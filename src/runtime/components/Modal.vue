@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { DialogRootProps, DialogRootEmits, DialogContentProps, DialogContentEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/modal'
+import theme from '../../theme/modal.js'
 import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
 import type { EmitsToProps } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Modal = ComponentConfig<typeof theme, AppConfig, 'modal'>
 
@@ -82,7 +81,6 @@ export interface ModalSlots {
 import { computed, toRef } from 'vue'
 import { DialogRoot, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, DialogTitle, DialogDescription, DialogClose, VisuallyHidden, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { usePortal } from '../composables/usePortal'
 import { tv } from '../utils/tv'
@@ -100,7 +98,7 @@ const emits = defineEmits<ModalEmits>()
 const slots = defineSlots<ModalSlots>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Modal['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
@@ -141,7 +139,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.modal || {})
   fullscreen: props.fullscreen,
   overlay: props.overlay,
   scrollable: props.scrollable
-} as any))
+} as any) as unknown as Modal['ui'])
 </script>
 
 <!-- eslint-disable vue/no-template-shadow -->

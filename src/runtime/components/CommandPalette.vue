@@ -2,13 +2,12 @@
 <script lang="ts">
 import type { ListboxRootProps, ListboxRootEmits } from 'reka-ui'
 import type { FuseResult } from 'fuse.js'
-import type { AppConfig } from '@nuxt/schema'
 import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
-import theme from '#build/ui/command-palette'
+import theme from '../../theme/command-palette.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, ButtonProps, ChipProps, KbdProps, InputProps, LinkProps, IconProps, LinkPropsKeys } from '../types'
 import type { GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type CommandPalette = ComponentConfig<typeof theme, AppConfig, 'commandPalette'>
 
@@ -201,7 +200,6 @@ import { ListboxRoot, ListboxFilter, ListboxContent, ListboxGroup, ListboxGroupL
 import { defu } from 'defu'
 import { reactivePick, createReusableTemplate, refThrottled } from '@vueuse/core'
 import { useFuse } from '@vueuse/integrations/useFuse'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { omit, get } from '../utils'
 import { highlight } from '../utils/fuse'
@@ -235,7 +233,7 @@ const slots = defineSlots<CommandPaletteSlots<G, T>>()
 const searchTerm = defineModel<string>('searchTerm', { default: '' })
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as CommandPalette['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'disabled', 'multiple', 'modelValue', 'defaultValue', 'highlightOnHover'), emits)
 const inputProps = useForwardProps(reactivePick(props, 'loading'))
@@ -266,7 +264,7 @@ const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item: C
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.commandPalette || {}) })({
   virtualize: !!props.virtualize
-}))
+}) as unknown as CommandPalette['ui'])
 
 const fuse = computed(() => defu({}, props.fuse, {
   fuseOptions: {

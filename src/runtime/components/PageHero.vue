@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-hero'
+import theme from '../../theme/page-hero.js'
 import type { ButtonProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageHero = ComponentConfig<typeof theme, AppConfig, 'pageHero'>
 
@@ -51,7 +50,6 @@ export interface PageHeroSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 import UContainer from './Container.vue'
@@ -61,13 +59,13 @@ const props = withDefaults(defineProps<PageHeroProps>(), {
 })
 const slots = defineSlots<PageHeroSlots>()
 
-const appConfig = useAppConfig() as PageHero['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageHero || {}) })({
   orientation: props.orientation,
   reverse: props.reverse,
   title: !!props.title || !!slots.title
-}))
+}) as unknown as PageHero['ui'])
 </script>
 
 <template>

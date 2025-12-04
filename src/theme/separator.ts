@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'flex items-center align-center text-center',
     border: '',
@@ -12,7 +11,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, { border: `border-${color}` }])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, { border: `border-${color}` }])),
       neutral: { border: 'border-default' }
     },
     orientation: {
@@ -92,4 +91,4 @@ export default (options: Required<ModuleOptions>) => ({
     size: 'xs',
     type: 'solid'
   }
-})
+}

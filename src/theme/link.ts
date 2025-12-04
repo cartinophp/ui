@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   base: 'focus-visible:outline-primary',
   variants: {
     active: {
@@ -14,6 +13,6 @@ export default (options: Required<ModuleOptions>) => ({
   compoundVariants: [{
     active: false,
     disabled: false,
-    class: ['hover:text-default', options.theme.transitions && 'transition-colors']
+    class: ['hover:text-default', true && 'transition-colors']
   }]
-})
+}

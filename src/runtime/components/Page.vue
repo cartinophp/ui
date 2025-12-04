@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/page.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Page = ComponentConfig<typeof theme, AppConfig, 'page'>
 
@@ -25,19 +24,18 @@ export interface PageSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<PageProps>()
 const slots = defineSlots<PageSlots>()
 
-const appConfig = useAppConfig() as Page['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.page || {}) })({
   left: !!slots.left,
   right: !!slots.right
-}))
+}) as unknown as Page['ui'])
 </script>
 
 <template>

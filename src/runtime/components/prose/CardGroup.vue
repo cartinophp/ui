@@ -24,7 +24,7 @@ defineSlots<ProseCardGroupSlots>()
 
 const appConfig = useAppConfig() as ProseCardGroup['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.cardGroup || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.cardGroup || {}) }) as unknown as ProseCardGroup['ui'])
 </script>
 
 <template>

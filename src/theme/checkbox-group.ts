@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative',
     fieldset: 'flex gap-x-2',
@@ -17,7 +16,7 @@ export default (options: Required<ModuleOptions>) => ({
       }
     },
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {}])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {}])),
       neutral: {}
     },
     variant: {
@@ -80,7 +79,7 @@ export default (options: Required<ModuleOptions>) => ({
         fieldset: 'gap-0 -space-y-px'
       }
     },
-    ...(options.theme.colors || []).map((color: string) => ({
+    ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
       color,
       variant: 'table',
       class: {
@@ -107,4 +106,4 @@ export default (options: Required<ModuleOptions>) => ({
     variant: 'list',
     color: 'primary'
   }
-})
+}

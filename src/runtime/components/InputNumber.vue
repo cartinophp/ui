@@ -1,11 +1,10 @@
 <script lang="ts">
 import type { NumberFieldRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/input-number'
+import theme from '../../theme/input-number.js'
 import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
 import type { InputHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type InputNumber = ComponentConfig<typeof theme, AppConfig, 'inputNumber'>
 
@@ -78,7 +77,6 @@ export interface InputNumberSlots {
 import { onMounted, computed, useTemplateRef, toRef } from 'vue'
 import { NumberFieldRoot, NumberFieldInput, NumberFieldDecrement, NumberFieldIncrement, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick, useVModel } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useFormField } from '../composables/useFormField'
 import { useLocale } from '../composables/useLocale'
@@ -98,7 +96,7 @@ defineSlots<InputNumberSlots>()
 const modelValue = useVModel<InputNumberProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emits, { defaultValue: props.defaultValue })
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as InputNumber['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultValue', 'min', 'max', 'step', 'stepSnapping', 'formatOptions', 'disableWheelChange', 'invertWheelChange', 'readonly'), emits)
 
@@ -116,7 +114,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.inputNumber 
   fieldGroup: orientation.value,
   increment: props.orientation === 'vertical' ? (!!props.increment || !!props.decrement) : !!props.increment,
   decrement: props.orientation === 'vertical' ? false : !!props.decrement
-}))
+}) as unknown as InputNumber['ui'])
 
 const incrementIcon = computed(() => props.incrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.plus : appConfig.ui.icons.chevronUp))
 const decrementIcon = computed(() => props.decrementIcon || (props.orientation === 'horizontal' ? appConfig.ui.icons.minus : appConfig.ui.icons.chevronDown))

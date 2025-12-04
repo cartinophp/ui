@@ -1,12 +1,11 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/input'
+import theme from '../../theme/input.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps } from '../types'
 import type { InputHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
 import type { AcceptableValue } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Input = ComponentConfig<typeof theme, AppConfig, 'input'>
 
@@ -66,7 +65,6 @@ export interface InputSlots {
 import { useTemplateRef, computed, onMounted } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useVModel } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
@@ -87,7 +85,7 @@ const slots = defineSlots<InputSlots>()
 
 const modelValue = useVModel<InputProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emits, { defaultValue: props.defaultValue })
 
-const appConfig = useAppConfig() as Input['AppConfig']
+const appConfig = {} as AppConfig
 
 const { emitFormBlur, emitFormInput, emitFormChange, size: formGroupSize, color, id, name, highlight, disabled, emitFormFocus, ariaAttrs } = useFormField<InputProps<T>>(props, { deferInputValidation: true })
 const { orientation, size: fieldGroupSize } = useFieldGroup<InputProps<T>>(props)
@@ -105,7 +103,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.input || {})
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
   fieldGroup: orientation.value
-}))
+}) as unknown as Input['ui'])
 
 const inputRef = useTemplateRef('inputRef')
 

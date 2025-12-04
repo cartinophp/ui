@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { StepperRootProps, StepperRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/stepper'
+import theme from '../../theme/stepper.js'
 import type { IconProps } from '../types'
 import type { DynamicSlots } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Stepper = ComponentConfig<typeof theme, AppConfig, 'stepper'>
 
@@ -74,7 +73,6 @@ export type StepperSlots<T extends StepperItem = StepperItem> = {
 import { computed } from 'vue'
 import { StepperRoot, StepperItem, StepperTrigger, StepperIndicator, StepperSeparator, StepperTitle, StepperDescription, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 
@@ -87,7 +85,7 @@ const slots = defineSlots<StepperSlots<T>>()
 
 const modelValue = defineModel<string | number>()
 
-const appConfig = useAppConfig() as Stepper['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'orientation', 'linear'))
 
@@ -95,7 +93,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.stepper || {
   orientation: props.orientation,
   size: props.size,
   color: props.color
-}))
+}) as unknown as Stepper['ui'])
 
 const currentStepIndex = computed({
   get() {

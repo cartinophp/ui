@@ -1,10 +1,9 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { MaybeRefOrGetter } from 'vue'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/color-picker'
+import theme from '../../theme/color-picker.js'
 import type { HSLObject } from 'colortranslator'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ColorPicker = ComponentConfig<typeof theme, AppConfig, 'colorPicker'>
 
@@ -74,7 +73,6 @@ import { Primitive } from 'reka-ui'
 import { useEventListener, useElementBounding, watchThrottled, watchPausable } from '@vueuse/core'
 import { isClient } from '@vueuse/shared'
 import { ColorTranslator } from 'colortranslator'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps<ColorPickerProps>(), {
@@ -85,11 +83,11 @@ const props = withDefaults(defineProps<ColorPickerProps>(), {
 
 const modelValue = defineModel<string>(undefined)
 
-const appConfig = useAppConfig() as ColorPicker['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.colorPicker || {}) })({
   size: props.size
-}))
+}) as unknown as ColorPicker['ui'])
 
 const pickedColor = computed<HSVColor>({
   get() {

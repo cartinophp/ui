@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-card'
+import theme from '../../theme/page-card.js'
 import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageCard = ComponentConfig<typeof theme, AppConfig, 'pageCard'>
 
@@ -71,7 +70,6 @@ export interface PageCardSlots {
 import { computed, ref, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useMouseInElement, pausableFilter } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { getSlotChildrenText } from '../utils'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -87,7 +85,7 @@ const slots = defineSlots<PageCardSlots>()
 const cardRef = ref<HTMLElement>()
 const motionControl = pausableFilter()
 
-const appConfig = useAppConfig() as PageCard['AppConfig']
+const appConfig = {} as AppConfig
 const { elementX, elementY } = useMouseInElement(cardRef, {
   eventFilter: motionControl.eventFilter
 })
@@ -112,7 +110,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageCard || 
   highlightColor: props.highlightColor,
   spotlight: spotlight.value,
   spotlightColor: props.spotlightColor
-}))
+}) as unknown as PageCard['ui'])
 
 const ariaLabel = computed(() => {
   const slotText = slots.title && getSlotChildrenText(slots.title())

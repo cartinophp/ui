@@ -50,7 +50,7 @@ const appConfig = useAppConfig() as ProseCodeTree['AppConfig']
 const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: TreeNode[], level: number }>()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeTree || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeTree || {}) })() as unknown as ProseCodeTree['ui'])
 
 const model = ref(props.defaultValue ? { path: props.defaultValue } : undefined)
 const lastSelectedItem = ref()

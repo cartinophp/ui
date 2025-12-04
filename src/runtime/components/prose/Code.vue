@@ -29,7 +29,7 @@ defineSlots<ProseCodeSlots>()
 
 const appConfig = useAppConfig() as ProseCode['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.code || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.code || {}) }) as unknown as ProseCode['ui'])
 </script>
 
 <template>

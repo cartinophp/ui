@@ -1,11 +1,10 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/textarea'
+import theme from '../../theme/textarea.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps } from '../types'
 import type { TextareaHTMLAttributes } from '../types/html'
 import type { ModelModifiers } from '../types/input'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Textarea = ComponentConfig<typeof theme, AppConfig, 'textarea'>
 
@@ -67,7 +66,6 @@ export interface TextareaSlots {
 import { useTemplateRef, computed, onMounted, nextTick, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useVModel } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
@@ -88,7 +86,7 @@ const slots = defineSlots<TextareaSlots>()
 
 const modelValue = useVModel<TextareaProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emits, { defaultValue: props.defaultValue })
 
-const appConfig = useAppConfig() as Textarea['AppConfig']
+const appConfig = {} as AppConfig
 
 const { emitFormFocus, emitFormBlur, emitFormInput, emitFormChange, size, color, id, name, highlight, disabled, ariaAttrs } = useFormField<TextareaProps<T>>(props, { deferInputValidation: true })
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props)
@@ -102,7 +100,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.textarea || 
   autoresize: props.autoresize,
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing
-}))
+}) as unknown as Textarea['ui'])
 
 const textareaRef = useTemplateRef('textareaRef')
 

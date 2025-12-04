@@ -1,10 +1,9 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/breadcrumb'
+import theme from '../../theme/breadcrumb.js'
 import type { AvatarProps, IconProps, LinkProps } from '../types'
 import type { DynamicSlots, GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Breadcrumb = ComponentConfig<typeof theme, AppConfig, 'breadcrumb'>
 
@@ -60,7 +59,6 @@ export type BreadcrumbSlots<T extends BreadcrumbItem = BreadcrumbItem> = {
 <script setup lang="ts" generic="T extends BreadcrumbItem">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { get } from '../utils'
 import { tv } from '../utils/tv'
@@ -77,12 +75,12 @@ const props = withDefaults(defineProps<BreadcrumbProps<T>>(), {
 const slots = defineSlots<BreadcrumbSlots<T>>()
 
 const { dir } = useLocale()
-const appConfig = useAppConfig() as Breadcrumb['AppConfig']
+const appConfig = {} as AppConfig
 
 const separatorIcon = computed(() => props.separatorIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight))
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.breadcrumb || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.breadcrumb || {}) })() as unknown as Breadcrumb['ui'])
 </script>
 
 <template>

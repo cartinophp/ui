@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-feature'
+import theme from '../../theme/page-feature.js'
 import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageFeature = ComponentConfig<typeof theme, AppConfig, 'pageFeature'>
 
@@ -42,7 +41,6 @@ export interface PageFeatureSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { getSlotChildrenText } from '../utils'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -55,12 +53,12 @@ const props = withDefaults(defineProps<PageFeatureProps>(), {
 })
 const slots = defineSlots<PageFeatureSlots>()
 
-const appConfig = useAppConfig() as PageFeature['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageFeature || {}) })({
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}))
+}) as unknown as PageFeature['ui'])
 
 const ariaLabel = computed(() => {
   const slotText = slots.title && getSlotChildrenText(slots.title())

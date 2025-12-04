@@ -1,11 +1,10 @@
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { TimeFieldRootProps, TimeFieldRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/input-time'
+import theme from '../../theme/input-time.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type InputTime = ComponentConfig<typeof theme, AppConfig, 'inputTime'>
 
@@ -52,7 +51,6 @@ export interface InputTimeSlots {
 import { computed, onMounted, ref } from 'vue'
 import { TimeFieldRoot, TimeFieldInput, useForwardPropsEmits } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
@@ -66,7 +64,7 @@ const props = withDefaults(defineProps<InputTimeProps>(), {
 const emits = defineEmits<InputTimeEmits>()
 const slots = defineSlots<InputTimeSlots>()
 
-const appConfig = useAppConfig() as InputTime['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'id', 'name', 'color', 'variant', 'size', 'highlight', 'disabled', 'autofocus', 'autofocusDelay', 'icon', 'avatar', 'leading', 'leadingIcon', 'trailing', 'trailingIcon', 'loading', 'loadingIcon', 'class', 'ui'), emits)
 
@@ -85,7 +83,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.inputTime ||
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
   fieldGroup: orientation.value
-}))
+}) as unknown as InputTime['ui'])
 
 const inputsRef = ref<ComponentPublicInstance[]>([])
 

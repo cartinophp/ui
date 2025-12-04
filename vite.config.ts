@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     vue(),
-    tailwindcss(),
+    tailwindcss()
   ],
   resolve: {
     alias: {
@@ -17,15 +17,26 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'CartinoUI',
-      fileName: 'index'
+      fileName: (format) => format === 'es' ? 'index.js' : `index.${format}.js`,
+      formats: ['es']
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'reka-ui', 'tailwind-variants', '@tanstack/vue-table'],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'reka-ui': 'RekaUI',
+          'tailwind-variants': 'TailwindVariants',
+          '@tanstack/vue-table': 'VueTable'
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names?.[0] === 'style.css') return 'index.css'
+          return assetInfo.names?.[0] || 'assets/[name][extname]'
         }
       }
-    }
+    },
+    outDir: 'dist',
+    emptyOutDir: true,
+    cssCodeSplit: false
   }
 })

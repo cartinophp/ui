@@ -25,7 +25,7 @@ defineSlots<ProseBadgeSlots>()
 
 const appConfig = useAppConfig() as ProseBadge['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.badge || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.badge || {}) }) as unknown as ProseBadge['ui'])
 </script>
 
 <template>

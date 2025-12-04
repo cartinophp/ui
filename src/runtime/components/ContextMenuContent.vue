@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { ContextMenuContentProps as RekaContextMenuContentProps, ContextMenuContentEmits as RekaContextMenuContentEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
 import type theme from '#build/ui/context-menu'
 import type { AvatarProps, ContextMenuItem, ContextMenuSlots, IconProps, KbdProps } from '../types'
 import type { ArrayOrNested, GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ContextMenu = ComponentConfig<typeof theme, AppConfig, 'contextMenu'>
 
@@ -39,7 +38,6 @@ import { computed, toRef } from 'vue'
 import { ContextMenu } from 'reka-ui/namespaced'
 import { useForwardPropsEmits } from 'reka-ui'
 import { reactiveOmit, createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { usePortal } from '../composables/usePortal'
 import { omit, get, isArrayOfArray } from '../utils'
@@ -56,7 +54,7 @@ const emits = defineEmits<ContextMenuContentEmits>()
 const slots = defineSlots<ContextMenuSlots<T>>()
 
 const { dir } = useLocale()
-const appConfig = useAppConfig()
+const appConfig = {} as AppConfig
 
 const portalProps = usePortal(toRef(() => props.portal))
 const contentProps = useForwardPropsEmits(reactiveOmit(props, 'sub', 'items', 'portal', 'labelKey', 'descriptionKey', 'checkedIcon', 'loadingIcon', 'externalIcon', 'class', 'ui', 'uiOverride'), emits)

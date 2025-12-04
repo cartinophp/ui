@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: '',
     list: '',
@@ -18,9 +17,9 @@ export default (options: Required<NuxtOptions['ui']>) => ({
         linkLeading: 'bg-primary ring-primary text-inverted'
       },
       false: {
-        link: ['text-muted hover:text-default font-medium', options.theme.transitions && 'transition-colors'],
-        linkLeading: ['bg-elevated/50 ring-accented text-dimmed group-hover:bg-primary group-hover:ring-primary group-hover:text-inverted', options.theme.transitions && 'transition']
+        link: ['text-muted hover:text-default font-medium',  'transition-colors'],
+        linkLeading: ['bg-elevated/50 ring-accented text-dimmed group-hover:bg-primary group-hover:ring-primary group-hover:text-inverted',  'transition']
       }
     }
   }
-})
+}

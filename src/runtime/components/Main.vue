@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/main'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/main.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Main = ComponentConfig<typeof theme, AppConfig, 'main'>
 
@@ -22,15 +21,14 @@ export interface MainSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<MainProps>()
 defineSlots<MainSlots>()
 
-const appConfig = useAppConfig() as Main['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.main || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.main || {}) }) as unknown as Main['ui'])
 </script>
 
 <template>

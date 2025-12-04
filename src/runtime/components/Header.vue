@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/header'
+import theme from '../../theme/header.js'
 import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Header = ComponentConfig<typeof theme, AppConfig, 'header'>
 
@@ -58,7 +57,6 @@ import { computed, watch, toRef } from 'vue'
 import { Primitive } from 'reka-ui'
 import { defu } from 'defu'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig, useRoute } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { getSlotChildrenText } from '../utils'
 import { tv } from '../utils/tv'
@@ -85,7 +83,7 @@ const open = defineModel<boolean>('open', { default: false })
 
 const route = useRoute()
 const { t } = useLocale()
-const appConfig = useAppConfig() as Header['AppConfig']
+const appConfig = {} as AppConfig
 
 const [DefineLeftTemplate, ReuseLeftTemplate] = createReusableTemplate()
 const [DefineRightTemplate, ReuseRightTemplate] = createReusableTemplate()
@@ -101,7 +99,7 @@ watch(() => route.fullPath, () => {
 })
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.header || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.header || {}) })() as unknown as Header['ui'])
 
 const Menu = computed(() => ({
   slideover: USlideover,

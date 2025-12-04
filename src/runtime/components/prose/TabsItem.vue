@@ -26,7 +26,7 @@ defineSlots<ProseTabsItemSlots>()
 
 const appConfig = useAppConfig() as ProseTabsItem['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tabsItem || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tabsItem || {}) }) as unknown as ProseTabsItem['ui'])
 </script>
 
 <template>

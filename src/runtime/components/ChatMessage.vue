@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { UIMessage } from 'ai'
-import theme from '#build/ui/chat-message'
+import theme from '../../theme/chat-message.js'
 import type { AvatarProps, ButtonProps, IconProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatMessage = ComponentConfig<typeof theme, AppConfig, 'chatMessage'>
 
@@ -57,7 +56,6 @@ export interface ChatMessageSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
@@ -70,7 +68,7 @@ const props = withDefaults(defineProps<ChatMessageProps>(), {
 })
 const slots = defineSlots<ChatMessageSlots>()
 
-const appConfig = useAppConfig() as ChatMessage['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessage || {}) })({
   variant: props.variant,
@@ -78,7 +76,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessage 
   leading: !!props.icon || !!props.avatar || !!slots.leading,
   actions: !!props.actions || !!slots.actions,
   compact: props.compact
-}))
+}) as unknown as ChatMessage['ui'])
 </script>
 
 <template>

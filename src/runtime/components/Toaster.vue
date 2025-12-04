@@ -1,8 +1,7 @@
 <script lang="ts">
 import type { ToastProviderProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/toaster'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/toaster.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Toaster = ComponentConfig<typeof theme, AppConfig, 'toaster'>
 
@@ -49,7 +48,6 @@ export default {
 import { ref, computed, toRef, provide } from 'vue'
 import { ToastProvider, ToastViewport, ToastPortal, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useToast, toastMaxInjectionKey } from '../composables/useToast'
 import { usePortal } from '../composables/usePortal'
 import { omit } from '../utils'
@@ -66,7 +64,7 @@ const props = withDefaults(defineProps<ToasterProps>(), {
 defineSlots<ToasterSlots>()
 
 const { toasts, remove } = useToast()
-const appConfig = useAppConfig() as Toaster['AppConfig']
+const appConfig = {} as AppConfig
 
 provide(toastMaxInjectionKey, toRef(() => props.max))
 
@@ -92,7 +90,7 @@ const swipeDirection = computed(() => {
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.toaster || {}) })({
   position: props.position,
   swipeDirection: swipeDirection.value
-}))
+}) as unknown as Toaster['ui'])
 
 function onUpdateOpen(value: boolean, id: string | number) {
   if (value) {

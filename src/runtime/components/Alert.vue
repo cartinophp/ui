@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/alert'
+import theme from '../../theme/alert.js'
 import type { AvatarProps, ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Alert = ComponentConfig<typeof theme, AppConfig, 'alert'>
 
@@ -72,7 +71,6 @@ export interface AlertSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -86,14 +84,14 @@ const emits = defineEmits<AlertEmits>()
 const slots = defineSlots<AlertSlots>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Alert['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.alert || {}) })({
   color: props.color,
   variant: props.variant,
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}))
+}) as unknown as Alert['ui'])
 </script>
 
 <template>

@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-section'
+import theme from '../../theme/page-section.js'
 import type { ButtonProps, IconProps, PageFeatureProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageSection = ComponentConfig<typeof theme, AppConfig, 'pageSection'>
 
@@ -65,7 +64,6 @@ export interface PageSectionSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UPageFeature from './PageFeature.vue'
 import UContainer from './Container.vue'
@@ -78,7 +76,7 @@ const props = withDefaults(defineProps<PageSectionProps>(), {
 })
 const slots = defineSlots<PageSectionSlots>()
 
-const appConfig = useAppConfig() as PageSection['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageSection || {}) })({
   orientation: props.orientation,
@@ -86,7 +84,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageSection 
   title: !!props.title || !!slots.title,
   description: !!props.description || !!slots.description,
   body: !!slots.body || (!!props.features?.length || !!slots.features)
-}))
+}) as unknown as PageSection['ui'])
 </script>
 
 <template>

@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { NuxtError } from '#app'
-import theme from '#build/ui/error'
+import theme from '../../theme/error.js'
 import type { ButtonProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Error = ComponentConfig<typeof theme, AppConfig, 'error'>
 
@@ -41,7 +40,6 @@ export interface ErrorSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { clearError, useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
@@ -53,10 +51,10 @@ const props = withDefaults(defineProps<ErrorProps>(), {
 const slots = defineSlots<ErrorSlots>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Error['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.error || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.error || {}) })() as unknown as Error['ui'])
 
 function handleError() {
   clearError({ redirect: props.redirect })

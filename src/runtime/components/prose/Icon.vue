@@ -21,7 +21,7 @@ const props = defineProps<ProseIconProps>()
 
 const appConfig = useAppConfig() as ProseIcon['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.icon || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.icon || {}) }) as unknown as ProseIcon['ui'])
 </script>
 
 <template>

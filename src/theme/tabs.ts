@@ -1,11 +1,10 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'flex items-center gap-2',
     list: 'relative flex p-1 group',
     indicator: 'absolute transition-[translate,width] duration-200',
-    trigger: ['group relative inline-flex items-center min-w-0 data-[state=inactive]:text-muted hover:data-[state=inactive]:not-disabled:text-default font-medium rounded-md disabled:cursor-not-allowed disabled:opacity-75', options.theme.transitions && 'transition-colors'],
+    trigger: ['group relative inline-flex items-center min-w-0 data-[state=inactive]:text-muted hover:data-[state=inactive]:not-disabled:text-default font-medium rounded-md disabled:cursor-not-allowed disabled:opacity-75', true && 'transition-colors'],
     leadingIcon: 'shrink-0',
     leadingAvatar: 'shrink-0',
     leadingAvatarSize: '',
@@ -16,7 +15,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     variant: {
@@ -98,7 +97,7 @@ export default (options: Required<ModuleOptions>) => ({
       list: 'border-s -ms-px',
       indicator: '-start-px w-px'
     }
-  }, ...(options.theme.colors || []).map((color: string) => ({
+  }, ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'pill',
     class: {
@@ -112,7 +111,7 @@ export default (options: Required<ModuleOptions>) => ({
       indicator: 'bg-inverted',
       trigger: 'data-[state=active]:text-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted'
     }
-  }, ...(options.theme.colors || []).map((color: string) => ({
+  }, ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'link',
     class: {
@@ -132,4 +131,4 @@ export default (options: Required<ModuleOptions>) => ({
     variant: 'pill',
     size: 'md'
   }
-})
+}

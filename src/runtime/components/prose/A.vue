@@ -24,7 +24,7 @@ import ULink from '../Link.vue'
 
 const appConfig = useAppConfig() as ProseA['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.a || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.a || {}) }) as unknown as ProseA['ui'])
 
 const props = defineProps<ProseAProps>()
 defineSlots<ProseASlots>()

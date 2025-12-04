@@ -1,9 +1,8 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/pricing-table'
+import theme from '../../theme/pricing-table.js'
 import type { PricingPlanProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PricingTable = ComponentConfig<typeof theme, AppConfig, 'pricingTable'>
 
@@ -103,7 +102,6 @@ export type PricingTableSlots<T extends PricingTableTier = PricingTableTier> = {
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UBadge from './Badge.vue'
@@ -116,7 +114,7 @@ const props = defineProps<PricingTableProps<T>>()
 const slots = defineSlots<PricingTableSlots<T>>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as PricingTable['AppConfig']
+const appConfig = {} as AppConfig
 
 const formatSlotName = (item: { id?: string, title: string }): string => {
   if (item.id) return item.id
@@ -130,7 +128,7 @@ const formatSlotName = (item: { id?: string, title: string }): string => {
 }
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingTable || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingTable || {}) })() as unknown as PricingTable['ui'])
 
 const [DefineTierTemplate, ReuseTierTemplate] = createReusableTemplate<{ tier: PricingTableTier }>({
   props: {

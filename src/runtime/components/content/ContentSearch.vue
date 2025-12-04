@@ -146,7 +146,7 @@ const fuse = computed(() => defu({}, props.fuse, {
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSearch || {}) })({
   fullscreen: props.fullscreen
-}))
+}) as unknown as ContentSearch['ui'])
 
 const commandPaletteRef = useTemplateRef('commandPaletteRef')
 

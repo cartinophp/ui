@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-sidebar'
+import theme from '../../theme/dashboard-sidebar.js'
 import type { UseResizableProps } from '../composables/useResizable'
 import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardSidebar = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebar'>
 
@@ -49,7 +48,6 @@ export interface DashboardSidebarSlots {
 import { ref, computed, toRef, useId, watch } from 'vue'
 import { defu } from 'defu'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig, useRuntimeHook, useRoute } from '#imports'
 import { useResizable } from '../composables/useResizable'
 import { useLocale } from '../composables/useLocale'
 import { useDashboard } from '../utils/dashboard'
@@ -81,7 +79,7 @@ const collapsed = defineModel<boolean>('collapsed', { default: false })
 
 const route = useRoute()
 const { t } = useLocale()
-const appConfig = useAppConfig() as DashboardSidebar['AppConfig']
+const appConfig = {} as AppConfig
 
 const dashboardContext = useDashboard({
   storageKey: 'dashboard',
@@ -114,7 +112,7 @@ watch(() => route.fullPath, () => {
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebar || {}) })({
   side: props.side
-}))
+}) as unknown as DashboardSidebar['ui'])
 
 const Menu = computed(() => ({
   slideover: USlideover,

@@ -130,7 +130,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentNavig
   variant: props.variant,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}))
+}) as unknown as ContentNavigation['ui'])
 
 const disabled = computed(() => props.disabled || (props.type === 'multiple' && props.collapsible === false))
 

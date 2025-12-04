@@ -21,7 +21,7 @@ const props = defineProps<ProseKbdProps>()
 
 const appConfig = useAppConfig() as ProseKbd['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.kbd || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.kbd || {}) }) as unknown as ProseKbd['ui'])
 </script>
 
 <template>

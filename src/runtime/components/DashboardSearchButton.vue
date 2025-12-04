@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-search-button'
+import theme from '../../theme/dashboard-search-button.js'
 import type { ButtonProps, ButtonSlots, IconProps, KbdProps, TooltipProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardSearchButton = ComponentConfig<typeof theme, AppConfig, 'dashboardSearchButton'>
 
@@ -54,7 +53,6 @@ import { computed, toRef } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { defu } from 'defu'
 import { reactiveOmit, createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { useDashboard } from '../utils/dashboard'
 import { omit, transformUI } from '../utils'
@@ -81,12 +79,12 @@ const buttonProps = useForwardProps(reactiveOmit(props, 'icon', 'label', 'varian
 const tooltipProps = toRef(() => defu(typeof props.tooltip === 'boolean' ? {} : props.tooltip, { delayDuration: 0, content: { side: 'right' } }) as TooltipProps)
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as DashboardSearchButton['AppConfig']
+const appConfig = {} as AppConfig
 const { toggleSearch } = useDashboard({ toggleSearch: () => {} })
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSearchButton || {}) })({
   collapsed: props.collapsed
-}))
+}) as unknown as DashboardSearchButton['ui'])
 </script>
 
 <template>

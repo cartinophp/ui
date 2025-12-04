@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     content: 'min-w-32 bg-default shadow-lg rounded-md ring ring-default overflow-hidden data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-context-menu-content-transform-origin) flex flex-col',
     viewport: 'relative divide-y divide-default scroll-py-1 overflow-y-auto flex-1',
@@ -22,7 +21,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     active: {
@@ -31,8 +30,8 @@ export default (options: Required<ModuleOptions>) => ({
         itemLeadingIcon: 'text-default'
       },
       false: {
-        item: ['text-default data-highlighted:text-highlighted data-[state=open]:text-highlighted data-highlighted:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50', options.theme.transitions && 'transition-colors before:transition-colors'],
-        itemLeadingIcon: ['text-dimmed group-data-highlighted:text-default group-data-[state=open]:text-default', options.theme.transitions && 'transition-colors']
+        item: ['text-default data-highlighted:text-highlighted data-[state=open]:text-highlighted data-highlighted:before:bg-elevated/50 data-[state=open]:before:bg-elevated/50', true && 'transition-colors before:transition-colors'],
+        itemLeadingIcon: ['text-dimmed group-data-highlighted:text-default group-data-[state=open]:text-default', true && 'transition-colors']
       }
     },
     loading: {
@@ -88,14 +87,14 @@ export default (options: Required<ModuleOptions>) => ({
       }
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     active: false,
     class: {
       item: `text-${color} data-highlighted:text-${color} data-highlighted:before:bg-${color}/10 data-[state=open]:before:bg-${color}/10`,
       itemLeadingIcon: `text-${color}/75 group-data-highlighted:text-${color} group-data-[state=open]:text-${color}`
     }
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     active: true,
     class: {
@@ -106,4 +105,4 @@ export default (options: Required<ModuleOptions>) => ({
   defaultVariants: {
     size: 'md'
   }
-})
+}

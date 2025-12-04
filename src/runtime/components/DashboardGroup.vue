@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-group'
+import theme from '../../theme/dashboard-group.js'
 import type { UseResizableProps } from '../composables/useResizable'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardGroup = ComponentConfig<typeof theme, AppConfig, 'dashboardGroup'>
 
@@ -23,7 +22,6 @@ export interface DashboardGroupSlots {
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useNuxtApp, useAppConfig } from '#imports'
 import { provideDashboardContext } from '../utils/dashboard'
 import { tv } from '../utils/tv'
 
@@ -36,9 +34,9 @@ const props = withDefaults(defineProps<DashboardGroupProps>(), {
 defineSlots<DashboardGroupSlots>()
 
 const nuxtApp = useNuxtApp()
-const appConfig = useAppConfig() as DashboardGroup['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardGroup || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardGroup || {}) }) as unknown as DashboardGroup['ui'])
 
 const sidebarOpen = ref(false)
 const sidebarCollapsed = ref(false)

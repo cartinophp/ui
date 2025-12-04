@@ -29,7 +29,7 @@ defineSlots<ProseStepsSlots>()
 
 const appConfig = useAppConfig() as ProseSteps['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.steps || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.steps || {}) }) as unknown as ProseSteps['ui'])
 </script>
 
 <template>

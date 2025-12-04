@@ -30,7 +30,7 @@ export function getDefaultConfig(theme?: ModuleOptions['theme']) {
 }
 
 export const defaultOptions = {
-  prefix: 'U',
+  prefix: 'ui-',
   fonts: true,
   colorMode: true,
   theme: {

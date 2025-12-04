@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-list'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/page-list.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageList = ComponentConfig<typeof theme, AppConfig, 'pageList'>
 
@@ -23,7 +22,6 @@ export interface PageListSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps<PageListProps>(), {
@@ -31,9 +29,9 @@ const props = withDefaults(defineProps<PageListProps>(), {
 })
 defineSlots<PageListSlots>()
 
-const appConfig = useAppConfig() as PageList['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageList || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageList || {}) }) as unknown as PageList['ui'])
 </script>
 
 <template>

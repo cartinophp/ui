@@ -26,7 +26,7 @@ defineSlots<ProseTableSlots>()
 const appConfig = useAppConfig() as ProseTable['AppConfig']
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.table || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.table || {}) })() as unknown as ProseTable['ui'])
 </script>
 
 <template>

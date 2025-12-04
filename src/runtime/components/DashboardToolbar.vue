@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-toolbar'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/dashboard-toolbar.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardToolbar = ComponentConfig<typeof theme, AppConfig, 'dashboardToolbar'>
 
@@ -25,16 +24,15 @@ export interface DashboardToolbarSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<DashboardToolbarProps>()
 defineSlots<DashboardToolbarSlots>()
 
-const appConfig = useAppConfig() as DashboardToolbar['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardToolbar || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardToolbar || {}) })() as unknown as DashboardToolbar['ui'])
 </script>
 
 <template>

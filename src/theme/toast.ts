@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative group overflow-hidden bg-default shadow-lg rounded-lg ring ring-default p-4 flex gap-2.5 focus:outline-none',
     wrapper: 'w-0 flex-1 flex flex-col',
@@ -15,7 +14,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         root: `focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`,
         icon: `text-${color}`
       }])),
@@ -43,4 +42,4 @@ export default (options: Required<ModuleOptions>) => ({
   defaultVariants: {
     color: 'primary'
   }
-})
+}

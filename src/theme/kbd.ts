@@ -1,10 +1,9 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   base: 'inline-flex items-center justify-center px-1 rounded-sm font-medium font-sans uppercase',
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     variant: {
@@ -19,19 +18,19 @@ export default (options: Required<ModuleOptions>) => ({
       lg: 'h-6 min-w-[24px] text-[12px]'
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'solid',
     class: `text-inverted bg-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'outline',
     class: `ring ring-inset ring-${color}/50 text-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'soft',
     class: `text-${color} bg-${color}/10`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'subtle',
     class: `text-${color} ring ring-inset ring-${color}/25 bg-${color}/10`
@@ -57,4 +56,4 @@ export default (options: Required<ModuleOptions>) => ({
     color: 'neutral',
     size: 'md'
   }
-})
+}

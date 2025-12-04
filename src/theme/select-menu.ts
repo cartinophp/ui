@@ -1,9 +1,7 @@
 import { defuFn } from 'defu'
-import type { ModuleOptions } from '../module'
 import select from './select'
 
-export default (options: Required<ModuleOptions>) => {
-  return defuFn({
+export default defuFn({
     slots: {
       input: 'border-b border-default',
       focusScope: 'flex flex-col min-h-0',
@@ -24,8 +22,7 @@ export default (options: Required<ModuleOptions>) => {
       ...item,
       class: typeof item.class === 'string' ? replaceFocus(item.class) : item.class
     }))
-  }, select(options))
-}
+  }, select)
 
 function replaceFocus(str: string): string {
   return str

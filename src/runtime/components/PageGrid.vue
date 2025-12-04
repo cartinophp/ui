@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-grid'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/page-grid.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageGrid = ComponentConfig<typeof theme, AppConfig, 'pageGrid'>
 
@@ -22,15 +21,14 @@ export interface PageGridSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<PageGridProps>()
 defineSlots<PageGridSlots>()
 
-const appConfig = useAppConfig() as PageGrid['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageGrid || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageGrid || {}) }) as unknown as PageGrid['ui'])
 </script>
 
 <template>

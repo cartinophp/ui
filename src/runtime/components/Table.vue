@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { Ref, WatchOptions, ComponentPublicInstance } from 'vue'
-import type { AppConfig } from '@nuxt/schema'
 import type { Cell, Column, Header, RowData, TableMeta } from '@tanstack/table-core'
 import type {
   CellContext,
@@ -36,9 +35,9 @@ import type {
   VisibilityState
 } from '@tanstack/vue-table'
 import type { VirtualizerOptions } from '@tanstack/vue-virtual'
-import theme from '#build/ui/table'
+import theme from '../../theme/table.js'
 import type { TableHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 declare module '@tanstack/table-core' {
 
@@ -228,7 +227,6 @@ import { defu } from 'defu'
 import { FlexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, getExpandedRowModel, useVueTable } from '@tanstack/vue-table'
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 
@@ -243,7 +241,7 @@ const props = withDefaults(defineProps<TableProps<T>>(), {
 const slots = defineSlots<TableSlots<T>>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Table['AppConfig']
+const appConfig = {} as AppConfig
 
 const data = ref(props.data ?? []) as Ref<T[]>
 const meta = computed(() => props.meta ?? {})
@@ -277,7 +275,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.table || {})
   loadingColor: props.loadingColor,
   loadingAnimation: props.loadingAnimation,
   virtualize: !!props.virtualize
-}))
+}) as unknown as Table['ui'])
 
 const [DefineTableTemplate, ReuseTableTemplate] = createReusableTemplate()
 const [DefineRowTemplate, ReuseRowTemplate] = createReusableTemplate<{ row: TableRow<T>, style?: Record<string, string> }>({

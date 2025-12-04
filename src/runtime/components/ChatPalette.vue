@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/chat-palette'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/chat-palette.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatPalette = ComponentConfig<typeof theme, AppConfig, 'chatPalette'>
 
@@ -24,16 +23,15 @@ export interface ChatPaletteSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<ChatPaletteProps>()
 const slots = defineSlots<ChatPaletteSlots>()
 
-const appConfig = useAppConfig() as ChatPalette['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPalette || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPalette || {}) })() as unknown as ChatPalette['ui'])
 </script>
 
 <template>

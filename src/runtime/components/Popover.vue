@@ -1,9 +1,8 @@
 <script lang="ts">
 import type { PopoverRootProps, HoverCardRootProps, PopoverRootEmits, PopoverContentProps, PopoverContentEmits, PopoverArrowProps, HoverCardTriggerProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/popover'
+import theme from '../../theme/popover.js'
 import type { EmitsToProps } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Popover = ComponentConfig<typeof theme, AppConfig, 'popover'>
 type PopoverMode = 'click' | 'hover'
@@ -63,7 +62,6 @@ import { defu } from 'defu'
 import { useForwardPropsEmits } from 'reka-ui'
 import { Popover, HoverCard } from 'reka-ui/namespaced'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { usePortal } from '../composables/usePortal'
 import { tv } from '../utils/tv'
 
@@ -77,7 +75,7 @@ const props = withDefaults(defineProps<PopoverProps<M>>(), {
 const emits = defineEmits<PopoverEmits>()
 const slots = defineSlots<PopoverSlots<M>>()
 
-const appConfig = useAppConfig() as Popover['AppConfig']
+const appConfig = {} as AppConfig
 
 const pick = props.mode === 'hover' ? reactivePick(props, 'defaultOpen', 'open', 'openDelay', 'closeDelay') : reactivePick(props, 'defaultOpen', 'open', 'modal')
 const rootProps = useForwardPropsEmits(pick, emits)
@@ -103,7 +101,7 @@ const arrowProps = toRef(() => props.arrow as PopoverArrowProps)
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.popover || {}) })({
   side: contentProps.value.side
-}))
+}) as unknown as Popover['ui'])
 
 const Component = computed(() => props.mode === 'hover' ? HoverCard : Popover)
 </script>

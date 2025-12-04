@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-anchors'
+import theme from '../../theme/page-anchors.js'
 import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageAnchors = ComponentConfig<typeof theme, AppConfig, 'pageAnchors'>
 
@@ -40,7 +39,6 @@ export interface PageAnchorsSlots<T extends PageAnchor = PageAnchor> {
 <script setup lang="ts" generic="T extends PageAnchor">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { pickLinkProps } from '../utils/link'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -52,10 +50,10 @@ const props = withDefaults(defineProps<PageAnchorsProps<T>>(), {
 })
 const slots = defineSlots<PageAnchorsSlots<T>>()
 
-const appConfig = useAppConfig() as PageAnchors['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAnchors || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAnchors || {}) })() as unknown as PageAnchors['ui'])
 </script>
 
 <template>

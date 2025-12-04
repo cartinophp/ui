@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/empty'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/empty.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 import type { ButtonProps, IconProps, AvatarProps } from '../types'
 
 type Empty = ComponentConfig<typeof theme, AppConfig, 'empty'>
@@ -50,7 +49,6 @@ export interface EmptySlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UAvatar from './Avatar.vue'
 import UButton from './Button.vue'
@@ -58,12 +56,12 @@ import UButton from './Button.vue'
 const props = defineProps<EmptyProps>()
 const slots = defineSlots<EmptySlots>()
 
-const appConfig = useAppConfig() as Empty['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.empty || {}) })({
   variant: props.variant,
   size: props.size
-}))
+}) as unknown as Empty['ui'])
 </script>
 
 <template>

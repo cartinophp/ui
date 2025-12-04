@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/marquee'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/marquee.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Marquee = ComponentConfig<typeof theme, AppConfig, 'marquee'>
 
@@ -48,7 +47,6 @@ export interface MarqueeSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps<MarqueeProps>(), {
@@ -58,14 +56,14 @@ const props = withDefaults(defineProps<MarqueeProps>(), {
 })
 defineSlots<MarqueeSlots>()
 
-const appConfig = useAppConfig() as Marquee['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.marquee || {}) })({
   pauseOnHover: props.pauseOnHover,
   orientation: props.orientation,
   reverse: props.reverse,
   overlay: props.overlay
-}))
+}) as unknown as Marquee['ui'])
 </script>
 
 <template>

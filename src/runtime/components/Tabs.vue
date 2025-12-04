@@ -2,11 +2,10 @@
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { TabsRootProps, TabsRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/tabs'
+import theme from '../../theme/tabs.js'
 import type { AvatarProps, BadgeProps, IconProps } from '../types'
 import type { DynamicSlots, GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Tabs = ComponentConfig<typeof theme, AppConfig, 'tabs'>
 
@@ -89,7 +88,6 @@ export type TabsSlots<T extends TabsItem = TabsItem> = {
 import { ref, computed } from 'vue'
 import { TabsRoot, TabsList, TabsIndicator, TabsTrigger, TabsContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { get } from '../utils'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -106,7 +104,7 @@ const props = withDefaults(defineProps<TabsProps<T>>(), {
 const emits = defineEmits<TabsEmits>()
 const slots = defineSlots<TabsSlots<T>>()
 
-const appConfig = useAppConfig() as Tabs['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'unmountOnHide'), emits)
 
@@ -115,7 +113,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.tabs || {}) 
   variant: props.variant,
   size: props.size,
   orientation: props.orientation
-}))
+}) as unknown as Tabs['ui'])
 
 const triggersRef = ref<ComponentPublicInstance[]>([])
 

@@ -76,7 +76,7 @@ const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?: 
 })
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSurround || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSurround || {}) })() as unknown as ContentSurround['ui'])
 </script>
 
 <template>

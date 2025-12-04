@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/banner'
+import theme from '../../theme/banner.js'
 import type { ButtonProps, IconProps, LinkProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Banner = ComponentConfig<typeof theme, AppConfig, 'banner'>
 
@@ -67,7 +66,6 @@ export interface BannerEmits {
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useHead, useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -82,12 +80,12 @@ const slots = defineSlots<BannerSlots>()
 const emits = defineEmits<BannerEmits>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Banner['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.banner || {}) })({
   color: props.color,
   to: !!props.to
-}))
+}) as unknown as Banner['ui'])
 
 const id = computed(() => `banner-${props.id || '1'}`)
 
@@ -100,16 +98,16 @@ watch(id, (newId) => {
   htmlElement?.classList.toggle('hide-banner', isClosed)
 })
 
-useHead({
-  script: [{
-    key: 'prehydrate-template-banner',
-    innerHTML: `
-            if (localStorage.getItem('${id.value}') === 'true') {
-              document.querySelector('html').classList.add('hide-banner')
-            }`.replace(/\s+/g, ' '),
-    type: 'text/javascript'
-  }]
-})
+// useHead({
+//   script: [{
+//     key: 'prehydrate-template-banner',
+//     innerHTML: `
+//             if (localStorage.getItem('${id.value}') === 'true') {
+//               document.querySelector('html').classList.add('hide-banner')
+//             }`.replace(/\s+/g, ' '),
+//     type: 'text/javascript'
+//   }]
+// })
 
 function onClose() {
   localStorage.setItem(id.value, 'true')

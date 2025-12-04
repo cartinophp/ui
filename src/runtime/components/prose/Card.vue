@@ -44,7 +44,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.card 
   color: props.color,
   to: !!props.to,
   title: !!props.title
-}))
+}) as unknown as ProseCard['ui'])
 
 const target = computed(() => props.target || (!!props.to && typeof props.to === 'string' && props.to.startsWith('http') ? '_blank' : undefined))
 

@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/user'
+import theme from '../../theme/user.js'
 import type { AvatarProps, ChipProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type User = ComponentConfig<typeof theme, AppConfig, 'user'>
 
@@ -43,7 +42,6 @@ export interface UserSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UChip from './Chip.vue'
 import UAvatar from './Avatar.vue'
@@ -56,13 +54,13 @@ const props = withDefaults(defineProps<UserProps>(), {
 })
 const slots = defineSlots<UserSlots>()
 
-const appConfig = useAppConfig() as User['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.user || {}) })({
   size: props.size,
   orientation: props.orientation,
   to: !!props.to || !!props.onClick
-}))
+}) as unknown as User['ui'])
 </script>
 
 <template>

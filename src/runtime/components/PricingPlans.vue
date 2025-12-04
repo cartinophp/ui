@@ -1,9 +1,8 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/pricing-plans'
+import theme from '../../theme/pricing-plans.js'
 import type { PricingPlanProps, PricingPlanSlots } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PricingPlans = ComponentConfig<typeof theme, AppConfig, 'pricingPlans'>
 
@@ -49,7 +48,6 @@ export type PricingPlansSlots<T extends PricingPlanProps = PricingPlanProps> = {
 <script setup lang="ts" generic="T extends PricingPlanProps">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UPricingPlan from './PricingPlan.vue'
@@ -63,9 +61,9 @@ const slots = defineSlots<PricingPlansSlots<T>>()
 
 const getProxySlots = () => omit(slots, ['default'])
 
-const appConfig = useAppConfig() as PricingPlans['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlans || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlans || {}) }) as unknown as PricingPlans['ui'])
 
 const count = computed(() => props.plans?.length || slots.default?.()?.flatMap(mapSlot).filter(Boolean)?.length || 3)
 

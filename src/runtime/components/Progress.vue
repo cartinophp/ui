@@ -1,9 +1,8 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { ProgressRootProps, ProgressRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/progress'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/progress.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Progress = ComponentConfig<typeof theme, AppConfig, 'progress'>
 
@@ -55,7 +54,6 @@ export type ProgressSlots = {
 import { computed } from 'vue'
 import { Primitive, ProgressRoot, ProgressIndicator, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 
@@ -68,7 +66,7 @@ const emits = defineEmits<ProgressEmits>()
 const slots = defineSlots<ProgressSlots>()
 
 const { dir } = useLocale()
-const appConfig = useAppConfig() as Progress['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'getValueLabel', 'getValueText', 'modelValue'), emits)
 
@@ -162,7 +160,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.progress || 
   color: props.color,
   orientation: props.orientation,
   inverted: props.inverted
-}))
+}) as unknown as Progress['ui'])
 </script>
 
 <template>

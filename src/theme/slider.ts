@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative flex items-center select-none touch-none',
     track: 'relative bg-accented overflow-hidden rounded-full grow',
@@ -9,7 +8,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         range: `bg-${color}`,
         thumb: `ring-${color} focus-visible:outline-${color}/50`
       }])),
@@ -116,4 +115,4 @@ export default (options: Required<ModuleOptions>) => ({
     size: 'md',
     color: 'primary'
   }
-})
+}

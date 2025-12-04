@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ComponentConfig } from '../types/tv'
-import theme from '#build/ui/footer'
+import type { ComponentConfig, AppConfig } from '../types/tv'
+import theme from '../../theme/footer.js'
 
 type Footer = ComponentConfig<typeof theme, AppConfig, 'footer'>
 
@@ -27,7 +26,6 @@ export interface FooterSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UContainer from './Container.vue'
 
@@ -36,10 +34,10 @@ const props = withDefaults(defineProps<FooterProps>(), {
 })
 const slots = defineSlots<FooterSlots>()
 
-const appConfig = useAppConfig() as Footer['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footer || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footer || {}) })() as unknown as Footer['ui'])
 </script>
 
 <template>

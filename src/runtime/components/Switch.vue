@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { SwitchRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/switch'
+import theme from '../../theme/switch.js'
 import type { IconProps } from '../types'
 import type { ButtonHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Switch = ComponentConfig<typeof theme, AppConfig, 'switch'>
 
@@ -60,7 +59,6 @@ export interface SwitchSlots {
 import { computed, useId } from 'vue'
 import { Primitive, SwitchRoot, SwitchThumb, useForwardProps, Label } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -73,7 +71,7 @@ const emits = defineEmits<SwitchEmits>()
 
 const modelValue = defineModel<boolean>({ default: undefined })
 
-const appConfig = useAppConfig() as Switch['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
@@ -86,7 +84,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.switch || {}
   required: props.required,
   loading: props.loading,
   disabled: disabled.value || props.loading
-}))
+}) as unknown as Switch['ui'])
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

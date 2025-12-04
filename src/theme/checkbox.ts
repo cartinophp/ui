@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative flex items-start',
     container: 'flex items-center',
@@ -13,7 +12,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         base: `focus-visible:outline-${color}`,
         indicator: `bg-${color}`
       }])),
@@ -94,7 +93,7 @@ export default (options: Required<ModuleOptions>) => ({
     { size: 'md', variant: 'card', class: { root: 'p-3.5' } },
     { size: 'lg', variant: 'card', class: { root: 'p-4' } },
     { size: 'xl', variant: 'card', class: { root: 'p-4.5' } },
-    ...(options.theme.colors || []).map((color: string) => ({
+    ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
       color,
       variant: 'card',
       class: {
@@ -122,4 +121,4 @@ export default (options: Required<ModuleOptions>) => ({
     variant: 'list',
     indicator: 'start'
   }
-})
+}

@@ -24,7 +24,7 @@ defineSlots<ProseBlockquoteSlots>()
 
 const appConfig = useAppConfig() as ProseBlockquote['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.blockquote || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.blockquote || {}) }) as unknown as ProseBlockquote['ui'])
 </script>
 
 <template>

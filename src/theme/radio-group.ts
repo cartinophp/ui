@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative',
     fieldset: 'flex gap-x-2',
@@ -15,7 +14,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         base: `focus-visible:outline-${color}`,
         indicator: `bg-${color}`
       }])),
@@ -135,7 +134,7 @@ export default (options: Required<ModuleOptions>) => ({
         fieldset: 'gap-0 -space-y-px'
       }
     },
-    ...(options.theme.colors || []).map((color: string) => ({
+    ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
       color,
       variant: 'card',
       class: {
@@ -149,7 +148,7 @@ export default (options: Required<ModuleOptions>) => ({
         item: 'has-data-[state=checked]:border-inverted'
       }
     },
-    ...(options.theme.colors || []).map((color: string) => ({
+    ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
       color,
       variant: 'table',
       class: {
@@ -178,4 +177,4 @@ export default (options: Required<ModuleOptions>) => ({
     orientation: 'vertical',
     indicator: 'start'
   }
-})
+}

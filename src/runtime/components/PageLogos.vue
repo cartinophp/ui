@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-logos'
+import theme from '../../theme/page-logos.js'
 import type { MarqueeProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageLogos = ComponentConfig<typeof theme, AppConfig, 'pageLogos'>
 
@@ -33,7 +32,6 @@ export interface PageLogosSlots {
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UMarquee from './Marquee.vue'
 import UAvatar from './Avatar.vue'
@@ -48,10 +46,10 @@ const props = withDefaults(defineProps<PageLogosProps>(), {
 })
 const slots = defineSlots<PageLogosSlots>()
 
-const appConfig = useAppConfig() as PageLogos['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLogos || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLogos || {}) })() as unknown as PageLogos['ui'])
 </script>
 
 <template>

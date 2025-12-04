@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: 'group/message relative w-full',
     container: 'relative flex items-start',
@@ -9,7 +8,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     leadingAvatar: 'shrink-0',
     leadingAvatarSize: '',
     content: 'relative text-pretty min-w-0 *:first:mt-0 *:last:mb-0',
-    actions: ['opacity-0 group-hover/message:opacity-100 absolute bottom-0 flex items-center', options.theme.transitions && 'transition-opacity']
+    actions: ['opacity-0 group-hover/message:opacity-100 absolute bottom-0 flex items-center',  'transition-opacity']
   },
   variants: {
     variant: {
@@ -102,4 +101,4 @@ export default (options: Required<NuxtOptions['ui']>) => ({
   defaultVariants: {
     variant: 'naked'
   }
-})
+}

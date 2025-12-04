@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-sidebar-collapse'
+import theme from '../../theme/dashboard-sidebar-collapse.js'
 import type { ButtonProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardSidebarCollapse = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebarCollapse'>
 
@@ -27,7 +26,6 @@ export interface DashboardSidebarCollapseProps extends Omit<ButtonProps, LinkPro
 import { ref, computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { useDashboard } from '../utils/dashboard'
 import { tv } from '../utils/tv'
@@ -42,10 +40,10 @@ const props = withDefaults(defineProps<DashboardSidebarCollapseProps>(), {
 const buttonProps = useForwardProps(reactiveOmit(props, 'icon', 'side', 'class'))
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as DashboardSidebarCollapse['AppConfig']
+const appConfig = {} as AppConfig
 const { sidebarCollapsed, collapseSidebar } = useDashboard({ sidebarCollapsed: ref(false), collapseSidebar: () => {} })
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarCollapse || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarCollapse || {}) }) as unknown as DashboardSidebarCollapse['ui'])
 </script>
 
 <template>

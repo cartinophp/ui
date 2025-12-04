@@ -24,7 +24,7 @@ defineSlots<ProseStrongSlots>()
 
 const appConfig = useAppConfig() as ProseStrong['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.strong || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.strong || {}) }) as unknown as ProseStrong['ui'])
 </script>
 
 <template>

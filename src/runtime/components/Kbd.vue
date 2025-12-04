@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/kbd'
+import theme from '../../theme/kbd.js'
 import type { KbdKey } from '../composables/useKbd'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Kbd = ComponentConfig<typeof theme, AppConfig, 'kbd'>
 
@@ -36,7 +35,6 @@ export interface KbdSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useKbd } from '../composables/useKbd'
 import { tv } from '../utils/tv'
 
@@ -46,9 +44,9 @@ const props = withDefaults(defineProps<KbdProps>(), {
 defineSlots<KbdSlots>()
 
 const { getKbdKey } = useKbd()
-const appConfig = useAppConfig() as Kbd['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.kbd || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.kbd || {}) }) as unknown as Kbd['ui'])
 </script>
 
 <template>

@@ -24,7 +24,7 @@ defineSlots<ProseTbodySlots>()
 
 const appConfig = useAppConfig() as ProseTbody['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tbody || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tbody || {}) }) as unknown as ProseTbody['ui'])
 </script>
 
 <template>

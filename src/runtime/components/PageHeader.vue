@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-header'
+import theme from '../../theme/page-header.js'
 import type { ButtonProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageHeader = ComponentConfig<typeof theme, AppConfig, 'pageHeader'>
 
@@ -36,18 +35,17 @@ export interface PageHeaderSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 
 const props = defineProps<PageHeaderProps>()
 const slots = defineSlots<PageHeaderSlots>()
 
-const appConfig = useAppConfig() as PageHeader['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageHeader || {}) })({
   title: !!props.title || !!slots.title
-}))
+}) as unknown as PageHeader['ui'])
 </script>
 
 <template>

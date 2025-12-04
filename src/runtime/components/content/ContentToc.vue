@@ -102,7 +102,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentToc |
   color: props.color,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}))
+}) as unknown as ContentToc['ui'])
 
 function scrollToHeading(id: string) {
   const encodedId = encodeURIComponent(id)

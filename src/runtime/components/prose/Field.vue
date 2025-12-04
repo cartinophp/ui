@@ -48,7 +48,7 @@ const slots = defineSlots<ProseFieldSlots>()
 const appConfig = useAppConfig() as ProseField['AppConfig']
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.field || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.field || {}) })() as unknown as ProseField['ui'])
 </script>
 
 <template>

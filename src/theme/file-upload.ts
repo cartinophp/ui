@@ -1,9 +1,8 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative flex flex-col',
-    base: ['w-full flex-1 bg-default border border-default flex flex-col gap-2 items-stretch justify-center rounded-lg focus-visible:outline-2', options.theme.transitions && 'transition-[background]'],
+    base: ['w-full flex-1 bg-default border border-default flex flex-col gap-2 items-stretch justify-center rounded-lg focus-visible:outline-2', true && 'transition-[background]'],
     wrapper: 'flex flex-col items-center justify-center text-center',
     icon: 'shrink-0',
     avatar: 'shrink-0',
@@ -20,7 +19,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     variant: {
@@ -94,10 +93,10 @@ export default (options: Required<ModuleOptions>) => ({
       true: 'cursor-not-allowed opacity-75'
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     class: `focus-visible:outline-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     highlight: true,
     class: `border-${color}`
@@ -191,4 +190,4 @@ export default (options: Required<ModuleOptions>) => ({
     variant: 'area',
     size: 'md'
   }
-})
+}

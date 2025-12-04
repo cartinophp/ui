@@ -2,9 +2,8 @@
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { PinInputRootEmits, PinInputRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/pin-input'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/pin-input.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PinInput = ComponentConfig<typeof theme, AppConfig, 'pinInput'>
 
@@ -52,7 +51,6 @@ export type PinInputEmits<T extends PinInputType = 'text'> = PinInputRootEmits<T
 import { ref, computed, onMounted } from 'vue'
 import { PinInputInput, PinInputRoot, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { looseToNumber } from '../utils'
 import { tv } from '../utils/tv'
@@ -64,7 +62,7 @@ const props = withDefaults(defineProps<PinInputProps<T>>(), {
 })
 const emits = defineEmits<PinInputEmits<T>>()
 
-const appConfig = useAppConfig() as PinInput['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'disabled', 'id', 'mask', 'name', 'otp', 'required', 'type'), emits)
 
@@ -75,7 +73,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pinInput || 
   variant: props.variant,
   size: size.value,
   highlight: highlight.value
-}))
+}) as unknown as PinInput['ui'])
 
 const inputsRef = ref<ComponentPublicInstance[]>([])
 

@@ -1,13 +1,11 @@
 import { defuFn } from 'defu'
-import type { ModuleOptions } from '../module'
 import input from './input'
 
-export default (options: Required<ModuleOptions>) => {
-  return defuFn({
+export default defuFn({
     slots: {
       root: () => undefined,
-      base: () => ['group relative inline-flex items-center rounded-md select-none', options.theme.transitions && 'transition-colors'],
-      segment: ['rounded text-center outline-hidden data-placeholder:text-dimmed data-[segment=literal]:text-muted data-invalid:text-error data-disabled:cursor-not-allowed data-disabled:opacity-75', options.theme.transitions && 'transition-colors']
+      base: () => ['group relative inline-flex items-center rounded-md select-none',  'transition-colors'],
+      segment: ['rounded text-center outline-hidden data-placeholder:text-dimmed data-[segment=literal]:text-muted data-invalid:text-error data-disabled:cursor-not-allowed data-disabled:opacity-75',  'transition-colors']
     },
     variants: {
       size: {
@@ -59,5 +57,4 @@ export default (options: Required<ModuleOptions>) => {
         segment: 'focus:bg-elevated'
       }
     }]
-  }, input(options))
-}
+}, input)

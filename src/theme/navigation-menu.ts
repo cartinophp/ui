@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative flex gap-1.5 [&>div]:min-w-0',
     list: 'isolate min-w-0',
@@ -34,7 +33,7 @@ export default (options: Required<ModuleOptions>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         link: `focus-visible:before:ring-${color}`,
         childLink: `focus-visible:before:ring-${color}`
       }])),
@@ -44,7 +43,7 @@ export default (options: Required<ModuleOptions>) => ({
       }
     },
     highlightColor: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     variant: {
@@ -86,8 +85,8 @@ export default (options: Required<ModuleOptions>) => ({
       false: {
         link: 'text-muted',
         linkLeadingIcon: 'text-dimmed',
-        childLink: ['hover:before:bg-elevated/50 text-default hover:text-highlighted', options.theme.transitions && 'transition-colors before:transition-colors'],
-        childLinkIcon: ['text-dimmed group-hover:text-default', options.theme.transitions && 'transition-colors']
+        childLink: ['hover:before:bg-elevated/50 text-default hover:text-highlighted', true && 'transition-colors before:transition-colors'],
+        childLinkIcon: ['text-dimmed group-hover:text-default', true && 'transition-colors']
       }
     },
     disabled: {
@@ -139,22 +138,22 @@ export default (options: Required<ModuleOptions>) => ({
     orientation: 'horizontal',
     highlight: true,
     class: {
-      link: ['after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full', options.theme.transitions && 'after:transition-colors']
+      link: ['after:absolute after:-bottom-2 after:inset-x-2.5 after:block after:h-px after:rounded-full', true && 'after:transition-colors']
     }
   }, {
     orientation: 'vertical',
     highlight: true,
     level: true,
     class: {
-      link: ['after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full', options.theme.transitions && 'after:transition-colors']
+      link: ['after:absolute after:-start-1.5 after:inset-y-0.5 after:block after:w-px after:rounded-full', true && 'after:transition-colors']
     }
   }, {
     disabled: false,
     active: false,
     variant: 'pill',
     class: {
-      link: ['hover:text-highlighted hover:before:bg-elevated/50', options.theme.transitions && 'transition-colors before:transition-colors'],
-      linkLeadingIcon: ['group-hover:text-default', options.theme.transitions && 'transition-colors']
+      link: ['hover:text-highlighted hover:before:bg-elevated/50', true && 'transition-colors before:transition-colors'],
+      linkLeadingIcon: ['group-hover:text-default', true && 'transition-colors']
     }
   }, {
     disabled: false,
@@ -182,7 +181,7 @@ export default (options: Required<ModuleOptions>) => ({
     class: {
       link: 'data-[state=open]:before:bg-elevated/50'
     }
-  }, ...(options.theme.colors || []).map((color: string) => ({
+  }, ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'pill',
     active: true,
@@ -211,15 +210,15 @@ export default (options: Required<ModuleOptions>) => ({
     highlight: true,
     disabled: false,
     class: {
-      link: ['hover:before:bg-elevated/50', options.theme.transitions && 'before:transition-colors']
+      link: ['hover:before:bg-elevated/50', true && 'before:transition-colors']
     }
   }, {
     disabled: false,
     active: false,
     variant: 'link',
     class: {
-      link: ['hover:text-highlighted', options.theme.transitions && 'transition-colors'],
-      linkLeadingIcon: ['group-hover:text-default', options.theme.transitions && 'transition-colors']
+      link: ['hover:text-highlighted', true && 'transition-colors'],
+      linkLeadingIcon: ['group-hover:text-default', true && 'transition-colors']
     }
   }, {
     disabled: false,
@@ -230,7 +229,7 @@ export default (options: Required<ModuleOptions>) => ({
       link: 'data-[state=open]:text-highlighted',
       linkLeadingIcon: 'group-data-[state=open]:text-default'
     }
-  }, ...(options.theme.colors || []).map((color: string) => ({
+  }, ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'link',
     active: true,
@@ -246,7 +245,7 @@ export default (options: Required<ModuleOptions>) => ({
       link: 'text-highlighted',
       linkLeadingIcon: 'text-highlighted group-data-[state=open]:text-highlighted'
     }
-  }, ...(options.theme.colors || []).map((highlightColor: string) => ({
+  }, ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((highlightColor: string) => ({
     highlightColor,
     highlight: true,
     level: true,
@@ -268,4 +267,4 @@ export default (options: Required<ModuleOptions>) => ({
     highlightColor: 'primary',
     variant: 'pill'
   }
-})
+}

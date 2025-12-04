@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
-import type { AppConfig } from '@nuxt/schema'
 import type { UIMessage, ChatStatus } from 'ai'
-import theme from '#build/ui/chat-messages'
+import theme from '../../theme/chat-messages.js'
 import type { ButtonProps, ChatMessageProps, ChatMessageSlots, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatMessages = ComponentConfig<typeof theme, AppConfig, 'chatMessages'>
 
@@ -79,7 +78,6 @@ import { ref, computed, watch, nextTick, toRef, onMounted } from 'vue'
 import { Presence } from 'reka-ui'
 import { defu } from 'defu'
 import { useElementBounding, useEventListener, watchThrottled } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UChatMessage from './ChatMessage.vue'
@@ -95,14 +93,14 @@ const slots = defineSlots<ChatMessagesSlots>()
 
 const getProxySlots = () => omit(slots, ['default', 'indicator', 'viewport'])
 
-const appConfig = useAppConfig() as ChatMessages['AppConfig']
+const appConfig = {} as AppConfig
 
 const userProps = toRef(() => defu(props.user, { side: 'right' as const, variant: 'soft' as const }))
 const assistantProps = toRef(() => defu(props.assistant, { side: 'left' as const, variant: 'naked' as const }))
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessages || {}) })({
   compact: props.compact
-}))
+}) as unknown as ChatMessages['ui'])
 
 const el = ref<HTMLElement | null>(null)
 const parent = ref<HTMLElement | null>(null)

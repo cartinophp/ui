@@ -1,21 +1,19 @@
-import type { ModuleOptions } from '../module'
 import inputTheme from './input'
 import { fieldGroupVariantWithRoot } from './field-group'
 
-export default (options: Required<ModuleOptions>) => {
-  const input = inputTheme(options)
+const input = inputTheme
 
-  return {
-    slots: {
-      root: 'relative inline-flex items-center',
-      base: ['w-full rounded-md border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', options.theme.transitions && 'transition-colors'],
+export default {
+  slots: {
+    root: 'relative inline-flex items-center',
+    base: ['w-full rounded-md border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', 'transition-colors'],
       increment: 'absolute flex items-center',
       decrement: 'absolute flex items-center'
     },
     variants: {
       ...fieldGroupVariantWithRoot,
       color: {
-        ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+        ...Object.fromEntries(['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => [color, ''])),
         neutral: ''
       },
       size: {
@@ -55,11 +53,11 @@ export default (options: Required<ModuleOptions>) => {
         false: ''
       }
     },
-    compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+    compoundVariants: [...['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => ({
       color,
       variant: ['outline', 'subtle'],
       class: `focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`
-    })), ...(options.theme.colors || []).map((color: string) => ({
+    })), ...['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => ({
       color,
       highlight: true,
       class: `ring ring-inset ring-${color}`
@@ -122,4 +120,3 @@ export default (options: Required<ModuleOptions>) => {
       variant: 'outline'
     }
   }
-}

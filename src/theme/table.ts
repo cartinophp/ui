@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative overflow-auto',
     base: 'min-w-full',
@@ -52,11 +51,11 @@ export default (options: Required<ModuleOptions>) => ({
       'elastic': ''
     },
     loadingColor: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((loadingColor: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((loadingColor: string) => ({
     loading: true,
     loadingColor,
     class: {
@@ -97,4 +96,4 @@ export default (options: Required<ModuleOptions>) => ({
     loadingColor: 'primary',
     loadingAnimation: 'carousel'
   }
-})
+}

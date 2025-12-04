@@ -1,7 +1,6 @@
-import type { ModuleOptions } from '../module'
 import { fieldGroupVariant } from './field-group'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     base: 'font-medium inline-flex items-center',
     label: 'truncate',
@@ -13,7 +12,7 @@ export default (options: Required<ModuleOptions>) => ({
   variants: {
     ...fieldGroupVariant,
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     variant: {
@@ -58,19 +57,19 @@ export default (options: Required<ModuleOptions>) => ({
       true: ''
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'solid',
     class: `bg-${color} text-inverted`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'outline',
     class: `text-${color} ring ring-inset ring-${color}/50`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'soft',
     class: `bg-${color}/10 text-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: 'subtle',
     class: `bg-${color}/10 text-${color} ring ring-inset ring-${color}/25`
@@ -116,4 +115,4 @@ export default (options: Required<ModuleOptions>) => ({
     variant: 'solid',
     size: 'md'
   }
-})
+}

@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-links'
+import theme from '../../theme/page-links.js'
 import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageLinks = ComponentConfig<typeof theme, AppConfig, 'pageLinks'>
 
@@ -42,7 +41,6 @@ export interface PageLinksSlots<T extends PageLink = PageLink> {
 <script setup lang="ts" generic="T extends PageLink">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { pickLinkProps } from '../utils/link'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -54,10 +52,10 @@ const props = withDefaults(defineProps<PageLinksProps<T>>(), {
 })
 const slots = defineSlots<PageLinksSlots<T>>()
 
-const appConfig = useAppConfig() as PageLinks['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLinks || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLinks || {}) })() as unknown as PageLinks['ui'])
 </script>
 
 <template>

@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'flex flex-col min-h-0 min-w-0 divide-y divide-default',
     input: '[&>input]:h-12',
@@ -45,8 +44,8 @@ export default (options: Required<ModuleOptions>) => ({
         itemLeadingIcon: 'text-default'
       },
       false: {
-        item: ['text-default data-highlighted:not-data-disabled:text-highlighted data-highlighted:not-data-disabled:before:bg-elevated/50', options.theme.transitions && 'transition-colors before:transition-colors'],
-        itemLeadingIcon: ['text-dimmed group-data-highlighted:not-group-data-disabled:text-default', options.theme.transitions && 'transition-colors']
+        item: ['text-default data-highlighted:not-data-disabled:text-highlighted data-highlighted:not-data-disabled:before:bg-elevated/50', true && 'transition-colors before:transition-colors'],
+        itemLeadingIcon: ['text-dimmed group-data-highlighted:not-group-data-disabled:text-default', true && 'transition-colors']
       }
     },
     loading: {
@@ -55,4 +54,4 @@ export default (options: Required<ModuleOptions>) => ({
       }
     }
   }
-})
+}

@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/chat-prompt'
+import theme from '../../theme/chat-prompt.js'
 import type { TextareaProps, TextareaSlots } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatPrompt = ComponentConfig<typeof theme, AppConfig, 'chatPrompt'>
 
@@ -41,7 +40,6 @@ export interface ChatPromptSlots extends TextareaSlots {
 import { computed, toRef, useTemplateRef } from 'vue'
 import { Primitive, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { omit, transformUI } from '../utils'
 import { tv } from '../utils/tv'
@@ -61,7 +59,7 @@ const slots = defineSlots<ChatPromptSlots>()
 const model = defineModel<string>({ default: '' })
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as ChatPrompt['AppConfig']
+const appConfig = {} as AppConfig
 
 const textareaProps = useForwardProps(reactivePick(props, 'rows', 'autofocus', 'autofocusDelay', 'autoresize', 'autoresizeDelay', 'maxrows', 'icon', 'avatar', 'loading', 'loadingIcon'))
 
@@ -69,7 +67,7 @@ const getProxySlots = () => omit(slots, ['header', 'footer'])
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPrompt || {}) })({
   variant: props.variant
-}))
+}) as unknown as ChatPrompt['ui'])
 
 const textareaRef = useTemplateRef('textareaRef')
 

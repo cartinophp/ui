@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/card'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/card.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Card = ComponentConfig<typeof theme, AppConfig, 'card'>
 
@@ -29,17 +28,16 @@ export interface CardSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = defineProps<CardProps>()
 const slots = defineSlots<CardSlots>()
 
-const appConfig = useAppConfig() as Card['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.card || {}) })({
   variant: props.variant
-}))
+}) as unknown as Card['ui'])
 </script>
 
 <template>

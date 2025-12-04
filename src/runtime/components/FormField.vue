@@ -1,8 +1,7 @@
 <script lang="ts">
 import type { Ref } from 'vue'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/form-field'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/form-field.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type FormField = ComponentConfig<typeof theme, AppConfig, 'formField'>
 
@@ -50,7 +49,6 @@ export interface FormFieldSlots {
 <script setup lang="ts">
 import { computed, ref, inject, provide, useId, watch } from 'vue'
 import { Primitive, Label } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { formFieldInjectionKey, inputIdInjectionKey, formErrorsInjectionKey, formInputsInjectionKey } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import type { FormError, FormFieldInjectedOptions } from '../types/form'
@@ -58,12 +56,12 @@ import type { FormError, FormFieldInjectedOptions } from '../types/form'
 const props = defineProps<FormFieldProps>()
 const slots = defineSlots<FormFieldSlots>()
 
-const appConfig = useAppConfig() as FormField['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.formField || {}) })({
   size: props.size,
   required: props.required
-}))
+}) as unknown as FormField['ui'])
 
 const formErrors = inject<Ref<FormError[]> | null>(formErrorsInjectionKey, null)
 

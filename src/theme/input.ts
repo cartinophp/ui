@@ -1,10 +1,9 @@
-import type { ModuleOptions } from '../module'
 import { fieldGroupVariantWithRoot } from './field-group'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative inline-flex items-center',
-    base: ['w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', options.theme.transitions && 'transition-colors'],
+    base: ['w-full rounded-md border-0 appearance-none placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', true && 'transition-colors'],
     leading: 'absolute inset-y-0 start-0 flex items-center',
     leadingIcon: 'shrink-0 text-dimmed',
     leadingAvatar: 'shrink-0',
@@ -64,7 +63,7 @@ export default (options: Required<ModuleOptions>) => ({
       none: 'text-highlighted bg-transparent'
     },
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     leading: {
@@ -83,11 +82,11 @@ export default (options: Required<ModuleOptions>) => ({
       file: 'file:me-1.5 file:font-medium file:text-muted file:outline-none'
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: ['outline', 'subtle'],
     class: `focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     highlight: true,
     class: `ring ring-inset ring-${color}`
@@ -158,4 +157,4 @@ export default (options: Required<ModuleOptions>) => ({
     color: 'primary',
     variant: 'outline'
   }
-})
+}

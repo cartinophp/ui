@@ -27,7 +27,7 @@ const slots = defineSlots<ProseCodePreviewSlots>()
 const appConfig = useAppConfig() as ProseCodePreview['AppConfig']
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codePreview || {}) })({ code: !!slots.code }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codePreview || {}) })({ code: !!slots.code }) as unknown as ProseCodePreview['ui'])
 </script>
 
 <template>

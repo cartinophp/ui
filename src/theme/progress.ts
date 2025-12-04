@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'gap-2',
     base: 'relative overflow-hidden rounded-full bg-accented',
@@ -17,7 +16,7 @@ export default (options: Required<ModuleOptions>) => ({
       'elastic': ''
     },
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         indicator: `bg-${color}`,
         steps: `text-${color}`
       }])),
@@ -212,4 +211,4 @@ export default (options: Required<ModuleOptions>) => ({
     color: 'primary',
     size: 'md'
   }
-})
+}

@@ -1,4 +1,3 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
 export default (options: Required<NuxtOptions['ui']>) => ({
   base: 'px-1.5 py-0.5 text-sm font-mono font-medium rounded-md inline-block',

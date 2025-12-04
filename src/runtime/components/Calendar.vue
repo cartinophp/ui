@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { CalendarRootProps, CalendarRootEmits, RangeCalendarRootProps, RangeCalendarRootEmits, DateRange, CalendarCellTriggerProps } from 'reka-ui'
 import type { DateValue } from '@internationalized/date'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/calendar'
+import theme from '../../theme/calendar.js'
 import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Calendar = ComponentConfig<typeof theme, AppConfig, 'calendar'>
 
@@ -114,7 +113,6 @@ import { computed } from 'vue'
 import { useForwardPropsEmits } from 'reka-ui'
 import { Calendar as SingleCalendar, RangeCalendar } from 'reka-ui/namespaced'
 import { reactiveOmit } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
@@ -128,7 +126,7 @@ const emits = defineEmits<CalendarEmits<R, M>>()
 defineSlots<CalendarSlots>()
 
 const { dir, t } = useLocale()
-const appConfig = useAppConfig() as Calendar['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'range', 'modelValue', 'defaultValue', 'color', 'variant', 'size', 'monthControls', 'yearControls', 'class', 'ui'), emits)
 
@@ -141,7 +139,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.calendar || 
   color: props.color,
   variant: props.variant,
   size: props.size
-}))
+}) as unknown as Calendar['ui'])
 
 function paginateYear(date: DateValue, sign: -1 | 1) {
   if (sign === -1) {

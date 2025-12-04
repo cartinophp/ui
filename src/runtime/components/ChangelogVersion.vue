@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/changelog-version'
+import theme from '../../theme/changelog-version.js'
 import type { BadgeProps, LinkProps, UserProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChangelogVersion = ComponentConfig<typeof theme, AppConfig, 'changelogVersion'>
 
@@ -58,7 +57,6 @@ import { computed } from 'vue'
 import { Primitive, useDateFormatter } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
 import ImageComponent from '#build/ui-image-component'
-import { useLocale, useAppConfig } from '#imports'
 import { getSlotChildrenText } from '../utils'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -74,7 +72,7 @@ const props = withDefaults(defineProps<ChangelogVersionProps>(), {
 const slots = defineSlots<ChangelogVersionSlots>()
 
 const { locale } = useLocale()
-const appConfig = useAppConfig() as ChangelogVersion['AppConfig']
+const appConfig = {} as AppConfig
 const formatter = useDateFormatter(locale.value.code)
 
 const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate()
@@ -89,7 +87,7 @@ const [DefineDateTemplate, ReuseDateTemplate] = createReusableTemplate<{ hidden?
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVersion || {}) })({
   to: !!props.to || !!props.onClick
-}))
+}) as unknown as ChangelogVersion['ui'])
 
 const date = computed(() => {
   if (!props.date) {

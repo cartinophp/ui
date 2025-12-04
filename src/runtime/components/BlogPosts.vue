@@ -1,9 +1,8 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/blog-posts'
+import theme from '../../theme/blog-posts.js'
 import type { BlogPostProps, BlogPostSlots } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type BlogPosts = ComponentConfig<typeof theme, AppConfig, 'blogPosts'>
 
@@ -38,7 +37,6 @@ export type BlogPostsSlots<T extends BlogPostProps = BlogPostProps> = {
 <script setup lang="ts" generic="T extends BlogPostProps">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UBlogPost from './BlogPost.vue'
@@ -50,9 +48,9 @@ const slots = defineSlots<BlogPostsSlots<T>>()
 
 const getProxySlots = () => omit(slots, ['default'])
 
-const appConfig = useAppConfig() as BlogPosts['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPosts || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPosts || {}) }) as unknown as BlogPosts['ui'])
 </script>
 
 <template>

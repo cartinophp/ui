@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: 'relative group/user',
     wrapper: '',
@@ -19,8 +18,8 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     },
     to: {
       true: {
-        name: ['text-default peer-hover:text-highlighted', options.theme.transitions && 'transition-colors'],
-        description: ['peer-hover:text-toned', options.theme.transitions && 'transition-colors'],
+        name: ['text-default peer-hover:text-highlighted',  'transition-colors'],
+        description: ['peer-hover:text-toned',  'transition-colors'],
         avatar: 'transform transition-transform duration-200 group-hover/user:scale-115'
       },
       false: {
@@ -82,4 +81,4 @@ export default (options: Required<NuxtOptions['ui']>) => ({
   defaultVariants: {
     size: 'md'
   }
-})
+}

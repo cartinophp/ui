@@ -60,15 +60,15 @@ type ComponentAppConfig<
 
 /**
  * Defines the configuration shape expected for a component.
- * @template T The component's theme imported from `#build/ui/*`.
- * @template A The base AppConfig type from `@nuxt/schema`.
+ * @template T The component's theme configuration.
+ * @template A The base AppConfig type (optional, defaults to empty object for standalone usage).
  * @template K The key identifying the component (e.g., 'badge').
- * @template U The top-level key in AppConfig ('ui' or 'uiPro').
+ * @template U The top-level key in AppConfig ('ui' or 'ui.prose').
  */
 export type ComponentConfig<
   T extends Record<string, any>,
-  A extends Record<string, any>,
-  K extends string,
+  A extends Record<string, any> = {},
+  K extends string = string,
   U extends 'ui' | 'ui.prose' = 'ui'
 > = {
   AppConfig: ComponentAppConfig<T, A, K, U>
@@ -76,3 +76,8 @@ export type ComponentConfig<
   slots: ComponentSlots<T>
   ui: ComponentUI<T>
 }
+
+/**
+ * Standalone AppConfig type for use outside of Nuxt
+ */
+export type AppConfig = Record<string, any>

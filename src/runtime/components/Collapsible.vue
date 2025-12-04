@@ -1,8 +1,7 @@
 <script lang="ts">
 import type { CollapsibleRootProps, CollapsibleRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/collapsible'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/collapsible.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Collapsible = ComponentConfig<typeof theme, AppConfig, 'collapsible'>
 
@@ -28,7 +27,6 @@ export interface CollapsibleSlots {
 import { computed } from 'vue'
 import { CollapsibleRoot, CollapsibleTrigger, CollapsibleContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps<CollapsibleProps>(), {
@@ -37,12 +35,12 @@ const props = withDefaults(defineProps<CollapsibleProps>(), {
 const emits = defineEmits<CollapsibleEmits>()
 const slots = defineSlots<CollapsibleSlots>()
 
-const appConfig = useAppConfig() as Collapsible['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'disabled', 'unmountOnHide'), emits)
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.collapsible || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.collapsible || {}) })() as unknown as Collapsible['ui'])
 </script>
 
 <template>

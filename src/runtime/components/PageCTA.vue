@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/page-cta'
+import theme from '../../theme/page-cta.js'
 import type { ButtonProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PageCTA = ComponentConfig<typeof theme, AppConfig, 'pageCTA'>
 
@@ -53,7 +52,6 @@ export interface PageCTASlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 import UContainer from './Container.vue'
@@ -64,14 +62,14 @@ const props = withDefaults(defineProps<PageCTAProps>(), {
 })
 const slots = defineSlots<PageCTASlots>()
 
-const appConfig = useAppConfig() as PageCTA['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageCTA || {}) })({
   variant: props.variant,
   orientation: props.orientation,
   reverse: props.reverse,
   title: !!props.title || !!slots.title
-}))
+}) as unknown as PageCTA['ui'])
 </script>
 
 <template>

@@ -1,9 +1,8 @@
 <script lang="ts">
 import type { SeparatorProps as _SeparatorProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/separator'
+import theme from '../../theme/separator.js'
 import type { AvatarProps, IconProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Separator = ComponentConfig<typeof theme, AppConfig, 'separator'>
 
@@ -52,7 +51,6 @@ export interface SeparatorSlots {
 import { computed } from 'vue'
 import { Separator, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 import UAvatar from './Avatar.vue'
@@ -62,7 +60,7 @@ const props = withDefaults(defineProps<SeparatorProps>(), {
 })
 const slots = defineSlots<SeparatorSlots>()
 
-const appConfig = useAppConfig() as Separator['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orientation'))
 
@@ -71,7 +69,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.separator ||
   orientation: props.orientation,
   size: props.size,
   type: props.type
-}))
+}) as unknown as Separator['ui'])
 </script>
 
 <template>

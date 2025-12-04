@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'flex gap-4',
     header: 'flex',
@@ -70,7 +69,7 @@ export default (options: Required<ModuleOptions>) => ({
     },
 
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         trigger: `group-data-[state=completed]:bg-${color} group-data-[state=active]:bg-${color} focus-visible:outline-${color}`,
         separator: `group-data-[state=completed]:bg-${color}`
       }])),
@@ -127,4 +126,4 @@ export default (options: Required<ModuleOptions>) => ({
     size: 'md',
     color: 'primary'
   }
-})
+}

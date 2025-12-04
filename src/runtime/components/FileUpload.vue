@@ -1,10 +1,9 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { UseFileDialogReturn } from '@vueuse/core'
-import theme from '#build/ui/file-upload'
+import theme from '../../theme/file-upload.js'
 import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
 import type { InputHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type FileUpload = ComponentConfig<typeof theme, AppConfig, 'fileUpload'>
 
@@ -133,7 +132,6 @@ export interface FileUploadSlots<M extends boolean = false> {
 import { computed, toRef, watch } from 'vue'
 import { Primitive, VisuallyHidden } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig, useLocale } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { useFileUpload } from '../composables/useFileUpload'
 import { tv } from '../utils/tv'
@@ -159,7 +157,7 @@ const slots = defineSlots<FileUploadSlots<M>>()
 
 const modelValue = defineModel<(M extends true ? File[] : File) | null>()
 
-const appConfig = useAppConfig() as FileUpload['AppConfig']
+const appConfig = {} as AppConfig
 
 const { t } = useLocale()
 
@@ -198,7 +196,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fileUpload |
   multiple: props.multiple,
   highlight: props.highlight,
   disabled: props.disabled
-}))
+}) as unknown as FileUpload['ui'])
 
 function createObjectUrl(file: File): string {
   return URL.createObjectURL(file)

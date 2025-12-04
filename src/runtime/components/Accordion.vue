@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { AccordionRootProps, AccordionRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/accordion'
+import theme from '../../theme/accordion.js'
 import type { IconProps } from '../types'
 import type { DynamicSlots, GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Accordion = ComponentConfig<typeof theme, AppConfig, 'accordion'>
 
@@ -69,7 +68,6 @@ export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
 import { computed } from 'vue'
 import { AccordionRoot, AccordionItem, AccordionHeader, AccordionTrigger, AccordionContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { get } from '../utils'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -83,13 +81,13 @@ const props = withDefaults(defineProps<AccordionProps<T>>(), {
 const emits = defineEmits<AccordionEmits>()
 const slots = defineSlots<AccordionSlots<T>>()
 
-const appConfig = useAppConfig() as Accordion['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'unmountOnHide'), emits)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.accordion || {}) })({
   disabled: props.disabled
-}))
+}) as unknown as Accordion['ui'])
 </script>
 
 <template>

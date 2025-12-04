@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/avatar'
+import theme from '../../theme/avatar.js'
 import type { ChipProps, IconProps } from '../types'
 import type { ImgHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Avatar = ComponentConfig<typeof theme, AppConfig, 'avatar'>
 
@@ -39,7 +38,6 @@ export interface AvatarSlots {
 import { ref, computed, watch } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
 import { defu } from 'defu'
-import { useAppConfig } from '#imports'
 import ImageComponent from '#build/ui-image-component'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
 import { tv } from '../utils/tv'
@@ -60,13 +58,13 @@ const as = computed(() => {
 
 const fallback = computed(() => props.text || (props.alt || '').split(' ').map(word => word.charAt(0)).join('').substring(0, 2))
 
-const appConfig = useAppConfig() as Avatar['AppConfig']
+const appConfig = {} as AppConfig
 const { size } = useAvatarGroup(props)
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.avatar || {}) })({
   size: size.value
-}))
+}) as unknown as Avatar['ui'])
 
 const sizePx = computed(() => ({
   '3xs': 16,

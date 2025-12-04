@@ -54,7 +54,7 @@ const appConfig = useAppConfig() as ProseCodeCollapse['AppConfig']
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeCollapse || {}) })({
   open: open.value
-}))
+}) as unknown as ProseCodeCollapse['ui'])
 </script>
 
 <template>

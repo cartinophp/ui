@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-sidebar-toggle'
+import theme from '../../theme/dashboard-sidebar-toggle.js'
 import type { ButtonProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardSidebarToggle = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebarToggle'>
 
@@ -27,7 +26,6 @@ export interface DashboardSidebarToggleProps extends Omit<ButtonProps, LinkProps
 import { ref, computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { useDashboard } from '../utils/dashboard'
 import { tv } from '../utils/tv'
@@ -44,10 +42,10 @@ const props = withDefaults(defineProps<DashboardSidebarToggleProps>(), {
 const buttonProps = useForwardProps(reactiveOmit(props, 'icon', 'side', 'class'))
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as DashboardSidebarToggle['AppConfig']
+const appConfig = {} as AppConfig
 const { sidebarOpen, toggleSidebar } = useDashboard({ sidebarOpen: ref(false), toggleSidebar: () => {} })
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarToggle || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarToggle || {}) }) as unknown as DashboardSidebarToggle['ui'])
 </script>
 
 <template>

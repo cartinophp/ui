@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/pricing-plan'
+import theme from '../../theme/pricing-plan.js'
 import type { BadgeProps, ButtonProps, IconProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type PricingPlan = ComponentConfig<typeof theme, AppConfig, 'pricingPlan'>
 
@@ -112,7 +111,6 @@ export interface PricingPlanSlots {
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UBadge from './Badge.vue'
 import UButton from './Button.vue'
@@ -125,7 +123,7 @@ const props = withDefaults(defineProps<PricingPlanProps>(), {
 })
 const slots = defineSlots<PricingPlanSlots>()
 
-const appConfig = useAppConfig() as PricingPlan['AppConfig']
+const appConfig = {} as AppConfig
 
 const [DefinePriceTemplate, ReusePriceTemplate] = createReusableTemplate()
 
@@ -134,7 +132,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlan 
   variant: props.variant,
   highlight: props.highlight,
   scale: props.scale
-}))
+}) as unknown as PricingPlan['ui'])
 
 const features = computed(() => props.features?.map(feature => typeof feature === 'string' ? { title: feature } : feature))
 </script>

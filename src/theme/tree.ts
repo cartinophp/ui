@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative isolate',
     item: 'w-full',
@@ -19,7 +18,7 @@ export default (options: Required<ModuleOptions>) => ({
       }
     },
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         link: `focus-visible:before:ring-${color}`
       }])),
       neutral: {
@@ -69,7 +68,7 @@ export default (options: Required<ModuleOptions>) => ({
       }
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     selected: true,
     class: {
@@ -85,11 +84,11 @@ export default (options: Required<ModuleOptions>) => ({
     selected: false,
     disabled: false,
     class: {
-      link: ['hover:text-highlighted hover:before:bg-elevated/50', options.theme.transitions && 'transition-colors before:transition-colors']
+      link: ['hover:text-highlighted hover:before:bg-elevated/50', true && 'transition-colors before:transition-colors']
     }
   }],
   defaultVariants: {
     color: 'primary',
     size: 'md'
   }
-})
+}

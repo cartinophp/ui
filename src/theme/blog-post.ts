@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: 'relative group/blog-post flex flex-col rounded-lg overflow-hidden',
     header: 'relative overflow-hidden aspect-[16/9] w-full pointer-events-none',
@@ -56,7 +55,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     },
     to: {
       true: {
-        root: [options.theme.transitions && 'transition'],
+        root: [ 'transition'],
         image: 'transform transition-transform duration-200 group-hover/blog-post:scale-110',
         avatar: 'transform transition-transform duration-200 hover:scale-115'
       }
@@ -88,7 +87,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     to: true,
     class: {
       root: 'hover:bg-elevated/50',
-      header: ['group-hover/blog-post:shadow-none', options.theme.transitions && 'transition-all']
+      header: ['group-hover/blog-post:shadow-none',  'transition-all']
     }
   }, {
     variant: 'ghost',
@@ -115,4 +114,4 @@ export default (options: Required<NuxtOptions['ui']>) => ({
   defaultVariants: {
     variant: 'outline'
   }
-})
+}

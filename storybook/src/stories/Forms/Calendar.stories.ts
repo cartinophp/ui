@@ -1,0 +1,40 @@
+import type { Meta, StoryObj } from '@storybook/vue3'
+import UiCalendar from '../../../../src/runtime/components/Calendar.vue'
+
+const meta = {
+  title: 'Components/Forms/Calendar',
+  component: UiCalendar,
+  tags: ['autodocs'],
+  argTypes: {
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
+    },
+    variant: {
+      control: 'select',
+      options: ['outline', 'soft']
+    }
+  }
+} satisfies Meta<typeof UiCalendar>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  args: {
+    color: 'primary'
+  }
+}
+
+export const Secondary: Story = {
+  args: {
+    color: 'secondary'
+  }
+}
+
+export const Soft: Story = {
+  args: {
+    variant: 'soft',
+    color: 'primary'
+  }
+}

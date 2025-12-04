@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/blog-post'
+import theme from '../../theme/blog-post.js'
 import type { BadgeProps, LinkProps, UserProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type BlogPost = ComponentConfig<typeof theme, AppConfig, 'blogPost'>
 
@@ -58,7 +57,6 @@ export interface BlogPostSlots {
 import { computed } from 'vue'
 import { Primitive, useDateFormatter } from 'reka-ui'
 import ImageComponent from '#build/ui-image-component'
-import { useLocale, useAppConfig } from '#imports'
 import { getSlotChildrenText } from '../utils'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -76,7 +74,7 @@ const props = withDefaults(defineProps<BlogPostProps>(), {
 const slots = defineSlots<BlogPostSlots>()
 
 const { locale } = useLocale()
-const appConfig = useAppConfig() as BlogPost['AppConfig']
+const appConfig = {} as AppConfig
 const formatter = useDateFormatter(locale.value.code)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPost || {}) })({
@@ -84,7 +82,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPost || 
   variant: props.variant,
   image: !!props.image,
   to: !!props.to || !!props.onClick
-}))
+}) as unknown as BlogPost['ui'])
 
 const date = computed(() => {
   if (!props.date) {

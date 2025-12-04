@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { CheckboxGroupRootProps, CheckboxGroupRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/checkbox-group'
+import theme from '../../theme/checkbox-group.js'
 import type { CheckboxProps } from '../types'
 import type { AcceptableValue, GetItemKeys, GetModelValue } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type CheckboxGroup = ComponentConfig<typeof theme, AppConfig, 'checkboxGroup'>
 
@@ -81,7 +80,6 @@ export interface CheckboxGroupSlots<T extends CheckboxGroupItem[] = CheckboxGrou
 import { computed, useId } from 'vue'
 import { CheckboxGroupRoot, useForwardProps, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { get, omit } from '../utils'
 import { tv } from '../utils/tv'
@@ -96,7 +94,7 @@ const props = withDefaults(defineProps<CheckboxGroupProps<T, VK>>(), {
 const emits = defineEmits<CheckboxGroupEmits<T>>()
 const slots = defineSlots<CheckboxGroupSlots<T>>()
 
-const appConfig = useAppConfig() as CheckboxGroup['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emits)
 const checkboxProps = useForwardProps(reactivePick(props, 'variant', 'indicator', 'icon'))
@@ -112,7 +110,7 @@ const ui = computed(() => tv({ extend: theme, ...(appConfig.ui?.checkboxGroup ||
   color: props.color,
   variant: props.variant,
   disabled: disabled.value
-}))
+}) as unknown as CheckboxGroup['ui'])
 
 function normalizeItem(item: any) {
   if (item === null) {

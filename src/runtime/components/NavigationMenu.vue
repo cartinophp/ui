@@ -1,11 +1,10 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
 import type { NavigationMenuRootProps, NavigationMenuContentProps, NavigationMenuContentEmits, AccordionRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/navigation-menu'
+import theme from '../../theme/navigation-menu.js'
 import type { AvatarProps, BadgeProps, IconProps, LinkProps, PopoverProps, TooltipProps } from '../types'
 import type { ArrayOrNested, DynamicSlots, GetItemKeys, MergeTypes, NestedItem, EmitsToProps } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type NavigationMenu = ComponentConfig<typeof theme, AppConfig, 'navigationMenu'>
 
@@ -216,7 +215,6 @@ import { computed, toRef } from 'vue'
 import { NavigationMenuRoot, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuIndicator, NavigationMenuViewport, AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent, useForwardPropsEmits } from 'reka-ui'
 import { defu } from 'defu'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { get, isArrayOfArray } from '../utils'
 import { tv } from '../utils/tv'
 import { pickLinkProps } from '../utils/link'
@@ -243,7 +241,7 @@ const props = withDefaults(defineProps<NavigationMenuProps<T, K, O>>(), {
 const emits = defineEmits<NavigationMenuEmits<K, O>>()
 const slots = defineSlots<NavigationMenuSlots<T>>()
 
-const appConfig = useAppConfig() as NavigationMenu['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(computed(() => ({
   as: props.as,
@@ -277,7 +275,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.navigationMe
   variant: props.variant,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}))
+}) as unknown as NavigationMenu['ui'])
 
 const lists = computed<NavigationMenuItem[][]>(() =>
   props.items?.length

@@ -1,10 +1,9 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/timeline'
+import theme from '../../theme/timeline.js'
 import type { AvatarProps, IconProps } from '../types'
 import type { DynamicSlots } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Timeline = ComponentConfig<typeof theme, AppConfig, 'timeline'>
 
@@ -61,7 +60,6 @@ export type TimelineSlots<T extends TimelineItem = TimelineItem> = {
 <script setup lang="ts" generic="T extends TimelineItem">
 import { computed } from 'vue'
 import { Primitive, Separator } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { tv } from '../utils/tv'
 import UAvatar from './Avatar.vue'
 
@@ -72,14 +70,14 @@ const slots = defineSlots<TimelineSlots<T>>()
 
 const modelValue = defineModel<string | number>()
 
-const appConfig = useAppConfig() as Timeline['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.timeline || {}) })({
   orientation: props.orientation,
   size: props.size,
   color: props.color,
   reverse: props.reverse
-}))
+}) as unknown as Timeline['ui'])
 
 const currentStepIndex = computed(() => {
   const value = modelValue.value ?? props.defaultValue

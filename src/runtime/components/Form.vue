@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/form'
+import theme from '../../theme/form.js'
 import type { FormSchema, FormError, FormInputEvents, FormErrorEvent, FormSubmitEvent, FormEvent, Form, FormErrorWithId, InferInput, InferOutput, FormData } from '../types/form'
 import type { FormHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type FormConfig = ComponentConfig<typeof theme, AppConfig, 'form'>
 
@@ -76,7 +75,6 @@ export interface FormSlots {
 <script lang="ts" setup generic="S extends FormSchema, T extends boolean = true, N extends boolean = false">
 import { provide, inject, nextTick, ref, onUnmounted, onMounted, computed, useId, readonly, reactive } from 'vue'
 import { useEventBus } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { formOptionsInjectionKey, formInputsInjectionKey, formBusInjectionKey, formLoadingInjectionKey, formErrorsInjectionKey, formStateInjectionKey } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import { validateSchema, getAtPath, setAtPath } from '../utils/form'
@@ -97,9 +95,9 @@ const props = withDefaults(defineProps<FormProps<S, T, N>>(), {
 const emits = defineEmits<FormEmits<S, T>>()
 defineSlots<FormSlots>()
 
-const appConfig = useAppConfig() as FormConfig['AppConfig']
+const appConfig = {} as AppConfig
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.form || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.form || {}) }) as unknown as FormConfig['ui'])
 
 const formId = props.id ?? useId() as string
 

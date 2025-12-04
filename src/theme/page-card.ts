@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: 'relative flex rounded-lg',
     spotlight: 'absolute inset-0 rounded-[inherit] pointer-events-none bg-default/90',
@@ -56,7 +55,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     },
     to: {
       true: {
-        root: [options.theme.transitions && 'transition']
+        root: [ 'transition']
       }
     },
     title: {
@@ -70,7 +69,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
       }
     },
     highlightColor: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries(['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => [color, ''])),
       neutral: ''
     },
     spotlight: {
@@ -79,7 +78,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
       }
     },
     spotlightColor: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries(['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => [color, ''])),
       neutral: ''
     }
   },
@@ -120,7 +119,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     class: {
       root: 'hover:bg-elevated/50'
     }
-  }, ...(options.theme.colors || []).map((highlightColor: string) => ({
+  }, ...['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((highlightColor: string) => ({
     highlightColor,
     highlight: true,
     class: {
@@ -132,7 +131,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     class: {
       root: 'ring-inverted'
     }
-  }, ...(options.theme.colors || []).map((spotlightColor: string) => ({
+  }, ...['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((spotlightColor: string) => ({
     spotlightColor,
     spotlight: true,
     class: {
@@ -155,4 +154,4 @@ export default (options: Required<NuxtOptions['ui']>) => ({
     highlightColor: 'primary',
     spotlightColor: 'primary'
   }
-})
+}

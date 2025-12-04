@@ -1,11 +1,10 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { TagsInputRootProps, TagsInputRootEmits, AcceptableInputValue } from 'reka-ui'
-import theme from '#build/ui/input-tags'
+import theme from '../../theme/input-tags.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { AvatarProps, IconProps } from '../types'
 import type { InputHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type InputTags = ComponentConfig<typeof theme, AppConfig, 'inputTags'>
 
@@ -68,7 +67,6 @@ export interface InputTagsSlots<T extends InputTagItem = InputTagItem> {
 import { computed, useTemplateRef, onMounted, toRaw, toRef } from 'vue'
 import { TagsInputRoot, TagsInputItem, TagsInputItemText, TagsInputItemDelete, TagsInputInput, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFormField } from '../composables/useFormField'
@@ -85,7 +83,7 @@ const props = withDefaults(defineProps<InputTagsProps<T>>(), {
 const emits = defineEmits<InputTagsEmits<T>>()
 const slots = defineSlots<InputTagsSlots<T>>()
 
-const appConfig = useAppConfig() as InputTags['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'addOnPaste', 'addOnTab', 'addOnBlur', 'duplicate', 'delimiter', 'max', 'convertValue', 'displayValue', 'required'), emits)
 
@@ -104,7 +102,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.inputTags ||
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
   fieldGroup: orientation.value
-}))
+}) as unknown as InputTags['ui'])
 
 const inputRef = useTemplateRef('inputRef')
 

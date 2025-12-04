@@ -1,4 +1,16 @@
 import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3'
+import * as components from '../../src/index'
+
+// Register all components globally with ui- prefix
+setup((app) => {
+  // Register all components from the library
+  Object.entries(components).forEach(([name, component]) => {
+    if (name.startsWith('Ui') && typeof component === 'object') {
+      app.component(name, component)
+    }
+  })
+})
 
 const preview: Preview = {
   parameters: {

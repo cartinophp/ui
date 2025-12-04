@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { RouterLinkProps, RouteLocationRaw } from 'vue-router'
-import theme from '#build/ui/link'
+import theme from '../../theme/link.js'
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Link = ComponentConfig<typeof theme, AppConfig, 'link'>
 
@@ -103,7 +102,6 @@ import { isEqual } from 'ohash/utils'
 import { useForwardProps } from 'reka-ui'
 import { defu } from 'defu'
 import { reactiveOmit } from '@vueuse/core'
-import { useRoute, useAppConfig } from '#imports'
 import { mergeClasses } from '../utils'
 import { tv } from '../utils/tv'
 import { isPartiallyEqual } from '../utils/link'
@@ -120,7 +118,7 @@ const props = withDefaults(defineProps<LinkProps>(), {
 defineSlots<LinkSlots>()
 
 const route = useRoute()
-const appConfig = useAppConfig() as Link['AppConfig']
+const appConfig = {} as AppConfig
 
 const nuxtLinkProps = useForwardProps(reactiveOmit(props, 'as', 'type', 'disabled', 'active', 'exact', 'exactQuery', 'exactHash', 'activeClass', 'inactiveClass', 'to', 'href', 'raw', 'custom', 'class'))
 
@@ -134,7 +132,7 @@ const ui = computed(() => tv({
       }
     }
   }, appConfig.ui?.link || {})
-}))
+}) as unknown as Link['ui'])
 
 const to = computed(() => props.to ?? props.href)
 

@@ -1,9 +1,8 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative inline-flex items-center gap-1.5',
-    base: ['rounded-md border-0 placeholder:text-dimmed text-center focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', options.theme.transitions && 'transition-colors']
+    base: ['rounded-md border-0 placeholder:text-dimmed text-center focus:outline-none disabled:cursor-not-allowed disabled:opacity-75', true && 'transition-colors']
   },
   variants: {
     size: {
@@ -31,18 +30,18 @@ export default (options: Required<ModuleOptions>) => ({
       none: 'text-highlighted bg-transparent'
     },
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, ''])),
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, ''])),
       neutral: ''
     },
     highlight: {
       true: ''
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     variant: ['outline', 'subtle'],
     class: `focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-${color}`
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     highlight: true,
     class: `ring ring-inset ring-${color}`
@@ -60,4 +59,4 @@ export default (options: Required<ModuleOptions>) => ({
     color: 'primary',
     variant: 'outline'
   }
-})
+}

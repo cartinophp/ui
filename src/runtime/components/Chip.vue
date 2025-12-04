@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/chip'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/chip.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Chip = ComponentConfig<typeof theme, AppConfig, 'chip'>
 
@@ -47,7 +46,6 @@ export interface ChipSlots {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
 import { tv } from '../utils/tv'
 
@@ -62,7 +60,7 @@ defineSlots<ChipSlots>()
 const show = defineModel<boolean>('show', { default: true })
 
 const { size } = useAvatarGroup(props)
-const appConfig = useAppConfig() as Chip['AppConfig']
+const appConfig = {} as AppConfig
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chip || {}) })({
   color: props.color,
@@ -70,7 +68,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chip || {}) 
   position: props.position,
   inset: props.inset,
   standalone: props.standalone
-}))
+}) as unknown as Chip['ui'])
 </script>
 
 <template>

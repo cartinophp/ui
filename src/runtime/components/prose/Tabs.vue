@@ -46,7 +46,7 @@ const model = defineModel<string>()
 const appConfig = useAppConfig() as ProseTabs['AppConfig']
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tabs || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tabs || {}) }) as unknown as ProseTabs['ui'])
 
 const rerenderCount = ref(1)
 

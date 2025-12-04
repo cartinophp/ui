@@ -1,10 +1,9 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     overlay: 'fixed inset-0 bg-elevated/75',
     content: 'fixed bg-default ring ring-default flex focus:outline-none',
-    handle: ['shrink-0 !bg-accented', options.theme.transitions && 'transition-opacity'],
+    handle: ['shrink-0 !bg-accented', true && 'transition-opacity'],
     container: 'w-full flex flex-col gap-4 p-4 overflow-y-auto',
     header: '',
     title: 'text-highlighted font-semibold',
@@ -114,4 +113,4 @@ export default (options: Required<ModuleOptions>) => ({
       content: 'inset-y-0 right-0 rounded-l-lg'
     }
   }]
-})
+}

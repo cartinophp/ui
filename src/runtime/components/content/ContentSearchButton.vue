@@ -86,7 +86,7 @@ const appConfig = useAppConfig() as ContentSearchButton['AppConfig']
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSearchButton || {}) })({
   collapsed: props.collapsed
-}))
+}) as unknown as ContentSearchButton['ui'])
 </script>
 
 <template>

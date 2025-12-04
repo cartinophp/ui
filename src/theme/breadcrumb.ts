@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'relative min-w-0',
     list: 'flex items-center gap-1.5',
@@ -36,7 +35,7 @@ export default (options: Required<ModuleOptions>) => ({
     active: false,
     to: true,
     class: {
-      link: ['hover:text-default', options.theme.transitions && 'transition-colors']
+      link: ['hover:text-default', true && 'transition-colors']
     }
   }]
-})
+}

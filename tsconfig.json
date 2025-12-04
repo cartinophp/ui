@@ -28,6 +28,39 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "src/module.ts",
+    "src/plugins/**/*",
+    "src/templates.ts",
+    "src/unplugin.ts",
+    "src/vite.ts",
+    "src/runtime/vue/**/*",
+    "src/runtime/inertia/**/*",
+    "src/runtime/composables/useContentSearch.ts",
+    "src/runtime/composables/useOverlay.ts",
+    "src/runtime/plugins/**/*",
+    "src/runtime/utils/ai.ts",
+    "src/runtime/utils/content.ts",
+    "src/runtime/utils/form.ts",
+    "src/runtime/utils/fuse.ts",
+    "src/utils/components.ts",
+    "src/utils/defaults.ts",
+    "src/utils/variants.ts",
+    "src/types/variants.ts",
+    "src/runtime/types/form.ts",
+    "src/theme/content/**/*",
+    "src/theme/prose/**/*",
+    "src/**/*.stories.ts",
+    "src/stories/**/*",
+    ".storybook/**/*",
+    "node_modules",
+    "dist"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

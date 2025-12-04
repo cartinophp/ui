@@ -1,9 +1,8 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-navbar'
+import theme from '../../theme/dashboard-navbar.js'
 import type { DashboardContext } from '../utils/dashboard'
 import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardNavbar = ComponentConfig<typeof theme, AppConfig, 'dashboardNavbar'>
 
@@ -51,7 +50,6 @@ export interface DashboardNavbarSlots {
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useDashboard } from '../utils/dashboard'
 import { tv } from '../utils/tv'
 import UDashboardSidebarToggle from './DashboardSidebarToggle.vue'
@@ -65,13 +63,13 @@ const props = withDefaults(defineProps<DashboardNavbarProps>(), {
 })
 const slots = defineSlots<DashboardNavbarSlots>()
 
-const appConfig = useAppConfig() as DashboardNavbar['AppConfig']
+const appConfig = {} as AppConfig
 const dashboardContext = useDashboard({})
 
 const [DefineToggleTemplate, ReuseToggleTemplate] = createReusableTemplate()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardNavbar || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardNavbar || {}) })() as unknown as DashboardNavbar['ui'])
 </script>
 
 <template>

@@ -40,7 +40,7 @@ const appConfig = useAppConfig() as ProseCallout['AppConfig']
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.callout || {}) })({
   color: props.color,
   to: !!props.to
-}))
+}) as unknown as ProseCallout['ui'])
 
 const target = computed(() => props.target || (!!props.to && typeof props.to === 'string' && props.to.startsWith('http') ? '_blank' : undefined))
 </script>

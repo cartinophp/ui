@@ -1,6 +1,5 @@
-import type { ModuleOptions } from '../module'
 
-export default (options: Required<ModuleOptions>) => ({
+export default {
   slots: {
     root: 'flex gap-1.5',
     item: 'group relative flex flex-1 gap-3',
@@ -28,7 +27,7 @@ export default (options: Required<ModuleOptions>) => ({
     },
 
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries((['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => [color, {
         indicator: `group-data-[state=completed]:bg-${color} group-data-[state=active]:bg-${color}`
 
       }])),
@@ -54,13 +53,13 @@ export default (options: Required<ModuleOptions>) => ({
     }
   },
 
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     reverse: false,
     class: {
       separator: `group-data-[state=completed]:bg-${color}`
     }
-  })), ...(options.theme.colors || []).map((color: string) => ({
+  })), ...(['primary', 'secondary', 'success', 'info', 'warning', 'error']).map((color: string) => ({
     color,
     reverse: true,
     class: {
@@ -192,4 +191,4 @@ export default (options: Required<ModuleOptions>) => ({
     size: 'md',
     color: 'primary'
   }
-})
+}

@@ -2,11 +2,10 @@
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
 import type { TreeRootProps, TreeRootEmits, TreeItemSelectEvent, TreeItemToggleEvent } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/tree'
+import theme from '../../theme/tree.js'
 import type { IconProps } from '../types'
 import type { DynamicSlots, GetItemKeys } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Tree = ComponentConfig<typeof theme, AppConfig, 'tree'>
 
@@ -146,7 +145,6 @@ import { computed, toRef, useTemplateRef } from 'vue'
 import { TreeRoot, TreeItem, TreeVirtualizer, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
 import { defu } from 'defu'
-import { useAppConfig } from '#imports'
 import { get } from '../utils'
 import { getEstimateSize } from '../utils/virtualizer'
 import { tv } from '../utils/tv'
@@ -162,7 +160,7 @@ const props = withDefaults(defineProps<TreeProps<T, M>>(), {
 const emits = defineEmits<TreeEmits<T, M>>()
 const slots = defineSlots<TreeSlots<T>>()
 
-const appConfig = useAppConfig() as Tree['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'items', 'multiple', 'expanded', 'disabled', 'propagateSelect', 'bubbleSelect'), emits)
 
@@ -218,7 +216,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.tree || {}) 
   color: props.color,
   size: props.size,
   virtualize: !!props.virtualize
-}))
+}) as unknown as Tree['ui'])
 
 const rootRef = useTemplateRef<ComponentPublicInstance>('rootRef')
 

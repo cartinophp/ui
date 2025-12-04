@@ -1,7 +1,6 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/field-group'
-import type { ComponentConfig } from '../types/tv'
+import theme from '../../theme/field-group.js'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type FieldGroup = ComponentConfig<typeof theme, AppConfig, 'fieldGroup'>
 
@@ -32,7 +31,6 @@ export interface FieldGroupSlots {
 <script setup lang="ts">
 import { provide, computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { fieldGroupInjectionKey } from '../composables/useFieldGroup'
 import { tv } from '../utils/tv'
 
@@ -41,10 +39,10 @@ const props = withDefaults(defineProps<FieldGroupProps>(), {
 })
 defineSlots<FieldGroupSlots>()
 
-const appConfig = useAppConfig() as FieldGroup['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fieldGroup || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fieldGroup || {}) }) as unknown as FieldGroup['ui'])
 
 provide(fieldGroupInjectionKey, computed(() => ({
   orientation: props.orientation,

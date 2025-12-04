@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/footer-columns'
+import theme from '../../theme/footer-columns.js'
 import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type FooterColumns = ComponentConfig<typeof theme, AppConfig, 'footerColumns'>
 
@@ -49,7 +48,6 @@ export interface FooterColumnsSlots<T extends FooterColumnLink = FooterColumnLin
 <script setup lang="ts" generic="T extends FooterColumnLink">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { pickLinkProps } from '../utils/link'
 import { tv } from '../utils/tv'
 import ULink from './Link.vue'
@@ -61,10 +59,10 @@ const props = withDefaults(defineProps<FooterColumnsProps<T>>(), {
 })
 const slots = defineSlots<FooterColumnsSlots<T>>()
 
-const appConfig = useAppConfig() as FooterColumns['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footerColumns || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footerColumns || {}) })() as unknown as FooterColumns['ui'])
 </script>
 
 <template>

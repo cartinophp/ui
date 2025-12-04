@@ -24,7 +24,7 @@ defineSlots<ProseEmSlots>()
 
 const appConfig = useAppConfig() as ProseEm['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.em || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.em || {}) }) as unknown as ProseEm['ui'])
 </script>
 
 <template>

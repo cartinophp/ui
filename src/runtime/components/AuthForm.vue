@@ -1,12 +1,11 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/auth-form'
+import theme from '../../theme/auth-form.js'
 import type { ButtonProps, FormProps, FormFieldProps, SeparatorProps, InputProps, CheckboxProps, SelectMenuProps, PinInputProps, IconProps, LinkPropsKeys } from '../types'
 import type { FormSchema, FormSubmitEvent, InferInput } from '../types/form'
 import type { FormHTMLAttributes } from '../types/html'
 import type { NonUnion } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type AuthForm = ComponentConfig<typeof theme, AppConfig, 'authForm'>
 
@@ -105,7 +104,6 @@ export type AuthFormSlots<T extends object = object, F extends AuthFormField = A
 <script setup lang="ts" generic="T extends FormSchema, F extends AuthFormField">
 import { reactive, ref, computed, useTemplateRef } from 'vue'
 import { Primitive } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { omit, pick } from '../utils'
 import { tv } from '../utils/tv'
@@ -143,10 +141,10 @@ defineEmits<AuthFormEmits<typeof state>>()
 const slots = defineSlots<AuthFormSlots<typeof state, F>>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as AuthForm['AppConfig']
+const appConfig = {} as AppConfig
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.authForm || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.authForm || {}) })() as unknown as AuthForm['ui'])
 
 const formRef = useTemplateRef('formRef')
 const passwordVisibility = ref(false)

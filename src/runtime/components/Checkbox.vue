@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { CheckboxRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/checkbox'
+import theme from '../../theme/checkbox.js'
 import type { IconProps } from '../types'
 import type { ButtonHTMLAttributes } from '../types/html'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Checkbox = ComponentConfig<typeof theme, AppConfig, 'checkbox'>
 
@@ -63,7 +62,6 @@ export interface CheckboxSlots {
 import { computed, useId } from 'vue'
 import { Primitive, CheckboxRoot, CheckboxIndicator, Label, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -76,7 +74,7 @@ const emits = defineEmits<CheckboxEmits>()
 
 const modelValue = defineModel<boolean | 'indeterminate'>({ default: undefined })
 
-const appConfig = useAppConfig() as Checkbox['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
@@ -90,7 +88,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.checkbox || 
   indicator: props.indicator,
   required: props.required,
   disabled: disabled.value
-}))
+}) as unknown as Checkbox['ui'])
 
 function onUpdate(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

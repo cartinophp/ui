@@ -24,7 +24,7 @@ defineSlots<ProseThSlots>()
 
 const appConfig = useAppConfig() as ProseTh['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.th || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.th || {}) }) as unknown as ProseTh['ui'])
 </script>
 
 <template>

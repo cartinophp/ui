@@ -1,9 +1,8 @@
 <script lang="ts">
 import type { SliderRootProps } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/slider'
+import theme from '../../theme/slider.js'
 import type { TooltipProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Slider = ComponentConfig<typeof theme, AppConfig, 'slider'>
 
@@ -47,7 +46,6 @@ export interface SliderEmits {
 import { computed } from 'vue'
 import { SliderRoot, SliderRange, SliderTrack, SliderThumb, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useFormField } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import UTooltip from './Tooltip.vue'
@@ -62,7 +60,7 @@ const emits = defineEmits<SliderEmits>()
 
 const modelValue = defineModel<T>()
 
-const appConfig = useAppConfig() as Slider['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'orientation', 'min', 'max', 'step', 'minStepsBetweenThumbs', 'inverted'), emits)
 
@@ -94,7 +92,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.slider || {}
   size: size.value,
   color: color.value,
   orientation: props.orientation
-}))
+}) as unknown as Slider['ui'])
 
 function onChange(value: any) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'

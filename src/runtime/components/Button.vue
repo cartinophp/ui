@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { Ref } from 'vue'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/button'
+import theme from '../../theme/button.js'
 import type { UseComponentIconsProps } from '../composables/useComponentIcons'
 import type { LinkProps, AvatarProps } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Button = ComponentConfig<typeof theme, AppConfig, 'button'>
 
@@ -46,7 +45,6 @@ export interface ButtonSlots {
 import { computed, ref, inject } from 'vue'
 import { defu } from 'defu'
 import { useForwardProps } from 'reka-ui'
-import { useAppConfig } from '#imports'
 import { useComponentIcons } from '../composables/useComponentIcons'
 import { useFieldGroup } from '../composables/useFieldGroup'
 import { formLoadingInjectionKey } from '../composables/useFormField'
@@ -61,7 +59,7 @@ import ULinkBase from './LinkBase.vue'
 const props = defineProps<ButtonProps>()
 const slots = defineSlots<ButtonSlots>()
 
-const appConfig = useAppConfig() as Button['AppConfig']
+const appConfig = {} as AppConfig
 const { orientation, size: buttonSize } = useFieldGroup<ButtonProps>(props)
 
 const linkProps = useForwardProps(pickLinkProps(props))
@@ -111,7 +109,7 @@ const ui = computed(() => tv({
   leading: isLeading.value,
   trailing: isTrailing.value,
   fieldGroup: orientation.value
-}))
+}) as unknown as Button['ui'])
 </script>
 
 <template>

@@ -1,8 +1,7 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
-    root: ['relative z-50 w-full', options.theme.transitions && 'transition-colors'],
+    root: ['relative z-50 w-full',  'transition-colors'],
     container: 'flex items-center justify-between gap-3 h-12',
     left: 'hidden lg:flex-1 lg:flex lg:items-center',
     center: 'flex items-center gap-1.5 min-w-0',
@@ -14,7 +13,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
   },
   variants: {
     color: {
-      ...Object.fromEntries((options.theme.colors || []).map((color: string) => [color, {
+      ...Object.fromEntries(['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => [color, {
         root: `bg-${color}`
       }])),
       neutral: {
@@ -25,7 +24,7 @@ export default (options: Required<NuxtOptions['ui']>) => ({
       true: ''
     }
   },
-  compoundVariants: [...(options.theme.colors || []).map((color: string) => ({
+  compoundVariants: [...['primary', 'secondary', 'success', 'info', 'warning', 'error'].map((color: string) => ({
     color,
     to: true,
     class: {
@@ -41,4 +40,4 @@ export default (options: Required<NuxtOptions['ui']>) => ({
   defaultVariants: {
     color: 'primary'
   }
-})
+}

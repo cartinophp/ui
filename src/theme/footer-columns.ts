@@ -1,6 +1,5 @@
-import type { NuxtOptions } from '@nuxt/schema'
 
-export default (options: Required<NuxtOptions['ui']>) => ({
+export default {
   slots: {
     root: 'xl:grid xl:grid-cols-3 xl:gap-8',
     left: 'mb-10 xl:mb-0',
@@ -20,8 +19,8 @@ export default (options: Required<NuxtOptions['ui']>) => ({
         link: 'text-primary font-medium'
       },
       false: {
-        link: ['text-muted hover:text-default', options.theme.transitions && 'transition-colors']
+        link: ['text-muted hover:text-default',  'transition-colors']
       }
     }
   }
-})
+}

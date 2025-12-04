@@ -1,10 +1,9 @@
 <!-- eslint-disable vue/block-tag-newline -->
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
 import type { SpringOptions } from 'motion-v'
-import theme from '#build/ui/changelog-versions'
+import theme from '../../theme/changelog-versions.js'
 import type { ChangelogVersionProps, ChangelogVersionSlots } from '../types'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChangelogVersions = ComponentConfig<typeof theme, AppConfig, 'changelogVersions'>
 
@@ -50,7 +49,6 @@ import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { Motion, useScroll, useSpring, useTransform } from 'motion-v'
 import { defu } from 'defu'
-import { useAppConfig } from '#imports'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UChangelogVersion from './ChangelogVersion.vue'
@@ -63,7 +61,7 @@ const slots = defineSlots<ChangelogVersionsSlots<T>>()
 
 const getProxySlots = () => omit(slots, ['default', 'indicator'])
 
-const appConfig = useAppConfig() as ChangelogVersions['AppConfig']
+const appConfig = {} as AppConfig
 
 const springOptions = computed(() => defu(typeof props.indicatorMotion === 'object' ? props.indicatorMotion : {}, { damping: 30, restDelta: 0.001 }))
 
@@ -72,7 +70,7 @@ const y = useSpring(scrollYProgress, springOptions)
 const height = useTransform(() => `${y.get() * 100}%`)
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVersions || {}) })())
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVersions || {}) })() as unknown as ChangelogVersions['ui'])
 </script>
 
 <template>

@@ -1,10 +1,9 @@
 <script lang="ts">
 import type { ToastRootProps, ToastRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/toast'
+import theme from '../../theme/toast.js'
 import type { AvatarProps, ButtonProps, IconProps, ProgressProps, LinkPropsKeys } from '../types'
 import type { StringOrVNode } from '../types/utils'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Toast = ComponentConfig<typeof theme, AppConfig, 'toast'>
 
@@ -74,7 +73,6 @@ export interface ToastSlots {
 import { ref, computed, onMounted, nextTick, useTemplateRef } from 'vue'
 import { ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
-import { useAppConfig } from '#imports'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
@@ -91,7 +89,7 @@ const emits = defineEmits<ToastEmits>()
 const slots = defineSlots<ToastSlots>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as Toast['AppConfig']
+const appConfig = {} as AppConfig
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'duration', 'type'), emits)
 
@@ -99,7 +97,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.toast || {})
   color: props.color,
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}))
+}) as unknown as Toast['ui'])
 
 const rootRef = useTemplateRef('rootRef')
 const height = ref(0)

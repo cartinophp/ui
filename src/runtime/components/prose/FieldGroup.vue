@@ -30,7 +30,7 @@ defineSlots<ProseFieldGroupSlots>()
 
 const appConfig = useAppConfig() as ProseFieldGroup['AppConfig']
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.fieldGroup || {}) }))
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.fieldGroup || {}) }) as unknown as ProseFieldGroup['ui'])
 </script>
 
 <template>

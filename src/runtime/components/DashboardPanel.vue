@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/dashboard-panel'
+import theme from '../../theme/dashboard-panel.js'
 import type { UseResizableProps } from '../composables/useResizable'
-import type { ComponentConfig } from '../types/tv'
+import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardPanel = ComponentConfig<typeof theme, AppConfig, 'dashboardPanel'>
 
@@ -22,7 +21,6 @@ export interface DashboardPanelSlots {
 
 <script setup lang="ts">
 import { computed, useId, toRef } from 'vue'
-import { useAppConfig } from '#imports'
 import { useResizable } from '../composables/useResizable'
 import { useDashboard } from '../utils/dashboard'
 import { tv } from '../utils/tv'
@@ -36,7 +34,7 @@ const props = withDefaults(defineProps<DashboardPanelProps>(), {
 })
 defineSlots<DashboardPanelSlots>()
 
-const appConfig = useAppConfig() as DashboardPanel['AppConfig']
+const appConfig = {} as AppConfig
 const dashboardContext = useDashboard({ storageKey: 'dashboard', unit: '%' })
 
 const id = `${dashboardContext.storageKey}-panel-${props.id || useId()}`
@@ -46,7 +44,7 @@ const { el, size, isDragging, onMouseDown, onTouchStart, onDoubleClick } = useRe
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardPanel || {}) })({
   size: !!size.value
-}))
+}) as unknown as DashboardPanel['ui'])
 </script>
 
 <template>
