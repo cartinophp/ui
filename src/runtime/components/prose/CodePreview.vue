@@ -7,10 +7,10 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseCodePreviewProps>()
 const slots = defineSlots<ProseCodePreviewSlots>()
 
-const appConfig = useAppConfig() as ProseCodePreview['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codePreview || {}) })({ code: !!slots.code }) as unknown as ProseCodePreview['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codePreview || {}) })({ code: !!slots.code }))
 </script>
 
 <template>

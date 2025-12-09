@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseEmProps>()
 defineSlots<ProseEmSlots>()
 
-const appConfig = useAppConfig() as ProseEm['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.em || {}) }) as unknown as ProseEm['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.em || {}) }))
 </script>
 
 <template>

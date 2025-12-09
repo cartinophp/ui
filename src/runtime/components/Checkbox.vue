@@ -42,7 +42,7 @@ function onUpdate(value) {
 
 <!-- eslint-disable vue/no-template-shadow -->
 <template>
-  <Primitive :as="(!variant || variant === 'list') ? as " data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <Primitive :as="(!variant || variant === 'list') ? as : 'label'" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
       <CheckboxRoot
         :id="id"

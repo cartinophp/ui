@@ -89,7 +89,7 @@ nuxtApp.hooks.hook('page:transition:finish', () => {
           </slot>
         </a>
 
-        <ReuseListTemplate v-if="link.children?.length" :links="(link.children as T[])" :level="level + 1" />
+        <ReuseListTemplate v-if="link.children?.length" :links="(link.children[])" :level="level + 1" />
       </li>
     </ul>
   </DefineListTemplate>

@@ -26,7 +26,7 @@ provide(portalTargetInjectionKey, portal)
 </script>
 
 <template>
-  <ConfigProvider :use-id="() => (useId() as string)" :dir="props.dir || locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
+  <ConfigProvider :use-id="() => (useId())" :dir="props.dir || locale?.dir" :locale="locale?.code" v-bind="configProviderProps">
     <TooltipProvider v-bind="tooltipProps">
       <UToaster v-if="toaster !== null" v-bind="toasterProps">
         <slot />

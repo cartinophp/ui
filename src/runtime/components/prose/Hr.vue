@@ -6,9 +6,9 @@ import { tv } from '../../utils/tv'
 
 const props = defineProps<ProseHrProps>()
 
-const appConfig = useAppConfig() as ProseHr['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.hr || {}) }) as unknown as ProseHr['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.hr || {}) }))
 </script>
 
 <template>

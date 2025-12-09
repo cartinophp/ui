@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseTrProps>()
 defineSlots<ProseTrSlots>()
 
-const appConfig = useAppConfig() as ProseTr['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tr || {}) }) as unknown as ProseTr['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tr || {}) }))
 </script>
 
 <template>

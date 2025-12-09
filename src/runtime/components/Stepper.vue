@@ -47,13 +47,13 @@ defineExpose({
   next() {
     if (hasNext.value) {
       currentStepIndex.value += 1
-      emits('next', currentStep.value as T)
+      emits('next', currentStep.value)
     }
   },
   prev() {
     if (hasPrev.value) {
       currentStepIndex.value -= 1
-      emits('prev', currentStep.value as T)
+      emits('prev', currentStep.value)
     }
   },
   hasNext,

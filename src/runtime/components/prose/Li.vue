@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseLiProps>()
 defineSlots<ProseLiSlots>()
 
-const appConfig = useAppConfig() as ProseLi['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.li || {}) }) as unknown as ProseLi['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.li || {}) }))
 </script>
 
 <template>

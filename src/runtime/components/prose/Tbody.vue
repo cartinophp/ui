@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseTbodyProps>()
 defineSlots<ProseTbodySlots>()
 
-const appConfig = useAppConfig() as ProseTbody['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tbody || {}) }) as unknown as ProseTbody['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.tbody || {}) }))
 </script>
 
 <template>

@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseBlockquoteProps>()
 defineSlots<ProseBlockquoteSlots>()
 
-const appConfig = useAppConfig() as ProseBlockquote['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.blockquote || {}) }) as unknown as ProseBlockquote['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.blockquote || {}) }))
 </script>
 
 <template>

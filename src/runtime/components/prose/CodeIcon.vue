@@ -7,7 +7,7 @@ import UIcon from '../Icon.vue'
 
 const props = defineProps<ProseCodeIconProps>()
 
-const appConfig = useAppConfig() as ProseCodeIcon['AppConfig']
+const appConfig = useAppConfig()
 
 const icons = computed<any>(() => defu(appConfig.ui?.prose?.codeIcon || {}, theme))
 

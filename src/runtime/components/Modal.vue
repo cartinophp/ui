@@ -35,7 +35,7 @@ const contentEvents = computed(() => {
         emits('close:prevent')
       }
       return acc
-    }, {} as Record<typeof events[number], (e) => void>)
+    }, {} void>)
   }
 
   if (props.scrollable) {
@@ -43,7 +43,7 @@ const contentEvents = computed(() => {
       // FIXME://reka-ui.com/docs/components/dialog#scrollable-overlay but it's not working on Mac OS.
       pointerDownOutside: (e) => {
         const originalEvent = e.detail.originalEvent
-        const target = originalEvent.target as HTMLElement
+        const target = originalEvent.target
         if (originalEvent.offsetX > target.clientWidth || originalEvent.offsetY > target.clientHeight) {
           e.preventDefault()
         }
@@ -61,7 +61,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.modal || {})
   fullscreen: props.fullscreen,
   overlay: props.overlay,
   scrollable: props.scrollable
-} as any))
+}))
 </script>
 
 <!-- eslint-disable vue/no-template-shadow -->

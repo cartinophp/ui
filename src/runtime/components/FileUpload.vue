@@ -14,7 +14,7 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps(), {
   accept: '*',
-  multiple: false as never,
+  multiple: false,
   reset: false,
   dropzone: true,
   interactive: true,
@@ -136,7 +136,7 @@ watch(modelValue, (newValue) => {
 })
 
 defineExpose({
-  inputRef: toRef(() => inputRef.value?.$el as HTMLInputElement),
+  inputRef: toRef(() => inputRef.value?.$el),
   dropzoneRef
 })
 </script>

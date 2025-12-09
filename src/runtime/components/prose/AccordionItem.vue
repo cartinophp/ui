@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseAccordionItemProps>()
 defineSlots<ProseAccordionItemSlots>()
 
-const appConfig = useAppConfig() as ProseAccordionItem['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.accordionItem || {}) }) as unknown as ProseAccordionItem['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.accordionItem || {}) }))
 </script>
 
 <template>

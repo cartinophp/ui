@@ -121,7 +121,7 @@ defineExpose({
       v-if="progress && open && remaining > 0 && duration"
       :model-value="remaining / duration * 100"
       :color="color"
-      v-bind="(typeof progress === 'object' ? progress as Partial : {})"
+      v-bind="(typeof progress === 'object' ? progress : {})"
       size="sm"
       data-slot="progress"
       :class="ui.progress({ class: props.ui?.progress })"

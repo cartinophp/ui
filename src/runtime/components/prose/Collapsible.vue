@@ -12,10 +12,10 @@ const props = defineProps<ProseCollapsibleProps>()
 defineSlots<ProseCollapsibleSlots>()
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as ProseCollapsible['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.collapsible || {}) })() as unknown as ProseCollapsible['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.collapsible || {}) })())
 </script>
 
 <template>

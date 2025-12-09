@@ -10,7 +10,7 @@ import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps(), {
   portal: true,
-  mode: 'click' as never,
+  mode: 'click',
   openDelay: 0,
   closeDelay: 0,
   dismissible: true
@@ -23,7 +23,7 @@ const appConfig = {}
 const pick = props.mode === 'hover' ? reactivePick(props, 'defaultOpen', 'open', 'openDelay', 'closeDelay') : reactivePick(props, 'defaultOpen', 'open', 'modal')
 const rootProps = useForwardPropsEmits(pick, emits)
 const portalProps = usePortal(toRef(() => props.portal))
-const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8 }) as PopoverContentProps)
+const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8 }))
 const contentEvents = computed(() => {
   if (!props.dismissible) {
     const events = ['pointerDownOutside', 'interactOutside', 'escapeKeyDown']
@@ -34,12 +34,12 @@ const contentEvents = computed(() => {
         emits('close:prevent')
       }
       return acc
-    }, {} as Record<typeof events[number], (e) => void>)
+    }, {} void>)
   }
 
   return {}
 })
-const arrowProps = toRef(() => props.arrow as PopoverArrowProps)
+const arrowProps = toRef(() => props.arrow)
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.popover || {}) })({
@@ -56,12 +56,12 @@ const Component = computed(() => props.mode === 'hover' ? HoverCard )
     </Component.Trigger>
 
     <Component.Anchor v-if="'Anchor' in Component && !!slots.anchor" as-child>
-      <slot name="anchor" v-bind="((close ? { close } : {}) as SlotProps)" />
+      <slot name="anchor" v-bind="((close ? { close } : {}))" />
     </Component.Anchor>
 
     <Component.Portal v-bind="portalProps">
       <Component.Content v-bind="contentProps" data-slot="content" :class="ui.content({ class: [!slots.default && props.class, props.ui?.content] })" v-on="contentEvents">
-        <slot name="content" v-bind="((close ? { close } : {}) as SlotProps)" />
+        <slot name="content" v-bind="((close ? { close } : {}))" />
 
         <Component.Arrow v-if="!!arrow" v-bind="arrowProps" data-slot="arrow" :class="ui.arrow({ class: props.ui?.arrow })" />
       </Component.Content>

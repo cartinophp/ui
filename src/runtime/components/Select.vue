@@ -17,7 +17,7 @@ import UChip from './Chip.vue'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps(), {
-  valueKey: 'value' as never,
+  valueKey: 'value',
   labelKey: 'label',
   descriptionKey: 'description',
   portal: true,
@@ -30,8 +30,8 @@ const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'disabled', 'autocomplete', 'required', 'multiple'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
-const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as SelectContentProps)
-const arrowProps = toRef(() => props.arrow as SelectArrowProps)
+const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }))
+const arrowProps = toRef(() => props.arrow)
 
 const { emitFormChange, emitFormInput, emitFormBlur, emitFormFocus, size: formGroupSize, color, id, name, highlight, disabled, ariaAttrs } = useFormField(props)
 const { orientation, size: fieldGroupSize } = useFieldGroup(props)
@@ -72,7 +72,7 @@ function displayValue(value) | undefined {
     return displayedValues.length > 0 ? displayedValues.join(', ') : undefined
   }
 
-  return getDisplayValue(items.value, value as GetItemValue, {
+  return getDisplayValue(items.value, value, {
     labelKey: props.labelKey,
     valueKey: props.valueKey
   })
@@ -119,7 +119,7 @@ function isSelectItem(item): item is Exclude {
 }
 
 defineExpose({
-  triggerRef: toRef(() => triggerRef.value?.$el as HTMLButtonElement)
+  triggerRef: toRef(() => triggerRef.value?.$el)
 })
 </script>
 
@@ -176,7 +176,7 @@ defineExpose({
           <SelectGroup v-for="(group, groupIndex) in groups" :key="`group-${groupIndex}`" data-slot="group" :class="ui.group({ class: props.ui?.group })">
             <template v-for="(item, index) in group" :key="`group-${groupIndex}-${index}`">
               <SelectLabel v-if="isSelectItem(item) && item.type === 'label'" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label, item.class] })">
-                {{ get(item, props.labelKey as string) }}
+                {{ get(item, props.labelKey) }}
               </SelectLabel>
 
               <SelectSeparator v-else-if="isSelectItem(item) && item.type === 'separator'" data-slot="separator" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator, item.class] })" />
@@ -186,7 +186,7 @@ defineExpose({
                 data-slot="item"
                 :class="ui.item({ class: [props.ui?.item, isSelectItem(item) && item.ui?.item, isSelectItem(item) && item.class] })"
                 :disabled="isSelectItem(item) && item.disabled"
-                :value="isSelectItem(item) ? get(item, props.valueKey as string) : item"
+                :value="isSelectItem(item) ? get(item, props.valueKey) : item"
                 @select="isSelectItem(item) && item.onSelect?.($event)"
               >
                 <slot name="item" :item="item" :index="index" :ui="ui">
@@ -207,13 +207,13 @@ defineExpose({
                   <span data-slot="itemWrapper" :class="ui.itemWrapper({ class: [props.ui?.itemWrapper, isSelectItem(item) && item.ui?.itemWrapper] })">
                     <SelectItemText data-slot="itemLabel" :class="ui.itemLabel({ class: [props.ui?.itemLabel, isSelectItem(item) && item.ui?.itemLabel] })">
                       <slot name="item-label" :item="item" :index="index">
-                        {{ isSelectItem(item) ? get(item, props.labelKey as string) : item }}
+                        {{ isSelectItem(item) ? get(item, props.labelKey) : item }}
                       </slot>
                     </SelectItemText>
 
-                    <span v-if="isSelectItem(item) && (get(item, props.descriptionKey as string) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isSelectItem(item) && item.ui?.itemDescription] })">
+                    <span v-if="isSelectItem(item) && (get(item, props.descriptionKey) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isSelectItem(item) && item.ui?.itemDescription] })">
                       <slot name="item-description" :item="item" :index="index">
-                        {{ get(item, props.descriptionKey as string) }}
+                        {{ get(item, props.descriptionKey) }}
                       </slot>
                     </span>
                   </span>

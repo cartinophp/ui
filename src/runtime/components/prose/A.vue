@@ -5,9 +5,9 @@ import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'
 import ULink from '../Link.vue'
 
-const appConfig = useAppConfig() as ProseA['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.a || {}) }) as unknown as ProseA['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.a || {}) }))
 
 const props = defineProps<ProseAProps>()
 defineSlots<ProseASlots>()

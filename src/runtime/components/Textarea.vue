@@ -59,7 +59,7 @@ function updateInput(value | null | undefined) {
     value ||= undefined
   }
 
-  modelValue.value = value as T
+  modelValue.value = value
   emitFormInput()
 }
 

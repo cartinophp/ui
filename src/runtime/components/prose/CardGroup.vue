@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseCardGroupProps>()
 defineSlots<ProseCardGroupSlots>()
 
-const appConfig = useAppConfig() as ProseCardGroup['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.cardGroup || {}) }) as unknown as ProseCardGroup['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.cardGroup || {}) }))
 </script>
 
 <template>

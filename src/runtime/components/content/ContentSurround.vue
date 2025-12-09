@@ -1,5 +1,5 @@
 
-<script setup lang="ts" generic="T extends ContentSurroundLink">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
@@ -10,41 +10,41 @@ import UIcon from '../Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<ContentSurroundProps<T>>()
-defineSlots<ContentSurroundSlots<T>>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = useAppConfig() as ContentSurround['AppConfig']
+const appConfig = useAppConfig()
 
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?['name'], direction: 'left' | 'right' }>({
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate({
   props: {
-    link
-    icon
-    direction'left' | 'right'>
+    link,
+    icon,
+    direction
   }
 })
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSurround || {}) })() as unknown as ContentSurround['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentSurround || {}) })())
 </script>
 
 <template>
   <DefineLinkTemplate v-slot="{ link, icon, direction }">
     <ULink v-if="link" :to="link.path" raw data-slot="link" :class="ui.link({ class: [props.ui?.link, link.ui?.link, link.class], direction })">
-      <slot name="link" :link="(link as T)" :ui="ui">
+      <slot name="link" :link="(link)" :ui="ui">
         <div data-slot="linkLeading" :class="ui.linkLeading({ class: [props.ui?.linkLeading, link.ui?.linkLeading] })">
-          <slot name="link-leading" :link="(link as T)" :ui="ui">
+          <slot name="link-leading" :link="(link)" :ui="ui">
             <UIcon :name="link.icon || icon" data-slot="linkLeadingIcon" :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], direction })" />
           </slot>
         </div>
 
         <p data-slot="linkTitle" :class="ui.linkTitle({ class: [props.ui?.linkTitle, link.ui?.linkTitle] })">
-          <slot name="link-title" :link="(link as T)" :ui="ui">
+          <slot name="link-title" :link="(link)" :ui="ui">
             {{ link.title }}
           </slot>
         </p>
 
         <p data-slot="linkDescription" :class="ui.linkDescription({ class: [props.ui?.linkDescription, link.ui?.linkDescription] })">
-          <slot name="link-description" :link="(link as T)" :ui="ui">
+          <slot name="link-description" :link="(link)" :ui="ui">
             {{ link.description }}
           </slot>
         </p>

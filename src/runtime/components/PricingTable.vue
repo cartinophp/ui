@@ -32,12 +32,12 @@ const formatSlotName = (item: { id?, title }) => {
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingTable || {}) })())
 
-const [DefineTierTemplate, ReuseTierTemplate] = createReusableTemplate<{ tier}>({
+const [DefineTierTemplate, ReuseTierTemplate] = createReusableTemplate({
   props: {
     tier
   }
 })
-const [DefineFeatureTemplate, ReuseFeatureTemplate] = createReusableTemplate<{ tier}>({
+const [DefineFeatureTemplate, ReuseFeatureTemplate] = createReusableTemplate({
   props: {
     tier
     feature

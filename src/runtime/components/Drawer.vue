@@ -33,7 +33,7 @@ const contentEvents = computed(() => {
         emits('close:prevent')
       }
       return acc
-    }, {} as Record<typeof events[number], (e) => void>)
+    }, {} void>)
   }
 
   return {}

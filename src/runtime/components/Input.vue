@@ -32,7 +32,7 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 const inputSize = computed(() => fieldGroupSize.value || formGroupSize.value)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.input || {}) })({
-  type: props.type as Input['variants']['type'],
+  type: props.type,
   color: color.value,
   variant: props.variant,
   size: inputSize?.value,
@@ -63,7 +63,7 @@ function updateInput(value | null | undefined) {
     value ||= undefined
   }
 
-  modelValue.value = value as T
+  modelValue.value = value
   emitFormInput()
 }
 

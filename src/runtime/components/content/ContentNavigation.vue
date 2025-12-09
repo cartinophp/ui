@@ -1,5 +1,5 @@
 
-<script setup lang="ts" generic="T extends ContentNavigationLink">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
@@ -15,7 +15,7 @@ import UIcon from '../Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ContentNavigationProps<T>>(), {
+const props = withDefaults(defineProps(), {
   as: 'nav',
   defaultOpen: undefined,
   level: 0,
@@ -24,26 +24,26 @@ const props = withDefaults(defineProps<ContentNavigationProps<T>>(), {
   highlight: false,
   unmountOnHide: true
 })
-const emits = defineEmits<ContentNavigationEmits>()
-const slots = defineSlots<ContentNavigationSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'collapsible', 'type', 'unmountOnHide'), emits)
 
 const route = useRoute()
-const appConfig = useAppConfig() as ContentNavigation['AppConfig']
+const appConfig = useAppConfig()
 
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?: boolean }>()
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate()
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentNavigation || {}) })({
   color: props.color,
   variant: props.variant,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}) as unknown as ContentNavigation['ui'])
+}))
 
 const disabled = computed(() => props.disabled || (props.type === 'multiple' && props.collapsible === false))
 
-function isRouteInTree(link: string): boolean {
+function isRouteInTree(link, routePath) {
   if (link.children?.length) {
     return link.children.some(child => isRouteInTree(child, routePath))
   }
@@ -57,7 +57,7 @@ const defaultValue = computed(() => {
   }
   // When `defaultOpen` is `undefined`, open the first item or the first level
   if (props.defaultOpen === undefined) {
-    return props.type === 'single' ? '0' : props.navigation?.map((link, index) => link.defaultOpen !== false && String(index)).filter(Boolean) as string[]
+    return props.type === 'single' ? '0' : props.navigation?.map((link, index) => link.defaultOpen !== false && String(index)).filter(Boolean)
   }
   // When `defaultOpen` is `true`, open items based on the current route
   const indices = props.navigation?.reduce((acc, link, index) => {
@@ -65,7 +65,7 @@ const defaultValue = computed(() => {
       acc.push(String(index))
     }
     return acc
-  }, [] as string[]) || []
+  }, []) || []
 
   return props.type === 'multiple' ? indices : indices[0]
 })
@@ -73,13 +73,13 @@ const defaultValue = computed(() => {
 
 <template>
   <DefineLinkTemplate v-slot="{ link, active }">
-    <slot name="link" :link="(link as T)" :active="active" :ui="ui">
-      <slot name="link-leading" :link="(link as T)" :active="active" :ui="ui">
+    <slot name="link" :link="(link)" :active="active" :ui="ui">
+      <slot name="link-leading" :link="(link)" :active="active" :ui="ui">
         <UIcon v-if="link.icon" :name="link.icon" data-slot="linkLeadingIcon" :class="ui.linkLeadingIcon({ class: [props.ui?.linkLeadingIcon, link.ui?.linkLeadingIcon], active })" />
       </slot>
 
       <span v-if="link.title || !!slots['link-title']" data-slot="linkTitle" :class="ui.linkTitle({ class: [props.ui?.linkTitle, link.ui?.linkTitle], active })">
-        <slot name="link-title" :link="(link as T)" :active="active" :ui="ui">
+        <slot name="link-title" :link="(link)" :active="active" :ui="ui">
           {{ link.title }}
         </slot>
 
@@ -87,12 +87,12 @@ const defaultValue = computed(() => {
       </span>
 
       <span v-if="(link.badge || link.badge === 0) || (link.children?.length && !disabled) || link.trailingIcon || !!slots['link-trailing']" data-slot="linkTrailing" :class="ui.linkTrailing({ class: [props.ui?.linkTrailing, link.ui?.linkTrailing] })">
-        <slot name="link-trailing" :link="(link as T)" :active="active" :ui="ui">
+        <slot name="link-trailing" :link="(link)" :active="active" :ui="ui">
           <UBadge
             v-if="link.badge || link.badge === 0"
             color="neutral"
             variant="outline"
-            :size="((props.ui?.linkTrailingBadgeSize || ui.linkTrailingBadgeSize()) as BadgeProps['size'])"
+            :size="((props.ui?.linkTrailingBadgeSize || ui.linkTrailingBadgeSize()))"
             v-bind="(typeof link.badge === 'string' || typeof link.badge === 'number') ? { label: link.badge } : link.badge"
             data-slot="linkTrailingBadge"
             :class="ui.linkTrailingBadge({ class: props.ui?.linkTrailingBadge })"
@@ -132,7 +132,7 @@ const defaultValue = computed(() => {
               :ui="props.ui"
             >
               <template v-for="(_, name) in slots" #[name]="slotData">
-                <slot :name="name" v-bind="{ ...slotData, link: link as T }" />
+                <slot :name="name" v-bind="{ ...slotData, link: link }" />
               </template>
             </UContentNavigation>
           </AccordionContent>

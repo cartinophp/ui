@@ -91,7 +91,7 @@ defineExpose({
     <TimeFieldInput
       v-for="(segment, index) in segments"
       :key="`${segment.part}-${index}`"
-      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
+      :ref="el => (inputsRef[index] = el)"
       :part="segment.part"
       data-slot="segment"
       :class="ui.segment({ class: props.ui?.segment })"

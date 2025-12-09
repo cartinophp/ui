@@ -8,9 +8,9 @@ import UBadge from '../Badge.vue'
 const props = defineProps<ProseBadgeProps>()
 defineSlots<ProseBadgeSlots>()
 
-const appConfig = useAppConfig() as ProseBadge['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.badge || {}) }) as unknown as ProseBadge['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.badge || {}) }))
 </script>
 
 <template>

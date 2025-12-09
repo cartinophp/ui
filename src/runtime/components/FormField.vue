@@ -44,7 +44,7 @@ provide(formFieldInjectionKey, computed(() => ({
   description: props.description,
   help: props.help,
   ariaId
-}) as FormFieldInjectedOptions))
+})))
 </script>
 
 <template>

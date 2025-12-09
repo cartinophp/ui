@@ -13,10 +13,10 @@ const slots = defineSlots<ProseCodeGroupSlots>()
 
 const model = defineModel<string>()
 
-const appConfig = useAppConfig() as ProseCodeGroup['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeGroup || {}) })() as unknown as ProseCodeGroup['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeGroup || {}) })())
 
 const rerenderCount = ref(1)
 
@@ -46,7 +46,7 @@ function transformSlot(slot: any, index: number) {
 onMounted(() => {
   if (props.sync) {
     const syncKey = `code-group-${props.sync}`
-    const syncValue = useState<string>(syncKey, () => localStorage.getItem(syncKey) as string)
+    const syncValue = useState<string>(syncKey, () => localStorage.getItem(syncKey))
 
     watch(syncValue, () => {
       if (!syncValue.value) return

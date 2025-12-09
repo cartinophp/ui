@@ -12,12 +12,12 @@ defineSlots<ProseCodeCollapseSlots>()
 const open = defineModel<boolean>('open', { default: false })
 
 const { t } = useLocale()
-const appConfig = useAppConfig() as ProseCodeCollapse['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeCollapse || {}) })({
   open: open.value
-}) as unknown as ProseCodeCollapse['ui'])
+}))
 </script>
 
 <template>

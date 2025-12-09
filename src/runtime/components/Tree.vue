@@ -58,15 +58,15 @@ const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items?,
 const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item, level }, TreeSlots({
   props: {
     item: {
-      type
+      type: Object,
       required: true
     },
     index: {
-      type
+      type: Object,
       required: true
     },
     level: {
-      type
+      type: Object,
       required: true
     }
   }
@@ -81,7 +81,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.tree || {}) 
 const rootRef = useTemplateRef('rootRef')
 
 function getItemLabel(item) {
-  return get(item, props.labelKey as string)
+  return get(item, props.labelKey)
 }
 
 function getItemKey(item) {
@@ -101,7 +101,7 @@ const defaultExpanded = computed(() => props.defaultExpanded ?? props.items?.fla
 
 defineExpose({
   get $el() {
-    return rootRef.value?.$el as HTMLElement
+    return rootRef.value?.$el
   }
 })
 </script>

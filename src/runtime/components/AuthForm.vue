@@ -152,7 +152,7 @@ defineExpose({
               v-model="state[field.name]"
               data-slot="select"
               :class="ui.select({ class: props.ui?.select })"
-              v-bind="(omitFieldProps(field) as AuthFormSelectField)"
+              v-bind="(omitFieldProps(field))"
             />
             <UPinInput
               v-else-if="field.type === 'otp'"
@@ -160,7 +160,7 @@ defineExpose({
               v-model="state[field.name]"
               data-slot="otp"
               :class="ui.otp({ class: props.ui?.otp })"
-              v-bind="(Object.assign({}, omitFieldProps(field), typeof field.otp === 'object' ? field.otp : {}) as any)"
+              v-bind="Object.assign({}, omitFieldProps(field), typeof field.otp === 'object' ? field.otp : {})"
               otp
             />
             <UInput
@@ -169,7 +169,7 @@ defineExpose({
               v-model="state[field.name]"
               data-slot="password"
               :class="ui.password({ class: props.ui?.password })"
-              v-bind="(omitFieldProps(field) as AuthFormInputField<'password'>)"
+              v-bind="omitFieldProps(field, 'password')"
               :type="passwordVisibility ? 'text' : 'password'"
             >
               <template #trailing>
@@ -190,7 +190,7 @@ defineExpose({
               v-model="state[field.name]"
               data-slot="input"
               :class="ui.input({ class: props.ui?.input })"
-              v-bind="(omitFieldProps(field) as AuthFormInputField)"
+              v-bind="(omitFieldProps(field))"
             />
           </slot>
 

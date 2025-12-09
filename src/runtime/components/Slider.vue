@@ -38,7 +38,7 @@ const sliderValue = computed({
     return modelValue.value ?? defaultSliderValue.value
   },
   set(value) {
-    modelValue.value = (value?.length !== 1 ? value : value[0]) as T
+    modelValue.value = (value?.length !== 1 ? value : value[0])
   }
 })
 

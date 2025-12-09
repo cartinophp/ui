@@ -40,16 +40,16 @@ const { contains } = useFilter({ sensitivity: 'base' })
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'modelValue', 'defaultValue', 'open', 'defaultOpen', 'required', 'multiple', 'resetSearchTermOnBlur', 'resetSearchTermOnSelect', 'highlightOnHover'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
-const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as ComboboxContentProps)
-const arrowProps = toRef(() => props.arrow as ComboboxArrowProps)
+const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }))
+const arrowProps = toRef(() => props.arrow)
 const virtualizerProps = toRef(() => {
   if (!props.virtualize) return false
 
   return defu(typeof props.virtualize === 'boolean' ? {} : props.virtualize, {
-    estimateSize: getEstimateSize(items.value, props.size || 'md', props.descriptionKey as string)
+    estimateSize: getEstimateSize(items.value, props.size || 'md', props.descriptionKey)
   })
 })
-const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t('selectMenu.search'), variant: 'none' }) as InputProps)
+const searchInputProps = toRef(() => defu(props.searchInput, { placeholder: t('selectMenu.search'), variant: 'none' }))
 
 const { emitFormBlur, emitFormFocus, emitFormInput, emitFormChange, size: formGroupSize, color, id, name, highlight, disabled, ariaAttrs } = useFormField(props)
 const { orientation, size: fieldGroupSize } = useFieldGroup(props)
@@ -58,14 +58,14 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 const selectSize = computed(() => fieldGroupSize.value || formGroupSize.value)
 
 const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTemplate()
-const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item }>({
+const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate({
   props: {
     item: {
       type: [Object, String, Number, Boolean],
       required: true
     },
     index: {
-      type
+      type: Object,
       required: false
     }
   }
@@ -95,7 +95,7 @@ function displayValue(value) | undefined {
     return displayedValues.length > 0 ? displayedValues.join(', ') : undefined
   }
 
-  return getDisplayValue(items.value, value as GetItemValue, {
+  return getDisplayValue(items.value, value, {
     labelKey: props.labelKey,
     valueKey: props.valueKey
   })
@@ -146,10 +146,10 @@ const createItem = computed(() => {
     return false
   }
 
-  const newItem = props.valueKey ? { [props.valueKey]: searchTerm.value } as NestedItem : searchTerm.value
+  const newItem = props.valueKey ? { [props.valueKey]: searchTerm.value } : searchTerm.value
 
   if ((typeof props.createItem === 'object' && props.createItem.when === 'always') || props.createItem === 'always') {
-    return !filteredItems.value.find(item => compare(item, newItem, props.valueKey as string))
+    return !filteredItems.value.find(item => compare(item, newItem, props.valueKey))
   }
 
   return !filteredItems.value.length
@@ -238,7 +238,7 @@ function isSelectItem(item): item is Exclude {
 }
 
 defineExpose({
-  triggerRef: toRef(() => triggerRef.value?.$el as HTMLButtonElement)
+  triggerRef: toRef(() => triggerRef.value?.$el)
 })
 </script>
 
@@ -261,7 +261,7 @@ defineExpose({
 
   <DefineItemTemplate v-slot="{ item, index }">
     <ComboboxLabel v-if="isSelectItem(item) && item.type === 'label'" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label, item.class] })">
-      {{ get(item, props.labelKey as string) }}
+      {{ get(item, props.labelKey) }}
     </ComboboxLabel>
 
     <ComboboxSeparator v-else-if="isSelectItem(item) && item.type === 'separator'" data-slot="separator" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator, item.class] })" />
@@ -271,7 +271,7 @@ defineExpose({
       data-slot="item"
       :class="ui.item({ class: [props.ui?.item, isSelectItem(item) && item.ui?.item, isSelectItem(item) && item.class] })"
       :disabled="isSelectItem(item) && item.disabled"
-      :value="props.valueKey && isSelectItem(item) ? get(item, props.valueKey as string) : item"
+      :value="props.valueKey && isSelectItem(item) ? get(item, props.valueKey) : item"
       @select="onSelect($event, item)"
     >
       <slot name="item" :item="item" :index="index" :ui="ui">
@@ -292,13 +292,13 @@ defineExpose({
         <span data-slot="itemWrapper" :class="ui.itemWrapper({ class: [props.ui?.itemWrapper, isSelectItem(item) && item.ui?.itemWrapper] })">
           <span data-slot="itemLabel" :class="ui.itemLabel({ class: [props.ui?.itemLabel, isSelectItem(item) && item.ui?.itemLabel] })">
             <slot name="item-label" :item="item" :index="index">
-              {{ isSelectItem(item) ? get(item, props.labelKey as string) : item }}
+              {{ isSelectItem(item) ? get(item, props.labelKey) : item }}
             </slot>
           </span>
 
-          <span v-if="isSelectItem(item) && (get(item, props.descriptionKey as string) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isSelectItem(item) && item.ui?.itemDescription] })">
+          <span v-if="isSelectItem(item) && (get(item, props.descriptionKey) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isSelectItem(item) && item.ui?.itemDescription] })">
             <slot name="item-description" :item="item" :index="index">
-              {{ get(item, props.descriptionKey as string) }}
+              {{ get(item, props.descriptionKey) }}
             </slot>
           </span>
         </span>
@@ -383,7 +383,7 @@ defineExpose({
               <ComboboxVirtualizer
                 v-slot="{ option: item, virtualItem }"
                 :options="filteredItems"
-                :text-content="item => isSelectItem(item) ? get(item, props.labelKey as string) (item)"
+                :text-content="item => isSelectItem(item) ? get(item, props.labelKey) (item)"
                 v-bind="virtualizerProps"
               >
                 <ReuseItemTemplate :item="item" :index="virtualItem.index" />

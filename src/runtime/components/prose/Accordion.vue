@@ -11,10 +11,10 @@ const props = withDefaults(defineProps<ProseAccordionProps>(), {
 })
 const slots = defineSlots<ProseAccordionSlots>()
 
-const appConfig = useAppConfig() as ProseAccordion['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.accordion || {}) }) as unknown as ProseAccordion['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.accordion || {}) }))
 
 const rerenderCount = ref(1)
 

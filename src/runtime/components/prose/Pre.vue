@@ -13,10 +13,10 @@ defineSlots<ProsePreSlots>()
 
 const { t } = useLocale()
 const { copy, copied } = useClipboard()
-const appConfig = useAppConfig() as ProsePre['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.pre || {}) })() as unknown as ProsePre['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.pre || {}) })())
 </script>
 
 <template>

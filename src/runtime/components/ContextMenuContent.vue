@@ -26,7 +26,7 @@ const portalProps = usePortal(toRef(() => props.portal))
 const contentProps = useForwardPropsEmits(reactiveOmit(props, 'sub', 'items', 'portal', 'labelKey', 'descriptionKey', 'checkedIcon', 'loadingIcon', 'externalIcon', 'class', 'ui', 'uiOverride'), emits)
 const getProxySlots = () => omit(slots, ['default'])
 
-const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item?, index }>()
+const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate()
 
 const childrenIcon = computed(() => dir.value === 'rtl' ? appConfig.ui.icons.chevronLeft : appConfig.ui.icons.chevronRight)
 const groups = computed(() =>
@@ -47,18 +47,18 @@ const groups = computed(() =>
         <UAvatar v-else-if="item.avatar" :size="((item.ui?.itemLeadingAvatarSize || uiOverride?.itemLeadingAvatarSize || ui.itemLeadingAvatarSize()))" v-bind="item.avatar" data-slot="itemLeadingAvatar" :class="ui.itemLeadingAvatar({ class: [uiOverride?.itemLeadingAvatar, item.ui?.itemLeadingAvatar], active })" />
       </slot>
 
-      <span v-if="(get(item, props.labelKey as string) || !!slots[(item.slot ? `${item.slot}-label`: 'item-label') ]) || (get(item, props.descriptionKey as string) || !!slots[(item.slot ? `${item.slot}-description`: 'item-description') ])" data-slot="itemWrapper" :class="ui.itemWrapper({ class: [uiOverride?.itemWrapper, item.ui?.itemWrapper] })">
+      <span v-if="(get(item, props.labelKey) || !!slots[(item.slot ? `${item.slot}-label`: 'item-label') ]) || (get(item, props.descriptionKey) || !!slots[(item.slot ? `${item.slot}-description`: 'item-description') ])" data-slot="itemWrapper" :class="ui.itemWrapper({ class: [uiOverride?.itemWrapper, item.ui?.itemWrapper] })">
         <span data-slot="itemLabel" :class="ui.itemLabel({ class: [uiOverride?.itemLabel, item.ui?.itemLabel], active })">
           <slot :name="((item.slot ? `${item.slot}-label`: 'item-label') )" :item="item" :active="active" :index="index">
-            {{ get(item, props.labelKey as string) }}
+            {{ get(item, props.labelKey) }}
           </slot>
 
           <UIcon v-if="item.target === '_blank' && externalIcon !== false" :name="typeof externalIcon === 'string' ? externalIcon : appConfig.ui.icons.external" data-slot="itemLabelExternalIcon" :class="ui.itemLabelExternalIcon({ class: [uiOverride?.itemLabelExternalIcon, item.ui?.itemLabelExternalIcon], color: item?.color, active })" />
         </span>
 
-        <span v-if="get(item, props.descriptionKey as string)" data-slot="itemDescription" :class="ui.itemDescription({ class: [uiOverride?.itemDescription, item.ui?.itemDescription] })">
+        <span v-if="get(item, props.descriptionKey)" data-slot="itemDescription" :class="ui.itemDescription({ class: [uiOverride?.itemDescription, item.ui?.itemDescription] })">
           <slot :name="((item.slot ? `${item.slot}-description`: 'item-description') )" :item="item" :active="active" :index="index">
-            {{ get(item, props.descriptionKey as string) }}
+            {{ get(item, props.descriptionKey) }}
           </slot>
         </span>
       </span>
@@ -94,7 +94,7 @@ const groups = computed(() =>
                 as="button"
                 type="button"
                 :disabled="item.disabled"
-                :text-value="get(item, props.labelKey as string)"
+                :text-value="get(item, props.labelKey)"
                 data-slot="item"
                 :class="ui.item({ class: [uiOverride?.item, item.ui?.item, item.class], color: item?.color })"
               >
@@ -125,7 +125,7 @@ const groups = computed(() =>
               v-else-if="item.type === 'checkbox'"
               :model-value="item.checked"
               :disabled="item.disabled"
-              :text-value="get(item, props.labelKey as string)"
+              :text-value="get(item, props.labelKey)"
               data-slot="item"
               :class="ui.item({ class: [uiOverride?.item, item.ui?.item, item.class], color: item?.color })"
               @update:model-value="item.onUpdateChecked"
@@ -137,7 +137,7 @@ const groups = computed(() =>
               v-else
               as-child
               :disabled="item.disabled"
-              :text-value="get(item, props.labelKey as string)"
+              :text-value="get(item, props.labelKey)"
               @select="item.onSelect"
             >
               <ULink v-slot="{ active, ...slotProps }" v-bind="pickLinkPropsitem" custom>

@@ -78,7 +78,7 @@ onMounted(() => {
 })
 
 defineExpose({
-  inputRef: toRef(() => inputRef.value?.$el as HTMLInputElement)
+  inputRef: toRef(() => inputRef.value?.$el)
 })
 </script>
 

@@ -40,13 +40,13 @@ const { contains } = useFilter({ sensitivity: 'base' })
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'open', 'defaultOpen', 'required', 'multiple', 'resetSearchTermOnBlur', 'resetSearchTermOnSelect', 'highlightOnHover', 'openOnClick', 'openOnFocus'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
-const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }) as ComboboxContentProps)
-const arrowProps = toRef(() => props.arrow as ComboboxArrowProps)
+const contentProps = toRef(() => defu(props.content, { side: 'bottom', sideOffset: 8, collisionPadding: 8, position: 'popper' }))
+const arrowProps = toRef(() => props.arrow)
 const virtualizerProps = toRef(() => {
   if (!props.virtualize) return false
 
   return defu(typeof props.virtualize === 'boolean' ? {} : props.virtualize, {
-    estimateSize: getEstimateSize(items.value, inputSize.value || 'md', props.descriptionKey as string)
+    estimateSize: getEstimateSize(items.value, inputSize.value || 'md', props.descriptionKey)
   })
 })
 
@@ -57,14 +57,14 @@ const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponen
 const inputSize = computed(() => fieldGroupSize.value || formGroupSize.value)
 
 const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTemplate()
-const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item }>({
+const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate({
   props: {
     item: {
       type: [Object, String, Number, Boolean],
       required: true
     },
     index: {
-      type
+      type: Object,
       required: false
     }
   }
@@ -136,10 +136,10 @@ const createItem = computed(() => {
     return false
   }
 
-  const newItem = props.valueKey ? { [props.valueKey]: searchTerm.value } as NestedItem : searchTerm.value
+  const newItem = props.valueKey ? { [props.valueKey]: searchTerm.value } : searchTerm.value
 
   if ((typeof props.createItem === 'object' && props.createItem.when === 'always') || props.createItem === 'always') {
-    return !filteredItems.value.find(item => compare(item, newItem, props.valueKey as string))
+    return !filteredItems.value.find(item => compare(item, newItem, props.valueKey))
   }
 
   return !filteredItems.value.length
@@ -218,7 +218,7 @@ function onUpdateOpen(value) {
 function onRemoveTag(event, modelValue) {
   if (props.multiple) {
     const filteredValue = modelValue.filter(value => !isEqual(value, event))
-    emits('update:modelValue', filteredValue as GetModelValue)
+    emits('update:modelValue', filteredValue)
     emits('remove-tag', event)
     onUpdate(filteredValue)
   }
@@ -249,7 +249,7 @@ function isInputItem(item): item is Exclude {
 }
 
 defineExpose({
-  inputRef: toRef(() => inputRef.value?.$el as HTMLInputElement)
+  inputRef: toRef(() => inputRef.value?.$el)
 })
 </script>
 
@@ -272,7 +272,7 @@ defineExpose({
 
   <DefineItemTemplate v-slot="{ item, index }">
     <ComboboxLabel v-if="isInputItem(item) && item.type === 'label'" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label, item.class] })">
-      {{ get(item, props.labelKey as string) }}
+      {{ get(item, props.labelKey) }}
     </ComboboxLabel>
 
     <ComboboxSeparator v-else-if="isInputItem(item) && item.type === 'separator'" data-slot="separator" :class="ui.separator({ class: [props.ui?.separator, item.ui?.separator, item.class] })" />
@@ -282,7 +282,7 @@ defineExpose({
       data-slot="item"
       :class="ui.item({ class: [props.ui?.item, isInputItem(item) && item.ui?.item, isInputItem(item) && item.class] })"
       :disabled="isInputItem(item) && item.disabled"
-      :value="props.valueKey && isInputItem(item) ? get(item, props.valueKey as string) : item"
+      :value="props.valueKey && isInputItem(item) ? get(item, props.valueKey) : item"
       @select="onSelect($event, item)"
     >
       <slot name="item" :item="item" :index="index" :ui="ui">
@@ -303,13 +303,13 @@ defineExpose({
         <span data-slot="itemWrapper" :class="ui.itemWrapper({ class: [props.ui?.itemWrapper, isInputItem(item) && item.ui?.itemWrapper] })">
           <span data-slot="itemLabel" :class="ui.itemLabel({ class: [props.ui?.itemLabel, isInputItem(item) && item.ui?.itemLabel] })">
             <slot name="item-label" :item="item" :index="index">
-              {{ isInputItem(item) ? get(item, props.labelKey as string) : item }}
+              {{ isInputItem(item) ? get(item, props.labelKey) : item }}
             </slot>
           </span>
 
-          <span v-if="isInputItem(item) && (get(item, props.descriptionKey as string) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isInputItem(item) && item.ui?.itemDescription] })">
+          <span v-if="isInputItem(item) && (get(item, props.descriptionKey) || !!slots['item-description'])" data-slot="itemDescription" :class="ui.itemDescription({ class: [props.ui?.itemDescription, isInputItem(item) && item.ui?.itemDescription] })">
             <slot name="item-description" :item="item" :index="index">
-              {{ get(item, props.descriptionKey as string) }}
+              {{ get(item, props.descriptionKey) }}
             </slot>
           </span>
         </span>
@@ -348,7 +348,7 @@ defineExpose({
         as-child
         @blur="onBlur"
         @focus="onFocus"
-        @remove-tag="onRemoveTag($event, modelValue as GetModelValue)"
+        @remove-tag="onRemoveTag($event, modelValue)"
       >
         <TagsInputItem v-for="(item, index) in tags" :key="index" :value="item" data-slot="tagsItem" :class="ui.tagsItem({ class: [props.ui?.tagsItem, isInputItem(item) && item.ui?.tagsItem] })">
           <TagsInputItemText data-slot="tagsItemText" :class="ui.tagsItemText({ class: [props.ui?.tagsItemText, isInputItem(item) && item.ui?.tagsItemText] })">
@@ -423,7 +423,7 @@ defineExpose({
             <ComboboxVirtualizer
               v-slot="{ option: item, virtualItem }"
               :options="filteredItems"
-              :text-content="item => isInputItem(item) ? get(item, props.labelKey as string) (item)"
+              :text-content="item => isInputItem(item) ? get(item, props.labelKey) (item)"
               v-bind="virtualizerProps"
             >
               <ReuseItemTemplate :item="item" :index="virtualItem.index" />

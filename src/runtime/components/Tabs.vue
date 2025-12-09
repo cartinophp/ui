@@ -56,7 +56,7 @@ defineExpose({
       <TabsTrigger
         v-for="(item, index) of items"
         :key="index"
-        :ref="el => (triggersRef[index] = el as ComponentPublicInstance)"
+        :ref="el => (triggersRef[index] = el)"
         :value="item.value ?? String(index)"
         :disabled="item.disabled"
         data-slot="trigger"
@@ -67,8 +67,8 @@ defineExpose({
           <UAvatar v-else-if="item.avatar" :size="((item.ui?.leadingAvatarSize || props.ui?.leadingAvatarSize || ui.leadingAvatarSize()))" v-bind="item.avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: [props.ui?.leadingAvatar, item.ui?.leadingAvatar] })" />
         </slot>
 
-        <span v-if="get(item, props.labelKey as string) || !!slots.default" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })">
-          <slot :item="item" :index="index">{{ get(item, props.labelKey as string) }}</slot>
+        <span v-if="get(item, props.labelKey) || !!slots.default" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })">
+          <slot :item="item" :index="index">{{ get(item, props.labelKey) }}</slot>
         </span>
 
         <slot name="trailing" :item="item" :index="index" :ui="ui">
@@ -76,7 +76,7 @@ defineExpose({
             v-if="item.badge || item.badge === 0"
             color="neutral"
             variant="outline"
-            :size="((item.ui?.trailingBadgeSize || props.ui?.trailingBadgeSize || ui.trailingBadgeSize()) as BadgeProps['size'])"
+            :size="((item.ui?.trailingBadgeSize || props.ui?.trailingBadgeSize || ui.trailingBadgeSize()))"
             v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: item.badge } : item.badge"
             data-slot="trailingBadge"
             :class="ui.trailingBadge({ class: [props.ui?.trailingBadge, item.ui?.trailingBadge] })"

@@ -89,7 +89,7 @@ defineExpose({
     <DateField.Input
       v-for="(segment, index) in segments"
       :key="`${segment.part}-${index}`"
-      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
+      :ref="el => (inputsRef[index] = el)"
       :type="type"
       :part="segment.part"
       data-slot="segment"

@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<ProseImgProps>(), {
   zoom: true
 })
 
-const appConfig = useAppConfig() as ProseImg['AppConfig']
+const appConfig = useAppConfig()
 
 const [DefineImageTemplate, ReuseImageTemplate] = createReusableTemplate()
 const [DefineZoomedImageTemplate, ReuseZoomedImageTemplate] = createReusableTemplate()
@@ -25,7 +25,7 @@ const open = ref(false)
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.img || {}) })({
   zoom: props.zoom,
   open: open.value
-}) as unknown as ProseImg['ui'])
+}))
 
 const refinedSrc = computed(() => {
   if (props.src?.startsWith('/') && !props.src.startsWith('//')) {

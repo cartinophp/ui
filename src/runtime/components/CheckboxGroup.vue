@@ -11,7 +11,7 @@ import UCheckbox from './Checkbox.vue'
 const props = withDefaults(defineProps(), {
   labelKey: 'label',
   descriptionKey: 'description',
-  valueKey: 'value' as never,
+  valueKey: 'value',
   orientation: 'vertical'
 })
 const emits = defineEmits()
@@ -47,14 +47,14 @@ function normalizeItem(item) {
   if (typeof item === 'string' || typeof item === 'number') {
     return {
       id: `${id}:${item}`,
-      value(item),
-      label(item)
+      value: item,
+      label: item
     }
   }
 
-  const value = get(item, props.valueKey as string)
-  const label = get(item, props.labelKey as string)
-  const description = get(item, props.descriptionKey as string)
+  const value = get(item, props.valueKey)
+  const label = get(item, props.labelKey)
+  const description = get(item, props.descriptionKey)
 
   return {
     ...item,

@@ -13,12 +13,12 @@ defineOptions({ inheritAttrs: false })
 const props = defineProps<ProseCodeTreeProps>()
 const slots = defineSlots<ProseCodeTreeSlots>()
 
-const appConfig = useAppConfig() as ProseCodeTree['AppConfig']
+const appConfig = useAppConfig()
 
 const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items[], level: number }>()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeTree || {}) })() as unknown as ProseCodeTree['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeTree || {}) })())
 
 const model = ref(props.defaultValue ? { path: props.defaultValue } : undefined)
 const lastSelectedItem = ref()

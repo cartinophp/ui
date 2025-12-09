@@ -63,7 +63,7 @@ onUnmounted(() => {
 onMounted(async () => {
   bus.on(async (event) => {
     if (event.type === 'attach') {
-      nestedForms.value.set(event.formId, { validate: event.validate, name: event.name, api: event.api as any })
+      nestedForms.value.set(event.formId, { validate: event.validate, name: event.name, api: event.api })
     } else if (event.type === 'detach') {
       nestedForms.value.delete(event.formId)
     } else if (props.validateOn?.includes(event.type) && !loading.value) {
@@ -181,7 +181,7 @@ provide(formLoadingInjectionKey, readonly(loading))
 async function onSubmitWrapper(payload) {
   loading.value = props.loadingAuto && true
 
-  const event = payload as FormSubmitEvent
+  const event = payload
 
   try {
     event.data = await _validate({ nested: true, transform: props.transform })
@@ -266,7 +266,7 @@ function filterErrorsByNames(allErrors, names: (keyof O)) {
   const nameSet = new Set(names)
   const patterns = names
     .map(name => inputs.value?.[name]?.pattern)
-    .filter(Boolean) as RegExp
+    .filter(Boolean)
 
   const matchesNames = (error) => {
     if (!error.name) return false
@@ -359,7 +359,7 @@ const api = {
   dirtyFields: readonly(dirtyFields),
   blurredFields: readonly(blurredFields),
   touchedFields: readonly(touchedFields)
-} satisfies Form
+}
 
 defineExpose(api)
 </script>

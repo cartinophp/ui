@@ -9,7 +9,7 @@ import { looseToNumber } from '../utils'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps(), {
-  type: 'text' as never,
+  type: 'text',
   length: 5,
   autofocusDelay: 0
 })
@@ -78,7 +78,7 @@ defineExpose({
     <PinInputInput
       v-for="(ids, index) in looseToNumber(props.length)"
       :key="ids"
-      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
+      :ref="el => (inputsRef[index] = el)"
       :index="index"
       data-slot="base"
       :class="ui.base({ class: props.ui?.base })"

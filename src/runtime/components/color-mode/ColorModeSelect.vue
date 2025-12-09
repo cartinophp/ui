@@ -39,7 +39,7 @@ const preference = computed({
     <USelectMenu
       v-model="preference"
       :icon="preference?.icon"
-      v-bind="{ ...(selectMenuProps as any), ...$attrs }"
+      v-bind="{ ...selectMenuProps, ...$attrs }"
       :items="items"
     />
 
@@ -47,7 +47,7 @@ const preference = computed({
       <USelectMenu
         :icon="items[0]?.icon"
         :model-value="items[0]"
-        v-bind="{ ...(selectMenuProps as any), ...$attrs }"
+        v-bind="{ ...selectMenuProps, ...$attrs }"
         :items="items"
         disabled
       />

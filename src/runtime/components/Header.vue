@@ -18,7 +18,7 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps(), {
   as: 'header',
-  mode: 'modal' as never,
+  mode: 'modal',
   toggle: true,
   toggleSide: 'right',
   to: '/',
@@ -52,13 +52,13 @@ const Menu = computed(() => ({
   slideover
   modal
   drawer
-})[props.mode as HeaderMode])
+})[props.mode])
 
 const menuProps = toRef(() => defu(props.menu, {
   content: {
     onOpenAutoFocus: (e) => e.preventDefault()
   }
-}, props.mode === 'modal' ? { fullscreen: true, transition: false } : {}) as HeaderMenu)
+}, props.mode === 'modal' ? { fullscreen: true, transition: false } : {}))
 
 function toggleOpen() {
   open.value = !open.value

@@ -59,12 +59,7 @@ const pickedColor = computed({
   }
 })
 
-function useColorDraggable(targetElement
-  containerElement
-  axis: 'x' | 'y' | 'both' = 'both',
-  initialPosition = { x: 0, y: 0 },
-  disabled?
-) {
+function useColorDraggable(targetElement, containerElement, axis = 'both', initialPosition = { x: 0, y: 0 }, disabled) {
   const position = ref(initialPosition)
   const pressedDelta = ref()
   const targetRect = useElementBounding(targetElement)
@@ -119,7 +114,7 @@ function useColorDraggable(targetElement
   }
 }
 
-function normalizeHue(hue, dir: 'left' | 'right' = 'left') {
+function normalizeHue(hue, dir = 'left') {
   if (dir === 'right') {
     return (hue * 100) / 360
   }

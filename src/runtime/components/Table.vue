@@ -24,13 +24,13 @@ const slots = defineSlots()
 const { t } = useLocale()
 const appConfig = {}
 
-const data = ref(props.data ?? ) as Ref
+const data = ref(props.data ?? )
 const meta = computed(() => props.meta ?? {})
 const columns = computed(() => processColumns(props.columns ?? Object.keys(data.value[0] ?? {}).map((accessorKey) => ({ accessorKey, header: upperFirst(accessorKey) }))))
 
 function processColumns(columns) {
   return columns.map((column) => {
-    const col = { ...column } as TableColumn
+    const col = { ...column }
 
     if ('columns' in col && col.columns) {
       col.columns = processColumnscol.columns
@@ -59,14 +59,14 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.table || {})
 }))
 
 const [DefineTableTemplate, ReuseTableTemplate] = createReusableTemplate()
-const [DefineRowTemplate, ReuseRowTemplate] = createReusableTemplate<{ row?}>({
+const [DefineRowTemplate, ReuseRowTemplate] = createReusableTemplate({
   props: {
     row: {
-      type
+      type: Object,
       required: true
     },
     style: {
-      type
+      type: Object,
       required: false
     }
   }
@@ -229,7 +229,7 @@ function onRowSelect(e) {
   if (!props.onSelect) {
     return
   }
-  const target = e.target as HTMLElement
+  const target = e.target
   const isInteractive = target.closest('button') || target.closest('a')
   if (isInteractive) {
     return
@@ -288,7 +288,7 @@ watch(() => props.data, () => {
 
 defineExpose({
   get $el() {
-    return rootRef.value?.$el as HTMLElement
+    return rootRef.value?.$el
   },
   tableRef,
   tableApi

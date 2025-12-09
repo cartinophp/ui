@@ -8,7 +8,7 @@ import { get } from '../utils'
 import { tv } from '../utils/tv'
 
 const props = withDefaults(defineProps(), {
-  valueKey: 'value' as never,
+  valueKey: 'value',
   labelKey: 'label',
   descriptionKey: 'description',
   orientation: 'vertical'
@@ -50,9 +50,9 @@ function normalizeItem(item) {
     }
   }
 
-  const value = get(item, props.valueKey as string)
-  const label = get(item, props.labelKey as string)
-  const description = get(item, props.descriptionKey as string)
+  const value = get(item, props.valueKey)
+  const label = get(item, props.labelKey)
+  const description = get(item, props.descriptionKey)
 
   return {
     ...(item),

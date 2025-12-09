@@ -7,9 +7,9 @@ import UKbd from '../Kbd.vue'
 
 const props = defineProps<ProseKbdProps>()
 
-const appConfig = useAppConfig() as ProseKbd['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.kbd || {}) }) as unknown as ProseKbd['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.kbd || {}) }))
 </script>
 
 <template>

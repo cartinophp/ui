@@ -8,9 +8,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseFieldGroupProps>()
 defineSlots<ProseFieldGroupSlots>()
 
-const appConfig = useAppConfig() as ProseFieldGroup['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.fieldGroup || {}) }) as unknown as ProseFieldGroup['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.fieldGroup || {}) }))
 </script>
 
 <template>

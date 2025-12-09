@@ -7,9 +7,9 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseCodeProps>()
 defineSlots<ProseCodeSlots>()
 
-const appConfig = useAppConfig() as ProseCode['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.code || {}) }) as unknown as ProseCode['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.code || {}) }))
 </script>
 
 <template>

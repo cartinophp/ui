@@ -7,9 +7,9 @@ import UIcon from '../Icon.vue'
 
 const props = defineProps<ProseIconProps>()
 
-const appConfig = useAppConfig() as ProseIcon['AppConfig']
+const appConfig = useAppConfig()
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.icon || {}) }) as unknown as ProseIcon['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.icon || {}) }))
 </script>
 
 <template>

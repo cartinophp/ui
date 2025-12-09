@@ -8,11 +8,11 @@ import UIcon from '../Icon.vue'
 const props = defineProps<ProseH2Props>()
 defineSlots<ProseH2Slots>()
 
-const appConfig = useAppConfig() as ProseH2['AppConfig']
+const appConfig = useAppConfig()2['AppConfig']
 const { headings } = useRuntimeConfig().public?.mdc || {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.h2 || {}) })() as unknown as ProseH2['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.h2 || {}) })())
 
 const generate = computed(() => props.id && typeof headings?.anchorLinks === 'object' && headings.anchorLinks.h2)
 </script>

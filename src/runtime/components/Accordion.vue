@@ -43,8 +43,8 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.accordion ||
             <UIcon v-if="item.icon" :name="item.icon" data-slot="leadingIcon" :class="ui.leadingIcon({ class: [props.ui?.leadingIcon, item?.ui?.leadingIcon] })" />
           </slot>
 
-          <span v-if="get(item, props.labelKey as string) || !!slots.default" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })">
-            <slot :item="item" :index="index" :open="open">{{ get(item, props.labelKey as string) }}</slot>
+          <span v-if="get(item, props.labelKey) || !!slots.default" data-slot="label" :class="ui.label({ class: [props.ui?.label, item.ui?.label] })">
+            <slot :item="item" :index="index" :open="open">{{ get(item, props.labelKey) }}</slot>
           </span>
 
           <slot name="trailing" :item="item" :index="index" :open="open" :ui="ui">

@@ -7,10 +7,10 @@ import { tv } from '../../utils/tv'
 const props = defineProps<ProseTableProps>()
 defineSlots<ProseTableSlots>()
 
-const appConfig = useAppConfig() as ProseTable['AppConfig']
+const appConfig = useAppConfig()
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.table || {}) })() as unknown as ProseTable['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.table || {}) })())
 </script>
 
 <template>

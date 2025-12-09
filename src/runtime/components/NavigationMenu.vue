@@ -19,11 +19,11 @@ import UTooltip from './Tooltip.vue'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps(), {
-  orientation: 'horizontal' as never,
+  orientation: 'horizontal',
   contentOrientation: 'horizontal',
   externalIcon: true,
   delayDuration: 0,
-  type: 'multiple' as never,
+  type: 'multiple',
   collapsible: true,
   unmountOnHide: true,
   labelKey: 'label'
@@ -45,11 +45,11 @@ const rootProps = useForwardPropsEmits(computed(() => ({
 })), emits)
 const accordionProps = useForwardPropsEmits(reactivePick(props, 'collapsible', 'disabled', 'type', 'unmountOnHide'), emits)
 const contentProps = toRef(() => props.content)
-const tooltipProps = toRef(() => defu(typeof props.tooltip === 'boolean' ? {} : props.tooltip, { delayDuration: 0, content: { side: 'right' } }) as TooltipProps)
-const popoverProps = toRef(() => defu(typeof props.popover === 'boolean' ? {} : props.popover, { mode: 'hover', content: { side: 'right', align: 'start', alignOffset: 2 } }) as PopoverProps)
+const tooltipProps = toRef(() => defu(typeof props.tooltip === 'boolean' ? {} : props.tooltip, { delayDuration: 0, content: { side: 'right' } }))
+const popoverProps = toRef(() => defu(typeof props.popover === 'boolean' ? {} : props.popover, { mode: 'hover', content: { side: 'right', align: 'start', alignOffset: 2 } }))
 
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ item, active? }>()
-const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate<{ item, level? }>({
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate()
+const [DefineItemTemplate, ReuseItemTemplate] = createReusableTemplate({
   props: {
     item
     index
@@ -96,12 +96,12 @@ function getAccordionDefaultValue(list, level = 0) {
       </slot>
 
       <span
-        v-if="get(item, props.labelKey as string) || !!slots[(item.slot ? `${item.slot}-label` : 'item-label') ]"
+        v-if="get(item, props.labelKey) || !!slots[(item.slot ? `${item.slot}-label` : 'item-label') ]"
         data-slot="linkLabel"
         :class="ui.linkLabel({ class: [props.ui?.linkLabel, item.ui?.linkLabel] })"
       >
         <slot :name="((item.slot ? `${item.slot}-label` : 'item-label') )" :item="item" :active="active" :index="index">
-          {{ get(item, props.labelKey as string) }}
+          {{ get(item, props.labelKey) }}
         </slot>
 
         <UIcon v-if="item.target === '_blank' && externalIcon !== false" :name="typeof externalIcon === 'string' ? externalIcon : appConfig.ui.icons.external" data-slot="linkLabelExternalIcon" :class="ui.linkLabelExternalIcon({ class: [props.ui?.linkLabelExternalIcon, item.ui?.linkLabelExternalIcon], active })" />
@@ -120,7 +120,7 @@ function getAccordionDefaultValue(list, level = 0) {
             v-if="item.badge || item.badge === 0"
             color="neutral"
             variant="outline"
-            :size="((item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.linkTrailingBadgeSize()) as BadgeProps['size'])"
+            :size="((item.ui?.linkTrailingBadgeSize || props.ui?.linkTrailingBadgeSize || ui.linkTrailingBadgeSize()))"
             v-bind="(typeof item.badge === 'string' || typeof item.badge === 'number') ? { label: item.badge } : item.badge"
             data-slot="linkTrailingBadge"
             :class="ui.linkTrailingBadge({ class: [props.ui?.linkTrailingBadge, item.ui?.linkTrailingBadge] })"
@@ -166,7 +166,7 @@ function getAccordionDefaultValue(list, level = 0) {
               >
                 <ul data-slot="childList" :class="ui.childList({ class: [props.ui?.childList, item.ui?.childList] })">
                   <li data-slot="childLabel" :class="ui.childLabel({ class: [props.ui?.childLabel, item.ui?.childLabel] })">
-                    {{ get(item, props.labelKey as string) }}
+                    {{ get(item, props.labelKey) }}
                   </li>
                   <li v-for="(childItem, childIndex) in item.children" :key="childIndex" data-slot="childItem" :class="ui.childItem({ class: [props.ui?.childItem, item.ui?.childItem] })">
                     <ULink v-slot="{ active: childActive, ...childSlotProps }" v-bind="pickLinkProps(childItem)" custom>
@@ -175,7 +175,7 @@ function getAccordionDefaultValue(list, level = 0) {
                           <UIcon v-if="childItem.icon" :name="childItem.icon" data-slot="childLinkIcon" :class="ui.childLinkIcon({ class: [props.ui?.childLinkIcon, item.ui?.childLinkIcon], active: childActive })" />
 
                           <span data-slot="childLinkLabel" :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })">
-                            {{ get(childItem, props.labelKey as string) }}
+                            {{ get(childItem, props.labelKey) }}
 
                             <UIcon v-if="childItem.target === '_blank' && externalIcon !== false" :name="typeof externalIcon === 'string' ? externalIcon : appConfig.ui.icons.external" data-slot="childLinkLabelExternalIcon" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" />
                           </span>
@@ -187,7 +187,7 @@ function getAccordionDefaultValue(list, level = 0) {
               </slot>
             </template>
           </UPopover>
-          <UTooltip v-else-if="orientation === 'vertical' && collapsed && (!!props.tooltip || !!item.tooltip)" :text="get(item, props.labelKey as string)" v-bind="{ ...tooltipProps, ...(typeof item.tooltip === 'boolean' ? {} : item.tooltip || {}) }">
+          <UTooltip v-else-if="orientation === 'vertical' && collapsed && (!!props.tooltip || !!item.tooltip)" :text="get(item, props.labelKey)" v-bind="{ ...tooltipProps, ...(typeof item.tooltip === 'boolean' ? {} : item.tooltip || {}) }">
             <ULinkBase v-bind="slotProps" data-slot="link" :class="ui.link({ class: [props.ui?.link, item.ui?.link, item.class], active: active || item.active, disabled: !!item.disabled, level: level > 0 })">
               <ReuseLinkTemplate :item="item" :active="active || item.active" :index="index" />
             </ULinkBase>
@@ -208,7 +208,7 @@ function getAccordionDefaultValue(list, level = 0) {
 
                       <div data-slot="childLinkWrapper" :class="ui.childLinkWrapper({ class: [props.ui?.childLinkWrapper, item.ui?.childLinkWrapper] })">
                         <p data-slot="childLinkLabel" :class="ui.childLinkLabel({ class: [props.ui?.childLinkLabel, item.ui?.childLinkLabel], active: childActive })">
-                          {{ get(childItem, props.labelKey as string) }}
+                          {{ get(childItem, props.labelKey) }}
 
                           <UIcon v-if="childItem.target === '_blank' && externalIcon !== false" :name="typeof externalIcon === 'string' ? externalIcon : appConfig.ui.icons.external" data-slot="childLinkLabelExternalIcon" :class="ui.childLinkLabelExternalIcon({ class: [props.ui?.childLinkLabelExternalIcon, item.ui?.childLinkLabelExternalIcon], active: childActive })" />
                         </p>
@@ -230,7 +230,7 @@ function getAccordionDefaultValue(list, level = 0) {
           v-bind="({
             ...accordionProps,
             defaultValue: getAccordionDefaultValue(item.children, level + 1)
-          } as AccordionRootProps)"
+          })"
           as="ul"
           data-slot="childList"
           :class="ui.childList({ class: props.ui?.childList })"
@@ -253,8 +253,8 @@ function getAccordionDefaultValue(list, level = 0) {
     v-bind="{
       ...rootProps,
       ...(orientation === 'horizontal' ? {
-        modelValue: modelValue as string,
-        defaultValue: defaultValue as string
+        modelValue: modelValue,
+        defaultValue: defaultValue
       } : {}),
       ...$attrs
     }"
