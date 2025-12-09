@@ -1,20 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/badge'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseBadge = ComponentConfig<typeof theme, AppConfig, 'badge', 'ui.prose'>
-
-export interface ProseBadgeProps {
-  class?: any
-}
-
-export interface ProseBadgeSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

@@ -1,69 +1,5 @@
-<script lang="ts">
-import type { TagsInputRootProps, TagsInputRootEmits, AcceptableInputValue } from 'reka-ui'
-import theme from '../../theme/input-tags.js'
-import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps, IconProps } from '../types'
-import type { InputHTMLAttributes } from '../types/html'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type InputTags = ComponentConfig<typeof theme, AppConfig, 'inputTags'>
-
-export type InputTagItem = AcceptableInputValue
-
-export interface InputTagsProps<T extends InputTagItem = InputTagItem> extends Pick<TagsInputRootProps<T>, 'modelValue' | 'defaultValue' | 'addOnPaste' | 'addOnTab' | 'addOnBlur' | 'duplicate' | 'disabled' | 'delimiter' | 'max' | 'id' | 'convertValue' | 'displayValue' | 'name' | 'required'>, UseComponentIconsProps, /** @vue-ignore */ Omit<InputHTMLAttributes, 'disabled' | 'max' | 'required' | 'name' | 'placeholder' | 'type' | 'autofocus' | 'maxlength' | 'minlength' | 'pattern' | 'size' | 'min' | 'step'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /** The placeholder text when the input is empty. */
-  placeholder?: string
-  /** The maximum number of character allowed. */
-  maxLength?: number
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: InputTags['variants']['color']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: InputTags['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: InputTags['variants']['size']
-  autofocus?: boolean
-  autofocusDelay?: number
-  /**
-   * The icon displayed to delete a tag.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  deleteIcon?: IconProps['name']
-  /** Highlight the ring color like a focus state. */
-  highlight?: boolean
-  class?: any
-  ui?: InputTags['slots']
-}
-
-export interface InputTagsEmits<T extends InputTagItem> extends TagsInputRootEmits<T> {
-  change: [event: Event]
-  blur: [event: FocusEvent]
-  focus: [event: FocusEvent]
-}
-
-type SlotProps<T extends InputTagItem> = (props: { item: T, index: number, ui: InputTags['ui'] }) => any
-
-export interface InputTagsSlots<T extends InputTagItem = InputTagItem> {
-  'leading'(props: { ui: InputTags['ui'] }): any
-  'default'(props: { ui: InputTags['ui'] }): any
-  'trailing'(props: { ui: InputTags['ui'] }): any
-  'item-text': SlotProps<T>
-  'item-delete': SlotProps<T>
-}
-</script>
-
-<script setup lang="ts" generic="T extends InputTagItem">
+<script setup>
 import { computed, useTemplateRef, onMounted, toRaw, toRef } from 'vue'
 import { TagsInputRoot, TagsInputItem, TagsInputItemText, TagsInputItemDelete, TagsInputInput, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -76,19 +12,19 @@ import UAvatar from './Avatar.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<InputTagsProps<T>>(), {
+const props = withDefaults(defineProps(), {
   type: 'text',
   autofocusDelay: 0
 })
-const emits = defineEmits<InputTagsEmits<T>>()
-const slots = defineSlots<InputTagsSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'addOnPaste', 'addOnTab', 'addOnBlur', 'duplicate', 'delimiter', 'max', 'convertValue', 'displayValue', 'required'), emits)
 
-const { emitFormBlur, emitFormFocus, emitFormChange, emitFormInput, size: formGroupSize, color, id, name, highlight, disabled, ariaAttrs } = useFormField<InputTagsProps>(props)
-const { orientation, size: fieldGroupSize } = useFieldGroup<InputTagsProps>(props)
+const { emitFormBlur, emitFormFocus, emitFormChange, emitFormInput, size: formGroupSize, color, id, name, highlight, disabled, ariaAttrs } = useFormField(props)
+const { orientation, size: fieldGroupSize } = useFieldGroup(props)
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props)
 
 const inputSize = computed(() => fieldGroupSize.value || formGroupSize.value)
@@ -102,7 +38,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.inputTags ||
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
   fieldGroup: orientation.value
-}) as unknown as InputTags['ui'])
+}))
 
 const inputRef = useTemplateRef('inputRef')
 
@@ -118,7 +54,7 @@ onMounted(() => {
   }, props.autofocusDelay)
 })
 
-function onUpdate(value: T[]) {
+function onUpdate(value) {
   if (toRaw(props.modelValue) === value) {
     return
   }
@@ -129,12 +65,12 @@ function onUpdate(value: T[]) {
   emitFormInput()
 }
 
-function onBlur(event: FocusEvent) {
+function onBlur(event) {
   emits('blur', event)
   emitFormBlur()
 }
 
-function onFocus(event: FocusEvent) {
+function onFocus(event) {
   emits('focus', event)
   emitFormFocus()
 }
@@ -166,7 +102,7 @@ defineExpose({
       :class="ui.item({ class: [props.ui?.item] })"
     >
       <TagsInputItemText data-slot="itemText" :class="ui.itemText({ class: [props.ui?.itemText] })">
-        <slot v-if="!!slots['item-text']" name="item-text" :item="(item as T)" :index="index" :ui="ui" />
+        <slot v-if="!!slots['item-text']" name="item-text" :item="item" :index="index" :ui="ui" />
       </TagsInputItemText>
 
       <TagsInputItemDelete
@@ -174,7 +110,7 @@ defineExpose({
         :class="ui.itemDelete({ class: [props.ui?.itemDelete] })"
         :disabled="disabled"
       >
-        <slot name="item-delete" :item="(item as T)" :index="index" :ui="ui">
+        <slot name="item-delete" :item="item" :index="index" :ui="ui">
           <UIcon :name="deleteIcon || appConfig.ui.icons.close" data-slot="itemDeleteIcon" :class="ui.itemDeleteIcon({ class: [props.ui?.itemDeleteIcon] })" />
         </slot>
       </TagsInputItemDelete>
@@ -196,7 +132,7 @@ defineExpose({
     <span v-if="isLeading || !!avatar || !!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading" :ui="ui">
         <UIcon v-if="isLeading && leadingIconName" :name="leadingIconName" data-slot="leadingIcon" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })" />
-        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
+        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()))" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
       </slot>
     </span>
 

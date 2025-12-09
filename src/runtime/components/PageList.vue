@@ -1,37 +1,17 @@
-<script lang="ts">
-import theme from '../../theme/page-list.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageList = ComponentConfig<typeof theme, AppConfig, 'pageList'>
-
-export interface PageListProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  divide?: boolean
-  class?: any
-}
-
-export interface PageListSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<PageListProps>(), {
+const props = defineProps({
   divide: false
 })
-defineSlots<PageListSlots>()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageList || {}) }) as unknown as PageList['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageList || {}) }))
 </script>
 
 <template>

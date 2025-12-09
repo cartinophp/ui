@@ -1,18 +1,17 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useOverlay } from '../composables/useOverlay'
-import type { Overlay } from '../composables/useOverlay'
 
 const { overlays, unmount, close } = useOverlay()
 
-const mountedOverlays = computed(() => overlays.filter((overlay: Overlay) => overlay.isMounted))
+const mountedOverlays = computed(() => overlays.filter((overlay) => overlay.isMounted))
 
 const onAfterLeave = (id: symbol) => {
   close(id)
   unmount(id)
 }
 
-const onClose = (id: symbol, value: any) => {
+const onClose = (id: symbol, value) => {
   close(id, value)
 }
 </script>

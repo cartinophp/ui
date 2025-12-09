@@ -1,22 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ComponentConfig } from '../../types/tv'
-import theme from '#build/ui/prose/tabs-item'
 
-type ProseTabsItem = ComponentConfig<typeof theme, AppConfig, 'tabsItem', 'ui.prose'>
-
-export interface ProseTabsItemProps {
-  label: string
-  description?: string
-  class?: any
-}
-
-export interface ProseTabsItemSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

@@ -1,59 +1,5 @@
-<script lang="ts">
-import type { UIMessage } from 'ai'
-import theme from '../../theme/chat-message.js'
-import type { AvatarProps, ButtonProps, IconProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChatMessage = ComponentConfig<typeof theme, AppConfig, 'chatMessage'>
-
-export interface ChatMessageProps extends /** @vue-ignore */ /** @vue-ignore */ UIMessage {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'article'
-   */
-  as?: any
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  avatar?: AvatarProps & { [key: string]: any }
-  /**
-   * @defaultValue 'naked'
-   */
-  variant?: ChatMessage['variants']['variant']
-  /**
-   * @defaultValue 'left'
-   */
-  side?: ChatMessage['variants']['side']
-  /**
-   * Display a list of actions under the message.
-   * The `label` will be used in a tooltip.
-   * `{ size: 'xs', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   */
-  actions?: (Omit<ButtonProps, 'onClick'> & { onClick?: (e: MouseEvent, message: UIMessage) => void })[]
-  /**
-   * Render the message in a compact style.
-   * This is done automatically when used inside a `UChatPalette`{lang="ts-type"}.
-   * @defaultValue false
-   */
-  compact?: boolean
-  /**
-   * @deprecated Use `parts` instead. (https://ai-sdk.dev/docs/migration-guides/migration-guide-5-0#content--parts-array)
-   * Use to display the content of the message.
-   */
-  content?: string
-  class?: any
-  ui?: ChatMessage['slots']
-}
-
-export interface ChatMessageSlots {
-  leading(props: { avatar: ChatMessageProps['avatar'], ui: ChatMessage['ui'] }): any
-  content(props: ChatMessageProps): any
-  actions(props: { actions: ChatMessageProps['actions'] }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { omit } from '../utils'
@@ -63,12 +9,12 @@ import UTooltip from './Tooltip.vue'
 import UAvatar from './Avatar.vue'
 import UIcon from './Icon.vue'
 
-const props = withDefaults(defineProps<ChatMessageProps>(), {
+const props = defineProps({
   as: 'article'
 })
-const slots = defineSlots<ChatMessageSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessage || {}) })({
   variant: props.variant,
@@ -76,7 +22,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessage 
   leading: !!props.icon || !!props.avatar || !!slots.leading,
   actions: !!props.actions || !!slots.actions,
   compact: props.compact
-}) as unknown as ChatMessage['ui'])
+}))
 </script>
 
 <template>
@@ -85,7 +31,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessage 
       <div v-if="icon || avatar || !!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
         <slot name="leading" :avatar="avatar" :ui="ui">
           <UIcon v-if="icon" :name="icon" data-slot="leadingIcon" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })" />
-          <UAvatar v-else-if="avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
+          <UAvatar v-else-if="avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()))" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
         </slot>
       </div>
 

@@ -3,7 +3,7 @@ import UPinInput from '../../../../src/runtime/components/PinInput.vue'
 
 const meta = {
   title: 'Components/Forms/PinInput',
-  component: UiPinInput,
+  component: UPinInput,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['outline', 'soft', 'subtle']
     }
   }
-} satisfies Meta<typeof UiPinInput>
+} satisfies Meta<typeof UPinInput>
 
 export default meta
 type Story = StoryObj<typeof meta>

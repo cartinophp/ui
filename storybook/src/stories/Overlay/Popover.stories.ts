@@ -4,7 +4,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Popover',
-  component: UiPopover,
+  component: UPopover,
   tags: ['autodocs'],
   argTypes: {
     side: {
@@ -12,14 +12,14 @@ const meta = {
       options: ['top', 'right', 'bottom', 'left']
     }
   }
-} satisfies Meta<typeof UiPopover>
+} satisfies Meta<typeof UPopover>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiPopover, UiButton },
+    components: { UPopover, UButton },
     template: `
       <ui-popover>
         <ui-button label="Open Popover" />
@@ -38,7 +38,7 @@ export const Default: Story = {
 
 export const Bottom: Story = {
   render: () => ({
-    components: { UiPopover, UiButton },
+    components: { UPopover, UButton },
     template: `
       <ui-popover side="bottom">
         <ui-button label="Open Below" />
@@ -54,7 +54,7 @@ export const Bottom: Story = {
 
 export const WithActions: Story = {
   render: () => ({
-    components: { UiPopover, UiButton },
+    components: { UPopover, UButton },
     template: `
       <ui-popover>
         <ui-button label="Actions" />
@@ -78,7 +78,7 @@ export const WithActions: Story = {
 
 export const Form: Story = {
   render: () => ({
-    components: { UiPopover, UiButton },
+    components: { UPopover, UButton },
     template: `
       <ui-popover>
         <ui-button label="Add Comment" />
@@ -103,7 +103,7 @@ export const Form: Story = {
 
 export const RichContent: Story = {
   render: () => ({
-    components: { UiPopover, UiButton },
+    components: { UPopover, UButton },
     template: `
       <ui-popover>
         <ui-button label="User Info" />

@@ -3,7 +3,7 @@ import UCard from '../../../../src/runtime/components/Card.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Card',
-  component: UiCard,
+  component: UCard,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -11,14 +11,14 @@ const meta = {
       options: ['outline', 'subtle']
     }
   }
-} satisfies Meta<typeof UiCard>
+} satisfies Meta<typeof UCard>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiCard },
+    components: { UCard },
     template: `
       <ui-card>
         <div class="p-4">
@@ -32,7 +32,7 @@ export const Default: Story = {
 
 export const WithHeader: Story = {
   render: () => ({
-    components: { UiCard },
+    components: { UCard },
     template: `
       <ui-card>
         <template #header>
@@ -50,7 +50,7 @@ export const WithHeader: Story = {
 
 export const WithFooter: Story = {
   render: () => ({
-    components: { UiCard },
+    components: { UCard },
     template: `
       <ui-card>
         <div class="p-4">
@@ -70,7 +70,7 @@ export const WithFooter: Story = {
 
 export const Complete: Story = {
   render: () => ({
-    components: { UiCard },
+    components: { UCard },
     template: `
       <ui-card>
         <template #header>
@@ -102,7 +102,7 @@ export const Subtle: Story = {
     variant: 'subtle'
   },
   render: (args) => ({
-    components: { UiCard },
+    components: { UCard },
     setup() {
       return { args }
     },

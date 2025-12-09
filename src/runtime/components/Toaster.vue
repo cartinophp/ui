@@ -1,50 +1,5 @@
-<script lang="ts">
-import type { ToastProviderProps } from 'reka-ui'
-import theme from '../../theme/toaster.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Toaster = ComponentConfig<typeof theme, AppConfig, 'toaster'>
-
-export interface ToasterProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ToastProviderProps, 'swipeDirection'> {
-  /**
-   * The position on the screen to display the toasts.
-   * @defaultValue 'bottom-right'
-   */
-  position?: Toaster['variants']['position']
-  /**
-   * Expand the toasts to show multiple toasts at once.
-   * @defaultValue true
-   */
-  expand?: boolean
-  /**
-   * Whether to show the progress bar on all toasts.
-   * @defaultValue true
-   */
-  progress?: boolean
-  /**
-   * Render the toaster in a portal.
-   * @defaultValue true
-   */
-  portal?: boolean | string | HTMLElement
-  /**
-   * Maximum number of toasts to display at once.
-   * @defaultValue 5
-   */
-  max?: number
-  class?: any
-  ui?: Toaster['slots']
-}
-
-export interface ToasterSlots {
-  default(props?: {}): any
-}
-
-export default {
-  name: 'Toaster'
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed, toRef, provide } from 'vue'
 import { ToastProvider, ToastViewport, ToastPortal, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -54,17 +9,17 @@ import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UToast from './Toast.vue'
 
-const props = withDefaults(defineProps<ToasterProps>(), {
+const props = defineProps({
   expand: true,
   portal: true,
   duration: 5000,
   progress: true,
   max: 5
 })
-defineSlots<ToasterSlots>()
+defineSlots()
 
 const { toasts, remove } = useToast()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 provide(toastMaxInjectionKey, toRef(() => props.max))
 
@@ -90,9 +45,9 @@ const swipeDirection = computed(() => {
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.toaster || {}) })({
   position: props.position,
   swipeDirection: swipeDirection.value
-}) as unknown as Toaster['ui'])
+}))
 
-function onUpdateOpen(value: boolean, id: string | number) {
+function onUpdateOpen(value, id | number) {
   if (value) {
     return
   }
@@ -103,12 +58,12 @@ function onUpdateOpen(value: boolean, id: string | number) {
 const hovered = ref(false)
 const expanded = computed(() => props.expand || hovered.value)
 
-const refs = ref<{ height: number }[]>([])
+const refs = ref()
 
 const height = computed(() => refs.value.reduce((acc, { height }) => acc + height + 16, 0))
 const frontHeight = computed(() => refs.value[refs.value.length - 1]?.height || 0)
 
-function getOffset(index: number) {
+function getOffset(index) {
   return refs.value.slice(index + 1).reduce((acc, { height }) => acc + height + 16, 0)
 }
 </script>
@@ -123,7 +78,7 @@ function getOffset(index: number) {
       ref="refs"
       :progress="progress"
       v-bind="omit(toast, ['id', 'close'])"
-      :close="(toast.close as boolean)"
+      :close="toast.close"
       :data-expanded="expanded"
       :data-front="!expanded && index === toasts.length - 1"
       :style="{

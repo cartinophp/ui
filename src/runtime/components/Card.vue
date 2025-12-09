@@ -1,43 +1,17 @@
-<script lang="ts">
-import theme from '../../theme/card.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Card = ComponentConfig<typeof theme, AppConfig, 'card'>
-
-export interface CardProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: Card['variants']['variant']
-  class?: any
-  ui?: Card['slots']
-}
-
-export interface CardSlots {
-  header(props?: {}): any
-  default(props?: {}): any
-  footer(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<CardProps>()
-const slots = defineSlots<CardSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.card || {}) })({
   variant: props.variant
-}) as unknown as Card['ui'])
+}))
 </script>
 
 <template>

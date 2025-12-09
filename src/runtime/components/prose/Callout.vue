@@ -1,29 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/callout'
-import type { IconProps, LinkProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseCallout = ComponentConfig<typeof theme, AppConfig, 'callout', 'ui.prose'>
-
-export interface ProseCalloutProps {
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  icon?: IconProps['name']
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: ProseCallout['variants']['color']
-  class?: any
-  ui?: ProseCallout['slots']
-}
-
-export interface ProseCalloutSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

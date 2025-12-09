@@ -1,107 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import theme from '../../theme/auth-form.js'
-import type { ButtonProps, FormProps, FormFieldProps, SeparatorProps, InputProps, CheckboxProps, SelectMenuProps, PinInputProps, IconProps, LinkPropsKeys } from '../types'
-import type { FormSchema, FormSubmitEvent, InferInput } from '../types/form'
-import type { FormHTMLAttributes } from '../types/html'
-import type { NonUnion } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type AuthForm = ComponentConfig<typeof theme, AppConfig, 'authForm'>
-
-export type AuthFormCheckboxField = Omit<FormFieldProps, 'name'> & CheckboxProps & {
-  name: string
-  type: 'checkbox'
-}
-
-export type AuthFormSelectField = Omit<FormFieldProps, 'name'> & SelectMenuProps & {
-  name: string
-  type: 'select'
-}
-
-export type AuthFormOtpField = Omit<FormFieldProps, 'name'> & Omit<PinInputProps, 'type' | 'otp'> & {
-  name: string
-  type: 'otp'
-  /**
-   * @deprecated Bind props directly in the field object.
-   * The optional props for the `otp` type.
-   * `{ otp: true }`{lang="ts-type"}
-   */
-  otp?: boolean | PinInputProps
-}
-
-export type AuthFormInputFieldType = 'password' | 'text' | 'email' | 'number'
-
-export type AuthFormInputField<T extends AuthFormInputFieldType & NonUnion<T> = 'text'> = Omit<FormFieldProps, 'name'> & Omit<InputProps, 'type'> & {
-  name: string
-  type: T
-}
-
-export type AuthFormField = AuthFormCheckboxField | AuthFormSelectField | AuthFormOtpField | AuthFormInputField<'password'> | AuthFormInputField<'text'> | AuthFormInputField<'email'> | AuthFormInputField<'number'>
-
-export interface AuthFormProps<T extends FormSchema = FormSchema<object>, F extends AuthFormField = AuthFormField> extends /** @vue-ignore */ FormHTMLAttributes {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  title?: string
-  description?: string
-  fields?: F[]
-  /**
-   * Display a list of Button under the description.
-   * `{ color: 'neutral', variant: 'subtle', block: true }`{lang="ts-type"}
-   */
-  providers?: ButtonProps[]
-  /**
-   * The text displayed in the separator.
-   * @defaultValue 'or'
-   */
-  separator?: string | SeparatorProps
-  /**
-   * Display a submit button at the bottom of the form.
-   * `{ label: 'Continue', block: true }`{lang="ts-type"}
-   */
-  submit?: Omit<ButtonProps, LinkPropsKeys>
-  schema?: T
-  validate?: FormProps<T>['validate']
-  validateOn?: FormProps<T>['validateOn']
-  validateOnInputDelay?: FormProps<T>['validateOnInputDelay']
-  disabled?: FormProps<T>['disabled']
-  loading?: ButtonProps['loading']
-  loadingAuto?: FormProps<T>['loadingAuto']
-  class?: any
-  onSubmit?: FormProps<T>['onSubmit']
-  ui?: AuthForm['slots']
-}
-
-export type AuthFormEmits<T extends object> = {
-  submit: [payload: FormSubmitEvent<T>]
-}
-
-type DynamicFieldSlots<T, F, SlotProps = { field: F, state: T }> = Record<string, (props: SlotProps) => any> & Record<`${keyof T extends string ? keyof T : never}-field`, (props: SlotProps) => any>
-
-type DynamicFormFieldSlots<T> = Record<string, (props?: {}) => any> & Record<`${keyof T extends string ? keyof T : never}-${'label' | 'description' | 'hint' | 'help' | 'error'}`, (props?: {}) => any>
-
-export type AuthFormSlots<T extends object = object, F extends AuthFormField = AuthFormField> = {
-  header(props?: {}): any
-  leading(props: { ui: AuthForm['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  providers(props?: {}): any
-  validation(props?: {}): any
-  submit(props: { loading: boolean }): any
-  footer(props?: {}): any
-} & DynamicFieldSlots<T, F> & DynamicFormFieldSlots<T>
-
-</script>
-
-<script setup lang="ts" generic="T extends FormSchema, F extends AuthFormField">
+<script setup>
 import { reactive, ref, computed, useTemplateRef } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useLocale } from '../composables/useLocale'
@@ -119,39 +18,32 @@ import UPinInput from './PinInput.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<AuthFormProps<T, F>>(), {
-  separator: 'or'
+const props = defineProps({
+  separator: { default: 'or' }
 })
 
-type FormStateType = InferInput<T>
-
-type TypedAuthFormField = AuthFormField & {
-  name: keyof FormStateType
-  defaultValue?: FormStateType[keyof FormStateType]
-}
-
-const state = reactive<FormStateType>((props.fields as TypedAuthFormField[] || []).reduce<FormStateType>((acc, field) => {
+const state = reactive(props.fields?.reduce((acc, field) => {
   if (field.name) {
     acc[field.name] = field.defaultValue
   }
   return acc
-}, {} as FormStateType))
+}, {}) || {})
 
-defineEmits<AuthFormEmits<typeof state>>()
-const slots = defineSlots<AuthFormSlots<typeof state, F>>()
+defineEmits()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.authForm || {}) })() as unknown as AuthForm['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.authForm || {}) })())
 
 const formRef = useTemplateRef('formRef')
 const passwordVisibility = ref(false)
 const passwordRef = useTemplateRef('passwordRef')
 
-function pickFieldProps(field: F) {
-  const fields = ['name', 'errorPattern', 'help', 'error', 'hint', 'size', 'required', 'eagerValidation', 'validateOnInputDelay'] as (keyof F)[]
+function pickFieldProps(field) {
+  const fields = ['name', 'errorPattern', 'help', 'error', 'hint', 'size', 'required', 'eagerValidation', 'validateOnInputDelay']
 
   // Prevent binding `label` and `description` on Checkbox's FormField
   if (field.type === 'checkbox') {
@@ -161,8 +53,8 @@ function pickFieldProps(field: F) {
   return pick(field, [...fields, 'label', 'description'])
 }
 
-function omitFieldProps(field: F) {
-  const fields = ['errorPattern', 'help', 'error', 'hint', 'size', 'required', 'eagerValidation', 'validateOnInputDelay'] as (keyof F)[]
+function omitFieldProps(field) {
+  const fields = ['errorPattern', 'help', 'error', 'hint', 'size', 'required', 'eagerValidation', 'validateOnInputDelay']
 
   // Prevent binding `type` on other fields than Input
   if (field.type === 'checkbox' || field.type === 'select' || field.type === 'otp') {
@@ -268,7 +160,7 @@ defineExpose({
               v-model="state[field.name]"
               data-slot="otp"
               :class="ui.otp({ class: props.ui?.otp })"
-              v-bind="(Object.assign({}, omitFieldProps(field), typeof (field as AuthFormOtpField).otp === 'object' ? (field as AuthFormOtpField).otp : {}) as any)"
+              v-bind="(Object.assign({}, omitFieldProps(field), typeof field.otp === 'object' ? field.otp : {}) as any)"
               otp
             />
             <UInput

@@ -3,7 +3,7 @@ import UUser from '../../../../src/runtime/components/User.vue'
 
 const meta = {
   title: 'Components/DataDisplay/User',
-  component: UiUser,
+  component: UUser,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
     }
   }
-} satisfies Meta<typeof UiUser>
+} satisfies Meta<typeof UUser>
 
 export default meta
 type Story = StoryObj<typeof meta>

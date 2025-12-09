@@ -1,29 +1,14 @@
-<script lang="ts">
-import theme from '../../theme/skeleton.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Skeleton = ComponentConfig<typeof theme, AppConfig, 'skeleton'>
-
-export interface SkeletonProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<SkeletonProps>()
+const props = defineProps()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.skeleton || {}) }) as unknown as Skeleton['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.skeleton || {}) }))
 </script>
 
 <template>

@@ -1,71 +1,23 @@
-<script lang="ts">
-import theme from '../../theme/page-hero.js'
-import type { ButtonProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageHero = ComponentConfig<typeof theme, AppConfig, 'pageHero'>
-
-export interface PageHeroProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  headline?: string
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button under the description.
-   * `{ size: 'xl' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  /**
-   * The orientation of the page hero.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageHero['variants']['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  class?: any
-  ui?: PageHero['slots']
-}
-
-export interface PageHeroSlots {
-  top(props?: {}): any
-  header(props?: {}): any
-  headline(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-  links(props?: {}): any
-  default(props?: {}): any
-  bottom(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 import UContainer from './Container.vue'
 
-const props = withDefaults(defineProps<PageHeroProps>(), {
+const props = defineProps({
   orientation: 'vertical'
 })
-const slots = defineSlots<PageHeroSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageHero || {}) })({
   orientation: props.orientation,
   reverse: props.reverse,
   title: !!props.title || !!slots.title
-}) as unknown as PageHero['ui'])
+}))
 </script>
 
 <template>

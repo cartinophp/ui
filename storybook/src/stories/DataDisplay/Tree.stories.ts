@@ -3,7 +3,7 @@ import UTree from '../../../../src/runtime/components/Tree.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Tree',
-  component: UiTree,
+  component: UTree,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiTree>
+} satisfies Meta<typeof UTree>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -1,48 +1,19 @@
-<script lang="ts">
-import theme from '../../theme/field-group.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type FieldGroup = ComponentConfig<typeof theme, AppConfig, 'fieldGroup'>
-
-export interface FieldGroupProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * @defaultValue 'md'
-   */
-  size?: FieldGroup['variants']['size']
-  /**
-   * The orientation the buttons are laid out.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: FieldGroup['variants']['orientation']
-  class?: any
-  ui?: FieldGroup['slots']
-}
-
-export interface FieldGroupSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { provide, computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { fieldGroupInjectionKey } from '../composables/useFieldGroup'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<FieldGroupProps>(), {
+const props = defineProps({
   orientation: 'horizontal'
 })
-defineSlots<FieldGroupSlots>()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fieldGroup || {}) }) as unknown as FieldGroup['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fieldGroup || {}) }))
 
 provide(fieldGroupInjectionKey, computed(() => ({
   orientation: props.orientation,

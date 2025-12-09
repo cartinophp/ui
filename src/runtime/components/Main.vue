@@ -1,34 +1,15 @@
-<script lang="ts">
-import theme from '../../theme/main.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Main = ComponentConfig<typeof theme, AppConfig, 'main'>
-
-export interface MainProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface MainSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<MainProps>()
-defineSlots<MainSlots>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.main || {}) }) as unknown as Main['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.main || {}) }))
 </script>
 
 <template>

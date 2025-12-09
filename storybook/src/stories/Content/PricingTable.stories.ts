@@ -3,9 +3,9 @@ import UPricingTable from '../../../../src/runtime/components/PricingTable.vue'
 
 const meta = {
   title: 'Components/Content/PricingTable',
-  component: UiPricingTable,
+  component: UPricingTable,
   tags: ['autodocs']
-} satisfies Meta<typeof UiPricingTable>
+} satisfies Meta<typeof UPricingTable>
 
 export default meta
 type Story = StoryObj<typeof meta>

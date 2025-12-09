@@ -1,134 +1,5 @@
-<script lang="ts">
-import type { UseFileDialogReturn } from '@vueuse/core'
-import theme from '../../theme/file-upload.js'
-import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { InputHTMLAttributes } from '../types/html'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type FileUpload = ComponentConfig<typeof theme, AppConfig, 'fileUpload'>
-
-export interface FileUploadProps<M extends boolean = false> extends /** @vue-ignore */ Pick<InputHTMLAttributes, 'form' | 'formaction' | 'formenctype' | 'formmethod' | 'formnovalidate' | 'formtarget'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  id?: string
-  name?: string
-  /**
-   * The icon to display.
-   * @defaultValue appConfig.ui.icons.upload
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  label?: string
-  description?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: FileUpload['variants']['color']
-  /**
-   * The `button` variant is only available when `multiple` is `false`.
-   * @defaultValue 'area'
-   */
-  variant?: FileUpload['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: FileUpload['variants']['size']
-  /**
-   * The layout of how files are displayed.
-   * Only works when `variant` is `area`.
-   * @defaultValue 'list'
-   */
-  layout?: FileUpload['variants']['layout']
-  /**
-   * The position of the files.
-   * Only works when `variant` is `area` and when `layout` is `list`.
-   * @defaultValue 'outside'
-   */
-  position?: FileUpload['variants']['position']
-  /** Highlight the ring color like a focus state. */
-  highlight?: boolean
-  /**
-   * Specifies the allowed file types for the input. Provide a comma-separated list of MIME types or file extensions (e.g., "image/png,application/pdf,.jpg").
-   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/accept
-   * @defaultValue '*'
-   */
-  accept?: string
-  multiple?: M & boolean
-  /**
-   * Reset the file input when the dialog is opened.
-   * @defaultValue false
-   */
-  reset?: boolean
-  /**
-   * Create a zone that allows the user to drop files onto it.
-   * @defaultValue true
-   */
-  dropzone?: boolean
-  /**
-   * Make the dropzone interactive when the user is clicking on it.
-   * @defaultValue true
-   */
-  interactive?: boolean
-  required?: boolean
-  disabled?: boolean
-  /**
-   * The icon to display for the file.
-   * @defaultValue appConfig.ui.icons.file
-   * @IconifyIcon
-   */
-  fileIcon?: IconProps['name']
-  /**
-   * Configure the delete button for the file.
-   * When `layout` is `grid`, the default is `{ color: 'neutral', variant: 'solid', size: 'xs' }`{lang="ts-type"}
-   * When `layout` is `list`, the default is `{ color: 'neutral', variant: 'link' }`{lang="ts-type"}
-   */
-  fileDelete?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed to delete a file.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  fileDeleteIcon?: IconProps['name']
-  /**
-   * Show the file preview/list after upload.
-   * @defaultValue true
-   */
-  preview?: boolean
-  class?: any
-  ui?: FileUpload['slots']
-}
-
-export interface FileUploadEmits {
-  change: [event: Event]
-}
-
-type FileUploadFiles<M> = (M extends true ? File[] : File) | null
-
-export interface FileUploadSlots<M extends boolean = false> {
-  'default'(props: {
-    open: UseFileDialogReturn['open']
-    removeFile: (index?: number) => void
-    ui: FileUpload['ui']
-  }): any
-  'leading'(props: { ui: FileUpload['ui'] }): any
-  'label'(props?: {}): any
-  'description'(props?: {}): any
-  'actions'(props: { files?: FileUploadFiles<M>, open: UseFileDialogReturn['open'], removeFile: (index?: number) => void }): any
-  'files'(props: { files?: FileUploadFiles<M> }): any
-  'files-top'(props: { files?: FileUploadFiles<M>, open: UseFileDialogReturn['open'], removeFile: (index?: number) => void }): any
-  'files-bottom'(props: { files?: FileUploadFiles<M>, open: UseFileDialogReturn['open'], removeFile: (index?: number) => void }): any
-  'file'(props: { file: File, index: number }): any
-  'file-leading'(props: { file: File, index: number, ui: FileUpload['ui'] }): any
-  'file-name'(props: { file: File, index: number }): any
-  'file-size'(props: { file: File, index: number }): any
-  'file-trailing'(props: { file: File, index: number, ui: FileUpload['ui'] }): any
-}
-</script>
-
-<script setup lang="ts" generic="M extends boolean = false">
+<script setup>
 import { computed, toRef, watch } from 'vue'
 import { Primitive, VisuallyHidden } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
@@ -141,7 +12,7 @@ import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<FileUploadProps<M>>(), {
+const props = withDefaults(defineProps(), {
   accept: '*',
   multiple: false as never,
   reset: false,
@@ -152,12 +23,12 @@ const props = withDefaults(defineProps<FileUploadProps<M>>(), {
   position: 'outside',
   preview: true
 })
-const emits = defineEmits<FileUploadEmits>()
-const slots = defineSlots<FileUploadSlots<M>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const modelValue = defineModel<(M extends true ? File[] : File) | null>()
+const modelValue = defineModel<(M extends true ? File ) | null>()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const { t } = useLocale()
 
@@ -170,7 +41,7 @@ const { isDragging, open, inputRef, dropzoneRef } = useFileUpload({
   dropzone: props.dropzone,
   onUpdate
 })
-const { emitFormInput, emitFormChange, id, name, disabled, ariaAttrs } = useFormField<FileUploadProps>(props)
+const { emitFormInput, emitFormChange, id, name, disabled, ariaAttrs } = useFormField(props)
 
 const variant = computed(() => props.multiple ? 'area' : props.variant)
 const layout = computed(() => props.variant === 'button' && !props.multiple ? 'grid' : props.layout)
@@ -196,13 +67,13 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.fileUpload |
   multiple: props.multiple,
   highlight: props.highlight,
   disabled: props.disabled
-}) as unknown as FileUpload['ui'])
+}))
 
-function createObjectUrl(file: File): string {
+function createObjectUrl(file) {
   return URL.createObjectURL(file)
 }
 
-function formatFileSize(bytes: number): string {
+function formatFileSize(bytes) {
   if (bytes === 0) {
     return '0B'
   }
@@ -217,16 +88,16 @@ function formatFileSize(bytes: number): string {
   return `${formattedSize}${sizes[i]}`
 }
 
-function onUpdate(files: File[], reset = false) {
+function onUpdate(files, reset = false) {
   if (props.multiple) {
     if (reset) {
-      modelValue.value = files as (M extends true ? File[] : File) | null
+      modelValue.value = files | null
     } else {
-      const existingFiles = (modelValue.value as File[]) || []
-      modelValue.value = [...existingFiles, ...(files || [])] as (M extends true ? File[] : File) | null
+      const existingFiles = modelValue.value || 
+      modelValue.value = [...existingFiles, ...(files || )] | null
     }
   } else {
-    modelValue.value = files?.[0] as (M extends true ? File[] : File) | null
+    modelValue.value = files?.[0] | null
   }
 
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
@@ -236,19 +107,19 @@ function onUpdate(files: File[], reset = false) {
   emitFormInput()
 }
 
-function removeFile(index?: number) {
+function removeFile(index?) {
   if (!modelValue.value) {
     return
   }
 
   if (!props.multiple || index === undefined) {
-    onUpdate([], true)
+    onUpdate(, true)
 
     dropzoneRef.value?.focus()
     return
   }
 
-  const files = [...modelValue.value as File[]]
+  const files = [...modelValue.value]
   files.splice(index, 1)
 
   onUpdate(files, true)
@@ -257,7 +128,7 @@ function removeFile(index?: number) {
 }
 
 watch(modelValue, (newValue) => {
-  const hasModelReset = props.multiple ? !(newValue as File[])?.length : !newValue
+  const hasModelReset = props.multiple ? !newValue?.length : !newValue
 
   if (hasModelReset && inputRef.value?.$el) {
     inputRef.value.$el.value = ''
@@ -271,13 +142,13 @@ defineExpose({
 </script>
 
 <template>
-  <DefineFilesTemplate>
+  
     <template v-if="props.preview && modelValue && (Array.isArray(modelValue) ? modelValue.length : true)">
       <slot name="files-top" :files="modelValue" :open="open" :remove-file="removeFile" />
 
       <div data-slot="files" :class="ui.files({ class: props.ui?.files })">
         <slot name="files" :files="modelValue">
-          <div v-for="(file, index) in Array.isArray(modelValue) ? modelValue : [modelValue]" :key="(file as File).name" data-slot="file" :class="ui.file({ class: props.ui?.file })">
+          <div v-for="(file, index) in Array.isArray(modelValue) ? modelValue : [modelValue]" :key="file.name" data-slot="file" :class="ui.file({ class: props.ui?.file })">
             <slot name="file" :file="file" :index="index">
               <slot name="file-leading" :file="file" :index="index" :ui="ui">
                 <UAvatar
@@ -293,13 +164,13 @@ defineExpose({
               <div data-slot="fileWrapper" :class="ui.fileWrapper({ class: props.ui?.fileWrapper })">
                 <span data-slot="fileName" :class="ui.fileName({ class: props.ui?.fileName })">
                   <slot name="file-name" :file="file" :index="index">
-                    {{ (file as File).name }}
+                    {{ file.name }}
                   </slot>
                 </span>
 
                 <span data-slot="fileSize" :class="ui.fileSize({ class: props.ui?.fileSize })">
                   <slot name="file-size" :file="file" :index="index">
-                    {{ formatFileSize((file as File).size) }}
+                    {{ formatFileSize(file.size) }}
                   </slot>
                 </span>
               </div>
@@ -318,7 +189,7 @@ defineExpose({
                     }),
                     ...typeof fileDelete === 'object' ? fileDelete : undefined
                   }"
-                  :aria-label="t('fileUpload.removeFile', { filename: (file as File).name })"
+                  :aria-label="t('fileUpload.removeFile', { filename: file.name })"
                   :trailing-icon="fileDeleteIcon || appConfig.ui.icons.close"
                   data-slot="fileTrailingButton"
                   :class="ui.fileTrailingButton({ class: props.ui?.fileTrailingButton })"
@@ -351,7 +222,7 @@ defineExpose({
       >
         <ReuseFilesTemplate v-if="position === 'inside'" />
 
-        <div v-if="position === 'inside' ? (multiple ? !(modelValue as File[])?.length : !modelValue) : true" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+        <div v-if="position === 'inside' ? (multiple ? !modelValue?.length : !modelValue) : true" data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
           <slot name="leading" :ui="ui">
             <UIcon v-if="variant === 'button'" :name="icon || appConfig.ui.icons.upload" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
             <UAvatar v-else :icon="icon || appConfig.ui.icons.upload" :size="props.size" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
@@ -387,7 +258,7 @@ defineExpose({
       feature="fully-hidden"
       :name="name"
       :accept="accept"
-      :multiple="(multiple as boolean)"
+      :multiple="multiple"
       :required="required"
       :disabled="disabled"
       v-bind="{ ...$attrs, ...ariaAttrs }"

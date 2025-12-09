@@ -3,9 +3,9 @@ import UBreadcrumb from '../../../../src/runtime/components/Breadcrumb.vue'
 
 const meta = {
   title: 'Components/Navigation/Breadcrumb',
-  component: UiBreadcrumb,
+  component: UBreadcrumb,
   tags: ['autodocs']
-} satisfies Meta<typeof UiBreadcrumb>
+} satisfies Meta<typeof UBreadcrumb>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -1,60 +1,22 @@
-<script lang="ts">
-import type { NuxtError } from '#app'
-import theme from '../../theme/error.js'
-import type { ButtonProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Error = ComponentConfig<typeof theme, AppConfig, 'error'>
-
-export interface ErrorProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  error?: Partial<NuxtError & { message: string }>
-  /**
-   * The URL to redirect to when the error is cleared.
-   * @defaultValue '/'
-   */
-  redirect?: string
-  /**
-   * Display a button to clear the error in the links slot.
-   * `{ size: 'lg', color: 'primary', variant: 'solid', label: 'Back to home' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  clear?: boolean | ButtonProps
-  class?: any
-  ui?: Error['slots']
-}
-
-export interface ErrorSlots {
-  default(props?: {}): any
-  statusCode(props?: {}): any
-  statusMessage(props?: {}): any
-  message(props?: {}): any
-  links(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<ErrorProps>(), {
+const props = defineProps({
   redirect: '/',
   clear: true
 })
-const slots = defineSlots<ErrorSlots>()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.error || {}) })() as unknown as Error['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.error || {}) })())
 
 function handleError() {
   clearError({ redirect: props.redirect })

@@ -3,7 +3,7 @@ import UInput from '../../../../src/runtime/components/Input.vue'
 
 const meta = {
   title: 'Components/Forms/Input',
-  component: UiInput,
+  component: UInput,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -23,7 +23,7 @@ const meta = {
       options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search']
     }
   }
-} satisfies Meta<typeof UiInput>
+} satisfies Meta<typeof UInput>
 
 export default meta
 type Story = StoryObj<typeof meta>

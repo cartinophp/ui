@@ -1,69 +1,21 @@
-<script lang="ts">
-import type { Ref } from 'vue'
-import theme from '../../theme/form-field.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type FormField = ComponentConfig<typeof theme, AppConfig, 'formField'>
-
-export interface FormFieldProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /** The name of the FormField. Also used to match form errors. */
-  name?: string
-  /** A regular expression to match form error names. */
-  errorPattern?: RegExp
-  label?: string
-  description?: string
-  help?: string
-  error?: boolean | string
-  hint?: string
-  /**
-   * @defaultValue 'md'
-   */
-  size?: FormField['variants']['size']
-  required?: boolean
-  /** If true, validation on input will be active immediately instead of waiting for a blur event. */
-  eagerValidation?: boolean
-  /**
-   * Delay in milliseconds before validating the form on input events.
-   * @defaultValue `300`
-   */
-  validateOnInputDelay?: number
-  class?: any
-  ui?: FormField['slots']
-}
-
-export interface FormFieldSlots {
-  label(props: { label?: string }): any
-  hint(props: { hint?: string }): any
-  description(props: { description?: string }): any
-  help(props: { help?: string }): any
-  error(props: { error?: boolean | string }): any
-  default(props: { error?: boolean | string }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, ref, inject, provide, useId, watch } from 'vue'
 import { Primitive, Label } from 'reka-ui'
 import { formFieldInjectionKey, inputIdInjectionKey, formErrorsInjectionKey, formInputsInjectionKey } from '../composables/useFormField'
 import { tv } from '../utils/tv'
-import type { FormError, FormFieldInjectedOptions } from '../types/form'
 
-const props = defineProps<FormFieldProps>()
-const slots = defineSlots<FormFieldSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.formField || {}) })({
   size: props.size,
   required: props.required
-}) as unknown as FormField['ui'])
+}))
 
-const formErrors = inject<Ref<FormError[]> | null>(formErrorsInjectionKey, null)
+const formErrors = inject(formErrorsInjectionKey, null)
 
 const error = computed(() => props.error || formErrors?.value?.find(error => error.name === props.name || (props.errorPattern && error.name?.match(props.errorPattern)))?.message)
 
@@ -92,7 +44,7 @@ provide(formFieldInjectionKey, computed(() => ({
   description: props.description,
   help: props.help,
   ariaId
-}) as FormFieldInjectedOptions<FormFieldProps>))
+}) as FormFieldInjectedOptions))
 </script>
 
 <template>

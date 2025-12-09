@@ -3,7 +3,7 @@ import UTextarea from '../../../../src/runtime/components/Textarea.vue'
 
 const meta = {
   title: 'Components/Forms/Textarea',
-  component: UiTextarea,
+  component: UTextarea,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiTextarea>
+} satisfies Meta<typeof UTextarea>
 
 export default meta
 type Story = StoryObj<typeof meta>

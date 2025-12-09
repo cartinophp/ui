@@ -3,16 +3,16 @@ import UContainer from '../../../../src/runtime/components/Container.vue'
 
 const meta = {
   title: 'Components/Layout/Container',
-  component: UiContainer,
+  component: UContainer,
   tags: ['autodocs']
-} satisfies Meta<typeof UiContainer>
+} satisfies Meta<typeof UContainer>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiContainer },
+    components: { UContainer },
     template: `
       <ui-container>
         <div class="bg-gray-100 p-8 rounded">
@@ -28,7 +28,7 @@ export const Default: Story = {
 
 export const WithMaxWidth: Story = {
   render: () => ({
-    components: { UiContainer },
+    components: { UContainer },
     template: `
       <ui-container class="max-w-4xl">
         <div class="bg-blue-50 p-8 rounded border border-blue-200">
@@ -44,7 +44,7 @@ export const WithMaxWidth: Story = {
 
 export const FullWidth: Story = {
   render: () => ({
-    components: { UiContainer },
+    components: { UContainer },
     template: `
       <ui-container class="max-w-full px-4">
         <div class="bg-green-50 p-8 rounded border border-green-200">
@@ -60,7 +60,7 @@ export const FullWidth: Story = {
 
 export const Narrow: Story = {
   render: () => ({
-    components: { UiContainer },
+    components: { UContainer },
     template: `
       <ui-container class="max-w-2xl">
         <div class="bg-purple-50 p-8 rounded border border-purple-200">
@@ -79,7 +79,7 @@ export const Narrow: Story = {
 
 export const MultipleContainers: Story = {
   render: () => ({
-    components: { UiContainer },
+    components: { UContainer },
     template: `
       <div class="space-y-8">
         <ui-container class="max-w-2xl">

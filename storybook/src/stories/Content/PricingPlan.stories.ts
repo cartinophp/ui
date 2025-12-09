@@ -3,7 +3,7 @@ import UPricingPlan from '../../../../src/runtime/components/PricingPlan.vue'
 
 const meta = {
   title: 'Components/Content/PricingPlan',
-  component: UiPricingPlan,
+  component: UPricingPlan,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiPricingPlan>
+} satisfies Meta<typeof UPricingPlan>
 
 export default meta
 type Story = StoryObj<typeof meta>

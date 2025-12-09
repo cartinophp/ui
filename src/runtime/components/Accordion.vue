@@ -1,70 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { AccordionRootProps, AccordionRootEmits } from 'reka-ui'
-import theme from '../../theme/accordion.js'
-import type { IconProps } from '../types'
-import type { DynamicSlots, GetItemKeys } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Accordion = ComponentConfig<typeof theme, AppConfig, 'accordion'>
-
-export interface AccordionItem {
-  label?: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * @IconifyIcon
-   */
-  trailingIcon?: IconProps['name']
-  slot?: string
-  content?: string
-  /** A unique value for the accordion item. Defaults to the index. */
-  value?: string
-  disabled?: boolean
-  class?: any
-  ui?: Pick<Accordion['slots'], 'item' | 'header' | 'trigger' | 'leadingIcon' | 'label' | 'trailingIcon' | 'content' | 'body'>
-  [key: string]: any
-}
-
-export interface AccordionProps<T extends AccordionItem = AccordionItem> extends /** @vue-ignore */ Pick<AccordionRootProps, 'collapsible' | 'defaultValue' | 'modelValue' | 'type' | 'disabled' | 'unmountOnHide'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  items?: T[]
-  /**
-   * The icon displayed on the right side of the trigger.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   * @IconifyIcon
-   */
-  trailingIcon?: IconProps['name']
-  /**
-   * The key used to get the label from the item.
-   * @defaultValue 'label'
-   */
-  labelKey?: GetItemKeys<T>
-  class?: any
-  ui?: Accordion['slots']
-}
-
-export interface AccordionEmits extends /** @vue-ignore */ /** @vue-ignore */ AccordionRootEmits {}
-
-type SlotProps<T extends AccordionItem> = (props: { item: T, index: number, open: boolean, ui: Accordion['ui'] }) => any
-
-export type AccordionSlots<T extends AccordionItem = AccordionItem> = {
-  leading: SlotProps<T>
-  default(props: { item: T, index: number, open: boolean }): any
-  trailing: SlotProps<T>
-  content: SlotProps<T>
-  body: SlotProps<T>
-} & DynamicSlots<T, 'body', { index: number, open: boolean, ui: Accordion['ui'] }>
-
-</script>
-
-<script setup lang="ts" generic="T extends AccordionItem">
+<script setup>
 import { computed } from 'vue'
 import { AccordionRoot, AccordionItem, AccordionHeader, AccordionTrigger, AccordionContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -72,22 +8,22 @@ import { get } from '../utils'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 
-const props = withDefaults(defineProps<AccordionProps<T>>(), {
+const props = defineProps({
   type: 'single',
   collapsible: true,
   unmountOnHide: true,
   labelKey: 'label'
 })
-const emits = defineEmits<AccordionEmits>()
-const slots = defineSlots<AccordionSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'collapsible', 'defaultValue', 'disabled', 'modelValue', 'unmountOnHide'), emits)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.accordion || {}) })({
   disabled: props.disabled
-}) as unknown as Accordion['ui'])
+}))
 </script>
 
 <template>
@@ -117,10 +53,10 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.accordion ||
         </AccordionTrigger>
       </AccordionHeader>
 
-      <AccordionContent v-if="item.content || !!slots.content || (item.slot && !!slots[item.slot as keyof AccordionSlots<T>]) || !!slots.body || (item.slot && !!slots[`${item.slot}-body` as keyof AccordionSlots<T>])" data-slot="content" :class="ui.content({ class: [props.ui?.content, item.ui?.content] })">
-        <slot :name="((item.slot || 'content') as keyof AccordionSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :open="open" :ui="ui">
+      <AccordionContent v-if="item.content || !!slots.content || (item.slot && !!slots[item.slot ]) || !!slots.body || (item.slot && !!slots[`${item.slot}-body` ])" data-slot="content" :class="ui.content({ class: [props.ui?.content, item.ui?.content] })">
+        <slot :name="((item.slot || 'content') )" :item="item" :index="index" :open="open" :ui="ui">
           <div data-slot="body" :class="ui.body({ class: [props.ui?.body, item.ui?.body] })">
-            <slot :name="((item.slot ? `${item.slot}-body`: 'body') as keyof AccordionSlots<T>)" :item="(item as Extract<T, { slot: string; }>)" :index="index" :open="open" :ui="ui">
+            <slot :name="((item.slot ? `${item.slot}-body`: 'body') )" :item="item" :index="index" :open="open" :ui="ui">
               {{ item.content }}
             </slot>
           </div>

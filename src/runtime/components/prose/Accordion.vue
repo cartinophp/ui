@@ -1,23 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/accordion'
-import type { AccordionProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseAccordion = ComponentConfig<typeof theme, AppConfig, 'accordion', 'ui.prose'>
-
-export interface ProseAccordionProps {
-  type?: 'single' | 'multiple'
-  class?: any
-  ui?: ProseAccordion['slots'] & AccordionProps['ui']
-}
-
-export interface ProseAccordionSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, ref, onBeforeUpdate } from 'vue'
 import { useAppConfig } from '#imports'
 import { transformUI } from '../../utils'

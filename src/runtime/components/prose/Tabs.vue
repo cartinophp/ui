@@ -1,35 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/tabs'
-import type { TabsProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseTabs = ComponentConfig<typeof theme, AppConfig, 'tabs', 'ui.prose'>
-
-export interface ProseTabsProps {
-  /**
-   * The default tab to select.
-   * @example '1'
-   */
-  defaultValue?: string
-  /**
-   * Sync the selected tab with a local storage key.
-   */
-  sync?: string
-  /**
-   * The hash to scroll to when the tab is selected.
-   */
-  hash?: string
-  class?: any
-  ui?: ProseTabs['slots'] & TabsProps['ui']
-}
-
-export interface ProseTabsSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, watch, onMounted, ref, onBeforeUpdate } from 'vue'
 import { useState, useAppConfig } from '#imports'
 import { transformUI } from '../../utils'

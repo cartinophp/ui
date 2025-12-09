@@ -3,7 +3,7 @@ import UColorPicker from '../../../../src/runtime/components/ColorPicker.vue'
 
 const meta = {
   title: 'Components/Forms/ColorPicker',
-  component: UiColorPicker,
+  component: UColorPicker,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiColorPicker>
+} satisfies Meta<typeof UColorPicker>
 
 export default meta
 type Story = StoryObj<typeof meta>

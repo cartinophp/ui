@@ -1,26 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ComponentConfig } from '../../types/tv'
-import theme from '#build/ui/prose/img'
 
-type ProseImg = ComponentConfig<typeof theme, AppConfig, 'img', 'ui.prose'>
-
-export interface ProseImgProps {
-  src: string
-  alt: string
-  width?: string | number
-  height?: string | number
-  class?: any
-  /**
-   * Zoom image on click
-   * @defaultValue true
-   */
-  zoom?: boolean
-  ui?: ProseImg['slots']
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed, useId } from 'vue'
 import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
 import { DialogRoot, DialogPortal, DialogTrigger } from 'reka-ui'

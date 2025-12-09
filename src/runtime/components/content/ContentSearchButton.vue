@@ -1,55 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/content/content-search-button'
-import type { ButtonProps, ButtonSlots, IconProps, KbdProps, TooltipProps, LinkPropsKeys } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ContentSearchButton = ComponentConfig<typeof theme, AppConfig, 'contentSearchButton'>
-
-export interface ContentSearchButtonProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ButtonProps, LinkPropsKeys | 'icon' | 'label' | 'color' | 'variant'> {
-  /**
-   * The icon displayed in the button.
-   * @defaultValue appConfig.ui.icons.search
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * The label displayed in the button.
-   * @defaultValue t('contentSearchButton.label')
-   */
-  label?: string
-  /**
-   * The color of the button.
-   * @defaultValue 'neutral'
-   */
-  color?: ButtonProps['color']
-  /**
-   * The variant of the button.
-   * Defaults to 'outline' when not collapsed, 'ghost' when collapsed.
-   */
-  variant?: ButtonProps['variant']
-  /**
-   * Whether the button is collapsed.
-   * @defaultValue true
-   */
-  collapsed?: boolean
-  /**
-   * Display a tooltip on the button when is collapsed with the button label.
-   * This has priority over the global `tooltip` prop.
-   */
-  tooltip?: boolean | TooltipProps
-  /**
-   * The keyboard keys to display in the button.
-   * `{ variant: 'subtle' }`{lang="ts-type"}
-   * @defaultValue ['meta', 'k']
-   */
-  kbds?: KbdProps['value'][] | KbdProps[]
-  ui?: ContentSearchButton['slots'] & ButtonProps['ui']
-  class?: any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, toRef } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { defu } from 'defu'

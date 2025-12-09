@@ -1,72 +1,22 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { ProgressRootProps, ProgressRootEmits } from 'reka-ui'
-import theme from '../../theme/progress.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Progress = ComponentConfig<typeof theme, AppConfig, 'progress'>
-
-export interface ProgressProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<ProgressRootProps, 'getValueLabel' | 'getValueText' | 'modelValue'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /** The maximum progress value. */
-  max?: number | Array<any>
-  /** Display the current progress value. */
-  status?: boolean
-  /** Whether the progress is visually inverted. */
-  inverted?: boolean
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Progress['variants']['size']
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Progress['variants']['color']
-  /**
-   * The orientation of the progress bar.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: Progress['variants']['orientation']
-  /**
-   * The animation of the progress bar.
-   * @defaultValue 'carousel'
-   */
-  animation?: Progress['variants']['animation']
-  class?: any
-  ui?: Progress['slots']
-}
-
-export interface ProgressEmits extends /** @vue-ignore */ /** @vue-ignore */ ProgressRootEmits {}
-
-export type ProgressSlots = {
-  status(props: { percent?: number }): any
-} & {
-  [key: string]: (props: { step: number }) => any
-}
-
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, ProgressRoot, ProgressIndicator, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
 import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<ProgressProps>(), {
+const props = defineProps({
   inverted: false,
   modelValue: null,
   orientation: 'horizontal'
 })
-const emits = defineEmits<ProgressEmits>()
-const slots = defineSlots<ProgressSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { dir } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'getValueLabel', 'getValueText', 'modelValue'), emits)
 
@@ -124,19 +74,19 @@ const statusStyle = computed(() => {
   return props.orientation === 'vertical' ? { height: value } : { width: value }
 })
 
-function isActive(index: number) {
+function isActive(index) {
   return index === Number(props.modelValue)
 }
 
-function isFirst(index: number) {
+function isFirst(index) {
   return index === 0
 }
 
-function isLast(index: number) {
+function isLast(index) {
   return index === realMax.value
 }
 
-function stepVariant(index: number | string) {
+function stepVariant(index | string) {
   index = Number(index)
 
   if (isActive(index) && !isFirst(index)) {
@@ -160,7 +110,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.progress || 
   color: props.color,
   orientation: props.orientation,
   inverted: props.inverted
-}) as unknown as Progress['ui'])
+}))
 </script>
 
 <template>

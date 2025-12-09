@@ -3,7 +3,7 @@ import UCalendar from '../../../../src/runtime/components/Calendar.vue'
 
 const meta = {
   title: 'Components/Forms/Calendar',
-  component: UiCalendar,
+  component: UCalendar,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['outline', 'soft']
     }
   }
-} satisfies Meta<typeof UiCalendar>
+} satisfies Meta<typeof UCalendar>
 
 export default meta
 type Story = StoryObj<typeof meta>

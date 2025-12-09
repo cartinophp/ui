@@ -3,7 +3,7 @@ import USeparator from '../../../../src/runtime/components/Separator.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Separator',
-  component: UiSeparator,
+  component: USeparator,
   tags: ['autodocs'],
   argTypes: {
     orientation: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg']
     }
   }
-} satisfies Meta<typeof UiSeparator>
+} satisfies Meta<typeof USeparator>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -31,7 +31,7 @@ export const Vertical: Story = {
     orientation: 'vertical'
   },
   render: (args) => ({
-    components: { UiSeparator },
+    components: { USeparator },
     setup() {
       return { args }
     },
@@ -68,7 +68,7 @@ export const Large: Story = {
 
 export const InContent: Story = {
   render: () => ({
-    components: { UiSeparator },
+    components: { USeparator },
     template: `
       <div class="space-y-4">
         <p>This is some content above the separator.</p>

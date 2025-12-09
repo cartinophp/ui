@@ -3,7 +3,7 @@ import URadioGroup from '../../../../src/runtime/components/RadioGroup.vue'
 
 const meta = {
   title: 'Components/Forms/RadioGroup',
-  component: UiRadioGroup,
+  component: URadioGroup,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiRadioGroup>
+} satisfies Meta<typeof URadioGroup>
 
 export default meta
 type Story = StoryObj<typeof meta>

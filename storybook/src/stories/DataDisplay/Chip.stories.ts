@@ -3,7 +3,7 @@ import UChip from '../../../../src/runtime/components/Chip.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Chip',
-  component: UiChip,
+  component: UChip,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['top-right', 'top-left', 'bottom-right', 'bottom-left']
     }
   }
-} satisfies Meta<typeof UiChip>
+} satisfies Meta<typeof UChip>
 
 export default meta
 type Story = StoryObj<typeof meta>

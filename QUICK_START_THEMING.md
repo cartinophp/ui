@@ -10,7 +10,7 @@ npm install @cartino/ui
 
 ## 2. Create Theme Config
 
-Create `cartino-ui.config.ts` in your project root:
+Create `cartino-ui.config.js` in your project root:
 
 ```typescript
 import { defineTheme } from '@cartino/ui'
@@ -225,7 +225,7 @@ All components support:
 
 - Read [THEME_CUSTOMIZATION.md](./THEME_CUSTOMIZATION.md) for complete guide
 - Check [examples/](./examples/) for working examples
-- Copy [cartino-ui.config.example.ts](./cartino-ui.config.example.ts) as template
+- Copy [cartino-ui.config.example.js](./cartino-ui.config.example.js) as template
 
 ## Need Help?
 

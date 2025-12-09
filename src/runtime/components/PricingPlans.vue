@@ -1,73 +1,28 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import theme from '../../theme/pricing-plans.js'
-import type { PricingPlanProps, PricingPlanSlots } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PricingPlans = ComponentConfig<typeof theme, AppConfig, 'pricingPlans'>
-
-export interface PricingPlansProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  plans?: PricingPlanProps[]
-  /**
-   * The orientation of the pricing plans.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: PricingPlans['variants']['orientation']
-  /**
-   * When `true`, the plans will be displayed without gap.
-   * @defaultValue false
-   */
-  compact?: boolean
-  /**
-   * When `true`, the plans will be displayed with a larger gap.
-   * Useful when one plan is scaled. Doesn't work with `compact`.
-   * @defaultValue false
-   */
-  scale?: boolean
-  class?: any
-}
-
-type ExtendSlotWithPlan<T extends PricingPlanProps, K extends keyof PricingPlanSlots>
-  = PricingPlanSlots[K] extends (props: infer P) => any
-    ? (props: P & { plan: T }) => any
-    : PricingPlanSlots[K]
-
-export type PricingPlansSlots<T extends PricingPlanProps = PricingPlanProps> = {
-  [K in keyof PricingPlanSlots]: ExtendSlotWithPlan<T, K>
-} & {
-  default(props?: {}): any
-}
-
-</script>
-
-<script setup lang="ts" generic="T extends PricingPlanProps">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UPricingPlan from './PricingPlan.vue'
 
-const props = withDefaults(defineProps<PricingPlansProps>(), {
+const props = defineProps({
   orientation: 'horizontal',
   compact: false,
   scale: false
 })
-const slots = defineSlots<PricingPlansSlots<T>>()
+const slots = defineSlots()
 
 const getProxySlots = () => omit(slots, ['default'])
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlans || {}) }) as unknown as PricingPlans['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlans || {}) }))
 
 const count = computed(() => props.plans?.length || slots.default?.()?.flatMap(mapSlot).filter(Boolean)?.length || 3)
 
-function mapSlot(slot: any) {
+function mapSlot(slot) {
   if (typeof slot.type === 'symbol') {
     if (slot.children && Array.isArray(slot.children)) {
       return slot.children.map(mapSlot)
@@ -90,7 +45,7 @@ function mapSlot(slot: any) {
         v-bind="plan"
       >
         <template v-for="(_, name) in getProxySlots()" #[name]="slotData">
-          <slot :name="name" v-bind="(slotData as any)" :plan="plan" />
+          <slot :name="name" v-bind="slotData" :plan="plan" />
         </template>
       </UPricingPlan>
     </slot>

@@ -1,40 +1,18 @@
-<script lang="ts">
-import theme from '../../theme/page-aside.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageAside = ComponentConfig<typeof theme, AppConfig, 'pageAside'>
-
-export interface PageAsideProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'aside'
-   */
-  as?: any
-  class?: any
-  ui?: PageAside['slots']
-}
-
-export interface PageAsideSlots {
-  top(props?: {}): any
-  default(props?: {}): any
-  bottom(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<PageAsideProps>(), {
+const props = defineProps({
   as: 'aside'
 })
-const slots = defineSlots<PageAsideSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAside || {}) })() as unknown as PageAside['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAside || {}) })())
 </script>
 
 <template>

@@ -5,7 +5,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Drawer',
-  component: UiDrawer,
+  component: UDrawer,
   tags: ['autodocs'],
   argTypes: {
     side: {
@@ -13,14 +13,14 @@ const meta = {
       options: ['left', 'right', 'top', 'bottom']
     }
   }
-} satisfies Meta<typeof UiDrawer>
+} satisfies Meta<typeof UDrawer>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Right: Story = {
   render: () => ({
-    components: { UiDrawer, UiButton },
+    components: { UDrawer, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -45,7 +45,7 @@ export const Right: Story = {
 
 export const Left: Story = {
   render: () => ({
-    components: { UiDrawer, UiButton },
+    components: { UDrawer, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -70,7 +70,7 @@ export const Left: Story = {
 
 export const WithFooter: Story = {
   render: () => ({
-    components: { UiDrawer, UiButton },
+    components: { UDrawer, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -105,7 +105,7 @@ export const WithFooter: Story = {
 
 export const Top: Story = {
   render: () => ({
-    components: { UiDrawer, UiButton },
+    components: { UDrawer, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -127,7 +127,7 @@ export const Top: Story = {
 
 export const Bottom: Story = {
   render: () => ({
-    components: { UiDrawer, UiButton },
+    components: { UDrawer, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }

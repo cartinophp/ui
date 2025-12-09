@@ -1,22 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ComponentConfig } from '../../types/tv'
-import theme from '#build/ui/prose/accordion-item'
 
-type ProseAccordionItem = ComponentConfig<typeof theme, AppConfig, 'accordionItem', 'ui.prose'>
-
-export interface ProseAccordionItemProps {
-  label: string
-  description?: string
-  class?: any
-}
-
-export interface ProseAccordionItemSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

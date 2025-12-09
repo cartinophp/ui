@@ -1,54 +1,26 @@
-<script lang="ts">
-import theme from '../../theme/avatar-group.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type AvatarGroup = ComponentConfig<typeof theme, AppConfig, 'avatarGroup'>
-
-export interface AvatarGroupProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * @defaultValue 'md'
-   */
-  size?: AvatarGroup['variants']['size']
-  /**
-   * The maximum number of avatars to display.
-   */
-  max?: number | string
-  class?: any
-  ui?: AvatarGroup['slots']
-}
-
-export interface AvatarGroupSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, provide } from 'vue'
 import { Primitive } from 'reka-ui'
 import { avatarGroupInjectionKey } from '../composables/useAvatarGroup'
 import { tv } from '../utils/tv'
 import UAvatar from './Avatar.vue'
 
-const props = defineProps<AvatarGroupProps>()
-const slots = defineSlots<AvatarGroupSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.avatarGroup || {}) })({
   size: props.size
-}) as unknown as AvatarGroup['ui'])
+}))
 
 const max = computed(() => typeof props.max === 'string' ? Number.parseInt(props.max, 10) : props.max)
 
 const children = computed(() => {
   let children = slots.default?.()
   if (children?.length) {
-    children = children.flatMap((child: any) => {
+    children = children.flatMap((child) => {
       if (typeof child.type === 'symbol') {
         // `v-if="false"` or commented node
         if (typeof child.children === 'string') {
@@ -62,12 +34,12 @@ const children = computed(() => {
     }).filter(Boolean)
   }
 
-  return children || []
+  return children
 })
 
 const visibleAvatars = computed(() => {
   if (!children.value.length) {
-    return []
+    return 
   }
 
   if (!max.value || max.value <= 0) {

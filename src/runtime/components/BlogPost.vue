@@ -1,59 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/blog-post.js'
-import type { BadgeProps, LinkProps, UserProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type BlogPost = ComponentConfig<typeof theme, AppConfig, 'blogPost'>
-
-export interface BlogPostProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'article'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /** The date of the blog post. Can be a string or a Date object. */
-  date?: string | Date
-  /**
-   * Display a badge on the blog post.
-   * Can be a string or an object.
-   * `{ color: 'neutral', variant: 'subtle' }`{lang="ts-type"}
-   */
-  badge?: string | BadgeProps
-  /** The authors of the blog post. */
-  authors?: UserProps[]
-  /** The image of the blog post. Can be a string or an object. */
-  image?: string | (Partial<HTMLImageElement> & { [key: string]: any })
-  /**
-   * The orientation of the blog post.
-   * @defaultValue 'vertical'
-   */
-  orientation?: BlogPost['variants']['orientation']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: BlogPost['variants']['variant']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: BlogPost['slots']
-}
-
-export interface BlogPostSlots {
-  date(props?: {}): any
-  badge(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  authors(props: { ui: BlogPost['ui'] }): any
-  header(props: { ui: BlogPost['ui'] }): any
-  body(props?: {}): any
-  footer(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, useDateFormatter } from 'reka-ui'
 import ImageComponent from '#build/ui-image-component'
@@ -67,14 +13,14 @@ import UUser from './User.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<BlogPostProps>(), {
+const props = defineProps({
   as: 'article',
   orientation: 'vertical'
 })
-const slots = defineSlots<BlogPostSlots>()
+const slots = defineSlots()
 
 const { locale } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 const formatter = useDateFormatter(locale.value.code)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPost || {}) })({
@@ -82,7 +28,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.blogPost || 
   variant: props.variant,
   image: !!props.image,
   to: !!props.to || !!props.onClick
-}) as unknown as BlogPost['ui'])
+}))
 
 const date = computed(() => {
   if (!props.date) {

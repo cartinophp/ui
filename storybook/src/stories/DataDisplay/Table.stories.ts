@@ -3,9 +3,9 @@ import UTable from '../../../../src/runtime/components/Table.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Table',
-  component: UiTable,
+  component: UTable,
   tags: ['autodocs']
-} satisfies Meta<typeof UiTable>
+} satisfies Meta<typeof UTable>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -108,7 +108,7 @@ export const Loading: Story = {
 
 export const WithCustomCell: Story = {
   render: () => ({
-    components: { UiTable },
+    components: { UTable },
     setup() {
       return { columns, rows }
     },

@@ -1,45 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/user.js'
-import type { AvatarProps, ChipProps, LinkProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type User = ComponentConfig<typeof theme, AppConfig, 'user'>
-
-export interface UserProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  name?: string
-  description?: string
-  avatar?: Omit<AvatarProps, 'size'> & { [key: string]: any }
-  chip?: boolean | Omit<ChipProps, 'size' | 'inset'>
-  /**
-   * @defaultValue 'md'
-   */
-  size?: User['variants']['size']
-  /**
-   * The orientation of the user.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: User['variants']['orientation']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: User['slots']
-}
-
-export interface UserSlots {
-  avatar(props: { ui: User['ui'] }): any
-  name(props?: {}): any
-  description(props?: {}): any
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
@@ -49,18 +9,18 @@ import ULink from './Link.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<UserProps>(), {
+const props = defineProps({
   orientation: 'horizontal'
 })
-const slots = defineSlots<UserSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.user || {}) })({
   size: props.size,
   orientation: props.orientation,
   to: !!props.to || !!props.onClick
-}) as unknown as User['ui'])
+}))
 </script>
 
 <template>

@@ -1,38 +1,16 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-toolbar.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardToolbar = ComponentConfig<typeof theme, AppConfig, 'dashboardToolbar'>
-
-export interface DashboardToolbarProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  ui?: DashboardToolbar['slots']
-}
-
-export interface DashboardToolbarSlots {
-  default(props?: {}): any
-  left(props?: {}): any
-  right(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<DashboardToolbarProps>()
-defineSlots<DashboardToolbarSlots>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardToolbar || {}) })() as unknown as DashboardToolbar['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardToolbar || {}) })())
 </script>
 
 <template>

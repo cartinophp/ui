@@ -1,75 +1,5 @@
-<script lang="ts">
-import type { ToastRootProps, ToastRootEmits } from 'reka-ui'
-import theme from '../../theme/toast.js'
-import type { AvatarProps, ButtonProps, IconProps, ProgressProps, LinkPropsKeys } from '../types'
-import type { StringOrVNode } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Toast = ComponentConfig<typeof theme, AppConfig, 'toast'>
-
-export interface ToastProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'li'
-   */
-  as?: any
-  title?: StringOrVNode
-  description?: StringOrVNode
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  avatar?: AvatarProps
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Toast['variants']['color']
-  /**
-   * The orientation between the content and the actions.
-   * @defaultValue 'vertical'
-   */
-  orientation?: Toast['variants']['orientation']
-  /**
-   * Display a close button to dismiss the toast.
-   * `{ size: 'md', color: 'neutral', variant: 'link' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the close button.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  closeIcon?: IconProps['name']
-  /**
-   * Display a list of actions:
-   * - under the title and description when orientation is `vertical`
-   * - next to the close button when orientation is `horizontal`
-   * `{ size: 'xs' }`{lang="ts-type"}
-   */
-  actions?: ButtonProps[]
-  /**
-   * Display a progress bar showing the toast's remaining duration.
-   * `{ size: 'sm' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  progress?: boolean | Pick<ProgressProps, 'color' | 'ui'>
-  class?: any
-  ui?: Toast['slots']
-}
-
-export interface ToastEmits extends /** @vue-ignore */ /** @vue-ignore */ ToastRootEmits {}
-
-export interface ToastSlots {
-  leading(props: { ui: Toast['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  actions(props?: {}): any
-  close(props: { ui: Toast['ui'] }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, nextTick, useTemplateRef } from 'vue'
 import { ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -80,16 +10,16 @@ import UAvatar from './Avatar.vue'
 import UButton from './Button.vue'
 import UProgress from './Progress.vue'
 
-const props = withDefaults(defineProps<ToastProps>(), {
+const props = defineProps({
   orientation: 'vertical',
   close: true,
   progress: true
 })
-const emits = defineEmits<ToastEmits>()
-const slots = defineSlots<ToastSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultOpen', 'open', 'duration', 'type'), emits)
 
@@ -97,7 +27,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.toast || {})
   color: props.color,
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}) as unknown as Toast['ui'])
+}))
 
 const rootRef = useTemplateRef('rootRef')
 const height = ref(0)
@@ -128,7 +58,7 @@ defineExpose({
     :style="{ '--height': height }"
   >
     <slot name="leading" :ui="ui">
-      <UAvatar v-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
+      <UAvatar v-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()))" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
       <UIcon v-else-if="icon" :name="icon" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
     </slot>
 
@@ -191,7 +121,7 @@ defineExpose({
       v-if="progress && open && remaining > 0 && duration"
       :model-value="remaining / duration * 100"
       :color="color"
-      v-bind="(typeof progress === 'object' ? progress as Partial<ProgressProps> : {})"
+      v-bind="(typeof progress === 'object' ? progress as Partial : {})"
       size="sm"
       data-slot="progress"
       :class="ui.progress({ class: props.ui?.progress })"

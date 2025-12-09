@@ -1,53 +1,5 @@
-<script lang="ts">
-import type { ComponentPublicInstance } from 'vue'
-import type { TimeFieldRootProps, TimeFieldRootEmits } from 'reka-ui'
-import theme from '../../theme/input-time.js'
-import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type InputTime = ComponentConfig<typeof theme, AppConfig, 'inputTime'>
-
-export interface InputTimeProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<TimeFieldRootProps, 'as' | 'asChild' | 'locale' | 'dir'>, UseComponentIconsProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: InputTime['variants']['color']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: InputTime['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: InputTime['variants']['size']
-  /** Highlight the ring color like a focus state. */
-  highlight?: boolean
-  autofocus?: boolean
-  autofocusDelay?: number
-  class?: any
-  ui?: InputTime['slots']
-}
-
-export interface InputTimeEmits extends /** @vue-ignore */ /** @vue-ignore */ TimeFieldRootEmits {
-  change: [event: Event]
-  blur: [event: FocusEvent]
-  focus: [event: FocusEvent]
-}
-
-export interface InputTimeSlots {
-  leading(props: { ui: InputTime['ui'] }): any
-  default(props: { ui: InputTime['ui'] }): any
-  trailing(props: { ui: InputTime['ui'] }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, onMounted, ref } from 'vue'
 import { TimeFieldRoot, TimeFieldInput, useForwardPropsEmits } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
@@ -58,18 +10,18 @@ import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 import UAvatar from './Avatar.vue'
 
-const props = withDefaults(defineProps<InputTimeProps>(), {
+const props = defineProps({
   autofocusDelay: 0
 })
-const emits = defineEmits<InputTimeEmits>()
-const slots = defineSlots<InputTimeSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactiveOmit(props, 'id', 'name', 'color', 'variant', 'size', 'highlight', 'disabled', 'autofocus', 'autofocusDelay', 'icon', 'avatar', 'leading', 'leadingIcon', 'trailing', 'trailingIcon', 'loading', 'loadingIcon', 'class', 'ui'), emits)
 
-const { emitFormBlur, emitFormFocus, emitFormChange, emitFormInput, id, color, size: formGroupSize, name, highlight, disabled, ariaAttrs } = useFormField<InputTimeProps>(props)
-const { orientation, size: fieldGroupSize } = useFieldGroup<InputTimeProps>(props)
+const { emitFormBlur, emitFormFocus, emitFormChange, emitFormInput, id, color, size: formGroupSize, name, highlight, disabled, ariaAttrs } = useFormField(props)
+const { orientation, size: fieldGroupSize } = useFieldGroup(props)
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props)
 
 const inputSize = computed(() => fieldGroupSize.value || formGroupSize.value)
@@ -83,11 +35,11 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.inputTime ||
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing,
   fieldGroup: orientation.value
-}) as unknown as InputTime['ui'])
+}))
 
-const inputsRef = ref<ComponentPublicInstance[]>([])
+const inputsRef = ref()
 
-function onUpdate(value: any) {
+function onUpdate(value) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emits('change', event)
@@ -96,12 +48,12 @@ function onUpdate(value: any) {
   emitFormInput()
 }
 
-function onBlur(event: FocusEvent) {
+function onBlur(event) {
   emitFormBlur()
   emits('blur', event)
 }
 
-function onFocus(event: FocusEvent) {
+function onFocus(event) {
   emitFormFocus()
   emits('focus', event)
 }
@@ -152,7 +104,7 @@ defineExpose({
     <span v-if="isLeading || !!avatar || !!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading" :ui="ui">
         <UIcon v-if="isLeading && leadingIconName" :name="leadingIconName" data-slot="leadingIcon" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })" />
-        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
+        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()))" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
       </slot>
     </span>
 

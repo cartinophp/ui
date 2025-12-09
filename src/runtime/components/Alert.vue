@@ -1,74 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/alert.js'
-import type { AvatarProps, ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Alert = ComponentConfig<typeof theme, AppConfig, 'alert'>
-
-export interface AlertProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  avatar?: AvatarProps
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Alert['variants']['color']
-  /**
-   * @defaultValue 'solid'
-   */
-  variant?: Alert['variants']['variant']
-  /**
-   * The orientation between the content and the actions.
-   * @defaultValue 'vertical'
-   */
-  orientation?: Alert['variants']['orientation']
-  /**
-   * Display a list of actions:
-   * - under the title and description when orientation is `vertical`
-   * - next to the close button when orientation is `horizontal`
-   * `{ size: 'xs' }`{lang="ts-type"}
-   */
-  actions?: ButtonProps[]
-  /**
-   * Display a close button to dismiss the alert.
-   * `{ size: 'md', color: 'neutral', variant: 'link' }`{lang="ts-type"}
-   * @emits 'update:open'
-   * @defaultValue false
-   */
-  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the close button.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  closeIcon?: IconProps['name']
-  class?: any
-  ui?: Alert['slots']
-}
-
-export interface AlertEmits {
-  'update:open': [value: boolean]
-}
-
-export interface AlertSlots {
-  leading(props: { ui: Alert['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  actions(props?: {}): any
-  close(props: { ui: Alert['ui'] }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useLocale } from '../composables/useLocale'
@@ -77,27 +8,27 @@ import UIcon from './Icon.vue'
 import UAvatar from './Avatar.vue'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<AlertProps>(), {
+const props = defineProps({
   orientation: 'vertical'
 })
-const emits = defineEmits<AlertEmits>()
-const slots = defineSlots<AlertSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.alert || {}) })({
   color: props.color,
   variant: props.variant,
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}) as unknown as Alert['ui'])
+}))
 </script>
 
 <template>
   <Primitive :as="as" :data-orientation="orientation" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <slot name="leading" :ui="ui">
-      <UAvatar v-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
+      <UAvatar v-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()))" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
       <UIcon v-else-if="icon" :name="icon" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
     </slot>
 

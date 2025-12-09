@@ -3,7 +3,7 @@ import USelect from '../../../../src/runtime/components/Select.vue'
 
 const meta = {
   title: 'Components/Forms/Select',
-  component: UiSelect,
+  component: USelect,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiSelect>
+} satisfies Meta<typeof USelect>
 
 export default meta
 type Story = StoryObj<typeof meta>

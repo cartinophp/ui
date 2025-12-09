@@ -1,42 +1,22 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-group.js'
-import type { UseResizableProps } from '../composables/useResizable'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardGroup = ComponentConfig<typeof theme, AppConfig, 'dashboardGroup'>
-
-export interface DashboardGroupProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<UseResizableProps, 'storage' | 'storageKey' | 'persistent' | 'unit'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface DashboardGroupSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { provideDashboardContext } from '../utils/dashboard'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<DashboardGroupProps>(), {
+const props = defineProps({
   storage: 'cookie',
   storageKey: 'dashboard',
   persistent: true,
   unit: '%'
 })
-defineSlots<DashboardGroupSlots>()
+defineSlots()
 
 const nuxtApp = useNuxtApp()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardGroup || {}) }) as unknown as DashboardGroup['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardGroup || {}) }))
 
 const sidebarOpen = ref(false)
 const sidebarCollapsed = ref(false)
@@ -51,7 +31,7 @@ provideDashboardContext({
     nuxtApp.hooks.callHook('dashboard:sidebar:toggle')
   },
   sidebarCollapsed,
-  collapseSidebar: (collapsed: boolean) => {
+  collapseSidebar: (collapsed) => {
     nuxtApp.hooks.callHook('dashboard:sidebar:collapse', collapsed)
   },
   toggleSearch: () => {

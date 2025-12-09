@@ -3,7 +3,7 @@ import UPageFeature from '../../../../src/runtime/components/PageFeature.vue'
 
 const meta = {
   title: 'Components/Page/PageFeature',
-  component: UiPageFeature,
+  component: UPageFeature,
   tags: ['autodocs'],
   argTypes: {
     orientation: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['horizontal', 'vertical']
     }
   }
-} satisfies Meta<typeof UiPageFeature>
+} satisfies Meta<typeof UPageFeature>
 
 export default meta
 type Story = StoryObj<typeof meta>

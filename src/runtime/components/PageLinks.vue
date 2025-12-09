@@ -1,44 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-links.js'
-import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageLinks = ComponentConfig<typeof theme, AppConfig, 'pageLinks'>
-
-export interface PageLink extends Omit<LinkProps, 'custom'> {
-  label: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  class?: any
-  ui?: Pick<PageLinks['slots'], 'item' | 'link' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkLeadingIcon'>
-}
-
-export interface PageLinksProps<T extends PageLink = PageLink> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  title?: string
-  links?: T[]
-  class?: any
-  ui?: PageLinks['slots']
-}
-
-type SlotProps<T> = (props: { link: T, active: boolean, ui: PageLinks['ui'] }) => any
-
-export interface PageLinksSlots<T extends PageLink = PageLink> {
-  'title'(props?: {}): any
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-label'(props: { link: T, active: boolean }): any
-  'link-trailing'(props: { link: T, active: boolean }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends PageLink">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { pickLinkProps } from '../utils/link'
@@ -47,15 +8,15 @@ import ULink from './Link.vue'
 import ULinkBase from './LinkBase.vue'
 import UIcon from './Icon.vue'
 
-const props = withDefaults(defineProps<PageLinksProps<T>>(), {
+const props = withDefaults(defineProps(), {
   as: 'nav'
 })
-const slots = defineSlots<PageLinksSlots<T>>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLinks || {}) })() as unknown as PageLinks['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLinks || {}) })())
 </script>
 
 <template>

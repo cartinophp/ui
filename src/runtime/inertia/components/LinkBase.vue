@@ -1,31 +1,15 @@
-<script lang="ts">
-import type { LinkProps } from '../../types'
-
-export interface LinkBaseProps {
-  as?: string
-  type?: string
-  disabled?: boolean
-  onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
-  href?: string
-  target?: LinkProps['target']
-  rel?: LinkProps['rel']
-  active?: boolean
-  isExternal?: boolean
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { Primitive } from 'reka-ui'
 import { Link as InertiaLink } from '@inertiajs/vue3'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<LinkBaseProps>(), {
+const props = withDefaults(defineProps(), {
   as: 'button',
   type: 'button'
 })
 
-function onClickWrapper(e: MouseEvent) {
+function onClickWrapper(e) {
   if (props.disabled) {
     e.stopPropagation()
     e.preventDefault()

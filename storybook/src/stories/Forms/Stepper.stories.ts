@@ -3,7 +3,7 @@ import UStepper from '../../../../src/runtime/components/Stepper.vue'
 
 const meta = {
   title: 'Components/Forms/Stepper',
-  component: UiStepper,
+  component: UStepper,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['horizontal', 'vertical']
     }
   }
-} satisfies Meta<typeof UiStepper>
+} satisfies Meta<typeof UStepper>
 
 export default meta
 type Story = StoryObj<typeof meta>

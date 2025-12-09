@@ -1,50 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-sidebar.js'
-import type { UseResizableProps } from '../composables/useResizable'
-import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardSidebar = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebar'>
-
-type DashboardSidebarMode = 'modal' | 'slideover' | 'drawer'
-type DashboardSidebarMenu<T> = T extends 'modal' ? ModalProps : T extends 'slideover' ? SlideoverProps : T extends 'drawer' ? DrawerProps : never
-
-export interface DashboardSidebarProps<T extends DashboardSidebarMode = DashboardSidebarMode> extends Pick<UseResizableProps, 'id' | 'side' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable' | 'collapsible' | 'collapsedSize'> {
-  /**
-   * The mode of the sidebar menu.
-   * @defaultValue 'modal'
-   */
-  mode?: T
-  /**
-   * The props for the sidebar menu component.
-   */
-  menu?: DashboardSidebarMenu<T>
-  /**
-   * Customize the toggle button to open the sidebar.
-   * `{ color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  toggle?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The side to render the toggle button on.
-   * @defaultValue 'left'
-   */
-  toggleSide?: 'left' | 'right'
-  class?: any
-  ui?: DashboardSidebar['slots']
-}
-
-export interface DashboardSidebarSlots {
-  'header'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'default'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'footer'(props: { collapsed?: boolean, collapse?: (value: boolean) => void }): any
-  'toggle'(props: { open: boolean, toggle: () => void, ui: DashboardSidebar['ui'] }): any
-  'content'(props: { close?: () => void }): any
-  'resize-handle'(props: { onMouseDown: (e: MouseEvent) => void, onTouchStart: (e: TouchEvent) => void, onDoubleClick: (e: MouseEvent) => void, ui: DashboardSidebar['ui'] }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends DashboardSidebarMode">
+<script setup>
 import { ref, computed, toRef, useId, watch } from 'vue'
 import { defu } from 'defu'
 import { createReusableTemplate } from '@vueuse/core'
@@ -60,7 +15,7 @@ import UDrawer from './Drawer.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<DashboardSidebarProps<T>>(), {
+const props = withDefaults(defineProps(), {
   side: 'left',
   mode: 'slideover' as never,
   toggle: true,
@@ -72,14 +27,14 @@ const props = withDefaults(defineProps<DashboardSidebarProps<T>>(), {
   collapsible: false,
   collapsedSize: 0
 })
-const slots = defineSlots<DashboardSidebarSlots>()
+const slots = defineSlots()
 
 const open = defineModel<boolean>('open', { default: false })
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 
 const route = useRoute()
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const dashboardContext = useDashboard({
   storageKey: 'dashboard',
@@ -99,12 +54,12 @@ useRuntimeHook('dashboard:sidebar:toggle', () => {
   open.value = !open.value
 })
 
-useRuntimeHook('dashboard:sidebar:collapse', (value: boolean) => {
+useRuntimeHook('dashboard:sidebar:collapse', (value) => {
   isCollapsed.value = value
 })
 
-watch(open, () => dashboardContext.sidebarOpen!.value = open.value, { immediate: true })
-watch(isCollapsed, () => dashboardContext.sidebarCollapsed!.value = isCollapsed.value, { immediate: true })
+watch(open, () => dashboardContext.sidebarOpen.value = open.value, { immediate: true })
+watch(isCollapsed, () => dashboardContext.sidebarCollapsed.value = isCollapsed.value, { immediate: true })
 
 watch(() => route.fullPath, () => {
   open.value = false
@@ -112,19 +67,19 @@ watch(() => route.fullPath, () => {
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebar || {}) })({
   side: props.side
-}) as unknown as DashboardSidebar['ui'])
+}))
 
 const Menu = computed(() => ({
-  slideover: USlideover,
-  modal: UModal,
-  drawer: UDrawer
+  slideover
+  modal
+  drawer
 })[props.mode as DashboardSidebarMode])
 
 const menuProps = toRef(() => defu(props.menu, {
   content: {
-    onOpenAutoFocus: (e: Event) => e.preventDefault()
+    onOpenAutoFocus: (e) => e.preventDefault()
   }
-}, props.mode === 'modal' ? { fullscreen: true, transition: false } : props.mode === 'slideover' ? { side: 'left' } : {}) as DashboardSidebarMenu<T>)
+}, props.mode === 'modal' ? { fullscreen: true, transition: false } : props.mode === 'slideover' ? { side: 'left' } : {}) as DashboardSidebarMenu)
 
 function toggleOpen() {
   open.value = !open.value
@@ -132,7 +87,7 @@ function toggleOpen() {
 </script>
 
 <template>
-  <DefineToggleTemplate>
+  
     <slot name="toggle" :open="open" :toggle="toggleOpen" :ui="ui">
       <UDashboardSidebarToggle
         v-if="toggle"
@@ -144,7 +99,7 @@ function toggleOpen() {
     </slot>
   </DefineToggleTemplate>
 
-  <DefineResizeHandleTemplate>
+  
     <slot name="resize-handle" :on-mouse-down="onMouseDown" :on-touch-start="onTouchStart" :on-double-click="onDoubleClick" :ui="ui">
       <UDashboardResizeHandle
         v-if="resizable"

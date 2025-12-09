@@ -5,7 +5,7 @@
 Ho creato i 2 composables principali ispirati a Nuxt UI:
 
 ### 1. **useUI** - Component UI Management
-**File:** `src/runtime/composables/useUI.ts`
+**File:** `src/runtime/composables/useUI.js`
 
 Il composable principale per gestire la configurazione UI dei componenti con merge automatico di:
 - Base theme dal file di tema
@@ -19,7 +19,7 @@ Il composable principale per gestire la configurazione UI dei componenti con mer
 - `getSlotClass(ui, slot, classes)` - Extract slot classes
 
 ### 2. **useAppConfig** - Global App Configuration
-**File:** `src/runtime/composables/useAppConfig.ts`
+**File:** `src/runtime/composables/useAppConfig.js`
 
 Accesso alla configurazione globale dell'applicazione (stile Nuxt).
 
@@ -33,19 +33,19 @@ Accesso alla configurazione globale dell'applicazione (stile Nuxt).
 ## Composables Già Esistenti
 
 ### useOverlay
-**File:** `src/runtime/composables/useOverlay.ts` (già presente)
+**File:** `src/runtime/composables/useOverlay.js` (già presente)
 - Gestione stati overlay/modal
 - `isOpen`, `open()`, `close()`, `toggle()`
 
 ### useToast
-**File:** `src/runtime/composables/useToast.ts` (già presente)
+**File:** `src/runtime/composables/useToast.js` (già presente)
 - Sistema di notifiche toast
 - `add()`, `remove()`, `clear()`
 
 ## Aggiornamenti Effettuati
 
 ### 1. Export Aggiornati
-**File:** `src/index.ts`
+**File:** `src/index.js`
 
 Aggiunti export per:
 ```typescript
@@ -56,9 +56,9 @@ export { useUI, useUISlots, mergeUIClasses, getSlotClass, type UseUIOptions, typ
 
 ### 2. Stories Aggiornati
 Tutti gli stories in `storybook/src/stories/` sono stati aggiornati:
-- `UButton` → `UiButton`
-- `UInput` → `UiInput`
-- `UCard` → `UiCard`
+- `UButton` → `UButton`
+- `UInput` → `UInput`
+- `UCard` → `UCard`
 - etc.
 
 Usano ora il nuovo prefix `ui-` (kebab-case: `<ui-button>`, `<ui-input>`, etc.)
@@ -76,15 +76,15 @@ Guida completa con:
 
 ```
 src/runtime/composables/
-├── useTheme.ts           ✓ (creato prima)
-├── useAppConfig.ts       ✓ (nuovo)
-├── useUI.ts              ✓ (nuovo)
-├── useOverlay.ts         ✓ (già esistente)
-├── useToast.ts           ✓ (già esistente)
-├── useFormField.ts       ✓ (già esistente)
-├── useFileUpload.ts      ✓ (già esistente)
-├── useResizable.ts       ✓ (già esistente)
-├── useComponentIcons.ts  ✓ (già esistente)
+├── useTheme.js           ✓ (creato prima)
+├── useAppConfig.js       ✓ (nuovo)
+├── useUI.js              ✓ (nuovo)
+├── useOverlay.js         ✓ (già esistente)
+├── useToast.js           ✓ (già esistente)
+├── useFormField.js       ✓ (già esistente)
+├── useFileUpload.js      ✓ (già esistente)
+├── useResizable.js       ✓ (già esistente)
+├── useComponentIcons.js  ✓ (già esistente)
 └── ... altri composables
 ```
 
@@ -146,15 +146,15 @@ const ui = useUI({
 
 ## File Creati
 
-1. `src/runtime/composables/useUI.ts` - Component UI management
-2. `src/runtime/composables/useAppConfig.ts` - Global config access
+1. `src/runtime/composables/useUI.js` - Component UI management
+2. `src/runtime/composables/useAppConfig.js` - Global config access
 3. `COMPOSABLES_GUIDE.md` - Complete documentation
 
 ## File Modificati
 
-1. `src/index.ts` - Added exports
-2. `src/runtime/composables/index.ts` - Added exports
-3. `storybook/src/stories/**/*.stories.ts` - Updated imports (U → Ui)
+1. `src/index.js` - Added exports
+2. `src/runtime/composables/index.js` - Added exports
+3. `storybook/src/stories/**/*.stories.js` - Updated imports (U → U)
 
 ## Checklist
 

@@ -3,9 +3,9 @@ import UContextMenu from '../../../../src/runtime/components/ContextMenu.vue'
 
 const meta = {
   title: 'Components/Overlay/ContextMenu',
-  component: UiContextMenu,
+  component: UContextMenu,
   tags: ['autodocs']
-} satisfies Meta<typeof UiContextMenu>
+} satisfies Meta<typeof UContextMenu>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -30,7 +30,7 @@ export const Default: Story = {
     items
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },
@@ -58,7 +58,7 @@ export const OnText: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },
@@ -92,7 +92,7 @@ export const OnImage: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },
@@ -127,7 +127,7 @@ export const FileManager: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },
@@ -156,7 +156,7 @@ export const WithDisabled: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },
@@ -193,7 +193,7 @@ export const Nested: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiContextMenu },
+    components: { UContextMenu },
     setup() {
       return { args }
     },

@@ -1,11 +1,5 @@
-<script lang="ts">
-import type { SwitchProps } from '../../types'
 
-export interface ColorModeSwitchProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<SwitchProps, 'checkedIcon' | 'uncheckedIcon' | 'modelValue'> {
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { useColorMode, useAppConfig } from '#imports'

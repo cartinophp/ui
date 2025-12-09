@@ -3,7 +3,7 @@ import USwitch from '../../../../src/runtime/components/Switch.vue'
 
 const meta = {
   title: 'Components/Forms/Switch',
-  component: UiSwitch,
+  component: USwitch,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiSwitch>
+} satisfies Meta<typeof USwitch>
 
 export default meta
 type Story = StoryObj<typeof meta>

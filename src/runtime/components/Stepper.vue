@@ -1,91 +1,22 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { StepperRootProps, StepperRootEmits } from 'reka-ui'
-import theme from '../../theme/stepper.js'
-import type { IconProps } from '../types'
-import type { DynamicSlots } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Stepper = ComponentConfig<typeof theme, AppConfig, 'stepper'>
-
-export interface StepperItem {
-  slot?: string
-  value?: string | number
-  title?: string
-  description?: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  content?: string
-  disabled?: boolean
-  class?: any
-  ui?: Pick<Stepper['slots'], 'item' | 'container' | 'trigger' | 'indicator' | 'icon' | 'separator' | 'wrapper' | 'title' | 'description'>
-  [key: string]: any
-}
-
-export interface StepperProps<T extends StepperItem = StepperItem> extends Pick<StepperRootProps, 'linear'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  items: T[]
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Stepper['variants']['size']
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Stepper['variants']['color']
-  /**
-   * The orientation of the stepper.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: Stepper['variants']['orientation']
-  /**
-   * The value of the step that should be active when initially rendered. Use when you do not need to control the state of the steps.
-   */
-  defaultValue?: string | number
-  disabled?: boolean
-  class?: any
-  ui?: Stepper['slots']
-}
-
-export type StepperEmits<T extends StepperItem = StepperItem> = Omit<StepperRootEmits, 'update:modelValue'> & {
-  next: [value: T]
-  prev: [value: T]
-}
-
-type SlotProps<T extends StepperItem> = (props: { item: T }) => any
-
-export type StepperSlots<T extends StepperItem = StepperItem> = {
-  indicator(props: { item: T, ui: Stepper['ui'] }): any
-  title: SlotProps<T>
-  description: SlotProps<T>
-  content: SlotProps<T>
-} & DynamicSlots<T>
-
-</script>
-
-<script setup lang="ts" generic="T extends StepperItem">
+<script setup>
 import { computed } from 'vue'
 import { StepperRoot, StepperItem, StepperTrigger, StepperIndicator, StepperSeparator, StepperTitle, StepperDescription, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
 import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 
-const props = withDefaults(defineProps<StepperProps<T>>(), {
+const props = withDefaults(defineProps(), {
   orientation: 'horizontal',
   linear: true
 })
-const emits = defineEmits<StepperEmits<T>>()
-const slots = defineSlots<StepperSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const modelValue = defineModel<string | number>()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'orientation', 'linear'))
 
@@ -93,7 +24,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.stepper || {
   orientation: props.orientation,
   size: props.size,
   color: props.color
-}) as unknown as Stepper['ui'])
+}))
 
 const currentStepIndex = computed({
   get() {
@@ -103,7 +34,7 @@ const currentStepIndex = computed({
       ? props.items.findIndex(item => item.value === value)
       : value) ?? 0
   },
-  set(value: number) {
+  set(value) {
     modelValue.value = props.items?.[value]?.value ?? value
   }
 })
@@ -177,8 +108,8 @@ defineExpose({
 
     <div v-if="currentStep?.content || !!slots.content || currentStep?.slot" data-slot="content" :class="ui.content({ class: props.ui?.content })">
       <slot
-        :name="((currentStep?.slot || 'content') as keyof StepperSlots<T>)"
-        :item="(currentStep as Extract<T, { slot: string }>)"
+        :name="((currentStep?.slot || 'content') )"
+        :item="currentStep"
       >
         {{ currentStep?.content }}
       </slot>

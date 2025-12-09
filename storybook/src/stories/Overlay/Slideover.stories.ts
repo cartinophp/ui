@@ -5,7 +5,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Slideover',
-  component: UiSlideover,
+  component: USlideover,
   tags: ['autodocs'],
   argTypes: {
     side: {
@@ -13,14 +13,14 @@ const meta = {
       options: ['left', 'right']
     }
   }
-} satisfies Meta<typeof UiSlideover>
+} satisfies Meta<typeof USlideover>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Right: Story = {
   render: () => ({
-    components: { UiSlideover, UiButton },
+    components: { USlideover, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -45,7 +45,7 @@ export const Right: Story = {
 
 export const Left: Story = {
   render: () => ({
-    components: { UiSlideover, UiButton },
+    components: { USlideover, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -70,7 +70,7 @@ export const Left: Story = {
 
 export const WithFooter: Story = {
   render: () => ({
-    components: { UiSlideover, UiButton },
+    components: { USlideover, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -105,7 +105,7 @@ export const WithFooter: Story = {
 
 export const Wide: Story = {
   render: () => ({
-    components: { UiSlideover, UiButton },
+    components: { USlideover, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -131,7 +131,7 @@ export const Wide: Story = {
 
 export const PreventClose: Story = {
   render: () => ({
-    components: { UiSlideover, UiButton },
+    components: { USlideover, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }

@@ -1,64 +1,5 @@
-<script lang="ts">
-import type { CheckboxRootProps } from 'reka-ui'
-import theme from '../../theme/checkbox.js'
-import type { IconProps } from '../types'
-import type { ButtonHTMLAttributes } from '../types/html'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Checkbox = ComponentConfig<typeof theme, AppConfig, 'checkbox'>
-
-export interface CheckboxProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<CheckboxRootProps, 'disabled' | 'required' | 'name' | 'value' | 'id' | 'defaultValue'>, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled' | 'name'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  label?: string
-  description?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Checkbox['variants']['color']
-  /**
-   * @defaultValue 'list'
-   */
-  variant?: Checkbox['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Checkbox['variants']['size']
-  /**
-   * Position of the indicator.
-   * @defaultValue 'start'
-   */
-  indicator?: Checkbox['variants']['indicator']
-  /**
-   * The icon displayed when checked.
-   * @defaultValue appConfig.ui.icons.check
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * The icon displayed when the checkbox is indeterminate.
-   * @defaultValue appConfig.ui.icons.minus
-   * @IconifyIcon
-   */
-  indeterminateIcon?: IconProps['name']
-  class?: any
-  ui?: Checkbox['slots']
-}
-
-export type CheckboxEmits = {
-  change: [event: Event]
-}
-
-export interface CheckboxSlots {
-  label(props: { label?: string }): any
-  description(props: { description?: string }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, useId } from 'vue'
 import { Primitive, CheckboxRoot, CheckboxIndicator, Label, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -68,17 +9,17 @@ import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<CheckboxProps>()
-const slots = defineSlots<CheckboxSlots>()
-const emits = defineEmits<CheckboxEmits>()
+const props = defineProps()
+const slots = defineSlots()
+const emits = defineEmits()
 
 const modelValue = defineModel<boolean | 'indeterminate'>({ default: undefined })
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardProps(reactivePick(props, 'required', 'value', 'defaultValue'))
 
-const { id: _id, emitFormChange, emitFormInput, size, color, name, disabled, ariaAttrs } = useFormField<CheckboxProps>(props)
+const { id: _id, emitFormChange, emitFormInput, size, color, name, disabled, ariaAttrs } = useFormField(props)
 const id = _id.value ?? useId()
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.checkbox || {}) })({
@@ -88,9 +29,9 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.checkbox || 
   indicator: props.indicator,
   required: props.required,
   disabled: disabled.value
-}) as unknown as Checkbox['ui'])
+}))
 
-function onUpdate(value: any) {
+function onUpdate(value) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emits('change', event)
@@ -101,7 +42,7 @@ function onUpdate(value: any) {
 
 <!-- eslint-disable vue/no-template-shadow -->
 <template>
-  <Primitive :as="(!variant || variant === 'list') ? as : Label" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <Primitive :as="(!variant || variant === 'list') ? as " data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
       <CheckboxRoot
         :id="id"

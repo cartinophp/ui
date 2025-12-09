@@ -1,25 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-panel.js'
-import type { UseResizableProps } from '../composables/useResizable'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardPanel = ComponentConfig<typeof theme, AppConfig, 'dashboardPanel'>
-
-export interface DashboardPanelProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<UseResizableProps, 'id' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable'> {
-  class?: any
-  ui?: DashboardPanel['slots']
-}
-
-export interface DashboardPanelSlots {
-  'default'(props?: {}): any
-  'header'(props?: {}): any
-  'body'(props?: {}): any
-  'footer'(props?: {}): any
-  'resize-handle'(props: { onMouseDown: (e: MouseEvent) => void, onTouchStart: (e: TouchEvent) => void, onDoubleClick: (e: MouseEvent) => void }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, useId, toRef } from 'vue'
 import { useResizable } from '../composables/useResizable'
 import { useDashboard } from '../utils/dashboard'
@@ -28,13 +8,13 @@ import UDashboardResizeHandle from './DashboardResizeHandle.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<DashboardPanelProps>(), {
+const props = defineProps({
   minSize: 15,
   resizable: false
 })
-defineSlots<DashboardPanelSlots>()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 const dashboardContext = useDashboard({ storageKey: 'dashboard', unit: '%' })
 
 const id = `${dashboardContext.storageKey}-panel-${props.id || useId()}`
@@ -44,7 +24,7 @@ const { el, size, isDragging, onMouseDown, onTouchStart, onDoubleClick } = useRe
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardPanel || {}) })({
   size: !!size.value
-}) as unknown as DashboardPanel['ui'])
+}))
 </script>
 
 <template>

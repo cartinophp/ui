@@ -1,2 +1,3 @@
 // Mock for #build/ui-image-component
-export const UiImageComponent = 'img'
+export default 'img'
+export const UImageComponent = 'img'

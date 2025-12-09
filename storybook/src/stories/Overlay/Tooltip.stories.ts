@@ -4,7 +4,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Tooltip',
-  component: UiTooltip,
+  component: UTooltip,
   tags: ['autodocs'],
   argTypes: {
     side: {
@@ -12,7 +12,7 @@ const meta = {
       options: ['top', 'right', 'bottom', 'left']
     }
   }
-} satisfies Meta<typeof UiTooltip>
+} satisfies Meta<typeof UTooltip>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -22,7 +22,7 @@ export const Default: Story = {
     text: 'This is a tooltip'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -40,7 +40,7 @@ export const Top: Story = {
     side: 'top'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -58,7 +58,7 @@ export const Right: Story = {
     side: 'right'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -76,7 +76,7 @@ export const Bottom: Story = {
     side: 'bottom'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -94,7 +94,7 @@ export const Left: Story = {
     side: 'left'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -111,7 +111,7 @@ export const LongText: Story = {
     text: 'This is a very long tooltip text that demonstrates how the tooltip handles longer content.'
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },
@@ -129,7 +129,7 @@ export const WithShortcut: Story = {
     shortcuts: ['⌘', 'S']
   },
   render: (args) => ({
-    components: { UiTooltip, UiButton },
+    components: { UTooltip, UButton },
     setup() {
       return { args }
     },

@@ -16,10 +16,10 @@ CartinoPHP UI provides a powerful, flexible theming system that allows you to:
 
 ### 1. Create a Theme Configuration File
 
-Create a `cartino-ui.config.ts` file in your project root:
+Create a `cartino-ui.config.js` file in your project root:
 
 ```typescript
-// cartino-ui.config.ts
+// cartino-ui.config.js
 import { defineTheme } from '@cartino/ui'
 
 export default defineTheme({
@@ -475,10 +475,10 @@ const myTheme: ThemeConfig = {
 ```
 project/
 ├── themes/
-│   ├── default.ts
-│   ├── dark.ts
-│   └── custom.ts
-├── cartino-ui.config.ts (imports from themes/)
+│   ├── default.js
+│   ├── dark.js
+│   └── custom.js
+├── cartino-ui.config.js (imports from themes/)
 └── src/
 ```
 
@@ -557,7 +557,7 @@ const appConfig = {
 ### After
 
 ```typescript
-// cartino-ui.config.ts
+// cartino-ui.config.js
 export default defineTheme({
   components: {
     button: {

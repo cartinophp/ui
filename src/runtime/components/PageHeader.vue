@@ -1,51 +1,18 @@
-<script lang="ts">
-import theme from '../../theme/page-header.js'
-import type { ButtonProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageHeader = ComponentConfig<typeof theme, AppConfig, 'pageHeader'>
-
-export interface PageHeaderProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  headline?: string
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button next to the title.
-   * `{ color: 'neutral', variant: 'outline' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  class?: any
-  ui?: PageHeader['slots']
-}
-
-export interface PageHeaderSlots {
-  headline(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  links(props?: {}): any
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 
-const props = defineProps<PageHeaderProps>()
-const slots = defineSlots<PageHeaderSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageHeader || {}) })({
   title: !!props.title || !!slots.title
-}) as unknown as PageHeader['ui'])
+}))
 </script>
 
 <template>

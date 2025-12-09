@@ -3,9 +3,9 @@ import UPageHero from '../../../../src/runtime/components/PageHero.vue'
 
 const meta = {
   title: 'Components/Page/PageHero',
-  component: UiPageHero,
+  component: UPageHero,
   tags: ['autodocs']
-} satisfies Meta<typeof UiPageHero>
+} satisfies Meta<typeof UPageHero>
 
 export default meta
 type Story = StoryObj<typeof meta>

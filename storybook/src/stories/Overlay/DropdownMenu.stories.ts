@@ -4,9 +4,9 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/DropdownMenu',
-  component: UiDropdownMenu,
+  component: UDropdownMenu,
   tags: ['autodocs']
-} satisfies Meta<typeof UiDropdownMenu>
+} satisfies Meta<typeof UDropdownMenu>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -27,7 +27,7 @@ export const Default: Story = {
     items
   },
   render: (args) => ({
-    components: { UiDropdownMenu, UiButton },
+    components: { UDropdownMenu, UButton },
     setup() {
       return { args }
     },
@@ -53,7 +53,7 @@ export const WithIcons: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiDropdownMenu, UiButton },
+    components: { UDropdownMenu, UButton },
     setup() {
       return { args }
     },
@@ -79,7 +79,7 @@ export const WithShortcuts: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiDropdownMenu, UiButton },
+    components: { UDropdownMenu, UButton },
     setup() {
       return { args }
     },
@@ -102,7 +102,7 @@ export const WithDisabled: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiDropdownMenu, UiButton },
+    components: { UDropdownMenu, UButton },
     setup() {
       return { args }
     },
@@ -137,7 +137,7 @@ export const Nested: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiDropdownMenu, UiButton },
+    components: { UDropdownMenu, UButton },
     setup() {
       return { args }
     },

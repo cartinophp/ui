@@ -4,7 +4,7 @@ import USelectMenu from '../../../../src/runtime/components/SelectMenu.vue'
 
 const meta = {
   title: 'Components/Forms/SelectMenu',
-  component: UiSelectMenu,
+  component: USelectMenu,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -20,7 +20,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiSelectMenu>
+} satisfies Meta<typeof USelectMenu>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -61,7 +61,7 @@ const groupedOptions = [
 
 export const Default: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, options }
@@ -77,7 +77,7 @@ export const Default: Story = {
 
 export const WithValue: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref('option2')
       return { selected, options }
@@ -93,7 +93,7 @@ export const WithValue: Story = {
 
 export const WithIcons: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, optionsWithIcons }
@@ -106,7 +106,7 @@ export const WithIcons: Story = {
 
 export const Searchable: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, options }
@@ -124,7 +124,7 @@ export const Searchable: Story = {
 
 export const Multiple: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -145,7 +145,7 @@ export const Multiple: Story = {
 
 export const Grouped: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, groupedOptions }
@@ -162,7 +162,7 @@ export const Grouped: Story = {
 
 export const WithAvatar: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       const users = [
@@ -192,7 +192,7 @@ export const Disabled: Story = {
 
 export const Small: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, options }
@@ -205,7 +205,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => ({
-    components: { UiSelectMenu },
+    components: { USelectMenu },
     setup() {
       const selected = ref(null)
       return { selected, options }

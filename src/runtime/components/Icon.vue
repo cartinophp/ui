@@ -1,22 +1,9 @@
-<script lang="ts">
-export interface IconProps {
-  name: string | any
-  mode?: 'svg' | 'css'
-  size?: string | number
-  customize?: (
-    content: string,
-    name?: string,
-    prefix?: string,
-    provider?: string
-  ) => string
-}
-</script>
 
-<script setup lang="ts">
+<script setup>
 import { useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
 
-const props = defineProps<IconProps>()
+const props = defineProps()
 
 const iconProps = useForwardProps(reactivePick(props, 'name', 'mode', 'size', 'customize'))
 </script>

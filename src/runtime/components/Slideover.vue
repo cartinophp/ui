@@ -1,78 +1,5 @@
-<script lang="ts">
-import type { DialogRootProps, DialogRootEmits, DialogContentProps, DialogContentEmits } from 'reka-ui'
-import theme from '../../theme/slideover.js'
-import type { ButtonProps, IconProps, LinkPropsKeys } from '../types'
-import type { EmitsToProps } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Slideover = ComponentConfig<typeof theme, AppConfig, 'slideover'>
-
-export interface SlideoverProps extends /** @vue-ignore */ /** @vue-ignore */ DialogRootProps {
-  title?: string
-  description?: string
-  /** The content of the slideover. */
-  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DialogContentEmits>>
-  /**
-   * Render an overlay behind the slideover.
-   * @defaultValue true
-   */
-  overlay?: boolean
-  /**
-   * Animate the slideover when opening or closing.
-   * @defaultValue true
-   */
-  transition?: boolean
-  /**
-   * The side of the slideover.
-   * @defaultValue 'right'
-   */
-  side?: Slideover['variants']['side']
-  /**
-   * Render the slideover in a portal.
-   * @defaultValue true
-   */
-  portal?: boolean | string | HTMLElement
-  /**
-   * Display a close button to dismiss the slideover.
-   * `{ size: 'md', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the close button.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  closeIcon?: IconProps['name']
-  /**
-   * When `false`, the slideover will not close when clicking outside or pressing escape.
-   * @defaultValue true
-   */
-  dismissible?: boolean
-  class?: any
-  ui?: Slideover['slots']
-}
-
-export interface SlideoverEmits extends /** @vue-ignore */ /** @vue-ignore */ DialogRootEmits {
-  'after:leave': []
-  'after:enter': []
-  'close:prevent': []
-}
-
-export interface SlideoverSlots {
-  default(props: { open: boolean }): any
-  content(props: { close: () => void }): any
-  header(props: { close: () => void }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  actions(props?: {}): any
-  close(props: { ui: Slideover['ui'] }): any
-  body(props: { close: () => void }): any
-  footer(props: { close: () => void }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, toRef } from 'vue'
 import { DialogRoot, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, DialogTitle, DialogDescription, DialogClose, VisuallyHidden, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -81,7 +8,7 @@ import { usePortal } from '../composables/usePortal'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<SlideoverProps>(), {
+const props = defineProps({
   close: true,
   portal: true,
   overlay: true,
@@ -90,11 +17,11 @@ const props = withDefaults(defineProps<SlideoverProps>(), {
   dismissible: true,
   side: 'right'
 })
-const emits = defineEmits<SlideoverEmits>()
-const slots = defineSlots<SlideoverSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'open', 'defaultOpen', 'modal'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
@@ -104,12 +31,12 @@ const contentEvents = computed(() => {
     const events = ['pointerDownOutside', 'interactOutside', 'escapeKeyDown']
 
     return events.reduce((acc, curr) => {
-      acc[curr] = (e: Event) => {
+      acc[curr] = (e) => {
         e.preventDefault()
         emits('close:prevent')
       }
       return acc
-    }, {} as Record<typeof events[number], (e: Event) => void>)
+    }, {} as Record<typeof events[number], (e) => void>)
   }
 
   return {}
@@ -118,7 +45,7 @@ const contentEvents = computed(() => {
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.slideover || {}) })({
   transition: props.transition,
   side: props.side
-}) as unknown as Slideover['ui'])
+}))
 </script>
 
 <!-- eslint-disable vue/no-template-shadow -->

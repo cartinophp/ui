@@ -1,75 +1,25 @@
-<script lang="ts">
-import theme from '../../theme/page-cta.js'
-import type { ButtonProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageCTA = ComponentConfig<typeof theme, AppConfig, 'pageCTA'>
-
-export interface PageCTAProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  title?: string
-  description?: string
-  /**
-   * The orientation of the page cta.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageCTA['variants']['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: PageCTA['variants']['variant']
-  /**
-   * Display a list of Button under the description.
-   * `{ size: 'lg' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  ui?: PageCTA['slots']
-}
-
-export interface PageCTASlots {
-  top(props?: {}): any
-  header(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-  links(props?: {}): any
-  default(props?: {}): any
-  bottom(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 import UContainer from './Container.vue'
 
-const props = withDefaults(defineProps<PageCTAProps>(), {
+const props = defineProps({
   orientation: 'vertical',
   reverse: false
 })
-const slots = defineSlots<PageCTASlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageCTA || {}) })({
   variant: props.variant,
   orientation: props.orientation,
   reverse: props.reverse,
   title: !!props.title || !!slots.title
-}) as unknown as PageCTA['ui'])
+}))
 </script>
 
 <template>

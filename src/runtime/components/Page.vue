@@ -1,41 +1,19 @@
-<script lang="ts">
-import theme from '../../theme/page.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Page = ComponentConfig<typeof theme, AppConfig, 'page'>
-
-export interface PageProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  ui?: Page['slots']
-}
-
-export interface PageSlots {
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<PageProps>()
-const slots = defineSlots<PageSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.page || {}) })({
   left: !!slots.left,
   right: !!slots.right
-}) as unknown as Page['ui'])
+}))
 </script>
 
 <template>

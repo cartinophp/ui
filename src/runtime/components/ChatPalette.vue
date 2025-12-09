@@ -1,43 +1,22 @@
-<script lang="ts">
-import theme from '../../theme/chat-palette.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChatPalette = ComponentConfig<typeof theme, AppConfig, 'chatPalette'>
-
-export interface ChatPaletteProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-  ui?: ChatPalette['slots']
-}
-
-export interface ChatPaletteSlots {
-  default(props?: {}): any
-  prompt(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<ChatPaletteProps>()
-const slots = defineSlots<ChatPaletteSlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPalette || {}) })() as unknown as ChatPalette['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPalette || {}) })())
 </script>
 
 <template>
   <Primitive :as="as" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <div data-slot="content" :class="ui.content({ class: props.ui?.content })">
-      <Slot compact>
+      
         <slot />
       </Slot>
     </div>

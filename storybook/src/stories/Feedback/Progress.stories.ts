@@ -3,7 +3,7 @@ import UProgress from '../../../../src/runtime/components/Progress.vue'
 
 const meta = {
   title: 'Components/Feedback/Progress',
-  component: UiProgress,
+  component: UProgress,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiProgress>
+} satisfies Meta<typeof UProgress>
 
 export default meta
 type Story = StoryObj<typeof meta>

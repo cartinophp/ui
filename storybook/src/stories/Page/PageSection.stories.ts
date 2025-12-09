@@ -3,9 +3,9 @@ import UPageSection from '../../../../src/runtime/components/PageSection.vue'
 
 const meta = {
   title: 'Components/Page/PageSection',
-  component: UiPageSection,
+  component: UPageSection,
   tags: ['autodocs']
-} satisfies Meta<typeof UiPageSection>
+} satisfies Meta<typeof UPageSection>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -3,7 +3,7 @@ import USlider from '../../../../src/runtime/components/Slider.vue'
 
 const meta = {
   title: 'Components/Forms/Slider',
-  component: UiSlider,
+  component: USlider,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiSlider>
+} satisfies Meta<typeof USlider>
 
 export default meta
 type Story = StoryObj<typeof meta>

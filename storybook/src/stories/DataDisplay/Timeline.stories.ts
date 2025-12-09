@@ -3,7 +3,7 @@ import UTimeline from '../../../../src/runtime/components/Timeline.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Timeline',
-  component: UiTimeline,
+  component: UTimeline,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiTimeline>
+} satisfies Meta<typeof UTimeline>
 
 export default meta
 type Story = StoryObj<typeof meta>

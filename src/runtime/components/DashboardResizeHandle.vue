@@ -1,34 +1,15 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-resize-handle.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardResizeHandle = ComponentConfig<typeof theme, AppConfig, 'dashboardResizeHandle'>
-
-export interface DashboardResizeHandleProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface DashboardResizeHandleSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<DashboardResizeHandleProps>()
-defineSlots<DashboardResizeHandleSlots>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardResizeHandle || {}) }) as unknown as DashboardResizeHandle['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardResizeHandle || {}) }))
 </script>
 
 <template>

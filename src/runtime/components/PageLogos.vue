@@ -1,34 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-logos.js'
-import type { MarqueeProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageLogos = ComponentConfig<typeof theme, AppConfig, 'pageLogos'>
-
-type PageLogosItem = {
-  src: string
-  alt: string
-} | string
-
-export interface PageLogosProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  items?: PageLogosItem[]
-  marquee?: boolean | MarqueeProps
-  class?: any
-  ui?: PageLogos['slots']
-}
-
-export interface PageLogosSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
@@ -41,19 +12,19 @@ defineOptions({ inheritAttrs: false })
 
 const [DefineCreateItemTemplate, ReuseCreateItemTemplate] = createReusableTemplate()
 
-const props = withDefaults(defineProps<PageLogosProps>(), {
+const props = defineProps({
   marquee: false
 })
-const slots = defineSlots<PageLogosSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLogos || {}) })() as unknown as PageLogos['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageLogos || {}) })())
 </script>
 
 <template>
-  <DefineCreateItemTemplate>
+  
     <slot v-if="!!slots.default" />
     <template v-else-if="items?.length">
       <template v-for="(item, index) in items" :key="index">

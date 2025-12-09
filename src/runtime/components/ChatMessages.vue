@@ -1,79 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { ComponentPublicInstance } from 'vue'
-import type { UIMessage, ChatStatus } from 'ai'
-import theme from '../../theme/chat-messages.js'
-import type { ButtonProps, ChatMessageProps, ChatMessageSlots, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChatMessages = ComponentConfig<typeof theme, AppConfig, 'chatMessages'>
-
-export interface ChatMessagesProps {
-  messages?: UIMessage[]
-  status?: ChatStatus
-  /**
-   * Whether to automatically scroll to the bottom when a message is streaming.
-   * @defaultValue false
-   */
-  shouldAutoScroll?: boolean
-  /**
-   * Whether to scroll to the bottom on mounted.
-   * @defaultValue true
-   */
-  shouldScrollToBottom?: boolean
-  /**
-   * Display an auto scroll button.
-   * `{ size: 'md', color: 'neutral', variant: 'outline' }`{lang="ts-type"}
-   * @defaultValue true
-   */
-  autoScroll?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the auto scroll button.
-   * @defaultValue appConfig.ui.icons.arrowDown
-   * @IconifyIcon
-   */
-  autoScrollIcon?: IconProps['name']
-  /**
-   * The `user` messages props.
-   * `{ side: 'right', variant: 'soft' }`{lang="ts-type"}
-   */
-  user?: Pick<ChatMessageProps, 'icon' | 'avatar' | 'variant' | 'side' | 'actions' | 'ui'>
-  /**
-   * The `assistant` messages props.
-   * `{ side: 'left', variant: 'naked' }`{lang="ts-type"}
-   */
-  assistant?: Pick<ChatMessageProps, 'icon' | 'avatar' | 'variant' | 'side' | 'actions' | 'ui'>
-  /**
-   * Render the messages in a compact style.
-   * This is done automatically when used inside a `UChatPalette`{lang="ts-type"}.
-   * @defaultValue false
-   */
-  compact?: boolean
-  /**
-   * The spacing offset for the last message in px. Can be useful when the prompt is sticky for example.
-   * @defaultValue 0
-   */
-  spacingOffset?: number
-  class?: any
-  ui?: ChatMessages['slots']
-}
-
-type ExtendSlotWithVersion<K extends keyof ChatMessageSlots>
-  = ChatMessageSlots[K] extends (props: infer P) => any
-    ? (props: P & { message: UIMessage }) => any
-    : ChatMessageSlots[K]
-
-export type ChatMessagesSlots = {
-  [K in keyof ChatMessageSlots]: ExtendSlotWithVersion<K>
-} & {
-  default(props?: {}): any
-  indicator(props: { ui: ChatMessages['ui'] }): any
-  viewport(props: { ui: ChatMessages['ui'], onClick: () => void }): any
-}
-
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed, watch, nextTick, toRef, onMounted } from 'vue'
 import { Presence } from 'reka-ui'
 import { defu } from 'defu'
@@ -83,27 +10,27 @@ import { tv } from '../utils/tv'
 import UChatMessage from './ChatMessage.vue'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<ChatMessagesProps>(), {
+const props = defineProps({
   autoScroll: true,
   shouldAutoScroll: false,
   shouldScrollToBottom: true,
   spacingOffset: 0
 })
-const slots = defineSlots<ChatMessagesSlots>()
+const slots = defineSlots()
 
 const getProxySlots = () => omit(slots, ['default', 'indicator', 'viewport'])
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const userProps = toRef(() => defu(props.user, { side: 'right' as const, variant: 'soft' as const }))
 const assistantProps = toRef(() => defu(props.assistant, { side: 'left' as const, variant: 'naked' as const }))
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatMessages || {}) })({
   compact: props.compact
-}) as unknown as ChatMessages['ui'])
+}))
 
-const el = ref<HTMLElement | null>(null)
-const parent = ref<HTMLElement | null>(null)
+const el = ref(null)
+const parent = ref(null)
 const messagesRefs = ref(new Map<string, HTMLElement>())
 
 const showAutoScroll = ref(false)
@@ -112,21 +39,21 @@ const lastMessageSubmitted = ref(false)
 const lastScrollTop = ref(0)
 const userScrolledUp = ref(false)
 
-function registerMessageRef(id: string, element: ComponentPublicInstance | null) {
+function registerMessageRef(id, element) {
   const elInstance = element?.$el
   if (elInstance) {
     messagesRefs.value.set(id, elInstance)
   }
 }
 
-function scrollToMessage(id: string) {
+function scrollToMessage(id) {
   const element = messagesRefs.value.get(id)
   if (element) {
     element.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 }
 
-function scrollToBottom(smooth: boolean = true) {
+function scrollToBottom(smooth = true) {
   if (!parent.value) {
     return
   }
@@ -207,14 +134,14 @@ function onAutoScrollClick() {
   scrollToBottom()
 }
 
-function getScrollParent(node: HTMLElement | null): HTMLElement {
+function getScrollParent(node){
   if (!node) {
     return document.documentElement
   }
 
   const overflowRegex = /auto|scroll/
 
-  let current: HTMLElement | null = node
+  let current= node
   while (current && current !== document.body && current !== document.documentElement) {
     const style = window.getComputedStyle(current)
     if (overflowRegex.test(style.overflowY)) {
@@ -299,7 +226,7 @@ onMounted(() => {
         :compact="compact"
       >
         <template v-for="(_, name) in getProxySlots()" #[name]="slotData">
-          <slot :name="name" v-bind="(slotData as any)" :message="message" />
+          <slot :name="name" v-bind="slotData" :message="message" />
         </template>
       </UChatMessage>
     </slot>
@@ -308,7 +235,7 @@ onMounted(() => {
       v-if="status === 'submitted'"
       id="indicator"
       role="assistant"
-      v-bind="{ ...assistantProps, actions: undefined, parts: [] }"
+      v-bind="{ ...assistantProps, actions: undefined, parts:  }"
       :compact="compact"
     >
       <template #content>

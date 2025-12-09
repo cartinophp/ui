@@ -1,42 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/code-collapse'
-import type { IconProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseCodeCollapse = ComponentConfig<typeof theme, AppConfig, 'codeCollapse', 'ui.prose'>
-
-export interface ProseCodeCollapseProps {
-  /**
-   * The icon displayed to toggle the code.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   */
-  icon?: IconProps['name']
-  /**
-   * The name displayed in the trigger label.
-   * @defaultValue t('prose.codeCollapse.name')
-   */
-  name?: string
-  /**
-   * The text displayed when the code is collapsed.
-   * @defaultValue t('prose.codeCollapse.openText')
-   */
-  openText?: string
-  /**
-   * The text displayed when the code is expanded.
-   * @defaultValue t('prose.codeCollapse.closeText')
-   */
-  closeText?: string
-  class?: any
-  ui?: ProseCodeCollapse['slots']
-}
-
-export interface ProseCodeCollapseSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { useLocale } from '../../composables/useLocale'

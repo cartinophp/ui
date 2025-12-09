@@ -1,12 +1,14 @@
 import type { Preview } from '@storybook/vue3-vite'
 import { setup } from '@storybook/vue3'
-import * as components from '../../src/index'
+import * as components from '../../src/index.js'
+import '../../src/app.css'
+import '../../src/runtime/keyframes.css'
 
 // Register all components globally with ui- prefix
 setup((app) => {
   // Register all components from the library
   Object.entries(components).forEach(([name, component]) => {
-    if (name.startsWith('Ui') && typeof component === 'object') {
+    if (name.startsWith('U') && typeof component === 'object') {
       app.component(name, component)
     }
   })

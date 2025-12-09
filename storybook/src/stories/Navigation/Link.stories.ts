@@ -3,7 +3,7 @@ import ULink from '../../../../src/runtime/components/Link.vue'
 
 const meta = {
   title: 'Components/Navigation/Link',
-  component: UiLink,
+  component: ULink,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiLink>
+} satisfies Meta<typeof ULink>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -107,7 +107,7 @@ export const AsButton: Story = {
 
 export const UnderlineStyle: Story = {
   render: () => ({
-    components: { UiLink },
+    components: { ULink },
     template: `
       <p class="text-gray-600">
         This is a paragraph with an
@@ -120,7 +120,7 @@ export const UnderlineStyle: Story = {
 
 export const InText: Story = {
   render: () => ({
-    components: { UiLink },
+    components: { ULink },
     template: `
       <p class="text-gray-600">
         Read our

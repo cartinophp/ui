@@ -4,7 +4,7 @@ import UPagination from '../../../../src/runtime/components/Pagination.vue'
 
 const meta = {
   title: 'Components/Navigation/Pagination',
-  component: UiPagination,
+  component: UPagination,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -12,14 +12,14 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg']
     }
   }
-} satisfies Meta<typeof UiPagination>
+} satisfies Meta<typeof UPagination>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       return { page }
@@ -35,7 +35,7 @@ export const Default: Story = {
 
 export const ManyPages: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(5)
       return { page }
@@ -51,7 +51,7 @@ export const ManyPages: Story = {
 
 export const Small: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       return { page }
@@ -64,7 +64,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       return { page }
@@ -77,7 +77,7 @@ export const Large: Story = {
 
 export const WithPageSize: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       const pageSize = ref(10)
@@ -101,7 +101,7 @@ export const WithPageSize: Story = {
 
 export const Simple: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       return { page }
@@ -114,7 +114,7 @@ export const Simple: Story = {
 
 export const FirstPage: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(1)
       return { page }
@@ -127,7 +127,7 @@ export const FirstPage: Story = {
 
 export const LastPage: Story = {
   render: () => ({
-    components: { UiPagination },
+    components: { UPagination },
     setup() {
       const page = ref(10)
       return { page }

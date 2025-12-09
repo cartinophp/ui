@@ -3,7 +3,7 @@ import UMarquee from '../../../../src/runtime/components/Marquee.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Marquee',
-  component: UiMarquee,
+  component: UMarquee,
   tags: ['autodocs'],
   argTypes: {
     direction: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['left', 'right', 'up', 'down']
     }
   }
-} satisfies Meta<typeof UiMarquee>
+} satisfies Meta<typeof UMarquee>
 
 export default meta
 type Story = StoryObj<typeof meta>

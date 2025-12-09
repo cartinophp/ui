@@ -1,42 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/chat-prompt.js'
-import type { TextareaProps, TextareaSlots } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChatPrompt = ComponentConfig<typeof theme, AppConfig, 'chatPrompt'>
-
-export interface ChatPromptProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<TextareaProps, 'rows' | 'autofocus' | 'autofocusDelay' | 'autoresize' | 'autoresizeDelay' | 'maxrows' | 'icon' | 'avatar' | 'loading' | 'loadingIcon' | 'disabled'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'form'
-   */
-  as?: any
-  /**
-   * The placeholder text for the textarea.
-   * @defaultValue t('chatPrompt.placeholder')
-   */
-  placeholder?: string
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: ChatPrompt['variants']['variant']
-  error?: Error
-  class?: any
-  ui?: ChatPrompt['slots'] & TextareaProps['ui']
-}
-
-export interface ChatPromptEmits {
-  submit: [event: Event]
-  close: [event: Event]
-}
-
-export interface ChatPromptSlots extends /** @vue-ignore */ TextareaSlots {
-  header(props?: {}): any
-  footer(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, toRef, useTemplateRef } from 'vue'
 import { Primitive, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -47,19 +10,19 @@ import UTextarea from './Textarea.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ChatPromptProps>(), {
+const props = defineProps({
   as: 'form',
   autofocus: true,
   autoresize: true,
   rows: 1
 })
-const emits = defineEmits<ChatPromptEmits>()
-const slots = defineSlots<ChatPromptSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const model = defineModel<string>({ default: '' })
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const textareaProps = useForwardProps(reactivePick(props, 'rows', 'autofocus', 'autofocusDelay', 'autoresize', 'autoresizeDelay', 'maxrows', 'icon', 'avatar', 'loading', 'loadingIcon'))
 
@@ -67,11 +30,11 @@ const getProxySlots = () => omit(slots, ['header', 'footer'])
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPrompt || {}) })({
   variant: props.variant
-}) as unknown as ChatPrompt['ui'])
+}))
 
 const textareaRef = useTemplateRef('textareaRef')
 
-function submit(e: Event) {
+function submit(e) {
   if (model.value.trim() === '') {
     return
   }
@@ -79,7 +42,7 @@ function submit(e: Event) {
   emits('submit', e)
 }
 
-function blur(e: Event) {
+function blur(e) {
   textareaRef.value?.textareaRef?.blur()
 
   emits('close', e)

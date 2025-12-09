@@ -1,73 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { MaybeRefOrGetter } from 'vue'
-import theme from '../../theme/color-picker.js'
-import type { HSLObject } from 'colortranslator'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ColorPicker = ComponentConfig<typeof theme, AppConfig, 'colorPicker'>
-
-type HSVColor = {
-  h: number
-  s: number
-  v: number
-}
-
-function HSLtoHSV(hsl: HSLObject): HSVColor {
-  const x = hsl.S * (hsl.L < 50 ? hsl.L : 100 - hsl.L)
-  const v = hsl.L + (x / 100)
-
-  return {
-    h: hsl.H,
-    s: hsl.L === 0 ? hsl.S : 2 * x / v,
-    v
-  }
-}
-
-function HSVtoHSL(hsv: HSVColor): HSLObject {
-  const x = (200 - hsv.s) * hsv.v / 100
-
-  return {
-    H: hsv.h,
-    S: x === 0 || x === 200 ? 0 : Math.round(hsv.s * hsv.v / (x <= 100 ? x : 200 - x)),
-    L: x / 2
-  }
-}
-
-export type ColorPickerProps = {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * Throttle time in ms for the color picker
-   */
-  throttle?: number
-  /**
-   * Disable the color picker
-   */
-  disabled?: boolean
-  /**
-   * The default value of the color picker
-   */
-  defaultValue?: string
-  /**
-   * Format of the color
-   * @defaultValue 'hex'
-   */
-  format?: 'hex' | 'rgb' | 'hsl' | 'cmyk' | 'lab'
-  /**
-   * @defaultValue 'md'
-   */
-  size?: ColorPicker['variants']['size']
-  class?: any
-  ui?: ColorPicker['slots']
-}
-
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, nextTick, computed, toValue } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useEventListener, useElementBounding, watchThrottled, watchPausable } from '@vueuse/core'
@@ -75,7 +8,7 @@ import { isClient } from '@vueuse/shared'
 import { ColorTranslator } from 'colortranslator'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<ColorPickerProps>(), {
+const props = defineProps({
   format: 'hex',
   throttle: 50,
   defaultValue: '#FFFFFF'
@@ -83,13 +16,13 @@ const props = withDefaults(defineProps<ColorPickerProps>(), {
 
 const modelValue = defineModel<string>(undefined)
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.colorPicker || {}) })({
   size: props.size
-}) as unknown as ColorPicker['ui'])
+}))
 
-const pickedColor = computed<HSVColor>({
+const pickedColor = computed({
   get() {
     try {
       const color = new ColorTranslator(modelValue.value || props.defaultValue)
@@ -126,18 +59,18 @@ const pickedColor = computed<HSVColor>({
   }
 })
 
-function useColorDraggable(targetElement: MaybeRefOrGetter<HTMLElement | null>,
-  containerElement: MaybeRefOrGetter<HTMLElement | null>,
+function useColorDraggable(targetElement
+  containerElement
   axis: 'x' | 'y' | 'both' = 'both',
   initialPosition = { x: 0, y: 0 },
-  disabled?: MaybeRefOrGetter<boolean | undefined>
+  disabled?
 ) {
-  const position = ref<{ x: number, y: number }>(initialPosition)
-  const pressedDelta = ref<{ x: number, y: number }>()
+  const position = ref(initialPosition)
+  const pressedDelta = ref()
   const targetRect = useElementBounding(targetElement)
   const containerRect = useElementBounding(containerElement)
 
-  function start(event: PointerEvent) {
+  function start(event) {
     if (toValue(disabled)) return event.preventDefault()
 
     const container = toValue(containerElement)
@@ -150,7 +83,7 @@ function useColorDraggable(targetElement: MaybeRefOrGetter<HTMLElement | null>,
     move(event)
   }
 
-  function move(event: PointerEvent) {
+  function move(event) {
     if (!pressedDelta.value) return
 
     const container = toValue(containerElement)
@@ -186,7 +119,7 @@ function useColorDraggable(targetElement: MaybeRefOrGetter<HTMLElement | null>,
   }
 }
 
-function normalizeHue(hue: number, dir: 'left' | 'right' = 'left'): number {
+function normalizeHue(hue, dir: 'left' | 'right' = 'left') {
   if (dir === 'right') {
     return (hue * 100) / 360
   }
@@ -194,14 +127,14 @@ function normalizeHue(hue: number, dir: 'left' | 'right' = 'left'): number {
   return (hue / 100) * 360
 }
 
-function normalizeBrightness(brightness: number): number {
+function normalizeBrightness(brightness) {
   return 100 - brightness
 }
 
-const selectorRef = ref<HTMLDivElement | null>(null)
-const selectorThumbRef = ref<HTMLDivElement | null>(null)
-const trackRef = ref<HTMLDivElement | null>(null)
-const trackThumbRef = ref<HTMLDivElement | null>(null)
+const selectorRef = ref(null)
+const selectorThumbRef = ref(null)
+const trackRef = ref(null)
+const trackThumbRef = ref(null)
 
 const disabled = computed(() => props.disabled)
 

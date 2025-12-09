@@ -1,69 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/banner.js'
-import type { ButtonProps, IconProps, LinkProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Banner = ComponentConfig<typeof theme, AppConfig, 'banner'>
-
-export interface BannerProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * A unique id saved to local storage to remember if the banner has been dismissed.
-   * Change this value to show the banner again.
-   * @defaultValue '1'
-   */
-  id?: string
-  /**
-   * The icon displayed next to the title.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  title?: string
-  /**
-   * Display a list of actions next to the title.
-   * `{ color: 'neutral', size: 'xs' }`{lang="ts-type"}
-   */
-  actions?: ButtonProps[]
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Banner['variants']['color']
-  /**
-   * Display a close button to dismiss the banner.
-   * `{ size: 'md', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @emits `close`
-   * @defaultValue false
-   */
-  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the close button.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  closeIcon?: IconProps['name']
-  class?: any
-  ui?: Banner['slots']
-}
-
-export interface BannerSlots {
-  leading(props: { ui: Banner['ui'] }): any
-  title(props?: {}): any
-  actions(props?: {}): any
-  close(props: { ui: Banner['ui'] }): any
-}
-
-export interface BannerEmits {
-  close: []
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useLocale } from '../composables/useLocale'
@@ -75,17 +11,17 @@ import UButton from './Button.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<BannerProps>()
-const slots = defineSlots<BannerSlots>()
-const emits = defineEmits<BannerEmits>()
+const props = defineProps()
+const slots = defineSlots()
+const emits = defineEmits()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.banner || {}) })({
   color: props.color,
   to: !!props.to
-}) as unknown as Banner['ui'])
+}))
 
 const id = computed(() => `banner-${props.id || '1'}`)
 

@@ -1,106 +1,5 @@
-<script lang="ts">
-import type { PaginationRootProps, PaginationRootEmits } from 'reka-ui'
-import theme from '../../theme/pagination.js'
-import type { ButtonProps, IconProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Pagination = ComponentConfig<typeof theme, AppConfig, 'pagination'>
-
-export interface PaginationProps extends /** @vue-ignore */ /** @vue-ignore */ Partial<Pick<PaginationRootProps, 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'>> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon to use for the first page control.
-   * @defaultValue appConfig.ui.icons.chevronDoubleLeft
-   * @IconifyIcon
-   */
-  firstIcon?: IconProps['name']
-  /**
-   * The icon to use for the previous page control.
-   * @defaultValue appConfig.ui.icons.chevronLeft
-   * @IconifyIcon
-   */
-  prevIcon?: IconProps['name']
-  /**
-   * The icon to use for the next page control.
-   * @defaultValue appConfig.ui.icons.chevronRight
-   * @IconifyIcon
-   */
-  nextIcon?: IconProps['name']
-  /**
-   * The icon to use for the last page control.
-   * @defaultValue appConfig.ui.icons.chevronDoubleRight
-   * @IconifyIcon
-   */
-  lastIcon?: IconProps['name']
-  /**
-   * The icon to use for the ellipsis control.
-   * @defaultValue appConfig.ui.icons.ellipsis
-   * @IconifyIcon
-   */
-  ellipsisIcon?: IconProps['name']
-  /**
-   * The color of the pagination controls.
-   * @defaultValue 'neutral'
-   * @IconifyIcon
-   */
-  color?: ButtonProps['color']
-  /**
-   * The variant of the pagination controls.
-   * @defaultValue 'outline'
-   */
-  variant?: ButtonProps['variant']
-  /**
-   * The color of the active pagination control.
-   * @defaultValue 'primary'
-   */
-  activeColor?: ButtonProps['color']
-  /**
-   * The variant of the active pagination control.
-   * @defaultValue 'solid'
-   */
-  activeVariant?: ButtonProps['variant']
-  /**
-   * Whether to show the first, previous, next, and last controls.
-   * @defaultValue true
-   */
-  showControls?: boolean
-  size?: ButtonProps['size']
-  /**
-   * A function to render page controls as links.
-   * @param page The page number to navigate to.
-   */
-  to?: (page: number) => ButtonProps['to']
-  class?: any
-  ui?: Pagination['slots']
-}
-
-export interface PaginationEmits extends /** @vue-ignore */ /** @vue-ignore */ PaginationRootEmits {}
-
-export interface PaginationSlots {
-  first(props?: {}): any
-  prev(props?: {}): any
-  next(props?: {}): any
-  last(props?: {}): any
-  ellipsis(props: { ui: Pagination['ui'] }): any
-  item(props: {
-    page: number
-    pageCount: number
-    item: {
-      type: 'ellipsis'
-    } | {
-      type: 'page'
-      value: number
-    }
-    index: number
-  }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { PaginationRoot, PaginationList, PaginationListItem, PaginationFirst, PaginationPrev, PaginationEllipsis, PaginationNext, PaginationLast, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -108,7 +7,7 @@ import { useLocale } from '../composables/useLocale'
 import { tv } from '../utils/tv'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<PaginationProps>(), {
+const props = defineProps({
   color: 'neutral',
   variant: 'outline',
   activeColor: 'primary',
@@ -119,11 +18,11 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   siblingCount: 2,
   total: 0
 })
-const emits = defineEmits<PaginationEmits>()
-const slots = defineSlots<PaginationSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { dir } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'defaultPage', 'disabled', 'itemsPerPage', 'page', 'showEdges', 'siblingCount', 'total'), emits)
 
@@ -133,7 +32,7 @@ const nextIcon = computed(() => props.nextIcon || (dir.value === 'rtl' ? appConf
 const lastIcon = computed(() => props.lastIcon || (dir.value === 'rtl' ? appConfig.ui.icons.chevronDoubleLeft : appConfig.ui.icons.chevronDoubleRight))
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pagination || {}) })() as unknown as Pagination['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pagination || {}) })())
 </script>
 
 <template>

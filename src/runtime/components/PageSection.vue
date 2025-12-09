@@ -1,67 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-section.js'
-import type { ButtonProps, IconProps, PageFeatureProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageSection = ComponentConfig<typeof theme, AppConfig, 'pageSection'>
-
-export interface PageSectionProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'section'
-   */
-  as?: any
-  /**
-   * The headline displayed above the title.
-   */
-  headline?: string
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button under the description.
-   * `{ size: 'lg' }`{lang="ts-type"}
-   */
-  links?: ButtonProps[]
-  /**
-   * Display a list of PageFeature under the description.
-   */
-  features?: PageFeatureProps[]
-  /**
-   * The orientation of the section.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageSection['variants']['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  class?: any
-  ui?: PageSection['slots']
-}
-
-export interface PageSectionSlots {
-  top(props?: {}): any
-  header(props?: {}): any
-  leading(props: { ui: PageSection['ui'] }): any
-  headline(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  body(props?: {}): any
-  features(props?: {}): any
-  footer(props?: {}): any
-  links(props?: {}): any
-  default(props?: {}): any
-  bottom(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
@@ -70,13 +8,13 @@ import UContainer from './Container.vue'
 import UIcon from './Icon.vue'
 import UButton from './Button.vue'
 
-const props = withDefaults(defineProps<PageSectionProps>(), {
+const props = defineProps({
   as: 'section',
   orientation: 'vertical'
 })
-const slots = defineSlots<PageSectionSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageSection || {}) })({
   orientation: props.orientation,
@@ -84,7 +22,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageSection 
   title: !!props.title || !!slots.title,
   description: !!props.description || !!slots.description,
   body: !!slots.body || (!!props.features?.length || !!slots.features)
-}) as unknown as PageSection['ui'])
+}))
 </script>
 
 <template>

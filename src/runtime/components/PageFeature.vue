@@ -1,44 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-feature.js'
-import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageFeature = ComponentConfig<typeof theme, AppConfig, 'pageFeature'>
-
-export interface PageFeatureProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed next to the title when `orientation` is `horizontal` and above the title when `orientation` is `vertical`.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  title?: string
-  description?: string
-  /**
-   * The orientation of the page feature.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: PageFeature['variants']['orientation']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: PageFeature['slots']
-}
-
-export interface PageFeatureSlots {
-  leading(props: { ui: PageFeature['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { getSlotChildrenText } from '../utils'
@@ -48,17 +9,17 @@ import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<PageFeatureProps>(), {
+const props = defineProps({
   orientation: 'horizontal'
 })
-const slots = defineSlots<PageFeatureSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageFeature || {}) })({
   orientation: props.orientation,
   title: !!props.title || !!slots.title
-}) as unknown as PageFeature['ui'])
+}))
 
 const ariaLabel = computed(() => {
   const slotText = slots.title && getSlotChildrenText(slots.title())

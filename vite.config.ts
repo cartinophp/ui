@@ -15,7 +15,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(__dirname, 'src/index.js'),
       name: 'CartinoUI',
       fileName: (format) => format === 'es' ? 'index.js' : `index.${format}.js`,
       formats: ['es']

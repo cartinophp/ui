@@ -1,113 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/pricing-plan.js'
-import type { BadgeProps, ButtonProps, IconProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PricingPlan = ComponentConfig<typeof theme, AppConfig, 'pricingPlan'>
-
-type PricingPlanFeature = {
-  title: string
-  /**
-   * @defaultValue appConfig.ui.icons.success
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-}
-
-export interface PricingPlanProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /**
-   * Display a badge next to the title.
-   * Can be a string or an object.
-   * `{ color: 'primary', variant: 'subtle' }`{lang="ts-type"}
-   */
-  badge?: string | BadgeProps
-  /**
-   * The unit price period that appears next to the price.
-   * Typically used to show the recurring interval.
-   * @example "/month", "/year", "/seat/month"
-   */
-  billingCycle?: string
-  /**
-   * Additional billing context that appears above the billing cycle.
-   * Typically used to show the actual billing frequency.
-   * @example "billed annually", "billed monthly", "per user, billed annually"
-   */
-  billingPeriod?: string
-  /**
-   * The current price of the plan.
-   * When used with `discount`, this becomes the original price.
-   * @example "$99", "€99", "Free"
-   */
-  price?: string
-  /**
-   * The discounted price of the plan.
-   * When provided, the `price` prop will be displayed as strikethrough.
-   * @example "$79", "€79"
-   */
-  discount?: string
-  /**
-   * Display a list of features under the price.
-   * Can be an array of strings or an array of objects.
-   */
-  features?: string[] | PricingPlanFeature[]
-  /**
-   * Display a buy button at the bottom.
-   * `{ size: 'lg', block: true }`{lang="ts-type"}
-   * Use the `onClick` field to add a click handler.
-   */
-  button?: ButtonProps
-  /**
-   * Display a tagline highlighting the pricing value proposition.
-   * @example 'Pay once, own it forever'
-   */
-  tagline?: string
-  /**
-   * Display terms at the bottom.
-   * @example '14-day free trial'
-   */
-  terms?: string
-  /**
-   * The orientation of the pricing plan.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PricingPlan['variants']['orientation']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: PricingPlan['variants']['variant']
-  /** Display a ring around the pricing plan to highlight it. */
-  highlight?: boolean
-  /** Enlarge the plan to make it more prominent. */
-  scale?: boolean
-  class?: any
-  ui?: PricingPlan['slots']
-}
-
-export interface PricingPlanSlots {
-  badge(props: { ui: PricingPlan['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  price(props?: {}): any
-  discount(props?: {}): any
-  billing(props: { ui: PricingPlan['ui'] }): any
-  features(props?: {}): any
-  button(props: { ui: PricingPlan['ui'] }): any
-  header(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-  tagline(props?: {}): any
-  terms(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
@@ -118,12 +10,12 @@ import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<PricingPlanProps>(), {
+const props = defineProps({
   orientation: 'vertical'
 })
-const slots = defineSlots<PricingPlanSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const [DefinePriceTemplate, ReusePriceTemplate] = createReusableTemplate()
 
@@ -132,13 +24,13 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pricingPlan 
   variant: props.variant,
   highlight: props.highlight,
   scale: props.scale
-}) as unknown as PricingPlan['ui'])
+}))
 
 const features = computed(() => props.features?.map(feature => typeof feature === 'string' ? { title: feature } : feature))
 </script>
 
 <template>
-  <DefinePriceTemplate>
+  
     <div v-if="discount || price || !!slots.discount || !!slots.price || billingCycle || billingPeriod || !!slots.billing" data-slot="priceWrapper" :class="ui.priceWrapper({ class: props.ui?.priceWrapper })">
       <div v-if="(discount && price) || !!slots.discount" data-slot="discount" :class="ui.discount({ class: props.ui?.discount })">
         <slot name="discount">

@@ -1,11 +1,5 @@
-<script lang="ts">
-import type { SelectMenuProps, SelectMenuItem } from '../../types'
 
-export interface ColorModeSelectProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<SelectMenuProps<SelectMenuItem[]>, 'icon' | 'items' | 'modelValue'> {
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { useColorMode, useAppConfig } from '#imports'

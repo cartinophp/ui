@@ -3,7 +3,7 @@ import UCarousel from '../../../../src/runtime/components/Carousel.vue'
 
 const meta = {
   title: 'Components/Layout/Carousel',
-  component: UiCarousel,
+  component: UCarousel,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiCarousel>
+} satisfies Meta<typeof UCarousel>
 
 export default meta
 type Story = StoryObj<typeof meta>

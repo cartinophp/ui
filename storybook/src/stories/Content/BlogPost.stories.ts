@@ -3,9 +3,9 @@ import UBlogPost from '../../../../src/runtime/components/BlogPost.vue'
 
 const meta = {
   title: 'Components/Content/BlogPost',
-  component: UiBlogPost,
+  component: UBlogPost,
   tags: ['autodocs']
-} satisfies Meta<typeof UiBlogPost>
+} satisfies Meta<typeof UBlogPost>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -1,29 +1,13 @@
-<script lang="ts">
-import type { LinkProps } from '../types'
 
-export interface LinkBaseProps {
-  as?: string
-  type?: string
-  disabled?: boolean
-  onClick?: ((e: MouseEvent) => void | Promise<void>) | Array<((e: MouseEvent) => void | Promise<void>)>
-  href?: string
-  navigate?: (e: MouseEvent) => void
-  target?: LinkProps['target']
-  rel?: LinkProps['rel']
-  active?: boolean
-  isExternal?: boolean
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { Primitive } from 'reka-ui'
 
-const props = withDefaults(defineProps<LinkBaseProps>(), {
+const props = defineProps({
   as: 'button',
   type: 'button'
 })
 
-function onClickWrapper(e: MouseEvent) {
+function onClickWrapper(e) {
   if (props.disabled) {
     e.stopPropagation()
     e.preventDefault()

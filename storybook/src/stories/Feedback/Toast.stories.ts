@@ -4,7 +4,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Feedback/Toast',
-  component: UiToast,
+  component: UToast,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -12,7 +12,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiToast>
+} satisfies Meta<typeof UToast>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -23,7 +23,7 @@ export const Default: Story = {
     description: 'This is a toast notification.'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -42,7 +42,7 @@ export const Success: Story = {
     color: 'success'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -61,7 +61,7 @@ export const Warning: Story = {
     color: 'warning'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -80,7 +80,7 @@ export const Error: Story = {
     color: 'danger'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -99,7 +99,7 @@ export const WithIcon: Story = {
     icon: 'i-heroicons-envelope'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -121,7 +121,7 @@ export const WithActions: Story = {
     ]
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -140,7 +140,7 @@ export const Closable: Story = {
     close: true
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -157,7 +157,7 @@ export const TitleOnly: Story = {
     title: 'Simple toast notification'
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },
@@ -176,7 +176,7 @@ export const WithAvatar: Story = {
     avatar: { src: 'https://i.pravatar.cc/150?img=1' }
   },
   render: (args) => ({
-    components: { UiToast },
+    components: { UToast },
     setup() {
       return { args }
     },

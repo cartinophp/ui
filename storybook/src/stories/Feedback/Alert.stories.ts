@@ -3,7 +3,7 @@ import UAlert from '../../../../src/runtime/components/Alert.vue'
 
 const meta = {
   title: 'Components/Feedback/Alert',
-  component: UiAlert,
+  component: UAlert,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiAlert>
+} satisfies Meta<typeof UAlert>
 
 export default meta
 type Story = StoryObj<typeof meta>

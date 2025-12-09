@@ -3,9 +3,9 @@ import UEmpty from '../../../../src/runtime/components/Empty.vue'
 
 const meta = {
   title: 'Components/Feedback/Empty',
-  component: UiEmpty,
+  component: UEmpty,
   tags: ['autodocs']
-} satisfies Meta<typeof UiEmpty>
+} satisfies Meta<typeof UEmpty>
 
 export default meta
 type Story = StoryObj<typeof meta>

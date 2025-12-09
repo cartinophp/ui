@@ -5,7 +5,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Modal',
-  component: UiModal,
+  component: UModal,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -13,14 +13,14 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl']
     }
   }
-} satisfies Meta<typeof UiModal>
+} satisfies Meta<typeof UModal>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -40,7 +40,7 @@ export const Default: Story = {
 
 export const WithFooter: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -66,7 +66,7 @@ export const WithFooter: Story = {
 
 export const Small: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -86,7 +86,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -106,7 +106,7 @@ export const Large: Story = {
 
 export const Fullscreen: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -126,7 +126,7 @@ export const Fullscreen: Story = {
 
 export const PreventClose: Story = {
   render: () => ({
-    components: { UiModal, UiButton },
+    components: { UModal, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }

@@ -3,7 +3,7 @@ import UAvatar from '../../../../src/runtime/components/Avatar.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Avatar',
-  component: UiAvatar,
+  component: UAvatar,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
     }
   }
-} satisfies Meta<typeof UiAvatar>
+} satisfies Meta<typeof UAvatar>
 
 export default meta
 type Story = StoryObj<typeof meta>

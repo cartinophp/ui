@@ -1,13 +1,5 @@
-<script lang="ts">
-import type { AvatarProps } from '../../types'
 
-export interface ColorModeAvatarProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<AvatarProps, 'src'> {
-  light: string
-  dark: string
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
 import UAvatar from '../Avatar.vue'

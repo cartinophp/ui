@@ -4,7 +4,7 @@ import UCheckboxGroup from '../../../../src/runtime/components/CheckboxGroup.vue
 
 const meta = {
   title: 'Components/Forms/CheckboxGroup',
-  component: UiCheckboxGroup,
+  component: UCheckboxGroup,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -16,7 +16,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiCheckboxGroup>
+} satisfies Meta<typeof UCheckboxGroup>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -47,7 +47,7 @@ const optionsWithDescription = [
 
 export const Default: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -63,7 +63,7 @@ export const Default: Story = {
 
 export const WithValue: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref(['option1', 'option3'])
       return { selected, options }
@@ -79,7 +79,7 @@ export const WithValue: Story = {
 
 export const WithDescription: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, optionsWithDescription }
@@ -96,7 +96,7 @@ export const WithDescription: Story = {
 
 export const Horizontal: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -114,7 +114,7 @@ export const Horizontal: Story = {
 
 export const Disabled: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref(['option1'])
       return { selected, options }
@@ -132,7 +132,7 @@ export const Disabled: Story = {
 
 export const DisabledOptions: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       const optionsWithDisabled = [
@@ -154,7 +154,7 @@ export const DisabledOptions: Story = {
 
 export const Required: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -172,7 +172,7 @@ export const Required: Story = {
 
 export const Small: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -190,7 +190,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       return { selected, options }
@@ -208,7 +208,7 @@ export const Large: Story = {
 
 export const WithIcons: Story = {
   render: () => ({
-    components: { UiCheckboxGroup },
+    components: { UCheckboxGroup },
     setup() {
       const selected = ref([])
       const optionsWithIcons = [

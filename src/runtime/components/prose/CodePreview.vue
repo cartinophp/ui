@@ -1,22 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import type { ComponentConfig } from '../../types/tv'
-import theme from '#build/ui/prose/code-preview'
 
-type ProseCodePreview = ComponentConfig<typeof theme, AppConfig, 'codePreview', 'ui.prose'>
-
-export interface ProseCodePreviewProps {
-  class?: any
-  ui?: ProseCodePreview['slots']
-}
-
-export interface ProseCodePreviewSlots {
-  default(props?: {}): any
-  code(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

@@ -1,34 +1,15 @@
-<script lang="ts">
-import theme from '../../theme/page-grid.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageGrid = ComponentConfig<typeof theme, AppConfig, 'pageGrid'>
-
-export interface PageGridProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface PageGridSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<PageGridProps>()
-defineSlots<PageGridSlots>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageGrid || {}) }) as unknown as PageGrid['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageGrid || {}) }))
 </script>
 
 <template>

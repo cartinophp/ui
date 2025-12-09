@@ -3,9 +3,9 @@ import UAccordion from '../../../../src/runtime/components/Accordion.vue'
 
 const meta = {
   title: 'Components/Layout/Accordion',
-  component: UiAccordion,
+  component: UAccordion,
   tags: ['autodocs']
-} satisfies Meta<typeof UiAccordion>
+} satisfies Meta<typeof UAccordion>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -76,7 +76,7 @@ export const WithIcons: Story = {
 
 export const Nested: Story = {
   render: () => ({
-    components: { UiAccordion },
+    components: { UAccordion },
     setup() {
       const parentItems = [
         {

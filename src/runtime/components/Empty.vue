@@ -1,67 +1,20 @@
-<script lang="ts">
-import theme from '../../theme/empty.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
-import type { ButtonProps, IconProps, AvatarProps } from '../types'
 
-type Empty = ComponentConfig<typeof theme, AppConfig, 'empty'>
-
-export interface EmptyProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  avatar?: AvatarProps
-  title?: string
-  description?: string
-  /**
-   * Display a list of Button in the body.
-   */
-  actions?: ButtonProps[]
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: Empty['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Empty['variants']['size']
-  class?: any
-  ui?: Empty['slots']
-}
-
-export interface EmptySlots {
-  header(props?: {}): any
-  leading(props: { ui: Empty['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  body(props?: {}): any
-  actions(props?: {}): any
-  footer(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 import UAvatar from './Avatar.vue'
 import UButton from './Button.vue'
 
-const props = defineProps<EmptyProps>()
-const slots = defineSlots<EmptySlots>()
+const props = defineProps()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.empty || {}) })({
   variant: props.variant,
   size: props.size
-}) as unknown as Empty['ui'])
+}))
 </script>
 
 <template>

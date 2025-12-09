@@ -1,68 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/textarea.js'
-import type { UseComponentIconsProps } from '../composables/useComponentIcons'
-import type { AvatarProps } from '../types'
-import type { TextareaHTMLAttributes } from '../types/html'
-import type { ModelModifiers } from '../types/input'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Textarea = ComponentConfig<typeof theme, AppConfig, 'textarea'>
-
-type TextareaValue = string | number | null
-
-export interface TextareaProps<T extends TextareaValue = TextareaValue> extends UseComponentIconsProps, /** @vue-ignore */ Omit<TextareaHTMLAttributes, 'name' | 'placeholder' | 'required' | 'autofocus' | 'disabled' | 'rows'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  id?: string
-  name?: string
-  /** The placeholder text when the textarea is empty. */
-  placeholder?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Textarea['variants']['color']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: Textarea['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Textarea['variants']['size']
-  required?: boolean
-  autofocus?: boolean
-  autofocusDelay?: number
-  autoresize?: boolean
-  autoresizeDelay?: number
-  disabled?: boolean
-  rows?: number
-  maxrows?: number
-  /** Highlight the ring color like a focus state. */
-  highlight?: boolean
-  modelValue?: T
-  defaultValue?: T
-  modelModifiers?: ModelModifiers<T>
-  class?: any
-  ui?: Textarea['slots']
-}
-
-export interface TextareaEmits<T extends TextareaValue = TextareaValue> {
-  'update:modelValue': [value: T]
-  'blur': [event: FocusEvent]
-  'change': [event: Event]
-}
-
-export interface TextareaSlots {
-  leading(props: { ui: Textarea['ui'] }): any
-  default(props: { ui: Textarea['ui'] }): any
-  trailing(props: { ui: Textarea['ui'] }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends TextareaValue">
+<script setup>
 import { useTemplateRef, computed, onMounted, nextTick, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useVModel } from '@vueuse/core'
@@ -75,20 +12,20 @@ import UAvatar from './Avatar.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<TextareaProps<T>>(), {
+const props = withDefaults(defineProps(), {
   rows: 3,
   maxrows: 0,
   autofocusDelay: 0,
   autoresizeDelay: 0
 })
-const emits = defineEmits<TextareaEmits<T>>()
-const slots = defineSlots<TextareaSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const modelValue = useVModel<TextareaProps<T>, 'modelValue', 'update:modelValue'>(props, 'modelValue', emits, { defaultValue: props.defaultValue })
+const modelValue = useVModel, 'modelValue', 'update:modelValue'>(props, 'modelValue', emits, { defaultValue: props.defaultValue })
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const { emitFormFocus, emitFormBlur, emitFormInput, emitFormChange, size, color, id, name, highlight, disabled, ariaAttrs } = useFormField<TextareaProps<T>>(props, { deferInputValidation: true })
+const { emitFormFocus, emitFormBlur, emitFormInput, emitFormChange, size, color, id, name, highlight, disabled, ariaAttrs } = useFormField(props, { deferInputValidation: true })
 const { isLeading, isTrailing, leadingIconName, trailingIconName } = useComponentIcons(props)
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.textarea || {}) })({
@@ -100,12 +37,12 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.textarea || 
   autoresize: props.autoresize,
   leading: isLeading.value || !!props.avatar || !!slots.leading,
   trailing: isTrailing.value || !!slots.trailing
-}) as unknown as Textarea['ui'])
+}))
 
 const textareaRef = useTemplateRef('textareaRef')
 
 // Custom function to handle the v-model properties
-function updateInput(value: string | null | undefined) {
+function updateInput(value | null | undefined) {
   if (props.modelModifiers?.trim) {
     value = value?.trim() ?? null
   }
@@ -126,31 +63,31 @@ function updateInput(value: string | null | undefined) {
   emitFormInput()
 }
 
-function onInput(event: Event) {
+function onInput(event) {
   autoResize()
 
   if (!props.modelModifiers?.lazy) {
-    updateInput((event.target as HTMLInputElement).value)
+    updateInput(event.target.value)
   }
 }
 
-function onChange(event: Event) {
-  const value = (event.target as HTMLInputElement).value
+function onChange(event) {
+  const value = event.target.value
 
   if (props.modelModifiers?.lazy) {
     updateInput(value)
   }
 
-  // Update trimmed textarea so that it has same behavior as native textarea https://github.com/vuejs/core/blob/5ea8a8a4fab4e19a71e123e4d27d051f5e927172/packages/runtime-dom/src/directives/vModel.ts#L63
+  // Update trimmed textarea so that it has same behavior as native textarea https://github.com/vuejs/core/blob/5ea8a8a4fab4e19a71e123e4d27d051f5e927172/packages/runtime-dom/src/directives/vModel.js#L63
   if (props.modelModifiers?.trim) {
-    (event.target as HTMLInputElement).value = value.trim()
+    event.target.value = value.trim()
   }
 
   emitFormChange()
   emits('change', event)
 }
 
-function onBlur(event: FocusEvent) {
+function onBlur(event) {
   emitFormBlur()
   emits('blur', event)
 }
@@ -227,7 +164,7 @@ defineExpose({
     <span v-if="isLeading || !!avatar || !!slots.leading" data-slot="leading" :class="ui.leading({ class: props.ui?.leading })">
       <slot name="leading" :ui="ui">
         <UIcon v-if="isLeading && leadingIconName" :name="leadingIconName" data-slot="leadingIcon" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })" />
-        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
+        <UAvatar v-else-if="!!avatar" :size="((props.ui?.leadingAvatarSize || ui.leadingAvatarSize()))" v-bind="avatar" data-slot="leadingAvatar" :class="ui.leadingAvatar({ class: props.ui?.leadingAvatar })" />
       </slot>
     </span>
 

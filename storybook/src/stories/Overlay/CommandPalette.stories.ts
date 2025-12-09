@@ -3,7 +3,7 @@ import UCommandPalette from '../../../../src/runtime/components/CommandPalette.v
 
 const meta = {
   title: 'Components/Overlay/CommandPalette',
-  component: UiCommandPalette,
+  component: UCommandPalette,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiCommandPalette>
+} satisfies Meta<typeof UCommandPalette>
 
 export default meta
 type Story = StoryObj<typeof meta>

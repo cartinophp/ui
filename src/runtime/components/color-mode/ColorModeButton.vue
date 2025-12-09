@@ -1,19 +1,5 @@
-<script lang="ts">
-import type { ButtonProps, LinkPropsKeys } from '../../types'
 
-export interface ColorModeButtonProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ButtonProps, LinkPropsKeys | 'color' | 'variant'> {
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: ButtonProps['color']
-  /**
-   * @defaultValue 'ghost'
-   */
-  variant?: ButtonProps['variant']
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'

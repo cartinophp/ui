@@ -1,77 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { UseFuseOptions } from '@vueuse/integrations/useFuse'
-import theme from '../../theme/dashboard-search.js'
-import type { ButtonProps, InputProps, ModalProps, CommandPaletteProps, CommandPaletteSlots, CommandPaletteGroup, CommandPaletteItem, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardSearch = ComponentConfig<typeof theme, AppConfig, 'dashboardSearch'>
-
-export interface DashboardSearchProps<T extends CommandPaletteItem = CommandPaletteItem> extends /** @vue-ignore */ Pick<ModalProps, 'title' | 'description' | 'overlay' | 'transition' | 'content' | 'dismissible' | 'fullscreen' | 'modal' | 'portal'> {
-  /**
-   * The icon displayed in the input.
-   * @defaultValue appConfig.ui.icons.search
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * The placeholder text for the input.
-   * @defaultValue t('commandPalette.placeholder')
-   */
-  placeholder?: InputProps['placeholder']
-  /**
-   * Automatically focus the input when component is mounted.
-   * @defaultValue true
-   */
-  autofocus?: boolean
-  /** When `true`, the loading icon will be displayed. */
-  loading?: boolean
-  /**
-   * The icon when the `loading` prop is `true`.
-   * @defaultValue appConfig.ui.icons.loading
-   * @IconifyIcon
-   */
-  loadingIcon?: IconProps['name']
-  /**
-   * Display a close button in the input (useful when inside a Modal for example).
-   * `{ size: 'md', color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   * @emits 'update:open'
-   * @defaultValue true
-   */
-  close?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The icon displayed in the close button.
-   * @defaultValue appConfig.ui.icons.close
-   * @IconifyIcon
-   */
-  closeIcon?: IconProps['name']
-  /**
-   * Keyboard shortcut to open the search (used by [`defineShortcuts`](https://ui.nuxt.com/docs/composables/define-shortcuts))
-   * @defaultValue 'meta_k'
-   */
-  shortcut?: string
-  groups?: CommandPaletteGroup<T>[]
-  /**
-   * Options for [useFuse](https://vueuse.org/integrations/useFuse) passed to the [CommandPalette](https://ui.nuxt.com/docs/components/command-palette).
-   * @defaultValue {}
-   */
-  fuse?: UseFuseOptions<T>
-  /**
-   * When `true`, the theme command will be added to the groups.
-   * @defaultValue true
-   */
-  colorMode?: boolean
-  class?: any
-  ui?: DashboardSearch['slots'] & CommandPaletteProps<CommandPaletteGroup<CommandPaletteItem>, CommandPaletteItem>['ui']
-}
-
-export type DashboardSearchSlots = CommandPaletteSlots<CommandPaletteGroup<CommandPaletteItem>, CommandPaletteItem> & {
-  content(props: { close: () => void }): any
-}
-
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, useTemplateRef } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { defu } from 'defu'
@@ -82,13 +11,13 @@ import { tv } from '../utils/tv'
 import UCommandPalette from './CommandPalette.vue'
 import UModal from './Modal.vue'
 
-const props = withDefaults(defineProps<DashboardSearchProps>(), {
+const props = defineProps({
   shortcut: 'meta_k',
   colorMode: true,
   close: true,
   fullscreen: false
 })
-const slots = defineSlots<DashboardSearchSlots>()
+const slots = defineSlots()
 
 const open = defineModel<boolean>('open', { default: false })
 const searchTerm = defineModel<string>('searchTerm', { default: '' })
@@ -100,7 +29,7 @@ useRuntimeHook('dashboard:search:toggle', () => {
 const { t } = useLocale()
 // eslint-disable-next-line vue/no-dupe-keys
 const colorMode = useColorMode()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const commandPaletteProps = useForwardProps(reactivePick(props, 'icon', 'placeholder', 'autofocus', 'loading', 'loadingIcon', 'close', 'closeIcon'))
 const modalProps = useForwardProps(reactivePick(props, 'overlay', 'transition', 'content', 'dismissible', 'fullscreen', 'modal', 'portal'))
@@ -114,12 +43,12 @@ const fuse = computed(() => defu({}, props.fuse, {
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSearch || {}) })({
   fullscreen: props.fullscreen
-}) as unknown as DashboardSearch['ui'])
+}))
 
 const groups = computed(() => {
-  const groups = []
+  const groups = 
 
-  groups.push(...(props.groups || []))
+  groups.push(...(props.groups || ))
 
   if (props.colorMode && !colorMode?.forced) {
     groups.push({
@@ -155,7 +84,7 @@ const groups = computed(() => {
 
 const commandPaletteRef = useTemplateRef('commandPaletteRef')
 
-function onSelect(item: CommandPaletteItem) {
+function onSelect(item) {
   if (item.disabled) {
     return
   }

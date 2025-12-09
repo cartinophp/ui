@@ -1,88 +1,5 @@
-<script lang="ts">
-import type { ChatStatus } from 'ai'
-import theme from '../../theme/chat-prompt-submit.js'
-import type { ButtonProps, ButtonSlots, IconProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChatPromptSubmit = ComponentConfig<typeof theme, AppConfig, 'chatPromptSubmit'>
-
-export interface ChatPromptSubmitProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ButtonProps, LinkPropsKeys | 'icon' | 'color' | 'variant'> {
-  status?: ChatStatus
-  /**
-   * The icon displayed in the button when the status is `ready`.
-   * @defaultValue appConfig.ui.icons.arrowUp
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * The color of the button when the status is `ready`.
-   * @defaultValue 'primary'
-   */
-  color?: ButtonProps['color']
-  /**
-   * The variant of the button when the status is `ready`.
-   * @defaultValue 'solid'
-   */
-  variant?: ButtonProps['variant']
-  /**
-   * The icon displayed in the button when the status is `streaming`.
-   * @defaultValue appConfig.ui.icons.stop
-   * @IconifyIcon
-   */
-  streamingIcon?: IconProps['name']
-  /**
-   * The color of the button when the status is `streaming`.
-   * @defaultValue 'neutral'
-   */
-  streamingColor?: ButtonProps['color']
-  /**
-   * The variant of the button when the status is `streaming`.
-   * @defaultValue 'subtle'
-   */
-  streamingVariant?: ButtonProps['variant']
-  /**
-   * The icon displayed in the button when the status is `submitted`.
-   * @defaultValue appConfig.ui.icons.stop
-   * @IconifyIcon
-   */
-  submittedIcon?: IconProps['name']
-  /**
-   * The color of the button when the status is `submitted`.
-   * @defaultValue 'neutral'
-   */
-  submittedColor?: ButtonProps['color']
-  /**
-   * The variant of the button when the status is `submitted`.
-   * @defaultValue 'subtle'
-   */
-  submittedVariant?: ButtonProps['variant']
-  /**
-   * The icon displayed in the button when the status is `error`.
-   * @defaultValue appConfig.ui.icons.reload
-   * @IconifyIcon
-   */
-  errorIcon?: IconProps['name']
-  /**
-   * The color of the button when the status is `error`.
-   * @defaultValue 'error'
-   */
-  errorColor?: ButtonProps['color']
-  /**
-   * The variant of the button when the status is `error`.
-   * @defaultValue 'soft'
-   */
-  errorVariant?: ButtonProps['variant']
-  ui?: ChatPromptSubmit['slots'] & ButtonProps['ui']
-  class?: any
-}
-
-export interface ChatPromptSubmitEmits {
-  stop: [event: MouseEvent]
-  reload: [event: MouseEvent]
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
@@ -93,7 +10,7 @@ import UButton from './Button.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ChatPromptSubmitProps>(), {
+const props = defineProps({
   status: 'ready',
   streamingColor: 'neutral',
   streamingVariant: 'subtle',
@@ -102,11 +19,11 @@ const props = withDefaults(defineProps<ChatPromptSubmitProps>(), {
   errorColor: 'error',
   errorVariant: 'soft'
 })
-const emits = defineEmits<ChatPromptSubmitEmits>()
-const slots = defineSlots<ButtonSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const buttonProps = useForwardProps(reactiveOmit(props, 'icon', 'color', 'variant', 'status', 'streamingIcon', 'streamingColor', 'streamingVariant', 'submittedIcon', 'submittedColor', 'submittedVariant', 'errorIcon', 'errorColor', 'errorVariant', 'class', 'ui'))
 
@@ -141,10 +58,10 @@ const statusButtonProps = computed(() => ({
       emits('reload', e)
     }
   }
-} satisfies { [key: string]: ButtonProps })[props.status])
+} satisfies { [key]})[props.status])
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPromptSubmit || {}) })() as unknown as ChatPromptSubmit['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chatPromptSubmit || {}) })())
 </script>
 
 <template>

@@ -1,34 +1,15 @@
-<script lang="ts">
-import theme from '../../theme/page-body.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageBody = ComponentConfig<typeof theme, AppConfig, 'pageBody'>
-
-export interface PageBodyProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  class?: any
-}
-
-export interface PageBodySlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 
-const props = defineProps<PageBodyProps>()
-defineSlots<PageBodySlots>()
+const props = defineProps()
+defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageBody || {}) }) as unknown as PageBody['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageBody || {}) }))
 </script>
 
 <template>

@@ -5,19 +5,15 @@
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.js"
     },
     "./components/*": {
-      "import": "./dist/components/*.js",
-      "types": "./dist/components/*.d.ts"
+      "import": "./dist/components/*.js"
     },
     "./variants/*": {
-      "import": "./dist/variants/*.js",
-      "types": "./dist/variants/*.d.ts"
+      "import": "./dist/variants/*.js"
     }
   },
   "files": [
@@ -25,9 +21,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "unbuild",
-    "build:vite": "vite build",
-    "build:check": "vue-tsc && vite build",
+    "build": "vite build",
     "storybook": "cd storybook && npm run storybook",
     "build-storybook": "cd storybook && npm run build-storybook",
     "lint": "biome check .",
@@ -54,15 +48,10 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@vitejs/plugin-vue": "^6.0.2",
-    "@vue/tsconfig": "^0.8.1",
     "autoprefixer": "^10.4.22",
-    "mkdist": "^2.4.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
-    "typescript": "^5.9.3",
-    "unbuild": "^3.6.1",
     "vite": "^7.2.7",
-    "vue": "^3.5.25",
-    "vue-tsc": "^3.1.8"
+    "vue": "^3.5.25"
   }
 }

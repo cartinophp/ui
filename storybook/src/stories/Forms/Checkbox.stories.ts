@@ -3,7 +3,7 @@ import UCheckbox from '../../../../src/runtime/components/Checkbox.vue'
 
 const meta = {
   title: 'Components/Forms/Checkbox',
-  component: UiCheckbox,
+  component: UCheckbox,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiCheckbox>
+} satisfies Meta<typeof UCheckbox>
 
 export default meta
 type Story = StoryObj<typeof meta>

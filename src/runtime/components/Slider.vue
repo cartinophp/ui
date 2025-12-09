@@ -1,48 +1,5 @@
-<script lang="ts">
-import type { SliderRootProps } from 'reka-ui'
-import theme from '../../theme/slider.js'
-import type { TooltipProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Slider = ComponentConfig<typeof theme, AppConfig, 'slider'>
-
-export interface SliderProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Slider['variants']['size']
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Slider['variants']['color']
-  /**
-   * The orientation of the slider.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: SliderRootProps['orientation']
-  /**
-   * Display a tooltip around the slider thumbs with the current value.
-   * `{ disableClosingTrigger: true }`{lang="ts-type"}
-   * @defaultValue false
-   */
-  tooltip?: boolean | TooltipProps
-  /** The value of the slider when initially rendered. Use when you do not need to control the state of the slider. */
-  defaultValue?: number | number[]
-  class?: any
-  ui?: Slider['slots']
-}
-
-export interface SliderEmits {
-  change: [event: Event]
-}
-</script>
-
-<script setup lang="ts" generic="T extends number | number[]">
+<script setup>
 import { computed } from 'vue'
 import { SliderRoot, SliderRange, SliderTrack, SliderThumb, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -50,21 +7,21 @@ import { useFormField } from '../composables/useFormField'
 import { tv } from '../utils/tv'
 import UTooltip from './Tooltip.vue'
 
-const props = withDefaults(defineProps<SliderProps>(), {
+const props = defineProps({
   min: 0,
   max: 100,
   step: 1,
   orientation: 'horizontal'
 })
-const emits = defineEmits<SliderEmits>()
+const emits = defineEmits()
 
-const modelValue = defineModel<T>()
+const modelValue = defineModel()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'orientation', 'min', 'max', 'step', 'minStepsBetweenThumbs', 'inverted'), emits)
 
-const { id, emitFormChange, emitFormInput, size, color, name, disabled, ariaAttrs } = useFormField<SliderProps>(props)
+const { id, emitFormChange, emitFormInput, size, color, name, disabled, ariaAttrs } = useFormField(props)
 
 const defaultSliderValue = computed(() => {
   if (typeof props.defaultValue === 'number') {
@@ -78,7 +35,7 @@ const sliderValue = computed({
     if (typeof modelValue.value === 'number') {
       return [modelValue.value]
     }
-    return (modelValue.value as number[]) ?? defaultSliderValue.value
+    return modelValue.value ?? defaultSliderValue.value
   },
   set(value) {
     modelValue.value = (value?.length !== 1 ? value : value[0]) as T
@@ -92,9 +49,9 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.slider || {}
   size: size.value,
   color: color.value,
   orientation: props.orientation
-}) as unknown as Slider['ui'])
+}))
 
-function onChange(value: any) {
+function onChange(value) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emits('change', event)
@@ -122,7 +79,7 @@ function onChange(value: any) {
     <template v-for="thumb in thumbs" :key="thumb">
       <UTooltip
         v-if="!!tooltip"
-        :text="thumbs > 1 ? String(sliderValue?.[thumb - 1]) : String(sliderValue)"
+        :text="thumbs > 1 ? String(sliderValue?.[thumb - 1]) (sliderValue)"
         disable-closing-trigger
         v-bind="(typeof tooltip === 'object' ? tooltip : {})"
       >

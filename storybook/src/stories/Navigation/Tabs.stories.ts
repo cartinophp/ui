@@ -4,7 +4,7 @@ import UTabs from '../../../../src/runtime/components/Tabs.vue'
 
 const meta = {
   title: 'Components/Navigation/Tabs',
-  component: UiTabs,
+  component: UTabs,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -16,7 +16,7 @@ const meta = {
       options: ['horizontal', 'vertical']
     }
   }
-} satisfies Meta<typeof UiTabs>
+} satisfies Meta<typeof UTabs>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -33,7 +33,7 @@ export const Default: Story = {
     defaultValue: 'tab1'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },
@@ -69,7 +69,7 @@ export const Pills: Story = {
     defaultValue: 'tab1'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },
@@ -96,7 +96,7 @@ export const Underline: Story = {
     defaultValue: 'tab1'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },
@@ -126,7 +126,7 @@ export const WithIcons: Story = {
     defaultValue: 'profile'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },
@@ -153,7 +153,7 @@ export const Vertical: Story = {
     defaultValue: 'tab1'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },
@@ -192,7 +192,7 @@ export const WithDisabled: Story = {
     defaultValue: 'tab1'
   },
   render: (args) => ({
-    components: { UiTabs },
+    components: { UTabs },
     setup() {
       return { args }
     },

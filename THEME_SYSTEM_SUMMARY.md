@@ -12,7 +12,7 @@ Successfully implemented a comprehensive external theme system for CartinoPHP UI
 
 ### 2. **No External Theme Support** ✓
 **Before**: Themes locked inside `/src/theme/` directory
-**After**: External `cartino-ui.config.ts` file for user customization
+**After**: External `cartino-ui.config.js` file for user customization
 
 ### 3. **Limited Configuration** ✓
 **Before**: Only basic `transitions` and `colors` array
@@ -33,25 +33,25 @@ Successfully implemented a comprehensive external theme system for CartinoPHP UI
 ```
 @cartino/ui/
 ├── src/
-│   ├── config.ts (✓ Enhanced with theme system)
+│   ├── config.js (✓ Enhanced with theme system)
 │   ├── runtime/
 │   │   ├── types/
-│   │   │   └── theme.ts (✓ New - TypeScript types)
+│   │   │   └── theme.js (✓ New - TypeScript types)
 │   │   ├── composables/
-│   │   │   └── useTheme.ts (✓ New - Theme composable)
+│   │   │   └── useTheme.js (✓ New - Theme composable)
 │   │   └── components/
 │   │       └── ThemeProvider.vue (✓ New - Theme provider)
 │   ├── presets/ (✓ New - Built-in themes)
-│   │   ├── index.ts
-│   │   ├── default.ts
-│   │   ├── minimal.ts
-│   │   └── modern.ts
+│   │   ├── index.js
+│   │   ├── default.js
+│   │   ├── minimal.js
+│   │   └── modern.js
 │   └── theme/ (existing base themes)
 ├── examples/ (✓ New - Example configs)
-│   ├── basic-theme.ts
-│   ├── dark-theme.ts
-│   └── brand-theme.ts
-├── cartino-ui.config.example.ts (✓ New - Template)
+│   ├── basic-theme.js
+│   ├── dark-theme.js
+│   └── brand-theme.js
+├── cartino-ui.config.example.js (✓ New - Template)
 ├── THEME_CUSTOMIZATION.md (✓ New - Complete guide)
 └── THEMING_ANALYSIS.md (✓ New - Technical analysis)
 ```
@@ -110,7 +110,7 @@ export default defineTheme({
 ### Basic Setup
 
 ```typescript
-// cartino-ui.config.ts
+// cartino-ui.config.js
 import { defineTheme } from '@cartino/ui'
 
 export default defineTheme({
@@ -227,7 +227,7 @@ const appConfig = {
 
 **After**:
 ```typescript
-// cartino-ui.config.ts
+// cartino-ui.config.js
 export default defineTheme({
   components: {
     button: {
@@ -243,7 +243,7 @@ export default defineTheme({
 
 1. **THEMING_ANALYSIS.md** - Technical analysis and bottlenecks
 2. **THEME_CUSTOMIZATION.md** - Complete usage guide (40+ sections)
-3. **cartino-ui.config.example.ts** - Fully commented template
+3. **cartino-ui.config.example.js** - Fully commented template
 4. **examples/** - 3 working examples (basic, dark, brand)
 
 ## Next Steps (Optional Enhancements)
@@ -290,24 +290,24 @@ export default defineTheme({
 ## Files Created/Modified
 
 ### Created (18 files)
-1. `/src/runtime/types/theme.ts` - TypeScript types
-2. `/src/runtime/composables/useTheme.ts` - Theme composable
+1. `/src/runtime/types/theme.js` - TypeScript types
+2. `/src/runtime/composables/useTheme.js` - Theme composable
 3. `/src/runtime/components/ThemeProvider.vue` - Provider component
-4. `/src/presets/default.ts` - Default preset
-5. `/src/presets/minimal.ts` - Minimal preset
-6. `/src/presets/modern.ts` - Modern preset
-7. `/src/presets/index.ts` - Presets export
-8. `/examples/basic-theme.ts` - Basic example
-9. `/examples/dark-theme.ts` - Dark mode example
-10. `/examples/brand-theme.ts` - Brand example
-11. `/cartino-ui.config.example.ts` - Config template
+4. `/src/presets/default.js` - Default preset
+5. `/src/presets/minimal.js` - Minimal preset
+6. `/src/presets/modern.js` - Modern preset
+7. `/src/presets/index.js` - Presets export
+8. `/examples/basic-theme.js` - Basic example
+9. `/examples/dark-theme.js` - Dark mode example
+10. `/examples/brand-theme.js` - Brand example
+11. `/cartino-ui.config.example.js` - Config template
 12. `/THEMING_ANALYSIS.md` - Analysis document
 13. `/THEME_CUSTOMIZATION.md` - User guide
 14. `/THEME_SYSTEM_SUMMARY.md` - This file
 
 ### Modified (2 files)
-1. `/src/config.ts` - Added theme functions
-2. `/src/index.ts` - Added theme exports
+1. `/src/config.js` - Added theme functions
+2. `/src/index.js` - Added theme exports
 
 ## Testing Checklist
 

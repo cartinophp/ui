@@ -18,7 +18,7 @@ const appConfig = {} as AppConfig
 
 #### C. Limited Configuration
 ```typescript
-// src/config.ts
+// src/config.js
 export interface CartinoUIConfig {
   transitions?: boolean
   colors?: string[]  // Only color names, no actual theme override
@@ -43,7 +43,7 @@ import theme from '../../theme/button.js'
 Nuxt UI's approach that we should adopt:
 
 ```typescript
-// nuxt.config.ts or app.config.ts
+// nuxt.config.js or app.config.js
 export default defineAppConfig({
   ui: {
     button: {
@@ -83,7 +83,7 @@ export default defineAppConfig({
 ### 1. **Theme Configuration Structure**
 
 ```typescript
-// cartino-ui.config.ts (user file)
+// cartino-ui.config.js (user file)
 import { defineTheme } from '@cartino/ui'
 
 export default defineTheme({
@@ -176,7 +176,7 @@ const ui = computed(() => tv({
 ### Phase 1: Core Theme System
 1. Create theme provider composable
 2. Add theme injection system
-3. Update config.ts to support full theme config
+3. Update config.js to support full theme config
 
 ### Phase 2: Component Integration
 1. Update all components to use theme provider
@@ -207,22 +207,22 @@ const ui = computed(() => tv({
 ```
 @cartino/ui/
 ├── src/
-│   ├── config.ts (enhanced)
+│   ├── config.js (enhanced)
 │   ├── theme/ (base themes)
-│   │   ├── index.ts
-│   │   ├── button.ts
+│   │   ├── index.js
+│   │   ├── button.js
 │   │   └── ...
 │   ├── runtime/
 │   │   ├── composables/
-│   │   │   ├── useTheme.ts (new)
-│   │   │   └── useThemeConfig.ts (new)
+│   │   │   ├── useTheme.js (new)
+│   │   │   └── useThemeConfig.js (new)
 │   │   └── providers/
 │   │       └── ThemeProvider.vue (new)
 │   └── presets/ (new)
-│       ├── default.ts
-│       ├── minimal.ts
-│       └── modern.ts
-└── cartino-ui.config.ts (user's config file)
+│       ├── default.js
+│       ├── minimal.js
+│       └── modern.js
+└── cartino-ui.config.js (user's config file)
 ```
 
 ## Performance Considerations

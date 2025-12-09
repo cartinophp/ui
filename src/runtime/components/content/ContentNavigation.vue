@@ -1,94 +1,3 @@
-<script lang="ts">
-import type { AccordionRootProps, AccordionRootEmits } from 'reka-ui'
-import type { AppConfig } from '@nuxt/schema'
-import type { ContentNavigationItem } from '@nuxt/content'
-import theme from '#build/ui/content/content-navigation'
-import type { BadgeProps, IconProps, LinkProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
-
-type ContentNavigation = ComponentConfig<typeof theme, AppConfig, 'contentNavigation'>
-
-export interface ContentNavigationLink extends ContentNavigationItem {
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /**
-   * Display a badge on the link.
-   * `{ color: 'neutral', variant: 'outline', size: 'sm' }`{lang="ts-type"}
-   */
-  badge?: string | number | BadgeProps
-  target?: LinkProps['target']
-  /**
-   * @IconifyIcon
-   */
-  trailingIcon?: IconProps['name']
-  disabled?: boolean
-  children?: ContentNavigationLink[]
-  defaultOpen?: boolean
-  active?: boolean
-  class?: any
-  ui?: Pick<ContentNavigation['slots'], 'link' | 'linkLeadingIcon' | 'linkTitle' | 'linkTrailing' | 'linkTrailingIcon' | 'linkTrailingBadge' | 'linkTrailingBadgeSize' | 'linkTrailingIcon' | 'linkTitleExternalIcon' | 'trigger' | 'content' | 'item' | 'itemWithChildren'>
-}
-
-export interface ContentNavigationProps<T extends ContentNavigationLink = ContentNavigationLink> extends Pick<AccordionRootProps, 'disabled' | 'type' | 'unmountOnHide'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  /**
-   * When `true`, the tree will be opened based on the current route.
-   * When `false`, the tree will be closed.
-   * When `undefined` (default), the first item will be opened with `type="single"` and the first level will be opened with `type="multiple"`.
-   */
-  defaultOpen?: boolean
-  /**
-   * The icon displayed to toggle the accordion.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   * @IconifyIcon
-   */
-  trailingIcon?: IconProps['name']
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: ContentNavigation['variants']['color']
-  /**
-   * @defaultValue 'pill'
-   */
-  variant?: ContentNavigation['variants']['variant']
-  /**
-   * Display a line next to the active link.
-   * @defaultValue false
-   */
-  highlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  highlightColor?: ContentNavigation['variants']['highlightColor']
-  /**
-   * When type is "single", prevents closing the open item when clicking its trigger.
-   * When type is "multiple", disables the collapsible behavior.
-   * @defaultValue true
-   */
-  collapsible?: boolean
-  level?: number
-  navigation?: T[]
-  class?: any
-  ui?: ContentNavigation['slots']
-}
-
-export interface ContentNavigationEmits extends /** @vue-ignore */ /** @vue-ignore */ AccordionRootEmits {}
-
-type SlotProps<T> = (props: { link: T, active?: boolean, ui: ContentNavigation['ui'] }) => any
-
-export interface ContentNavigationSlots<T extends ContentNavigationLink = ContentNavigationLink> {
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-title': SlotProps<T>
-  'link-trailing': SlotProps<T>
-}
-</script>
 
 <script setup lang="ts" generic="T extends ContentNavigationLink">
 import { computed } from 'vue'
@@ -123,7 +32,7 @@ const rootProps = useForwardPropsEmits(reactivePick(props, 'collapsible', 'type'
 const route = useRoute()
 const appConfig = useAppConfig() as ContentNavigation['AppConfig']
 
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link: ContentNavigationLink, active?: boolean }>()
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?: boolean }>()
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentNavigation || {}) })({
   color: props.color,
@@ -134,7 +43,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentNavig
 
 const disabled = computed(() => props.disabled || (props.type === 'multiple' && props.collapsible === false))
 
-function isRouteInTree(link: ContentNavigationLink, routePath: string): boolean {
+function isRouteInTree(link: string): boolean {
   if (link.children?.length) {
     return link.children.some(child => isRouteInTree(child, routePath))
   }

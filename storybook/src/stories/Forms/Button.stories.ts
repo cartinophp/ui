@@ -4,7 +4,7 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Forms/Button',
-  component: UiButton,
+  component: UButton,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -23,7 +23,7 @@ const meta = {
   args: {
     onClick: fn()
   }
-} satisfies Meta<typeof UiButton>
+} satisfies Meta<typeof UButton>
 
 export default meta
 type Story = StoryObj<typeof meta>

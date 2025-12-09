@@ -1,28 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/dashboard-sidebar-toggle.js'
-import type { ButtonProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type DashboardSidebarToggle = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebarToggle'>
-
-export interface DashboardSidebarToggleProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ButtonProps, LinkPropsKeys | 'color' | 'variant'> {
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: ButtonProps['color']
-  /**
-   * @defaultValue 'ghost'
-   */
-  variant?: ButtonProps['variant']
-  /**
-   * The side of the sidebar to toggle.
-   * @defaultValue 'left'
-   */
-  side?: 'left' | 'right'
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
@@ -33,7 +10,7 @@ import UButton from './Button.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<DashboardSidebarToggleProps>(), {
+const props = defineProps({
   color: 'neutral',
   variant: 'ghost',
   side: 'left'
@@ -42,10 +19,10 @@ const props = withDefaults(defineProps<DashboardSidebarToggleProps>(), {
 const buttonProps = useForwardProps(reactiveOmit(props, 'icon', 'side', 'class'))
 
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 const { sidebarOpen, toggleSidebar } = useDashboard({ sidebarOpen: ref(false), toggleSidebar: () => {} })
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarToggle || {}) }) as unknown as DashboardSidebarToggle['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSidebarToggle || {}) }))
 </script>
 
 <template>

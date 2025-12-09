@@ -1,50 +1,6 @@
 <!-- eslint-disable vue/block-tag-newline -->
-<script lang="ts">
-import type { SpringOptions } from 'motion-v'
-import theme from '../../theme/changelog-versions.js'
-import type { ChangelogVersionProps, ChangelogVersionSlots } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type ChangelogVersions = ComponentConfig<typeof theme, AppConfig, 'changelogVersions'>
-
-export interface ChangelogVersionsProps<T extends ChangelogVersionProps = ChangelogVersionProps> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  versions?: T[]
-  /**
-   * Display an indicator bar on the left.
-   * @defaultValue true
-   */
-  indicator?: boolean
-  /**
-   * Enable scrolling motion effect on the indicator bar.
-   * `{ damping: 30, restDelta: 0.001 }`{lang="ts-type"}
-   * @defaultValue true
-   * @see https://motion.dev/docs/vue-transitions#spring
-   */
-  indicatorMotion?: boolean | SpringOptions
-  class?: any
-  ui?: ChangelogVersions['slots']
-}
-
-type ExtendSlotWithVersion<T extends ChangelogVersionProps, K extends keyof ChangelogVersionSlots>
-  = ChangelogVersionSlots[K] extends (props: infer P) => any
-    ? (props: P & { version: T }) => any
-    : ChangelogVersionSlots[K]
-
-export type ChangelogVersionsSlots<T extends ChangelogVersionProps = ChangelogVersionProps> = {
-  [K in keyof ChangelogVersionSlots]: ExtendSlotWithVersion<T, K>
-} & {
-  default(props?: {}): any
-  indicator(props?: {}): any
-}
-
-</script>
-
-<script setup lang="ts" generic="T extends ChangelogVersionProps">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { Motion, useScroll, useSpring, useTransform } from 'motion-v'
@@ -53,15 +9,15 @@ import { omit } from '../utils'
 import { tv } from '../utils/tv'
 import UChangelogVersion from './ChangelogVersion.vue'
 
-const props = withDefaults(defineProps<ChangelogVersionsProps<T>>(), {
+const props = withDefaults(defineProps(), {
   indicator: true,
   indicatorMotion: true
 })
-const slots = defineSlots<ChangelogVersionsSlots<T>>()
+const slots = defineSlots()
 
 const getProxySlots = () => omit(slots, ['default', 'indicator'])
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const springOptions = computed(() => defu(typeof props.indicatorMotion === 'object' ? props.indicatorMotion : {}, { damping: 30, restDelta: 0.001 }))
 
@@ -70,7 +26,7 @@ const y = useSpring(scrollYProgress, springOptions)
 const height = useTransform(() => `${y.get() * 100}%`)
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVersions || {}) })() as unknown as ChangelogVersions['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVersions || {}) })())
 </script>
 
 <template>
@@ -87,10 +43,10 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.changelogVer
           v-for="(version, index) in versions"
           :key="index"
           :indicator="!!props.indicator"
-          v-bind="(version as ChangelogVersionProps)"
+          v-bind="version"
         >
           <template v-for="(_, name) in getProxySlots()" #[name]="slotData">
-            <slot :name="name" v-bind="(slotData as any)" :version="version" />
+            <slot :name="name" v-bind="slotData" :version="version" />
           </template>
         </UChangelogVersion>
       </slot>

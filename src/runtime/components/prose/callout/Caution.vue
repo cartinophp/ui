@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useAppConfig } from '#imports'
 import Callout from '../Callout.vue'
 

@@ -1,58 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/header.js'
-import type { ButtonProps, DrawerProps, ModalProps, SlideoverProps, LinkPropsKeys } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Header = ComponentConfig<typeof theme, AppConfig, 'header'>
-
-type HeaderMode = 'modal' | 'slideover' | 'drawer'
-type HeaderMenu<T> = T extends 'modal' ? ModalProps : T extends 'slideover' ? SlideoverProps : T extends 'drawer' ? DrawerProps : never
-
-export interface HeaderProps<T extends HeaderMode = HeaderMode> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'header'
-   */
-  as?: any
-  title?: string
-  to?: string
-  /**
-   * The mode of the header menu.
-   * @defaultValue 'modal'
-   */
-  mode?: T
-  /**
-   * The props for the header menu component.
-   */
-  menu?: HeaderMenu<T>
-  /**
-   * Customize the toggle button to open the header menu displayed when the `content` slot is used.
-   * `{ color: 'neutral', variant: 'ghost' }`{lang="ts-type"}
-   */
-  toggle?: boolean | Omit<ButtonProps, LinkPropsKeys>
-  /**
-   * The side to render the toggle button on.
-   * @defaultValue 'right'
-   */
-  toggleSide?: 'left' | 'right'
-  class?: any
-  ui?: Header['slots']
-}
-
-export interface HeaderSlots {
-  title(props?: {}): any
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-  toggle(props: { open: boolean, toggle: () => void, ui: Header['ui'] }): any
-  top(props?: {}): any
-  bottom(props?: {}): any
-  body(props?: {}): any
-  content(props: { close?: () => void }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends HeaderMode">
+<script setup>
 import { computed, watch, toRef } from 'vue'
 import { Primitive } from 'reka-ui'
 import { defu } from 'defu'
@@ -69,7 +16,7 @@ import UDrawer from './Drawer.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<HeaderProps<T>>(), {
+const props = withDefaults(defineProps(), {
   as: 'header',
   mode: 'modal' as never,
   toggle: true,
@@ -77,13 +24,13 @@ const props = withDefaults(defineProps<HeaderProps<T>>(), {
   to: '/',
   title: 'Nuxt UI'
 })
-const slots = defineSlots<HeaderSlots>()
+const slots = defineSlots()
 
 const open = defineModel<boolean>('open', { default: false })
 
 const route = useRoute()
 const { t } = useLocale()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const [DefineLeftTemplate, ReuseLeftTemplate] = createReusableTemplate()
 const [DefineRightTemplate, ReuseRightTemplate] = createReusableTemplate()
@@ -99,19 +46,19 @@ watch(() => route.fullPath, () => {
 })
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.header || {}) })() as unknown as Header['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.header || {}) })())
 
 const Menu = computed(() => ({
-  slideover: USlideover,
-  modal: UModal,
-  drawer: UDrawer
+  slideover
+  modal
+  drawer
 })[props.mode as HeaderMode])
 
 const menuProps = toRef(() => defu(props.menu, {
   content: {
-    onOpenAutoFocus: (e: Event) => e.preventDefault()
+    onOpenAutoFocus: (e) => e.preventDefault()
   }
-}, props.mode === 'modal' ? { fullscreen: true, transition: false } : {}) as HeaderMenu<T>)
+}, props.mode === 'modal' ? { fullscreen: true, transition: false } : {}) as HeaderMenu)
 
 function toggleOpen() {
   open.value = !open.value
@@ -119,7 +66,7 @@ function toggleOpen() {
 </script>
 
 <template>
-  <DefineToggleTemplate>
+  
     <slot name="toggle" :open="open" :toggle="toggleOpen" :ui="ui">
       <UButton
         v-if="toggle"
@@ -135,7 +82,7 @@ function toggleOpen() {
     </slot>
   </DefineToggleTemplate>
 
-  <DefineLeftTemplate>
+  
     <div data-slot="left" :class="ui.left({ class: props.ui?.left })">
       <ReuseToggleTemplate v-if="toggleSide === 'left'" />
 
@@ -149,7 +96,7 @@ function toggleOpen() {
     </div>
   </DefineLeftTemplate>
 
-  <DefineRightTemplate>
+  
     <div data-slot="right" :class="ui.right({ class: props.ui?.right })">
       <slot name="right" />
 

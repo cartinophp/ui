@@ -1,42 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-anchors.js'
-import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageAnchors = ComponentConfig<typeof theme, AppConfig, 'pageAnchors'>
-
-export interface PageAnchor extends Omit<LinkProps, 'custom'> {
-  label: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  class?: any
-  ui?: Pick<PageAnchors['slots'], 'item' | 'link' | 'linkLabel' | 'linkLabelExternalIcon' | 'linkLeading' | 'linkLeadingIcon'>
-}
-
-export interface PageAnchorsProps<T extends PageAnchor = PageAnchor> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  links?: T[]
-  class?: any
-  ui?: PageAnchors['slots']
-}
-
-type SlotProps<T> = (props: { link: T, active: boolean, ui: PageAnchors['ui'] }) => any
-
-export interface PageAnchorsSlots<T extends PageAnchor = PageAnchor> {
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-label'(props: { link: T, active: boolean }): any
-  'link-trailing'(props: { link: T, active: boolean }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends PageAnchor">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { pickLinkProps } from '../utils/link'
@@ -45,15 +8,15 @@ import ULink from './Link.vue'
 import ULinkBase from './LinkBase.vue'
 import UIcon from './Icon.vue'
 
-const props = withDefaults(defineProps<PageAnchorsProps<T>>(), {
+const props = withDefaults(defineProps(), {
   as: 'nav'
 })
-const slots = defineSlots<PageAnchorsSlots<T>>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAnchors || {}) })() as unknown as PageAnchors['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageAnchors || {}) })())
 </script>
 
 <template>

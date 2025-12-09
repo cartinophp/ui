@@ -3,7 +3,7 @@ import UFileUpload from '../../../../src/runtime/components/FileUpload.vue'
 
 const meta = {
   title: 'Components/Forms/FileUpload',
-  component: UiFileUpload,
+  component: UFileUpload,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -15,7 +15,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiFileUpload>
+} satisfies Meta<typeof UFileUpload>
 
 export default meta
 type Story = StoryObj<typeof meta>

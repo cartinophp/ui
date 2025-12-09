@@ -1,71 +1,5 @@
-<script lang="ts">
-import type { CollapsibleRootProps, CollapsibleRootEmits } from 'reka-ui'
-import type { TocLink } from '@nuxt/content'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/content/content-toc'
-import type { IconProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ContentToc = ComponentConfig<typeof theme, AppConfig, 'contentToc'>
-
-export type ContentTocLink = TocLink & {
-  class?: any
-  ui?: Pick<ContentToc['slots'], 'item' | 'itemWithChildren' | 'link' | 'linkText'>
-}
-
-export interface ContentTocProps<T extends ContentTocLink = ContentTocLink> extends Pick<CollapsibleRootProps, 'defaultOpen' | 'open'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'nav'
-   */
-  as?: any
-  /**
-   * The icon displayed to collapse the content.
-   * @defaultValue appConfig.ui.icons.chevronDown
-   * @IconifyIcon
-   */
-  trailingIcon?: IconProps['name']
-  /**
-   * The title of the table of contents.
-   * @defaultValue t('contentToc.title')
-   */
-  title?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: ContentToc['variants']['color']
-  /**
-   * Display a line next to the active link.
-   * @defaultValue false
-   */
-  highlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  highlightColor?: ContentToc['variants']['highlightColor']
-  links?: T[]
-  class?: any
-  ui?: ContentToc['slots']
-}
-
-export type ContentTocEmits = CollapsibleRootEmits & {
-  move: [id: string]
-}
-
-type SlotProps<T> = (props: { link: T }) => any
-
-export interface ContentTocSlots<T extends ContentTocLink = ContentTocLink> {
-  leading(props: { open: boolean, ui: ContentToc['ui'] }): any
-  default(props: { open: boolean }): any
-  trailing(props: { open: boolean, ui: ContentToc['ui'] }): any
-  content(props: { links: T[] }): any
-  link: SlotProps<T>
-  top(props: { links?: T[] }): any
-  bottom(props: { links?: T[] }): any
-}
-</script>
-
-<script setup lang="ts" generic="T extends ContentTocLink">
+<script setup>
 import { computed } from 'vue'
 import { CollapsibleRoot, CollapsibleTrigger, CollapsibleContent, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick, createReusableTemplate } from '@vueuse/core'
@@ -77,41 +11,41 @@ import UIcon from '../Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ContentTocProps<T>>(), {
+const props = withDefaults(defineProps(), {
   as: 'nav'
 })
-const emits = defineEmits<ContentTocEmits>()
-const slots = defineSlots<ContentTocSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'open', 'defaultOpen'), emits)
 
 const { t } = useLocale()
 const router = useRouter()
-const appConfig = useAppConfig() as ContentToc['AppConfig']
+const appConfig = useAppConfig()
 const { activeHeadings, updateHeadings } = useScrollspy()
 
-const [DefineListTemplate, ReuseListTemplate] = createReusableTemplate<{ links: T[], level: number }>({
+const [DefineListTemplate, ReuseListTemplate] = createReusableTemplate({
   props: {
-    links: Array,
-    level: Number
+    links,
+    level
   }
 })
-const [DefineTriggerTemplate, ReuseTriggerTemplate] = createReusableTemplate<{ open: boolean }>()
+const [DefineTriggerTemplate, ReuseTriggerTemplate] = createReusableTemplate()
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.contentToc || {}) })({
   color: props.color,
   highlight: props.highlight,
   highlightColor: props.highlightColor || props.color
-}) as unknown as ContentToc['ui'])
+}))
 
-function scrollToHeading(id: string) {
+function scrollToHeading(id) {
   const encodedId = encodeURIComponent(id)
   router.push(`#${encodedId}`)
   emits('move', id)
 }
 
-function flattenLinks(links: T[]): T[] {
-  return links.flatMap(link => [link, ...(link.children ? flattenLinks(link.children as T[]) : [])])
+function flattenLinks(links) {
+  return links.flatMap(link => [link, ...(link.children ? flattenLinks(link.children) : [])])
 }
 
 const indicatorStyle = computed(() => {

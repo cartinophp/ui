@@ -5,16 +5,16 @@ import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Layout/Collapsible',
-  component: UiCollapsible,
+  component: UCollapsible,
   tags: ['autodocs']
-} satisfies Meta<typeof UiCollapsible>
+} satisfies Meta<typeof UCollapsible>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiCollapsible, UiButton },
+    components: { UCollapsible, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -36,7 +36,7 @@ export const Default: Story = {
 
 export const OpenByDefault: Story = {
   render: () => ({
-    components: { UiCollapsible, UiButton },
+    components: { UCollapsible, UButton },
     setup() {
       const isOpen = ref(true)
       return { isOpen }
@@ -59,7 +59,7 @@ export const OpenByDefault: Story = {
 
 export const WithRichContent: Story = {
   render: () => ({
-    components: { UiCollapsible, UiButton },
+    components: { UCollapsible, UButton },
     setup() {
       const isOpen = ref(false)
       return { isOpen }
@@ -102,7 +102,7 @@ export const WithRichContent: Story = {
 
 export const Multiple: Story = {
   render: () => ({
-    components: { UiCollapsible, UiButton },
+    components: { UCollapsible, UButton },
     setup() {
       const section1 = ref(false)
       const section2 = ref(false)
@@ -144,7 +144,7 @@ export const Multiple: Story = {
 
 export const FAQ: Story = {
   render: () => ({
-    components: { UiCollapsible, UiButton },
+    components: { UCollapsible, UButton },
     setup() {
       const faq1 = ref(false)
       const faq2 = ref(false)

@@ -1,82 +1,5 @@
-<script lang="ts">
-import type { CheckboxGroupRootProps, CheckboxGroupRootEmits } from 'reka-ui'
-import theme from '../../theme/checkbox-group.js'
-import type { CheckboxProps } from '../types'
-import type { AcceptableValue, GetItemKeys, GetModelValue } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type CheckboxGroup = ComponentConfig<typeof theme, AppConfig, 'checkboxGroup'>
-
-export type CheckboxGroupValue = AcceptableValue
-
-export type CheckboxGroupItem = CheckboxGroupValue | {
-  label?: string
-  description?: string
-  disabled?: boolean
-  value?: string
-  class?: any
-  ui?: Pick<CheckboxGroup['slots'], 'item'> & Omit<Required<CheckboxProps>['ui'], 'root'>
-  [key: string]: any
-}
-
-export interface CheckboxGroupProps<T extends CheckboxGroupItem[] = CheckboxGroupItem[], VK extends GetItemKeys<T> = 'value'> extends Pick<CheckboxGroupRootProps, 'disabled' | 'loop' | 'name' | 'required'>, /** @vue-ignore */ Pick<CheckboxProps, 'color' | 'indicator' | 'icon'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  legend?: string
-  /**
-   * When `items` is an array of objects, select the field to use as the value.
-   * @defaultValue 'value'
-   */
-  valueKey?: VK
-  /**
-   * When `items` is an array of objects, select the field to use as the label.
-   * @defaultValue 'label'
-   */
-  labelKey?: GetItemKeys<T>
-  /**
-   * When `items` is an array of objects, select the field to use as the description.
-   * @defaultValue 'description'
-   */
-  descriptionKey?: GetItemKeys<T>
-  items?: T
-  /** The controlled value of the CheckboxGroup. Can be bind as `v-model`. */
-  modelValue?: GetModelValue<T, VK, true>
-  /** The value of the CheckboxGroup when initially rendered. Use when you do not need to control the state of the CheckboxGroup. */
-  defaultValue?: GetModelValue<T, VK, true>
-  /**
-   * @defaultValue 'md'
-   */
-  size?: CheckboxGroup['variants']['size']
-  /**
-   * @defaultValue 'list'
-   */
-  variant?: CheckboxGroup['variants']['variant']
-  /**
-   * The orientation the checkbox buttons are laid out.
-   * @defaultValue 'vertical'
-   */
-  orientation?: CheckboxGroupRootProps['orientation']
-  class?: any
-  ui?: CheckboxGroup['slots'] & CheckboxProps['ui']
-}
-
-export type CheckboxGroupEmits<T extends CheckboxGroupItem[] = CheckboxGroupItem[]> = CheckboxGroupRootEmits<T[number]> & {
-  change: [event: Event]
-}
-
-type SlotProps<T extends CheckboxGroupItem> = (props: { item: T & { id: string } }) => any
-
-export interface CheckboxGroupSlots<T extends CheckboxGroupItem[] = CheckboxGroupItem[]> {
-  legend(props?: {}): any
-  label: SlotProps<T[number]>
-  description: SlotProps<T[number]>
-}
-</script>
-
-<script setup lang="ts" generic="T extends CheckboxGroupItem[], VK extends GetItemKeys<T> = 'value'">
+<script setup>
 import { computed, useId } from 'vue'
 import { CheckboxGroupRoot, useForwardProps, useForwardPropsEmits } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -85,22 +8,22 @@ import { get, omit } from '../utils'
 import { tv } from '../utils/tv'
 import UCheckbox from './Checkbox.vue'
 
-const props = withDefaults(defineProps<CheckboxGroupProps<T, VK>>(), {
+const props = withDefaults(defineProps(), {
   labelKey: 'label',
   descriptionKey: 'description',
   valueKey: 'value' as never,
   orientation: 'vertical'
 })
-const emits = defineEmits<CheckboxGroupEmits<T>>()
-const slots = defineSlots<CheckboxGroupSlots<T>>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'as', 'modelValue', 'defaultValue', 'orientation', 'loop', 'required'), emits)
 const checkboxProps = useForwardProps(reactivePick(props, 'variant', 'indicator', 'icon'))
 const getProxySlots = () => omit(slots, ['legend'])
 
-const { emitFormChange, emitFormInput, color, name, size, id: _id, disabled, ariaAttrs } = useFormField<CheckboxGroupProps<T>>(props, { bind: false })
+const { emitFormChange, emitFormInput, color, name, size, id: _id, disabled, ariaAttrs } = useFormField(props, { bind: false })
 const id = _id.value ?? useId()
 
 const ui = computed(() => tv({ extend: theme, ...(appConfig.ui?.checkboxGroup || {}) })({
@@ -110,9 +33,9 @@ const ui = computed(() => tv({ extend: theme, ...(appConfig.ui?.checkboxGroup ||
   color: props.color,
   variant: props.variant,
   disabled: disabled.value
-}) as unknown as CheckboxGroup['ui'])
+}))
 
-function normalizeItem(item: any) {
+function normalizeItem(item) {
   if (item === null) {
     return {
       id: `${id}:null`,
@@ -124,8 +47,8 @@ function normalizeItem(item: any) {
   if (typeof item === 'string' || typeof item === 'number') {
     return {
       id: `${id}:${item}`,
-      value: String(item),
-      label: String(item)
+      value(item),
+      label(item)
     }
   }
 
@@ -144,12 +67,12 @@ function normalizeItem(item: any) {
 
 const normalizedItems = computed(() => {
   if (!props.items) {
-    return []
+    return 
   }
   return props.items.map(normalizeItem)
 })
 
-function onUpdate(value: any) {
+function onUpdate(value) {
   // @ts-expect-error - 'target' does not exist in type 'EventInit'
   const event = new Event('change', { target: { value } })
   emits('change', event)
@@ -189,7 +112,7 @@ function onUpdate(value: any) {
         :class="ui.item({ class: [props.ui?.item, item.ui?.item, item.class], disabled: item.disabled || disabled })"
       >
         <template v-for="(_, name) in getProxySlots()" #[name]>
-          <slot :name="(name as keyof CheckboxGroupSlots<T>)" :item="item" />
+          <slot :name="name" :item="item" />
         </template>
       </UCheckbox>
     </fieldset>

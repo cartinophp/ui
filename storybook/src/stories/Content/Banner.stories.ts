@@ -3,7 +3,7 @@ import UBanner from '../../../../src/runtime/components/Banner.vue'
 
 const meta = {
   title: 'Components/Content/Banner',
-  component: UiBanner,
+  component: UBanner,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiBanner>
+} satisfies Meta<typeof UBanner>
 
 export default meta
 type Story = StoryObj<typeof meta>

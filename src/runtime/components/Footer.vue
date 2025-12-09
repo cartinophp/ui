@@ -1,43 +1,19 @@
-<script lang="ts">
-import type { ComponentConfig, AppConfig } from '../types/tv'
-import theme from '../../theme/footer.js'
 
-type Footer = ComponentConfig<typeof theme, AppConfig, 'footer'>
-
-export interface FooterProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'footer'
-   */
-  as?: any
-  class?: any
-  ui?: Footer['slots']
-}
-
-export interface FooterSlots {
-  left(props?: {}): any
-  default(props?: {}): any
-  right(props?: {}): any
-  top(props?: {}): any
-  bottom(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { tv } from '../utils/tv'
 import UContainer from './Container.vue'
 
-const props = withDefaults(defineProps<FooterProps>(), {
+const props = defineProps({
   as: 'footer'
 })
-const slots = defineSlots<FooterSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 // eslint-disable-next-line vue/no-dupe-keys
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footer || {}) })() as unknown as Footer['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.footer || {}) })())
 </script>
 
 <template>

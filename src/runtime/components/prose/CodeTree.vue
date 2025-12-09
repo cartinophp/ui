@@ -1,37 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/code-tree'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseCodeTree = ComponentConfig<typeof theme, AppConfig, 'codeTree', 'ui.prose'>
-
-type TreeNode = {
-  label: string
-  path: string
-  children?: TreeNode[]
-}
-
-export interface ProseCodeTreeProps {
-  /**
-   * The default path to select.
-   * @example 'package.json'
-   */
-  defaultValue?: string
-  /**
-   * Expand all directories by default.
-   * @defaultValue false
-   */
-  expandAll?: boolean
-  class?: any
-  ui?: ProseCodeTree['slots']
-}
-
-export interface ProseCodeTreeSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, ref, watch, onBeforeUpdate } from 'vue'
 import { TreeRoot, TreeItem } from 'reka-ui'
 import { createReusableTemplate } from '@vueuse/core'
@@ -47,7 +15,7 @@ const slots = defineSlots<ProseCodeTreeSlots>()
 
 const appConfig = useAppConfig() as ProseCodeTree['AppConfig']
 
-const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items: TreeNode[], level: number }>()
+const [DefineTreeTemplate, ReuseTreeTemplate] = createReusableTemplate<{ items[], level: number }>()
 
 // eslint-disable-next-line vue/no-dupe-keys
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.prose?.codeTree || {}) })() as unknown as ProseCodeTree['ui'])
@@ -68,9 +36,9 @@ const flatItems = computed<{
 })
 const items = computed(() => buildTree(flatItems.value))
 
-function buildTree(items: { label: string }[]): TreeNode[] {
+function buildTree(items: { label: string }[])[] {
   const map = new Map<string, TreeNode>()
-  const root: TreeNode[] = []
+  const root[] = []
 
   items.forEach((item) => {
     const parts = item.label.split('/')
@@ -92,7 +60,7 @@ function buildTree(items: { label: string }[]): TreeNode[] {
     })
   })
 
-  const sort = (nodes: TreeNode[]): TreeNode[] =>
+  const sort = (nodes[])[] =>
     nodes.sort((a, b) =>
       !!a.children === !!b.children ? a.label.localeCompare(b.label) : b.children ? 1 : -1
     ).map(n => ({ ...n, children: n.children && sort(n.children) }))

@@ -28,42 +28,42 @@ import { UButton, UInput, UCard } from '@cartino/ui'
 </template>
 
 <script setup>
-import { UiButton, UiInput, UiCard } from '@cartino/ui'
+import { UButton, UInput, UCard } from '@cartino/ui'
 </script>
 ```
 
 ## Technical Implementation
 
 ### 1. Default Prefix Changed
-- **File**: `src/utils/defaults.ts`
+- **File**: `src/utils/defaults.js`
 - **Change**: Default prefix changed from `'U'` to `'ui-'`
 - Vue automatically converts PascalCase component names to kebab-case in templates
 
 ### 2. Export Names Updated
-- **File**: `src/index.ts`
-- **Change**: All exports renamed from `U*` to `Ui*`
+- **File**: `src/index.js`
+- **Change**: All exports renamed from `U*` to `U*`
 - Examples:
-  - `UButton` → `UiButton` (used as `<ui-button>`)
-  - `UInput` → `UiInput` (used as `<ui-input>`)
-  - `UCard` → `UiCard` (used as `<ui-card>`)
+  - `UButton` → `UButton` (used as `<ui-button>`)
+  - `UInput` → `UInput` (used as `<ui-input>`)
+  - `UCard` → `UCard` (used as `<ui-card>`)
 
 ### 3. Storybook Configuration
-- **File**: `storybook/.storybook/preview.ts`
+- **File**: `storybook/.storybook/preview.js`
 - **Change**: Added global component registration for Storybook
-- All `Ui*` components are automatically registered and available in stories
+- All `U*` components are automatically registered and available in stories
 
 ## Component Naming Reference
 
 | Import Name | Template Usage | Description |
 |-------------|----------------|-------------|
-| `UiButton` | `<ui-button>` | Button component |
-| `UiInput` | `<ui-input>` | Input field |
-| `UiCard` | `<ui-card>` | Card container |
-| `UiAlert` | `<ui-alert>` | Alert message |
-| `UiBadge` | `<ui-badge>` | Badge/label |
-| `UiModal` | `<ui-modal>` | Modal dialog |
-| `UiTable` | `<ui-table>` | Data table |
-| `UiTabs` | `<ui-tabs>` | Tab navigation |
+| `UButton` | `<ui-button>` | Button component |
+| `UInput` | `<ui-input>` | Input field |
+| `UCard` | `<ui-card>` | Card container |
+| `UAlert` | `<ui-alert>` | Alert message |
+| `UBadge` | `<ui-badge>` | Badge/label |
+| `UModal` | `<ui-modal>` | Modal dialog |
+| `UTable` | `<ui-table>` | Data table |
+| `UTabs` | `<ui-tabs>` | Tab navigation |
 | ... | ... | (and 100+ more) |
 
 ## Usage in Different Frameworks
@@ -71,7 +71,7 @@ import { UiButton, UiInput, UiCard } from '@cartino/ui'
 ### Vue 3 SFC (Single File Components)
 ```vue
 <script setup lang="ts">
-import { UiButton, UiInput } from '@cartino/ui'
+import { UButton, UInput } from '@cartino/ui'
 </script>
 
 <template>
@@ -93,7 +93,7 @@ If you're using the unplugin auto-import feature:
 ### TypeScript
 ```typescript
 import type { ButtonProps } from '@cartino/ui'
-import { UiButton } from '@cartino/ui'
+import { UButton } from '@cartino/ui'
 
 const props: ButtonProps = {
   label: 'Click me',
@@ -127,14 +127,14 @@ If you have existing code using the old `U*` naming:
 ### Step 1: Update Imports
 ```diff
 - import { UButton, UInput } from '@cartino/ui'
-+ import { UiButton, UiInput } from '@cartino/ui'
++ import { UButton, UInput } from '@cartino/ui'
 ```
 
 ### Step 2: Update Template Usage
 No changes needed! Vue handles both:
 ```vue
 <!-- Both work -->
-<UiButton label="Test" />
+<UButton label="Test" />
 <ui-button label="Test" />
 ```
 

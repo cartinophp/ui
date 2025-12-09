@@ -3,7 +3,7 @@ import UPageCard from '../../../../src/runtime/components/PageCard.vue'
 
 const meta = {
   title: 'Components/Page/PageCard',
-  component: UiPageCard,
+  component: UPageCard,
   tags: ['autodocs'],
   argTypes: {
     color: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'neutral']
     }
   }
-} satisfies Meta<typeof UiPageCard>
+} satisfies Meta<typeof UPageCard>
 
 export default meta
 type Story = StoryObj<typeof meta>

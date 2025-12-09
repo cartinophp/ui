@@ -3,7 +3,7 @@ import UBadge from '../../../../src/runtime/components/Badge.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Badge',
-  component: UiBadge,
+  component: UBadge,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -19,7 +19,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg']
     }
   }
-} satisfies Meta<typeof UiBadge>
+} satisfies Meta<typeof UBadge>
 
 export default meta
 type Story = StoryObj<typeof meta>

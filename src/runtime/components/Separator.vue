@@ -1,53 +1,5 @@
-<script lang="ts">
-import type { SeparatorProps as _SeparatorProps } from 'reka-ui'
-import theme from '../../theme/separator.js'
-import type { AvatarProps, IconProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Separator = ComponentConfig<typeof theme, AppConfig, 'separator'>
-
-export interface SeparatorProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<_SeparatorProps, 'decorative'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /** Display a label in the middle. */
-  label?: string
-  /**
-   * Display an icon in the middle.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  /** Display an avatar in the middle. */
-  avatar?: AvatarProps
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: Separator['variants']['color']
-  /**
-   * @defaultValue 'xs'
-   */
-  size?: Separator['variants']['size']
-  /**
-   * @defaultValue 'solid'
-   */
-  type?: Separator['variants']['type']
-  /**
-   * The orientation of the separator.
-   * @defaultValue 'horizontal'
-   */
-  orientation?: _SeparatorProps['orientation']
-  class?: any
-  ui?: Separator['slots']
-}
-
-export interface SeparatorSlots {
-  default(props: { ui: Separator['ui'] }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Separator, useForwardProps } from 'reka-ui'
 import { reactivePick } from '@vueuse/core'
@@ -55,12 +7,12 @@ import { tv } from '../utils/tv'
 import UIcon from './Icon.vue'
 import UAvatar from './Avatar.vue'
 
-const props = withDefaults(defineProps<SeparatorProps>(), {
+const props = defineProps({
   orientation: 'horizontal'
 })
-const slots = defineSlots<SeparatorSlots>()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardProps(reactivePick(props, 'as', 'decorative', 'orientation'))
 
@@ -69,7 +21,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.separator ||
   orientation: props.orientation,
   size: props.size,
   type: props.type
-}) as unknown as Separator['ui'])
+}))
 </script>
 
 <template>
@@ -81,7 +33,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.separator ||
         <slot :ui="ui">
           <span v-if="label" data-slot="label" :class="ui.label({ class: props.ui?.label })">{{ label }}</span>
           <UIcon v-else-if="icon" :name="icon" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
-          <UAvatar v-else-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()) as AvatarProps['size'])" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
+          <UAvatar v-else-if="avatar" :size="((props.ui?.avatarSize || ui.avatarSize()))" v-bind="avatar" data-slot="avatar" :class="ui.avatar({ class: props.ui?.avatar })" />
         </slot>
       </div>
 

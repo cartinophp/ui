@@ -1,22 +1,13 @@
-<script lang="ts">
-export interface ThemeProviderProps {
-  /**
-   * Theme configuration to provide to all child components
-   */
-  theme?: import('../types/theme').ThemeConfig
-}
-</script>
 
-<script setup lang="ts">
+<script setup>
 import { computed, provide } from 'vue'
 import { THEME_CONFIG_KEY, getDefaultTheme } from '../composables/useTheme'
-import type { ThemeConfig } from '../types/theme'
 import { defu } from 'defu'
 
-const props = defineProps<ThemeProviderProps>()
+const props = defineProps()
 
 // Merge user theme with defaults
-const themeConfig = computed<ThemeConfig>(() => {
+const themeConfig = computed(() => {
   return defu(props.theme || {}, getDefaultTheme())
 })
 

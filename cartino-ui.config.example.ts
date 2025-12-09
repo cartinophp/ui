@@ -1,6 +1,6 @@
 /**
  * Example Theme Configuration for CartinoPHP UI
- * Copy this file to your project root as `cartino-ui.config.ts` and customize as needed
+ * Copy this file to your project root as `cartino-ui.config.js` and customize as needed
  */
 
 import { defineTheme } from '@cartino/ui'

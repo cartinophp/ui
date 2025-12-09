@@ -1,72 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/page-card.js'
-import type { IconProps, LinkProps } from '../types'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type PageCard = ComponentConfig<typeof theme, AppConfig, 'pageCard'>
-
-export interface PageCardProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed above the title.
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  title?: string
-  description?: string
-  /**
-   * The orientation of the page card.
-   * @defaultValue 'vertical'
-   */
-  orientation?: PageCard['variants']['orientation']
-  /**
-   * Reverse the order of the default slot.
-   * @defaultValue false
-   */
-  reverse?: boolean
-  /**
-   * Display a line around the page card.
-   */
-  highlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  highlightColor?: PageCard['variants']['highlightColor']
-  /**
-   * Display a spotlight effect that follows your mouse cursor and highlights borders on hover.
-   */
-  spotlight?: boolean
-  /**
-   * @defaultValue 'primary'
-   */
-  spotlightColor?: PageCard['variants']['spotlightColor']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: PageCard['variants']['variant']
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  onClick?: (event: MouseEvent) => void | Promise<void>
-  class?: any
-  ui?: PageCard['slots']
-}
-
-export interface PageCardSlots {
-  header(props?: {}): any
-  body(props?: {}): any
-  leading(props: { ui: PageCard['ui'] }): any
-  title(props?: {}): any
-  description(props?: {}): any
-  footer(props?: {}): any
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, ref, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useMouseInElement, pausableFilter } from '@vueuse/core'
@@ -77,15 +10,15 @@ import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<PageCardProps>(), {
+const props = defineProps({
   orientation: 'vertical'
 })
-const slots = defineSlots<PageCardSlots>()
+const slots = defineSlots()
 
-const cardRef = ref<HTMLElement>()
+const cardRef = ref()
 const motionControl = pausableFilter()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 const { elementX, elementY } = useMouseInElement(cardRef, {
   eventFilter: motionControl.eventFilter
 })
@@ -110,7 +43,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.pageCard || 
   highlightColor: props.highlightColor,
   spotlight: spotlight.value,
   spotlightColor: props.spotlightColor
-}) as unknown as PageCard['ui'])
+}))
 
 const ariaLabel = computed(() => {
   const slotText = slots.title && getSlotChildrenText(slots.title())

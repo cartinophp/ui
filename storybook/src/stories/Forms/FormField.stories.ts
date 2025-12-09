@@ -4,7 +4,7 @@ import UInput from '../../../../src/runtime/components/Input.vue'
 
 const meta = {
   title: 'Components/Forms/FormField',
-  component: UiFormField,
+  component: UFormField,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -12,7 +12,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiFormField>
+} satisfies Meta<typeof UFormField>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -23,7 +23,7 @@ export const Default: Story = {
     name: 'email'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -42,7 +42,7 @@ export const WithDescription: Story = {
     name: 'username'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -61,7 +61,7 @@ export const WithHint: Story = {
     name: 'password'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -80,7 +80,7 @@ export const WithError: Story = {
     name: 'email'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -99,7 +99,7 @@ export const Required: Story = {
     name: 'email'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -118,7 +118,7 @@ export const Small: Story = {
     name: 'email'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },
@@ -137,7 +137,7 @@ export const Large: Story = {
     name: 'email'
   },
   render: (args) => ({
-    components: { UiFormField, UiInput },
+    components: { UFormField, UInput },
     setup() {
       return { args }
     },

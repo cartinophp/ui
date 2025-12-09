@@ -1,55 +1,3 @@
-<script lang="ts">
-import type { PropType } from 'vue'
-import type { ContentNavigationItem } from '@nuxt/content'
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/content/content-surround'
-import type { IconProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
-
-type ContentSurround = ComponentConfig<typeof theme, AppConfig, 'contentSurround'>
-
-export interface ContentSurroundLink extends ContentNavigationItem {
-  description?: string
-  /**
-   * @IconifyIcon
-   */
-  icon?: IconProps['name']
-  class?: any
-  ui?: Pick<ContentSurround['slots'], 'link' | 'linkLeading' | 'linkLeadingIcon' | 'linkTitle' | 'linkDescription'>
-}
-
-export interface ContentSurroundProps<T extends ContentSurroundLink = ContentSurroundLink> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /**
-   * The icon displayed in the prev link.
-   * @defaultValue appConfig.ui.icons.arrowLeft
-   * @IconifyIcon
-   */
-  prevIcon?: IconProps['name']
-  /**
-   * The icon displayed in the next link.
-   * @defaultValue appConfig.ui.icons.arrowRight
-   * @IconifyIcon
-   */
-  nextIcon?: IconProps['name']
-  surround?: T[]
-  class?: any
-  ui?: ContentSurround['slots']
-}
-
-type SlotProps<T> = (props: { link: T, ui: ContentSurround['ui'] }) => any
-
-export interface ContentSurroundSlots<T extends ContentSurroundLink = ContentSurroundLink> {
-  'link': SlotProps<T>
-  'link-leading': SlotProps<T>
-  'link-title': SlotProps<T>
-  'link-description': SlotProps<T>
-}
-</script>
 
 <script setup lang="ts" generic="T extends ContentSurroundLink">
 import { computed } from 'vue'
@@ -67,11 +15,11 @@ defineSlots<ContentSurroundSlots<T>>()
 
 const appConfig = useAppConfig() as ContentSurround['AppConfig']
 
-const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?: ContentSurroundLink, icon: IconProps['name'], direction: 'left' | 'right' }>({
+const [DefineLinkTemplate, ReuseLinkTemplate] = createReusableTemplate<{ link?['name'], direction: 'left' | 'right' }>({
   props: {
-    link: Object,
-    icon: String,
-    direction: String as PropType<'left' | 'right'>
+    link
+    icon
+    direction'left' | 'right'>
   }
 })
 

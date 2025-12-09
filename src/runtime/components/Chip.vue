@@ -1,49 +1,5 @@
-<script lang="ts">
-import theme from '../../theme/chip.js'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Chip = ComponentConfig<typeof theme, AppConfig, 'chip'>
-
-export interface ChipProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  /** Display some text inside the chip. */
-  text?: string | number
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: Chip['variants']['color']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Chip['variants']['size']
-  /**
-   * The position of the chip.
-   * @defaultValue 'top-right'
-   */
-  position?: Chip['variants']['position']
-  /** When `true`, keep the chip inside the component for rounded elements. */
-  inset?: boolean
-  /** When `true`, render the chip relatively to the parent. */
-  standalone?: boolean
-  class?: any
-  ui?: Chip['slots']
-}
-
-export interface ChipEmits {
-  'update:show': [value: boolean]
-}
-
-export interface ChipSlots {
-  default(props?: {}): any
-  content(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive, Slot } from 'reka-ui'
 import { useAvatarGroup } from '../composables/useAvatarGroup'
@@ -51,16 +7,16 @@ import { tv } from '../utils/tv'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<ChipProps>(), {
+const props = defineProps({
   inset: false,
   standalone: false
 })
-defineSlots<ChipSlots>()
+defineSlots()
 
 const show = defineModel<boolean>('show', { default: true })
 
 const { size } = useAvatarGroup(props)
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chip || {}) })({
   color: props.color,
@@ -68,7 +24,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.chip || {}) 
   position: props.position,
   inset: props.inset,
   standalone: props.standalone
-}) as unknown as Chip['ui'])
+}))
 </script>
 
 <template>

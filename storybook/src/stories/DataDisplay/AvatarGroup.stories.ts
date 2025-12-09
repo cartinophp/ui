@@ -3,7 +3,7 @@ import UAvatarGroup from '../../../../src/runtime/components/AvatarGroup.vue'
 
 const meta = {
   title: 'Components/DataDisplay/AvatarGroup',
-  component: UiAvatarGroup,
+  component: UAvatarGroup,
   tags: ['autodocs'],
   argTypes: {
     size: {
@@ -11,7 +11,7 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     }
   }
-} satisfies Meta<typeof UiAvatarGroup>
+} satisfies Meta<typeof UAvatarGroup>
 
 export default meta
 type Story = StoryObj<typeof meta>

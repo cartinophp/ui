@@ -1,67 +1,5 @@
-<script lang="ts">
-import type { DrawerRootProps, DrawerRootEmits } from 'vaul-vue'
-import type { DialogContentProps, DialogContentEmits } from 'reka-ui'
-import theme from '../../theme/drawer.js'
-import type { EmitsToProps } from '../types/utils'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Drawer = ComponentConfig<typeof theme, AppConfig, 'drawer'>
-
-export interface DrawerProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'shouldScaleBackground' | 'setBackgroundColorOnScale' | 'scrollLockTimeout' | 'fixed' | 'dismissible' | 'modal' | 'open' | 'defaultOpen' | 'nested' | 'direction' | 'noBodyStyles' | 'handleOnly' | 'preventScrollRestoration' | 'snapPoints'> {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'div'
-   */
-  as?: any
-  title?: string
-  description?: string
-  /**
-   * Whether to inset the drawer from the edges.
-   * @defaultValue false
-   */
-  inset?: boolean
-  /** The content of the drawer. */
-  content?: Omit<DialogContentProps, 'as' | 'asChild' | 'forceMount'> & Partial<EmitsToProps<DialogContentEmits>>
-  /**
-   * Render an overlay behind the drawer.
-   * @defaultValue true
-   */
-  overlay?: boolean
-  /**
-   * Render a handle on the drawer.
-   * @defaultValue true
-   */
-  handle?: boolean
-  /**
-   * Render the drawer in a portal.
-   * @defaultValue true
-   */
-  portal?: boolean | string | HTMLElement
-  /**
-   * Whether the drawer is nested in another drawer.
-   * @defaultValue false
-   */
-  nested?: boolean
-  class?: any
-  ui?: Drawer['slots']
-}
-
-export interface DrawerEmits extends /** @vue-ignore */ /** @vue-ignore */ DrawerRootEmits {
-  (e: 'close:prevent'): void
-}
-
-export interface DrawerSlots {
-  default(props?: {}): any
-  content(props?: {}): any
-  header(props?: {}): any
-  title(props?: {}): any
-  description(props?: {}): any
-  body(props?: {}): any
-  footer(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed, toRef } from 'vue'
 import { VisuallyHidden, useForwardPropsEmits } from 'reka-ui'
 import { DrawerRoot, DrawerRootNested, DrawerTrigger, DrawerPortal, DrawerOverlay, DrawerContent, DrawerTitle, DrawerDescription, DrawerHandle } from 'vaul-vue'
@@ -69,7 +7,7 @@ import { reactivePick } from '@vueuse/core'
 import { usePortal } from '../composables/usePortal'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<DrawerProps>(), {
+const props = defineProps({
   direction: 'bottom',
   portal: true,
   overlay: true,
@@ -77,10 +15,10 @@ const props = withDefaults(defineProps<DrawerProps>(), {
   modal: true,
   dismissible: true
 })
-const emits = defineEmits<DrawerEmits>()
-const slots = defineSlots<DrawerSlots>()
+const emits = defineEmits()
+const slots = defineSlots()
 
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const rootProps = useForwardPropsEmits(reactivePick(props, 'activeSnapPoint', 'closeThreshold', 'shouldScaleBackground', 'setBackgroundColorOnScale', 'scrollLockTimeout', 'fixed', 'dismissible', 'modal', 'open', 'defaultOpen', 'nested', 'direction', 'noBodyStyles', 'handleOnly', 'preventScrollRestoration', 'snapPoints'), emits)
 const portalProps = usePortal(toRef(() => props.portal))
@@ -90,12 +28,12 @@ const contentEvents = computed(() => {
     const events = ['pointerDownOutside', 'interactOutside', 'escapeKeyDown']
 
     return events.reduce((acc, curr) => {
-      acc[curr] = (e: Event) => {
+      acc[curr] = (e) => {
         e.preventDefault()
         emits('close:prevent')
       }
       return acc
-    }, {} as Record<typeof events[number], (e: Event) => void>)
+    }, {} as Record<typeof events[number], (e) => void>)
   }
 
   return {}
@@ -105,11 +43,11 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.drawer || {}
   direction: props.direction,
   inset: props.inset,
   snapPoints: props.snapPoints && props.snapPoints.length > 0
-}) as unknown as Drawer['ui'])
+}))
 </script>
 
 <template>
-  <component :is="nested ? DrawerRootNested : DrawerRoot" v-bind="rootProps">
+  <component :is="nested ? DrawerRootNested " v-bind="rootProps">
     <DrawerTrigger v-if="!!slots.default" as-child :class="props.class">
       <slot />
     </DrawerTrigger>

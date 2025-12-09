@@ -1,17 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/icon'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseIcon = ComponentConfig<typeof theme, AppConfig, 'icon', 'ui.prose'>
-
-export interface ProseIconProps {
-  name: string
-  class?: any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

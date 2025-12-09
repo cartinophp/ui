@@ -1,52 +1,19 @@
-<script lang="ts">
-import theme from '../../theme/kbd.js'
-import type { KbdKey } from '../composables/useKbd'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Kbd = ComponentConfig<typeof theme, AppConfig, 'kbd'>
-
-export interface KbdProps {
-  /**
-   * The element or component this component should render as.
-   * @defaultValue 'kbd'
-   */
-  as?: any
-  value?: KbdKey | string
-  /**
-   * @defaultValue 'neutral'
-   */
-  color?: Kbd['variants']['color']
-  /**
-   * @defaultValue 'outline'
-   */
-  variant?: Kbd['variants']['variant']
-  /**
-   * @defaultValue 'md'
-   */
-  size?: Kbd['variants']['size']
-  class?: any
-}
-
-export interface KbdSlots {
-  default(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import { useKbd } from '../composables/useKbd'
 import { tv } from '../utils/tv'
 
-const props = withDefaults(defineProps<KbdProps>(), {
+const props = defineProps({
   as: 'kbd'
 })
-defineSlots<KbdSlots>()
+defineSlots()
 
 const { getKbdKey } = useKbd()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
-const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.kbd || {}) }) as unknown as Kbd['ui'])
+const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.kbd || {}) }))
 </script>
 
 <template>

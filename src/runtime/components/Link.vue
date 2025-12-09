@@ -1,102 +1,5 @@
-<script lang="ts">
-import type { RouterLinkProps, RouteLocationRaw } from 'vue-router'
-import theme from '../../theme/link.js'
-import type { ButtonHTMLAttributes, AnchorHTMLAttributes } from '../types/html'
-import type { ComponentConfig, AppConfig } from '../types/tv'
 
-type Link = ComponentConfig<typeof theme, AppConfig, 'link'>
-
-interface NuxtLinkProps extends /** @vue-ignore */ Omit<RouterLinkProps, 'to'> {
-  /**
-   * Route Location the link should navigate to when clicked on.
-   */
-  to?: RouteLocationRaw
-  /**
-   * An alias for `to`. If used with `to`, `href` will be ignored
-   */
-  href?: NuxtLinkProps['to']
-  /**
-   * Forces the link to be considered as external (true) or internal (false). This is helpful to handle edge-cases
-   */
-  external?: boolean
-  /**
-   * Where to display the linked URL, as the name for a browsing context.
-   */
-  target?: '_blank' | '_parent' | '_self' | '_top' | (string & {}) | null
-  /**
-   * A rel attribute value to apply on the link. Defaults to "noopener noreferrer" for external links.
-   */
-  rel?: 'noopener' | 'noreferrer' | 'nofollow' | 'sponsored' | 'ugc' | (string & {}) | null
-  /**
-   * If set to true, no rel attribute will be added to the link
-   */
-  noRel?: boolean
-  /**
-   * A class to apply to links that have been prefetched.
-   */
-  prefetchedClass?: string
-  /**
-   * When enabled will prefetch middleware, layouts and payloads of links in the viewport.
-   */
-  prefetch?: boolean
-  /**
-   * Allows controlling when to prefetch links. By default, prefetch is triggered only on visibility.
-   */
-  prefetchOn?: 'visibility' | 'interaction' | Partial<{
-    visibility: boolean
-    interaction: boolean
-  }>
-  /**
-   * Escape hatch to disable `prefetch` attribute.
-   */
-  noPrefetch?: boolean
-  /**
-   * An option to either add or remove trailing slashes in the `href` for this specific link.
-   * Overrides the global `trailingSlash` option if provided.
-   */
-  trailingSlash?: 'append' | 'remove'
-}
-
-export interface LinkProps extends /** @vue-ignore */ /** @vue-ignore */ NuxtLinkProps, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
-  /**
-   * The element or component this component should render as when not a link.
-   * @defaultValue 'button'
-   */
-  as?: any
-  /**
-   * The type of the button when not a link.
-   * @defaultValue 'button'
-   */
-  type?: ButtonHTMLAttributes['type']
-  disabled?: boolean
-  /** Force the link to be active independent of the current route. */
-  active?: boolean
-  /** Will only be active if the current route is an exact match. */
-  exact?: boolean
-  /** Allows controlling how the current route query sets the link as active. */
-  exactQuery?: boolean | 'partial'
-  /** Will only be active if the current route hash is an exact match. */
-  exactHash?: boolean
-  /** The class to apply when the link is inactive. */
-  inactiveClass?: string
-  custom?: boolean
-  /** When `true`, only styles from `class`, `activeClass`, and `inactiveClass` will be applied. */
-  raw?: boolean
-  class?: any
-}
-
-/**
- * Link-related props that can be omitted from ButtonProps when link functionality is not needed.
- * Use this with `Omit<ButtonProps, LinkPropsKeys>` in components where buttons should not act as links.
- */
-export type LinkPropsKeys = 'to' | 'href' | 'target' | 'rel' | 'noRel' | 'external' | 'prefetch' | 'prefetchOn' | 'prefetchedClass' | 'noPrefetch' | 'trailingSlash' | 'replace' | 'ariaCurrentValue' | 'active' | 'activeClass' | 'exact' | 'exactQuery' | 'exactHash' | 'inactiveClass' | 'download' | 'ping' | 'referrerpolicy' | 'hreflang' | 'media'
-
-export interface LinkSlots {
-  default(props: { active: boolean }): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { isEqual } from 'ohash/utils'
 import { useForwardProps } from 'reka-ui'
@@ -109,16 +12,16 @@ import ULinkBase from './LinkBase.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(defineProps<LinkProps>(), {
+const props = defineProps({
   as: 'button',
   type: 'button',
   ariaCurrentValue: 'page',
   active: undefined
 })
-defineSlots<LinkSlots>()
+defineSlots()
 
 const route = useRoute()
-const appConfig = {} as AppConfig
+const appConfig = {}
 
 const nuxtLinkProps = useForwardProps(reactiveOmit(props, 'as', 'type', 'disabled', 'active', 'exact', 'exactQuery', 'exactHash', 'activeClass', 'inactiveClass', 'to', 'href', 'raw', 'custom', 'class'))
 
@@ -132,11 +35,11 @@ const ui = computed(() => tv({
       }
     }
   }, appConfig.ui?.link || {})
-}) as unknown as Link['ui'])
+}))
 
 const to = computed(() => props.to ?? props.href)
 
-function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
+function isLinkActive({ route: linkRoute, isActive, isExactActive }) {
   if (props.active !== undefined) {
     return props.active
   }
@@ -162,7 +65,7 @@ function isLinkActive({ route: linkRoute, isActive, isExactActive }: any) {
   return false
 }
 
-function resolveLinkClass({ route, isActive, isExactActive }: any) {
+function resolveLinkClass({ route, isActive, isExactActive }) {
   const active = isLinkActive({ route, isActive, isExactActive })
 
   if (props.raw) {

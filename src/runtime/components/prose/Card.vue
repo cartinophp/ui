@@ -1,32 +1,5 @@
-<script lang="ts">
-import type { AppConfig } from '@nuxt/schema'
-import theme from '#build/ui/prose/card'
-import type { IconProps, LinkProps } from '../../types'
-import type { ComponentConfig } from '../../types/tv'
 
-type ProseCard = ComponentConfig<typeof theme, AppConfig, 'card', 'ui.prose'>
-
-export interface ProseCardProps {
-  to?: LinkProps['to']
-  target?: LinkProps['target']
-  icon?: IconProps['name']
-  title?: string
-  description?: string
-  /**
-   * @defaultValue 'primary'
-   */
-  color?: ProseCard['variants']['color']
-  class?: any
-  ui?: ProseCard['slots']
-}
-
-export interface ProseCardSlots {
-  default(props?: {}): any
-  title(props?: {}): any
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { useAppConfig } from '#imports'
 import { tv } from '../../utils/tv'

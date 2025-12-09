@@ -1,13 +1,5 @@
-<script lang="ts">
-import type { SelectMenuProps } from '../../types'
-import type { Locale } from '../../types/locale'
 
-export interface LocaleSelectProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<SelectMenuProps<Locale<any>[], 'code', false>, 'items' | 'modelValue'> {
-  locales?: Locale<any>[]
-}
-</script>
-
-<script setup lang="ts">
+<script setup>
 import { useForwardProps } from 'reka-ui'
 import { reactiveOmit } from '@vueuse/core'
 import USelectMenu from '../SelectMenu.vue'
@@ -25,7 +17,7 @@ const selectMenuProps = useForwardProps(reactiveOmit(props, 'locales'))
 const modelValue = defineModel<string>({ required: true })
 
 function getEmojiFlag(locale: string): string {
-  const languageToCountry: Record<string, string> = {
+  const languageToCountry= {
     ar: 'sa', // Arabic -> Saudi Arabia
     bn: 'bd', // Bengali -> Bangladesh
     ca: 'es', // Catalan -> Spain

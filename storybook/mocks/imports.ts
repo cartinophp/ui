@@ -4,6 +4,11 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 // Export common Nuxt auto-imports
 export { ref, computed, watch, onMounted, onUnmounted }
 
+// Mock useAppConfig
+export const useAppConfig = () => ({
+  ui: {}
+})
+
 // Mock useCookie
 export const useCookie = <T>(key: string, options?: any) => {
   return ref(options?.default ? options.default() : undefined) as any

@@ -3,16 +3,16 @@ import USkeleton from '../../../../src/runtime/components/Skeleton.vue'
 
 const meta = {
   title: 'Components/Feedback/Skeleton',
-  component: UiSkeleton,
+  component: USkeleton,
   tags: ['autodocs']
-} satisfies Meta<typeof UiSkeleton>
+} satisfies Meta<typeof USkeleton>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <div class="space-y-4">
         <ui-skeleton class="h-4 w-full" />
@@ -25,7 +25,7 @@ export const Default: Story = {
 
 export const Circle: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <ui-skeleton class="h-12 w-12 rounded-full" />
     `
@@ -34,7 +34,7 @@ export const Circle: Story = {
 
 export const Avatar: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <div class="flex items-center gap-4">
         <ui-skeleton class="h-12 w-12 rounded-full" />
@@ -49,7 +49,7 @@ export const Avatar: Story = {
 
 export const Card: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <div class="border rounded-lg p-4 space-y-4">
         <ui-skeleton class="h-48 w-full" />
@@ -65,7 +65,7 @@ export const Card: Story = {
 
 export const List: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <div class="space-y-3">
         <div v-for="i in 5" :key="i" class="flex items-center gap-3">
@@ -82,7 +82,7 @@ export const List: Story = {
 
 export const Table: Story = {
   render: () => ({
-    components: { UiSkeleton },
+    components: { USkeleton },
     template: `
       <div class="space-y-3">
         <div class="grid grid-cols-4 gap-4">
