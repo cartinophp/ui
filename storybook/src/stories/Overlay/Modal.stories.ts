@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiModal from '../../../../src/runtime/components/Modal.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UModal from '../../../../src/runtime/components/Modal.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Modal',

@@ -21,7 +21,7 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: ['vue', 'reka-ui', 'tailwind-variants', '@tanstack/vue-table'],
+      external: ['vue', 'reka-ui', 'tailwind-variants', '@tanstack/vue-table', 'colortranslator', 'vaul-vue', '@vueuse/core', '@vueuse/integrations/useFuse', 'ohash', 'tailwind-merge', '@tiptap/vue-3', '@tiptap/starter-kit', '@tiptap/pm', '#build/ui-image-component', '#build/ui', 'motion-v'],
       output: {
         globals: {
           vue: 'Vue',
@@ -37,6 +37,7 @@ export default defineConfig({
     },
     outDir: 'dist',
     emptyOutDir: true,
-    cssCodeSplit: false
+    cssCodeSplit: false,
+    minify: false
   }
 })

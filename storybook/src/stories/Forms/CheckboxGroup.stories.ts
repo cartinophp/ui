@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiCheckboxGroup from '../../../../src/runtime/components/CheckboxGroup.vue'
+import UCheckboxGroup from '../../../../src/runtime/components/CheckboxGroup.vue'
 
 const meta = {
   title: 'Components/Forms/CheckboxGroup',

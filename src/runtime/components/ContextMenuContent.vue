@@ -30,7 +30,7 @@ interface ContextMenuContentProps<T extends ArrayOrNested<ContextMenuItem>> exte
   uiOverride?: ContextMenu['slots']
 }
 
-interface ContextMenuContentEmits extends RekaContextMenuContentEmits {}
+interface ContextMenuContentEmits extends /** @vue-ignore */ RekaContextMenuContentEmits {}
 </script>
 
 <script setup lang="ts" generic="T extends ArrayOrNested<ContextMenuItem>">

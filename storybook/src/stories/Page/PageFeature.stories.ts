@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPageFeature from '../../../../src/runtime/components/PageFeature.vue'
+import UPageFeature from '../../../../src/runtime/components/PageFeature.vue'
 
 const meta = {
   title: 'Components/Page/PageFeature',

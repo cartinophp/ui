@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiBreadcrumb from '../../../../src/runtime/components/Breadcrumb.vue'
+import UBreadcrumb from '../../../../src/runtime/components/Breadcrumb.vue'
 
 const meta = {
   title: 'Components/Navigation/Breadcrumb',

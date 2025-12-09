@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiCollapsible from '../../../../src/runtime/components/Collapsible.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UCollapsible from '../../../../src/runtime/components/Collapsible.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Layout/Collapsible',

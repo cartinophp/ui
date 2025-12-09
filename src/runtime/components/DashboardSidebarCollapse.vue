@@ -5,7 +5,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardSidebarCollapse = ComponentConfig<typeof theme, AppConfig, 'dashboardSidebarCollapse'>
 
-export interface DashboardSidebarCollapseProps extends Omit<ButtonProps, LinkPropsKeys | 'color' | 'variant'> {
+export interface DashboardSidebarCollapseProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<ButtonProps, LinkPropsKeys | 'color' | 'variant'> {
   /**
    * @defaultValue 'neutral'
    */

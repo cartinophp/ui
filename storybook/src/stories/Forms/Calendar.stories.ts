@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiCalendar from '../../../../src/runtime/components/Calendar.vue'
+import UCalendar from '../../../../src/runtime/components/Calendar.vue'
 
 const meta = {
   title: 'Components/Forms/Calendar',

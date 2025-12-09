@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiSelectMenu from '../../../../src/runtime/components/SelectMenu.vue'
+import USelectMenu from '../../../../src/runtime/components/SelectMenu.vue'
 
 const meta = {
   title: 'Components/Forms/SelectMenu',

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiCard from '../../../../src/runtime/components/Card.vue'
+import UCard from '../../../../src/runtime/components/Card.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Card',

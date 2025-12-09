@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiSwitch from '../../../../src/runtime/components/Switch.vue'
+import USwitch from '../../../../src/runtime/components/Switch.vue'
 
 const meta = {
   title: 'Components/Forms/Switch',

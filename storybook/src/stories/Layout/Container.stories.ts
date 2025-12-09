@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiContainer from '../../../../src/runtime/components/Container.vue'
+import UContainer from '../../../../src/runtime/components/Container.vue'
 
 const meta = {
   title: 'Components/Layout/Container',

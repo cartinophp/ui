@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiStepper from '../../../../src/runtime/components/Stepper.vue'
+import UStepper from '../../../../src/runtime/components/Stepper.vue'
 
 const meta = {
   title: 'Components/Forms/Stepper',

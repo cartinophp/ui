@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Pagination = ComponentConfig<typeof theme, AppConfig, 'pagination'>
 
-export interface PaginationProps extends Partial<Pick<PaginationRootProps, 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'>> {
+export interface PaginationProps extends /** @vue-ignore */ /** @vue-ignore */ Partial<Pick<PaginationRootProps, 'defaultPage' | 'disabled' | 'itemsPerPage' | 'page' | 'showEdges' | 'siblingCount' | 'total'>> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -78,7 +78,7 @@ export interface PaginationProps extends Partial<Pick<PaginationRootProps, 'defa
   ui?: Pagination['slots']
 }
 
-export interface PaginationEmits extends PaginationRootEmits {}
+export interface PaginationEmits extends /** @vue-ignore */ /** @vue-ignore */ PaginationRootEmits {}
 
 export interface PaginationSlots {
   first(props?: {}): any

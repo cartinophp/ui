@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiChip from '../../../../src/runtime/components/Chip.vue'
+import UChip from '../../../../src/runtime/components/Chip.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Chip',

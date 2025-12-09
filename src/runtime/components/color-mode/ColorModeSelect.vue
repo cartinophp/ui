@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { SelectMenuProps, SelectMenuItem } from '../../types'
 
-export interface ColorModeSelectProps extends Omit<SelectMenuProps<SelectMenuItem[]>, 'icon' | 'items' | 'modelValue'> {
+export interface ColorModeSelectProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<SelectMenuProps<SelectMenuItem[]>, 'icon' | 'items' | 'modelValue'> {
 }
 </script>
 

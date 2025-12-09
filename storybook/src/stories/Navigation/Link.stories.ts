@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiLink from '../../../../src/runtime/components/Link.vue'
+import ULink from '../../../../src/runtime/components/Link.vue'
 
 const meta = {
   title: 'Components/Navigation/Link',

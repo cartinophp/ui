@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiDropdownMenu from '../../../../src/runtime/components/DropdownMenu.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UDropdownMenu from '../../../../src/runtime/components/DropdownMenu.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/DropdownMenu',

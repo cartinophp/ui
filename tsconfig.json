@@ -1,66 +1,19 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Vue */
+    "composite": true,
     "declaration": true,
-    "declarationDir": "./dist",
-    "outDir": "./dist",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "declarationMap": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "jsx": "preserve",
+    "types": ["node"],
+    "noImplicitAny": false
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "src/module.ts",
-    "src/plugins/**/*",
-    "src/templates.ts",
-    "src/unplugin.ts",
-    "src/vite.ts",
-    "src/runtime/vue/**/*",
-    "src/runtime/inertia/**/*",
-    "src/runtime/composables/useContentSearch.ts",
-    "src/runtime/composables/useOverlay.ts",
-    "src/runtime/plugins/**/*",
-    "src/runtime/utils/ai.ts",
-    "src/runtime/utils/content.ts",
-    "src/runtime/utils/form.ts",
-    "src/runtime/utils/fuse.ts",
-    "src/utils/components.ts",
-    "src/utils/defaults.ts",
-    "src/utils/variants.ts",
-    "src/types/variants.ts",
-    "src/runtime/types/form.ts",
-    "src/theme/content/**/*",
-    "src/theme/prose/**/*",
-    "src/**/*.stories.ts",
-    "src/stories/**/*",
-    ".storybook/**/*",
-    "node_modules",
-    "dist"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/**/*"],
+  "exclude": ["cli", "docs", "dist", "playgrounds", "node_modules", "storybook"]
 }

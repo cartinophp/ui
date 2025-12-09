@@ -5,7 +5,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Collapsible = ComponentConfig<typeof theme, AppConfig, 'collapsible'>
 
-export interface CollapsibleProps extends Pick<CollapsibleRootProps, 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
+export interface CollapsibleProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<CollapsibleRootProps, 'defaultOpen' | 'open' | 'disabled' | 'unmountOnHide'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -15,7 +15,7 @@ export interface CollapsibleProps extends Pick<CollapsibleRootProps, 'defaultOpe
   ui?: Collapsible['slots']
 }
 
-export interface CollapsibleEmits extends CollapsibleRootEmits {}
+export interface CollapsibleEmits extends /** @vue-ignore */ /** @vue-ignore */ CollapsibleRootEmits {}
 
 export interface CollapsibleSlots {
   default(props: { open: boolean }): any

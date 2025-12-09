@@ -5,7 +5,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardPanel = ComponentConfig<typeof theme, AppConfig, 'dashboardPanel'>
 
-export interface DashboardPanelProps extends Pick<UseResizableProps, 'id' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable'> {
+export interface DashboardPanelProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<UseResizableProps, 'id' | 'minSize' | 'maxSize' | 'defaultSize' | 'resizable'> {
   class?: any
   ui?: DashboardPanel['slots']
 }

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiDrawer from '../../../../src/runtime/components/Drawer.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UDrawer from '../../../../src/runtime/components/Drawer.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Drawer',

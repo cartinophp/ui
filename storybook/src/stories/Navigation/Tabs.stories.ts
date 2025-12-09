@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiTabs from '../../../../src/runtime/components/Tabs.vue'
+import UTabs from '../../../../src/runtime/components/Tabs.vue'
 
 const meta = {
   title: 'Components/Navigation/Tabs',

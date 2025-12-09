@@ -93,7 +93,7 @@ export interface DropdownMenuProps<T extends ArrayOrNested<DropdownMenuItem> = A
   ui?: DropdownMenu['slots']
 }
 
-export interface DropdownMenuEmits extends DropdownMenuRootEmits {}
+export interface DropdownMenuEmits extends /** @vue-ignore */ /** @vue-ignore */ DropdownMenuRootEmits {}
 
 type SlotProps<T extends DropdownMenuItem> = (props: { item: T, active?: boolean, index: number, ui: DropdownMenu['ui'] }) => any
 

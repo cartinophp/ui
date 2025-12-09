@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiBadge from '../../../../src/runtime/components/Badge.vue'
+import UBadge from '../../../../src/runtime/components/Badge.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Badge',

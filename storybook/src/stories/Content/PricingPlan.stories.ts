@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPricingPlan from '../../../../src/runtime/components/PricingPlan.vue'
+import UPricingPlan from '../../../../src/runtime/components/PricingPlan.vue'
 
 const meta = {
   title: 'Components/Content/PricingPlan',

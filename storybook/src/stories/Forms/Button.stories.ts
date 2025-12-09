@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Forms/Button',

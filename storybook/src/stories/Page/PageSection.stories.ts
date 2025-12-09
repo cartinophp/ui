@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPageSection from '../../../../src/runtime/components/PageSection.vue'
+import UPageSection from '../../../../src/runtime/components/PageSection.vue'
 
 const meta = {
   title: 'Components/Page/PageSection',

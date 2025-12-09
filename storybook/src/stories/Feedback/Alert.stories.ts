@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiAlert from '../../../../src/runtime/components/Alert.vue'
+import UAlert from '../../../../src/runtime/components/Alert.vue'
 
 const meta = {
   title: 'Components/Feedback/Alert',

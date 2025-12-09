@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiKbd from '../../../../src/runtime/components/Kbd.vue'
+import UKbd from '../../../../src/runtime/components/Kbd.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Kbd',

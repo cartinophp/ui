@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiContextMenu from '../../../../src/runtime/components/ContextMenu.vue'
+import UContextMenu from '../../../../src/runtime/components/ContextMenu.vue'
 
 const meta = {
   title: 'Components/Overlay/ContextMenu',

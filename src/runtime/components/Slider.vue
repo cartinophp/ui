@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Slider = ComponentConfig<typeof theme, AppConfig, 'slider'>
 
-export interface SliderProps extends Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
+export interface SliderProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<SliderRootProps, 'name' | 'disabled' | 'inverted' | 'min' | 'max' | 'step' | 'minStepsBetweenThumbs'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'

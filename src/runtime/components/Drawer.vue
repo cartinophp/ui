@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Drawer = ComponentConfig<typeof theme, AppConfig, 'drawer'>
 
-export interface DrawerProps extends Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'shouldScaleBackground' | 'setBackgroundColorOnScale' | 'scrollLockTimeout' | 'fixed' | 'dismissible' | 'modal' | 'open' | 'defaultOpen' | 'nested' | 'direction' | 'noBodyStyles' | 'handleOnly' | 'preventScrollRestoration' | 'snapPoints'> {
+export interface DrawerProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<DrawerRootProps, 'activeSnapPoint' | 'closeThreshold' | 'shouldScaleBackground' | 'setBackgroundColorOnScale' | 'scrollLockTimeout' | 'fixed' | 'dismissible' | 'modal' | 'open' | 'defaultOpen' | 'nested' | 'direction' | 'noBodyStyles' | 'handleOnly' | 'preventScrollRestoration' | 'snapPoints'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -46,7 +46,7 @@ export interface DrawerProps extends Pick<DrawerRootProps, 'activeSnapPoint' | '
   ui?: Drawer['slots']
 }
 
-export interface DrawerEmits extends DrawerRootEmits {
+export interface DrawerEmits extends /** @vue-ignore */ /** @vue-ignore */ DrawerRootEmits {
   (e: 'close:prevent'): void
 }
 

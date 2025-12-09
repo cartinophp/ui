@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiBlogPost from '../../../../src/runtime/components/BlogPost.vue'
+import UBlogPost from '../../../../src/runtime/components/BlogPost.vue'
 
 const meta = {
   title: 'Components/Content/BlogPost',

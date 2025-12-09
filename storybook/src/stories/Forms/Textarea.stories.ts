@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiTextarea from '../../../../src/runtime/components/Textarea.vue'
+import UTextarea from '../../../../src/runtime/components/Textarea.vue'
 
 const meta = {
   title: 'Components/Forms/Textarea',

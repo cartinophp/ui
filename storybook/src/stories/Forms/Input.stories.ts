@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiInput from '../../../../src/runtime/components/Input.vue'
+import UInput from '../../../../src/runtime/components/Input.vue'
 
 const meta = {
   title: 'Components/Forms/Input',

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiTable from '../../../../src/runtime/components/Table.vue'
+import UTable from '../../../../src/runtime/components/Table.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Table',
@@ -136,8 +136,8 @@ export const Pagination: Story = {
     columns,
     rows: Array.from({ length: 50 }, (_, i) => ({
       id: i + 1,
-      name: \`User \${i + 1}\`,
-      email: \`user\${i + 1}@example.com\`,
+      name: `User ${i + 1}`,
+      email: `user${i + 1}@example.com`,
       role: ['Admin', 'User', 'Manager'][i % 3]
     })),
     pagination: {

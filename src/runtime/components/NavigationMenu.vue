@@ -74,7 +74,7 @@ export interface NavigationMenuProps<
   T extends ArrayOrNested<NavigationMenuItem> = ArrayOrNested<NavigationMenuItem>,
   K extends SingleOrMultipleType = SingleOrMultipleType,
   O extends Orientation = Orientation
-> extends Pick<NavigationMenuRootProps, 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>, Pick<AccordionRootProps, 'disabled' | 'collapsible'> {
+> extends Pick<NavigationMenuRootProps, 'delayDuration' | 'disableClickTrigger' | 'disableHoverTrigger' | 'skipDelayDuration' | 'disablePointerLeaveClose' | 'unmountOnHide'>, /** @vue-ignore */ Pick<AccordionRootProps, 'disabled' | 'collapsible'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'

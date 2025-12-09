@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiUser from '../../../../src/runtime/components/User.vue'
+import UUser from '../../../../src/runtime/components/User.vue'
 
 const meta = {
   title: 'Components/DataDisplay/User',

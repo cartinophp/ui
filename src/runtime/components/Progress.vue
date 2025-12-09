@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Progress = ComponentConfig<typeof theme, AppConfig, 'progress'>
 
-export interface ProgressProps extends Pick<ProgressRootProps, 'getValueLabel' | 'getValueText' | 'modelValue'> {
+export interface ProgressProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<ProgressRootProps, 'getValueLabel' | 'getValueText' | 'modelValue'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -40,7 +40,7 @@ export interface ProgressProps extends Pick<ProgressRootProps, 'getValueLabel' |
   ui?: Progress['slots']
 }
 
-export interface ProgressEmits extends ProgressRootEmits {}
+export interface ProgressEmits extends /** @vue-ignore */ /** @vue-ignore */ ProgressRootEmits {}
 
 export type ProgressSlots = {
   status(props: { percent?: number }): any

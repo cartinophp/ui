@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Button = ComponentConfig<typeof theme, AppConfig, 'button'>
 
-export interface ButtonProps extends UseComponentIconsProps, Omit<LinkProps, 'raw' | 'custom'> {
+export interface ButtonProps extends /** @vue-ignore */ /** @vue-ignore */ UseComponentIconsProps, /** @vue-ignore */ Omit<LinkProps, 'raw' | 'custom'> {
   label?: string
   /**
    * @defaultValue 'primary'

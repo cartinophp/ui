@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Slideover = ComponentConfig<typeof theme, AppConfig, 'slideover'>
 
-export interface SlideoverProps extends DialogRootProps {
+export interface SlideoverProps extends /** @vue-ignore */ /** @vue-ignore */ DialogRootProps {
   title?: string
   description?: string
   /** The content of the slideover. */
@@ -53,7 +53,7 @@ export interface SlideoverProps extends DialogRootProps {
   ui?: Slideover['slots']
 }
 
-export interface SlideoverEmits extends DialogRootEmits {
+export interface SlideoverEmits extends /** @vue-ignore */ /** @vue-ignore */ DialogRootEmits {
   'after:leave': []
   'after:enter': []
   'close:prevent': []

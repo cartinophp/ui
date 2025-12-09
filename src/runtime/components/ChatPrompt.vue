@@ -5,7 +5,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatPrompt = ComponentConfig<typeof theme, AppConfig, 'chatPrompt'>
 
-export interface ChatPromptProps extends Pick<TextareaProps, 'rows' | 'autofocus' | 'autofocusDelay' | 'autoresize' | 'autoresizeDelay' | 'maxrows' | 'icon' | 'avatar' | 'loading' | 'loadingIcon' | 'disabled'> {
+export interface ChatPromptProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<TextareaProps, 'rows' | 'autofocus' | 'autofocusDelay' | 'autoresize' | 'autoresizeDelay' | 'maxrows' | 'icon' | 'avatar' | 'loading' | 'loadingIcon' | 'disabled'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'form'
@@ -30,7 +30,7 @@ export interface ChatPromptEmits {
   close: [event: Event]
 }
 
-export interface ChatPromptSlots extends TextareaSlots {
+export interface ChatPromptSlots extends /** @vue-ignore */ TextareaSlots {
   header(props?: {}): any
   footer(props?: {}): any
 }

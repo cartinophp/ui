@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiProgress from '../../../../src/runtime/components/Progress.vue'
+import UProgress from '../../../../src/runtime/components/Progress.vue'
 
 const meta = {
   title: 'Components/Feedback/Progress',

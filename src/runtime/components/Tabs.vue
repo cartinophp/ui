@@ -69,7 +69,7 @@ export interface TabsProps<T extends TabsItem = TabsItem> extends Pick<TabsRootP
   ui?: Tabs['slots']
 }
 
-export interface TabsEmits extends TabsRootEmits<string | number> {}
+export interface TabsEmits extends /** @vue-ignore */ /** @vue-ignore */ TabsRootEmits<string | number> {}
 
 type SlotProps<T extends TabsItem> = (props: { item: T, index: number, ui: Tabs['ui'] }) => any
 

@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type ChatMessage = ComponentConfig<typeof theme, AppConfig, 'chatMessage'>
 
-export interface ChatMessageProps extends UIMessage {
+export interface ChatMessageProps extends /** @vue-ignore */ /** @vue-ignore */ UIMessage {
   /**
    * The element or component this component should render as.
    * @defaultValue 'article'

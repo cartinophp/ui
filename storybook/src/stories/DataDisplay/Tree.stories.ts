@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiTree from '../../../../src/runtime/components/Tree.vue'
+import UTree from '../../../../src/runtime/components/Tree.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Tree',

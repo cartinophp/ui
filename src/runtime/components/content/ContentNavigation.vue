@@ -78,7 +78,7 @@ export interface ContentNavigationProps<T extends ContentNavigationLink = Conten
   ui?: ContentNavigation['slots']
 }
 
-export interface ContentNavigationEmits extends AccordionRootEmits {}
+export interface ContentNavigationEmits extends /** @vue-ignore */ /** @vue-ignore */ AccordionRootEmits {}
 
 type SlotProps<T> = (props: { link: T, active?: boolean, ui: ContentNavigation['ui'] }) => any
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPinInput from '../../../../src/runtime/components/PinInput.vue'
+import UPinInput from '../../../../src/runtime/components/PinInput.vue'
 
 const meta = {
   title: 'Components/Forms/PinInput',

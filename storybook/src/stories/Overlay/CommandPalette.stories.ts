@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiCommandPalette from '../../../../src/runtime/components/CommandPalette.vue'
+import UCommandPalette from '../../../../src/runtime/components/CommandPalette.vue'
 
 const meta = {
   title: 'Components/Overlay/CommandPalette',

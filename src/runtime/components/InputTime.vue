@@ -8,7 +8,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type InputTime = ComponentConfig<typeof theme, AppConfig, 'inputTime'>
 
-export interface InputTimeProps extends Omit<TimeFieldRootProps, 'as' | 'asChild' | 'locale' | 'dir'>, UseComponentIconsProps {
+export interface InputTimeProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<TimeFieldRootProps, 'as' | 'asChild' | 'locale' | 'dir'>, UseComponentIconsProps {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'
@@ -34,7 +34,7 @@ export interface InputTimeProps extends Omit<TimeFieldRootProps, 'as' | 'asChild
   ui?: InputTime['slots']
 }
 
-export interface InputTimeEmits extends TimeFieldRootEmits {
+export interface InputTimeEmits extends /** @vue-ignore */ /** @vue-ignore */ TimeFieldRootEmits {
   change: [event: Event]
   blur: [event: FocusEvent]
   focus: [event: FocusEvent]

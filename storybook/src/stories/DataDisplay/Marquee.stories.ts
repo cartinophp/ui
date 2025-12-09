@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiMarquee from '../../../../src/runtime/components/Marquee.vue'
+import UMarquee from '../../../../src/runtime/components/Marquee.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Marquee',

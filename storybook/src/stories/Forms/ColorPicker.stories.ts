@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiColorPicker from '../../../../src/runtime/components/ColorPicker.vue'
+import UColorPicker from '../../../../src/runtime/components/ColorPicker.vue'
 
 const meta = {
   title: 'Components/Forms/ColorPicker',

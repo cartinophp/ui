@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPageHero from '../../../../src/runtime/components/PageHero.vue'
+import UPageHero from '../../../../src/runtime/components/PageHero.vue'
 
 const meta = {
   title: 'Components/Page/PageHero',

@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 type Popover = ComponentConfig<typeof theme, AppConfig, 'popover'>
 type PopoverMode = 'click' | 'hover'
 
-export interface PopoverProps<M extends PopoverMode = PopoverMode> extends PopoverRootProps, Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
+export interface PopoverProps<M extends PopoverMode = PopoverMode> extends PopoverRootProps, /** @vue-ignore */ Pick<HoverCardRootProps, 'openDelay' | 'closeDelay'> {
   /**
    * The display mode of the popover.
    * @defaultValue 'click'
@@ -43,7 +43,7 @@ export interface PopoverProps<M extends PopoverMode = PopoverMode> extends Popov
   ui?: Popover['slots']
 }
 
-export interface PopoverEmits extends PopoverRootEmits {
+export interface PopoverEmits extends /** @vue-ignore */ /** @vue-ignore */ PopoverRootEmits {
   'close:prevent': []
 }
 

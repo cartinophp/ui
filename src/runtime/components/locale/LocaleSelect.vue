@@ -2,7 +2,7 @@
 import type { SelectMenuProps } from '../../types'
 import type { Locale } from '../../types/locale'
 
-export interface LocaleSelectProps extends Omit<SelectMenuProps<Locale<any>[], 'code', false>, 'items' | 'modelValue'> {
+export interface LocaleSelectProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<SelectMenuProps<Locale<any>[], 'code', false>, 'items' | 'modelValue'> {
   locales?: Locale<any>[]
 }
 </script>

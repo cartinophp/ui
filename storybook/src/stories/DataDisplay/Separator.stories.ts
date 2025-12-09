@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiSeparator from '../../../../src/runtime/components/Separator.vue'
+import USeparator from '../../../../src/runtime/components/Separator.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Separator',

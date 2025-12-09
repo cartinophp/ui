@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Link = ComponentConfig<typeof theme, AppConfig, 'link'>
 
-interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
+interface NuxtLinkProps extends /** @vue-ignore */ Omit<RouterLinkProps, 'to'> {
   /**
    * Route Location the link should navigate to when clicked on.
    */
@@ -57,7 +57,7 @@ interface NuxtLinkProps extends Omit<RouterLinkProps, 'to'> {
   trailingSlash?: 'append' | 'remove'
 }
 
-export interface LinkProps extends NuxtLinkProps, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
+export interface LinkProps extends /** @vue-ignore */ /** @vue-ignore */ NuxtLinkProps, /** @vue-ignore */ Omit<ButtonHTMLAttributes, 'type' | 'disabled'>, /** @vue-ignore */ Omit<AnchorHTMLAttributes, 'href' | 'target' | 'rel' | 'type'> {
   /**
    * The element or component this component should render as when not a link.
    * @defaultValue 'button'

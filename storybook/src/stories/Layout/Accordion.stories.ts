@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiAccordion from '../../../../src/runtime/components/Accordion.vue'
+import UAccordion from '../../../../src/runtime/components/Accordion.vue'
 
 const meta = {
   title: 'Components/Layout/Accordion',

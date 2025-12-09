@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiTooltip from '../../../../src/runtime/components/Tooltip.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UTooltip from '../../../../src/runtime/components/Tooltip.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Tooltip',

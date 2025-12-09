@@ -5,7 +5,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type DashboardGroup = ComponentConfig<typeof theme, AppConfig, 'dashboardGroup'>
 
-export interface DashboardGroupProps extends Pick<UseResizableProps, 'storage' | 'storageKey' | 'persistent' | 'unit'> {
+export interface DashboardGroupProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<UseResizableProps, 'storage' | 'storageKey' | 'persistent' | 'unit'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'

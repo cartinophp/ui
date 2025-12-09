@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { AvatarProps } from '../../types'
 
-export interface ColorModeAvatarProps extends Omit<AvatarProps, 'src'> {
+export interface ColorModeAvatarProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<AvatarProps, 'src'> {
   light: string
   dark: string
 }

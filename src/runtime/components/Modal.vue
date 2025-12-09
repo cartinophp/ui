@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Modal = ComponentConfig<typeof theme, AppConfig, 'modal'>
 
-export interface ModalProps extends DialogRootProps {
+export interface ModalProps extends /** @vue-ignore */ /** @vue-ignore */ DialogRootProps {
   title?: string
   description?: string
   /** The content of the modal. */
@@ -58,7 +58,7 @@ export interface ModalProps extends DialogRootProps {
   ui?: Modal['slots']
 }
 
-export interface ModalEmits extends DialogRootEmits {
+export interface ModalEmits extends /** @vue-ignore */ /** @vue-ignore */ DialogRootEmits {
   'after:leave': []
   'after:enter': []
   'close:prevent': []

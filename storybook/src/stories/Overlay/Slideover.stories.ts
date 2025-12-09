@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiSlideover from '../../../../src/runtime/components/Slideover.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import USlideover from '../../../../src/runtime/components/Slideover.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Slideover',

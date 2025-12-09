@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Separator = ComponentConfig<typeof theme, AppConfig, 'separator'>
 
-export interface SeparatorProps extends Pick<_SeparatorProps, 'decorative'> {
+export interface SeparatorProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<_SeparatorProps, 'decorative'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'div'

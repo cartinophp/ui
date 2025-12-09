@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiAvatar from '../../../../src/runtime/components/Avatar.vue'
+import UAvatar from '../../../../src/runtime/components/Avatar.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Avatar',

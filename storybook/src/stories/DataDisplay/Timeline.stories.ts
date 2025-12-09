@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiTimeline from '../../../../src/runtime/components/Timeline.vue'
+import UTimeline from '../../../../src/runtime/components/Timeline.vue'
 
 const meta = {
   title: 'Components/DataDisplay/Timeline',

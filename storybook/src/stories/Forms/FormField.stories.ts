@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiFormField from '../../../../src/runtime/components/FormField.vue'
-import UiInput from '../../../../src/runtime/components/Input.vue'
+import UFormField from '../../../../src/runtime/components/FormField.vue'
+import UInput from '../../../../src/runtime/components/Input.vue'
 
 const meta = {
   title: 'Components/Forms/FormField',

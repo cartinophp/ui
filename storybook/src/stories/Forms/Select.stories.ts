@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiSelect from '../../../../src/runtime/components/Select.vue'
+import USelect from '../../../../src/runtime/components/Select.vue'
 
 const meta = {
   title: 'Components/Forms/Select',

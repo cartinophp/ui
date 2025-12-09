@@ -6,7 +6,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Badge = ComponentConfig<typeof theme, AppConfig, 'badge'>
 
-export interface BadgeProps extends Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
+export interface BadgeProps extends /** @vue-ignore */ /** @vue-ignore */ Omit<UseComponentIconsProps, 'loading' | 'loadingIcon'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'span'

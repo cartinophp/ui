@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPopover from '../../../../src/runtime/components/Popover.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UPopover from '../../../../src/runtime/components/Popover.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Overlay/Popover',

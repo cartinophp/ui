@@ -85,7 +85,7 @@ export interface ContextMenuProps<T extends ArrayOrNested<ContextMenuItem> = Arr
   ui?: ContextMenu['slots']
 }
 
-export interface ContextMenuEmits extends ContextMenuRootEmits {}
+export interface ContextMenuEmits extends /** @vue-ignore */ /** @vue-ignore */ ContextMenuRootEmits {}
 
 type SlotProps<T extends ContextMenuItem> = (props: { item: T, active?: boolean, index: number, ui: ContextMenu['ui'] }) => any
 

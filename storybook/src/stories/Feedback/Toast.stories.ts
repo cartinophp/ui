@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiToast from '../../../../src/runtime/components/Toast.vue'
-import UiButton from '../../../../src/runtime/components/Button.vue'
+import UToast from '../../../../src/runtime/components/Toast.vue'
+import UButton from '../../../../src/runtime/components/Button.vue'
 
 const meta = {
   title: 'Components/Feedback/Toast',

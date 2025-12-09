@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiSkeleton from '../../../../src/runtime/components/Skeleton.vue'
+import USkeleton from '../../../../src/runtime/components/Skeleton.vue'
 
 const meta = {
   title: 'Components/Feedback/Skeleton',

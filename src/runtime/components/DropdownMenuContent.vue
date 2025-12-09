@@ -31,7 +31,7 @@ interface DropdownMenuContentProps<T extends ArrayOrNested<DropdownMenuItem>> ex
   uiOverride?: DropdownMenu['slots']
 }
 
-interface DropdownMenuContentEmits extends RekaDropdownMenuContentEmits {}
+interface DropdownMenuContentEmits extends /** @vue-ignore */ RekaDropdownMenuContentEmits {}
 
 type DropdownMenuContentSlots<
   A extends ArrayOrNested<DropdownMenuItem> = ArrayOrNested<DropdownMenuItem>,

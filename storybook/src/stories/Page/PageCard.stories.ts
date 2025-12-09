@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiPageCard from '../../../../src/runtime/components/PageCard.vue'
+import UPageCard from '../../../../src/runtime/components/PageCard.vue'
 
 const meta = {
   title: 'Components/Page/PageCard',

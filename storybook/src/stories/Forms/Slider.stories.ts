@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiSlider from '../../../../src/runtime/components/Slider.vue'
+import USlider from '../../../../src/runtime/components/Slider.vue'
 
 const meta = {
   title: 'Components/Forms/Slider',

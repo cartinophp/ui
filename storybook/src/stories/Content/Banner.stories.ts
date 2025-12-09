@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiBanner from '../../../../src/runtime/components/Banner.vue'
+import UBanner from '../../../../src/runtime/components/Banner.vue'
 
 const meta = {
   title: 'Components/Content/Banner',

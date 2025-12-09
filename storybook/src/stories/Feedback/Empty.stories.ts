@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiEmpty from '../../../../src/runtime/components/Empty.vue'
+import UEmpty from '../../../../src/runtime/components/Empty.vue'
 
 const meta = {
   title: 'Components/Feedback/Empty',

@@ -7,7 +7,7 @@ import type { ComponentConfig, AppConfig } from '../types/tv'
 
 type Toast = ComponentConfig<typeof theme, AppConfig, 'toast'>
 
-export interface ToastProps extends Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
+export interface ToastProps extends /** @vue-ignore */ /** @vue-ignore */ Pick<ToastRootProps, 'defaultOpen' | 'open' | 'type' | 'duration'> {
   /**
    * The element or component this component should render as.
    * @defaultValue 'li'
@@ -58,7 +58,7 @@ export interface ToastProps extends Pick<ToastRootProps, 'defaultOpen' | 'open' 
   ui?: Toast['slots']
 }
 
-export interface ToastEmits extends ToastRootEmits {}
+export interface ToastEmits extends /** @vue-ignore */ /** @vue-ignore */ ToastRootEmits {}
 
 export interface ToastSlots {
   leading(props: { ui: Toast['ui'] }): any

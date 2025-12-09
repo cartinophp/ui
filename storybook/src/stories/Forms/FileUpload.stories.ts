@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import UiFileUpload from '../../../../src/runtime/components/FileUpload.vue'
+import UFileUpload from '../../../../src/runtime/components/FileUpload.vue'
 
 const meta = {
   title: 'Components/Forms/FileUpload',

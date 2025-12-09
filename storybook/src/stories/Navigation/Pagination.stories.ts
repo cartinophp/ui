@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import UiPagination from '../../../../src/runtime/components/Pagination.vue'
+import UPagination from '../../../../src/runtime/components/Pagination.vue'
 
 const meta = {
   title: 'Components/Navigation/Pagination',
