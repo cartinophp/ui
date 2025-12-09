@@ -36,9 +36,9 @@ const flatItems = computed<{
 })
 const items = computed(() => buildTree(flatItems.value))
 
-function buildTree(items: { label: string }[])[] {
-  const map = new Map<string, TreeNode>()
-  const root[] = []
+function buildTree(items) {
+  const map = new Map()
+  const root = []
 
   items.forEach((item) => {
     const parts = item.label.split('/')
@@ -68,7 +68,7 @@ function buildTree(items: { label: string }[])[] {
   return sort(root)
 }
 
-function transformSlot(slot: any, index: number) {
+function transformSlot(slot, index) {
   if (typeof slot.type === 'symbol') {
     return slot.children?.map(transformSlot)
   }

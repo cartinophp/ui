@@ -33,7 +33,7 @@ const contentEvents = computed(() => {
         emits('close:prevent')
       }
       return acc
-    }, {} void>)
+    }, {})
   }
 
   return {}
@@ -47,7 +47,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.drawer || {}
 </script>
 
 <template>
-  <component :is="nested ? DrawerRootNested " v-bind="rootProps">
+  <component :is="nested ? DrawerRootNested : DrawerRoot" v-bind="rootProps">
     <DrawerTrigger v-if="!!slots.default" as-child :class="props.class">
       <slot />
     </DrawerTrigger>

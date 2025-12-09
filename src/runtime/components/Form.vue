@@ -210,7 +210,7 @@ provide(formOptionsInjectionKey, computed(() => ({
 })))
 
 // Simple helper functions for nested forms
-async function validateNestedForm(form: { validate: typeof _validate, name? }, opts) {
+async function validateNestedForm(form, opts) {
   try {
     const result = await form.validate({ ...opts, silent: false })
     return { name: form.name, output: result }
@@ -262,7 +262,7 @@ function getNestedTarget(target, formPath) {
   return target
 }
 
-function filterErrorsByNames(allErrors, names: (keyof O)) {
+function filterErrorsByNames(allErrors, names) {
   const nameSet = new Set(names)
   const patterns = names
     .map(name => inputs.value?.[name]?.pattern)
@@ -280,7 +280,7 @@ function filterErrorsByNames(allErrors, names: (keyof O)) {
   return [...keepErrors, ...newErrors]
 }
 
-function filterErrorsByTarget(currentErrors, target: keyof I | string | RegExp) {
+function filterErrorsByTarget(currentErrors, target) {
   return currentErrors.filter(err =>
     target instanceof RegExp
       ? !(err.name && target.test(err.name))

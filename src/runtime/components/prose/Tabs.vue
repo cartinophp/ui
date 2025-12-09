@@ -31,7 +31,7 @@ const items = computed<{
   return slots.default?.()?.flatMap(transformSlot).filter(Boolean) || []
 })
 
-function transformSlot(slot: any, index: number) {
+function transformSlot(slot, index) {
   if (typeof slot.type === 'symbol') {
     return slot.children?.map(transformSlot)
   }

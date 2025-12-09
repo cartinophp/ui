@@ -34,7 +34,7 @@ const groups = computed(() =>
     ? isArrayOfArray(props.items)
       ? props.items
       : [props.items]
-    : 
+    : []
 )
 </script>
 
@@ -79,7 +79,7 @@ const groups = computed(() =>
   </DefineItemTemplate>
 
   <ContextMenu.Portal v-bind="portalProps">
-    <component :is="sub ? ContextMenu.SubContent .Content" data-slot="content" :class="ui.content({ class: [uiOverride?.content, props.class] })" v-bind="contentProps">
+    <component :is="sub ? ContextMenu.SubContent : ContextMenu.Content" data-slot="content" :class="ui.content({ class: [uiOverride?.content, props.class] })" v-bind="contentProps">
       <slot name="content-top" />
 
       <div role="presentation" data-slot="viewport" :class="ui.viewport({ class: uiOverride?.viewport })">

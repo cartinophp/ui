@@ -72,7 +72,7 @@ const lists = computed(() =>
     ? isArrayOfArray(props.items)
       ? props.items
       : [props.items]
-    : 
+    : []
 )
 
 function getAccordionDefaultValue(list, level = 0) {
@@ -135,7 +135,7 @@ function getAccordionDefaultValue(list, level = 0) {
 
   <DefineItemTemplate v-slot="{ item, index, level = 0 }">
     <component
-      :is="(orientation === 'vertical' && !collapsed) ? AccordionItem "
+      :is="(orientation === 'vertical' && !collapsed) ? AccordionItem : NavigationMenuItem"
       as="li"
       :value="item.value || (level > 0 ? `item-${level}-${index}` : `item-${index}`)"
     >
@@ -271,7 +271,7 @@ function getAccordionDefaultValue(list, level = 0) {
           modelValue,
           defaultValue: defaultValue ?? getAccordionDefaultValue(list)
         } : {}"
-        :is="orientation === 'vertical' ? AccordionRoot "
+        :is="orientation === 'vertical' ? AccordionRoot : NavigationMenuList"
         as="ul"
         data-slot="list"
         :class="ui.list({ class: props.ui?.list })"

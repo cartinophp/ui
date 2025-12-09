@@ -106,7 +106,7 @@ const groups = computed(() =>
     ? isArrayOfArray(props.items)
       ? props.items
       : [props.items]
-    : 
+    : []
 )
 // eslint-disable-next-line vue/no-dupe-keys
 const items = computed(() => groups.value.flatMap(group => group))

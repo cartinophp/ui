@@ -42,7 +42,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.textarea || 
 const textareaRef = useTemplateRef('textareaRef')
 
 // Custom function to handle the v-model properties
-function updateInput(value | null | undefined) {
+function updateInput(value) {
   if (props.modelModifiers?.trim) {
     value = value?.trim() ?? null
   }

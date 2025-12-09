@@ -98,7 +98,7 @@ const groups = computed(() =>
     ? isArrayOfArray(props.items)
       ? props.items
       : [props.items]
-    : 
+    : []
 )
 
 const filteredGroups = computed(() => {

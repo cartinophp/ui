@@ -39,7 +39,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSea
 </script>
 
 <template>
-  
+  <DefineButtonTemplate>
     <UButton
       :icon="icon || appConfig.ui.icons.search"
       :label="label || t('dashboardSearchButton.label')"

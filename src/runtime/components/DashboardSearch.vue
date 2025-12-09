@@ -46,9 +46,9 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSea
 }))
 
 const groups = computed(() => {
-  const groups = 
+  const groups = []
 
-  groups.push(...(props.groups || ))
+  groups.push(...(props.groups || []))
 
   if (props.colorMode && !colorMode?.forced) {
     groups.push({

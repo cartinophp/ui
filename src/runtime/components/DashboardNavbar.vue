@@ -26,7 +26,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardNav
 </script>
 
 <template>
-  
+  <DefineToggleTemplate>
     <slot name="toggle" v-bind="{ ...dashboardContext, ui }">
       <UDashboardSidebarToggle
         v-if="toggle"

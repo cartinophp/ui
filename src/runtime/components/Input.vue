@@ -46,7 +46,7 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.input || {})
 const inputRef = useTemplateRef('inputRef')
 
 // Custom function to handle the v-model properties
-function updateInput(value | null | undefined) {
+function updateInput(value) {
   if (props.modelModifiers?.trim) {
     value = value?.trim() ?? null
   }

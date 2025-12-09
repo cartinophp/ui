@@ -14,9 +14,9 @@ const props = withDefaults(defineProps<LocaleSelectProps>(), {
 
 const selectMenuProps = useForwardProps(reactiveOmit(props, 'locales'))
 
-const modelValue = defineModel<string>({ required: true })
+const modelValue = defineModel({ required: true })
 
-function getEmojiFlag(locale: string): string {
+function getEmojiFlag(locale) {
   const languageToCountry= {
     ar: 'sa', // Arabic -> Saudi Arabia
     bn: 'bd', // Bengali -> Bangladesh

@@ -35,7 +35,7 @@ const contentEvents = computed(() => {
         emits('close:prevent')
       }
       return acc
-    }, {} void>)
+    }, {}>)
   }
 
   if (props.scrollable) {

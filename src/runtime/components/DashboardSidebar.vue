@@ -70,9 +70,9 @@ const ui = computed(() => tv({ extend: tv(theme), ...(appConfig.ui?.dashboardSid
 }))
 
 const Menu = computed(() => ({
-  slideover
-  modal
-  drawer
+  slideover: UDashboardSlideover,
+  modal: UDashboardModal,
+  drawer: UDashboardDrawer
 })[props.mode])
 
 const menuProps = toRef(() => defu(props.menu, {
@@ -87,7 +87,7 @@ function toggleOpen() {
 </script>
 
 <template>
-  
+  <DefineToggleTemplate>
     <slot name="toggle" :open="open" :toggle="toggleOpen" :ui="ui">
       <UDashboardSidebarToggle
         v-if="toggle"
@@ -98,8 +98,7 @@ function toggleOpen() {
       />
     </slot>
   </DefineToggleTemplate>
-
-  
+  <DefineResizeHandleTemplate>
     <slot name="resize-handle" :on-mouse-down="onMouseDown" :on-touch-start="onTouchStart" :on-double-click="onDoubleClick" :ui="ui">
       <UDashboardResizeHandle
         v-if="resizable"
