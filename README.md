@@ -31,12 +31,19 @@ Puoi anche importare i componenti individualmente:
 
 ```vue
 <script setup lang="ts">
-import { Button, Dialog } from '@cartino/ui'
+import { Accordion, Alert, Button, Dialog } from '@cartino/ui'
 import '@cartino/ui/style.css'
 </script>
 
 <template>
   <Button variant="primary">Click me</Button>
+
+  <Alert
+    color="success"
+    title="Success!"
+    description="Your changes have been saved."
+    closable
+  />
 
   <Dialog v-model:open="isOpen">
     <template #trigger>
@@ -45,10 +52,80 @@ import '@cartino/ui/style.css'
     <template #title>Dialog Title</template>
     Content here
   </Dialog>
+
+  <Accordion :items="[
+    { label: 'Question 1', content: 'Answer 1' },
+    { label: 'Question 2', content: 'Answer 2' }
+  ]" />
 </template>
 ```
 
 ## Componenti Disponibili
+
+### Accordion
+
+Un componente accordion/fisarmonica costruito su Reka UI con supporto per singolo o multiplo aperto.
+
+**Props:**
+- `items`: `AccordionItem[]` (required) - Array di elementi accordion
+- `type`: `'single' | 'multiple'` (default: `'single'`)
+- `collapsible`: `boolean` (default: `true`)
+- `variant`: `'default' | 'bordered' | 'separated'` (default: `'default'`)
+- `disabled`: `boolean` (default: `false`)
+
+**Tipo AccordionItem:**
+```ts
+{
+  label?: string
+  content?: string
+  value?: string
+  disabled?: boolean
+  icon?: string
+}
+```
+
+**Esempio:**
+```vue
+<Accordion
+  variant="separated"
+  :items="[
+    { label: 'Domanda 1', content: 'Risposta 1', icon: '📦' },
+    { label: 'Domanda 2', content: 'Risposta 2', icon: '⚙️' }
+  ]"
+/>
+```
+
+### Alert
+
+Un componente alert/notifica per mostrare messaggi importanti agli utenti.
+
+**Props:**
+- `title`: `string` (optional) - Titolo dell'alert
+- `description`: `string` (optional) - Descrizione dell'alert
+- `icon`: `string` (optional) - Icona custom (emoji o carattere)
+- `color`: `'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'` (default: `'primary'`)
+- `variant`: `'solid' | 'soft' | 'outline'` (default: `'soft'`)
+- `closable`: `boolean` (default: `false`) - Mostra bottone di chiusura
+- `actions`: `Array<{ label: string, variant?: string, onClick?: () => void }>` (optional)
+
+**Eventi:**
+- `close` - Emesso quando l'utente chiude l'alert
+
+**Esempio:**
+```vue
+<Alert
+  color="warning"
+  variant="soft"
+  title="Attenzione"
+  description="Controlla i tuoi dati prima di procedere."
+  closable
+  :actions="[
+    { label: 'Annulla', variant: 'ghost' },
+    { label: 'Continua', variant: 'primary' }
+  ]"
+  @close="handleClose"
+/>
+```
 
 ### Button
 

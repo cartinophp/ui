@@ -36,24 +36,24 @@ export const Default: Story = {
         </template>
 
         <template #title>
-          Titolo del Dialog
+          Dialog Title
         </template>
 
         <template #description>
-          Questa è una breve descrizione del dialog che spiega cosa fa.
+          This is a brief description of the dialog explaining what it does.
         </template>
 
         <div class="space-y-4">
           <p class="text-sm text-gray-700">
-            Questo è il contenuto principale del dialog. Puoi inserire qui qualsiasi contenuto desideri.
+            This is the main content of the dialog. You can insert any content you want here.
           </p>
 
           <div class="flex justify-end gap-3">
             <Button variant="outline" @click="isOpen = false">
-              Annulla
+              Cancel
             </Button>
             <Button variant="primary" @click="isOpen = false">
-              Conferma
+              Confirm
             </Button>
           </div>
         </div>
@@ -76,17 +76,17 @@ export const WithoutDescription: Story = {
         </template>
 
         <template #title>
-          Dialog Senza Descrizione
+          Dialog Without Description
         </template>
 
         <div class="space-y-4">
           <p class="text-sm text-gray-700">
-            Questo dialog non ha una descrizione, solo il titolo e il contenuto.
+            This dialog has no description, only the title and content.
           </p>
 
           <div class="flex justify-end">
             <Button variant="primary" @click="isOpen = false">
-              Chiudi
+              Close
             </Button>
           </div>
         </div>
@@ -101,7 +101,7 @@ export const Confirmation: Story = {
     setup() {
       const isOpen = ref(false)
       const handleConfirm = () => {
-        alert('Confermato!')
+        alert('Confirmed!')
         isOpen.value = false
       }
       return { args, isOpen, handleConfirm }
@@ -109,30 +109,30 @@ export const Confirmation: Story = {
     template: `
       <Dialog v-model:open="isOpen" v-bind="args">
         <template #trigger>
-          <Button variant="outline">Elimina Account</Button>
+          <Button variant="outline">Delete Account</Button>
         </template>
 
         <template #title>
-          Sei sicuro?
+          Are you sure?
         </template>
 
         <template #description>
-          Questa azione non può essere annullata. Il tuo account sarà eliminato permanentemente.
+          This action cannot be undone. Your account will be permanently deleted.
         </template>
 
         <div class="space-y-4">
           <div class="rounded-lg bg-red-50 p-4">
             <p class="text-sm text-red-800">
-              ⚠️ Attenzione: questa è un'azione irreversibile!
+              ⚠️ Warning: this is an irreversible action!
             </p>
           </div>
 
           <div class="flex justify-end gap-3">
             <Button variant="outline" @click="isOpen = false">
-              Annulla
+              Cancel
             </Button>
             <Button variant="primary" @click="handleConfirm" class="!bg-red-600 hover:!bg-red-700">
-              Elimina Account
+              Delete Account
             </Button>
           </div>
         </div>
@@ -152,7 +152,7 @@ export const FormDialog: Story = {
       })
 
       const handleSubmit = () => {
-        alert(`Form submitted: ${JSON.stringify(formData.value)}`)
+        alert(\`Form submitted: \${JSON.stringify(formData.value)}\`)
         isOpen.value = false
       }
 
@@ -161,28 +161,28 @@ export const FormDialog: Story = {
     template: `
       <Dialog v-model:open="isOpen" v-bind="args">
         <template #trigger>
-          <Button variant="primary">Aggiungi Utente</Button>
+          <Button variant="primary">Add User</Button>
         </template>
 
         <template #title>
-          Nuovo Utente
+          New User
         </template>
 
         <template #description>
-          Inserisci i dettagli del nuovo utente
+          Enter the details of the new user
         </template>
 
         <form @submit.prevent="handleSubmit" class="space-y-4">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-              Nome
+              Name
             </label>
             <input
               id="name"
               v-model="formData.name"
               type="text"
               class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Mario Rossi"
+              placeholder="John Doe"
               required
             />
           </div>
@@ -196,17 +196,17 @@ export const FormDialog: Story = {
               v-model="formData.email"
               type="email"
               class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="mario.rossi@example.com"
+              placeholder="john.doe@example.com"
               required
             />
           </div>
 
           <div class="flex justify-end gap-3 pt-4">
             <Button type="button" variant="outline" @click="isOpen = false">
-              Annulla
+              Cancel
             </Button>
             <Button type="submit" variant="primary">
-              Salva
+              Save
             </Button>
           </div>
         </form>
