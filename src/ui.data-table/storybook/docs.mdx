@@ -1,0 +1,46 @@
+import { Markdown, Meta, Title, Subtitle, Description, Primary, Controls, Stories, Source } from "@storybook/addon-docs/blocks";
+import { getSource } from "../../utils/storybook";
+
+import * as stories from "./stories";
+import defaultConfig from "../config?raw"
+
+<Meta of={stories} />
+<Title of={stories} />
+<Subtitle of={stories} />
+<Description of={stories} />
+<Primary of={stories}  />
+<Controls of={stories.Default} />
+<Stories of={stories} />
+
+## Row meta keys
+Keys you may/have to provide to the component in the row object.
+
+<Markdown>
+{`
+| Key name      | Description                                         | Type                                    |
+| ------------- | --------------------------------------------------- | ----------------------------------------|
+| id            | Unique identifier for the row                       | String, Number                          |
+| rowDate       | Row date for date divider                           | String, Date                            |
+| row           | Nested row(s) for hierarchical tables               | Object, Array                           |
+| class         | Custom classes for the row                          | String                                  |
+
+`}
+</Markdown>
+
+## Cell meta keys
+- Any key matching a column's property (e.g. orderId, customerName, ...)
+- Value can be a string/number, or a CellObject:
+
+<Markdown>
+{`
+| CellObject key   | Description                                 | Type                                 |
+| ---------------- | ------------------------------------------- | ------------------------------------ |
+| value            | Cell value                                  | String, Number                       |
+| class            | Classes for the cell                        | String                               |
+| contentClass     | Classes for the cell content                | String                               |
+
+`}
+</Markdown>
+
+## Default config
+<Source code={getSource(defaultConfig)} language="jsx" dark />

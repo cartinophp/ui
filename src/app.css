@@ -1,5 +1,0 @@
-@import "tailwindcss";
-
-@source "./runtime/components/**/*.vue";
-@source "./theme/**/*.js";
-@source "./styles/**/*.js";

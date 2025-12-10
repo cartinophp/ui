@@ -1,0 +1,67 @@
+import defaultConfig from "./config";
+
+import DraggableContext from "vuedraggable";
+
+import type { ComponentConfig, UnknownType } from "../types";
+
+export type Config = typeof defaultConfig;
+
+export interface DragMoveEvent extends DragEvent {
+  draggedContext: typeof DraggableContext;
+  relatedContext: typeof DraggableContext | null;
+}
+
+export interface DataListItem {
+  crossed?: boolean;
+  actions?: boolean;
+  children?: DataListItem[];
+  [key: string]: UnknownType | DataListItem[];
+}
+
+export interface Props {
+  /**
+   * Data item options.
+   */
+  list?: DataListItem[];
+
+  /**
+   * Group name.
+   */
+  group?: string;
+
+  /**
+   * Data list size.
+   */
+  size?: "sm" | "md" | "lg";
+
+  /**
+   * Label key in the item object of options.
+   */
+  labelKey?: string;
+
+  /**
+   * Value key in the item object of options.
+   */
+  valueKey?: string;
+
+  /**
+   * Drag animation duration.
+   */
+  animationDuration?: number;
+
+  /**
+   * Disable empty state for nested elements if empty (internal props).
+   * @ignore
+   */
+  hideEmptyStateForNesting?: boolean;
+
+  /**
+   * Component config object.
+   */
+  config?: ComponentConfig<Config>;
+
+  /**
+   * Data-test attribute for automated testing.
+   */
+  dataTest?: string | null;
+}

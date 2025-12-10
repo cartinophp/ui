@@ -1,57 +1,146 @@
 {
-  "name": "@cartino/ui",
-  "version": "1.0.0",
-  "description": "A Vue 3 UI library with Reka UI and Tailwind Variants for CartinoPHP",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js"
-    },
-    "./components/*": {
-      "import": "./dist/components/*.js"
-    },
-    "./variants/*": {
-      "import": "./dist/variants/*.js"
-    }
+  "name": "vueless",
+  "version": "1.3.6-beta.0",
+  "description": "Vue Styleless UI Component Library, powered by Tailwind CSS.",
+  "author": "Johnny Grid <hello@vueless.com> (https://vueless.com)",
+  "homepage": "https://vueless.com",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "storybook": "cd storybook && npm run storybook",
-    "build-storybook": "cd storybook && npm run build-storybook",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "format": "biome format --write ."
+    "link:package": "rm -rf node_modules/vueless && ln -s ../src ./node_modules/vueless",
+    "dev:docs": "npm run link:package && storybook dev -p 6006 --docs --no-open",
+    "dev": "npm run link:package && storybook dev -p 6006 --no-open",
+    "build": "npm run link:package && storybook build --docs",
+    "preview": "vite preview --host --outDir=storybook-static",
+    "ts:check": "vue-tsc --build --force",
+    "release:icons": "npx node .scripts/icons",
+    "release:types": "rm -f ./node_modules/.tmp/tsconfig.app.tsbuildinfo && npx tsc --project tsconfig.build.json",
+    "release:prepare": "npm run release:icons && rm -rf dist && mkdir -p dist && cp -r src/. package.json LICENSE README.md dist/ && npx node .scripts/writeLocales && npm run release:types",
+    "release:beta": "release-it --increment=prerelease --preRelease=beta --ci --no-git.tag --no-github.release",
+    "release:patch": "release-it patch --ci",
+    "release:minor": "release-it minor --ci",
+    "release:major": "release-it major --ci",
+    "lint": "eslint --no-fix src/ test/ .storybook/ .vueless/ .scripts/",
+    "lint:fix": "eslint --fix src/ test/ .storybook/ .vueless/ .scripts/",
+    "lint:ci": "eslint --no-fix --max-warnings=0",
+    "test": "vitest",
+    "test:ci": "vitest --run"
   },
-  "peerDependencies": {
-    "vue": "^3.4.0"
+  "bin": {
+    "vueless": "./bin/index.js"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/vite": "^4.1.17",
-    "@tanstack/vue-table": "^8.21.3",
-    "@tiptap/pm": "^3.13.0",
-    "@tiptap/starter-kit": "^3.13.0",
-    "@tiptap/vue-3": "^3.13.0",
-    "@vueuse/core": "^14.1.0",
-    "motion-v": "^1.7.4",
-    "ohash": "^2.0.11",
-    "reka-ui": "^2.6.1",
+    "@types/lodash-es": "^4.17.12",
+    "cva": "^1.0.0-beta.4",
+    "lodash-es": "^4.17.21",
+    "svgo": "^4.0.0",
     "tailwind-merge": "^3.4.0",
-    "tailwind-variants": "^3.2.2",
-    "vaul-vue": "^0.4.1"
+    "tailwindcss": "^4.1.17",
+    "tippy.js": "^6.3.7",
+    "unplugin-vue-components": "^30.0.0",
+    "vuedraggable": "4.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
+    "@material-symbols/svg-500": "^0.40.2",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.2",
+    "@tsconfig/node20": "^20.1.8",
+    "@types/jsdom": "^27.0.0",
+    "@types/node": "^24.10.2",
     "@vitejs/plugin-vue": "^6.0.2",
-    "autoprefixer": "^10.4.22",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.17",
+    "@vitest/eslint-plugin": "^1.5.2",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.8.1",
+    "@vueless/storybook": "^1.3.9",
+    "eslint": "^9.39.1",
+    "eslint-plugin-storybook": "^10.1.6",
+    "eslint-plugin-vue": "^10.6.2",
+    "globals": "^16.5.0",
+    "jsdom": "^27.3.0",
+    "prettier": "^3.7.4",
+    "release-it": "^19.0.6",
+    "typescript": "^5.9.3",
     "vite": "^7.2.7",
-    "vue": "^3.5.25"
-  }
+    "vitest": "^4.0.15",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3",
+    "vue-tsc": "^3.1.8"
+  },
+  "peerDependencies": {
+    "vue-router": "^4.5.0"
+  },
+  "peerDependenciesMeta": {
+    "vue-router": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "style": "tailwind.css",
+  "types": "index.d.ts",
+  "main": "index.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "types": "./index.d.ts",
+      "style": "./tailwind.css"
+    },
+    "./v.*": "./v.*",
+    "./ui.*": "./ui.*",
+    "./utils/*": "./utils/*",
+    "./utils/node/*": "./utils/node/*",
+    "./composables/*": "./composables/*",
+    "./constants": "./constants.js",
+    "./constants.js": "./constants.js",
+    "./components": {
+      "import": "./components.ts",
+      "types": "./components.d.ts"
+    },
+    "./plugin-vite": "./plugin-vite.js",
+    "./plugin-vite.js": "./plugin-vite.js",
+    "./storybook": "./utils/node/storybook.js",
+    "./tailwind.css": "./tailwind.css",
+    "./types": "./types.ts",
+    "./modules": {
+      "types": "./modules.d.ts"
+    }
+  },
+  "overrides": {
+    "conventional-changelog-conventionalcommits": "8.0.0"
+  },
+  "resolutions": {
+    "jackspeak": "2.3.6"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuelessjs/vueless.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vuelessjs/vueless/issues"
+  },
+  "keywords": [
+    "vueless",
+    "vue",
+    "vue.js",
+    "vue3",
+    "ui library",
+    "component library",
+    "vue framework",
+    "design system",
+    "tailwind",
+    "tailwindcss",
+    "unstyled",
+    "styleless",
+    "headlessui",
+    "ui"
+  ]
 }

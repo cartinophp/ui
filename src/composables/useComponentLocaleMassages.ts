@@ -1,0 +1,32 @@
+import { computed, ref, watch } from "vue";
+import { merge } from "lodash-es";
+import { recursiveRt } from "../adapter.locale/vueless";
+
+import { useLocale } from "./useLocale";
+
+import { COMPONENTS } from "../constants";
+
+import type { VueMessageType } from "virtual:vueless/vue-i18n";
+
+export function useComponentLocaleMessages<TLocale>(
+  componentName: keyof typeof COMPONENTS,
+  defaultLocale: Record<string, unknown>,
+  propsLocale: Record<string, unknown> = {},
+) {
+  const { tm, locale } = useLocale();
+
+  const globalComponentMassages = ref(recursiveRt(tm(componentName) as VueMessageType));
+
+  watch(
+    () => locale,
+    () => {
+      globalComponentMassages.value = recursiveRt(tm(componentName) as VueMessageType);
+    },
+  );
+
+  const localeMessages = computed(
+    () => merge({}, defaultLocale, globalComponentMassages.value, propsLocale) as TLocale,
+  );
+
+  return { localeMessages };
+}

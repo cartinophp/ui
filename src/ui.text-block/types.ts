@@ -1,0 +1,72 @@
+import defaultConfig from "./config";
+import type { ComponentConfig } from "../types";
+
+export type Config = typeof defaultConfig;
+
+export interface Props {
+  /**
+   * Text label.
+   */
+  label?: string;
+
+  /**
+   * Text size.
+   */
+  size?: "xs" | "sm" | "md" | "lg";
+
+  /**
+   * Text align.
+   */
+  align?: "left" | "center" | "right";
+
+  /**
+   * Text variant.
+   */
+  variant?: "default" | "accented" | "lifted" | "muted" | "inverted";
+
+  /**
+   * Font weight.
+   */
+  weight?: "light" | "normal" | "medium" | "semibold" | "bold";
+
+  /**
+   * Text color.
+   */
+  color?:
+    | "text" // the default design system text color
+    | "primary"
+    | "secondary"
+    | "error"
+    | "warning"
+    | "success"
+    | "info"
+    | "notice"
+    | "neutral"
+    | "grayscale"
+    | "inherit";
+
+  /**
+   * Allows changing HTML tag.
+   */
+  tag?: string;
+
+  /**
+   * Removes text line height (useful for 1-line text).
+   */
+  line?: boolean;
+
+  /**
+   * Enables text wrapping.
+   */
+  wrap?: boolean;
+
+  /**
+   * Component config object.
+   */
+  config?: ComponentConfig<Config>;
+
+  /**
+   * Data-test attribute for automated testing.
+   */
+  dataTest?: string | null;
+}

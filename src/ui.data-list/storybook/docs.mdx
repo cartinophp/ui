@@ -1,0 +1,31 @@
+import { Markdown, Meta, Title, Subtitle, Description, Primary, Controls, Stories, Source } from "@storybook/addon-docs/blocks";
+import { getSource } from "../../utils/storybook";
+
+import * as stories from "./stories";
+import defaultConfig from "../config?raw"
+
+<Meta of={stories} />
+<Title of={stories} />
+<Subtitle of={stories} />
+<Description of={stories} />
+<Primary of={stories}  />
+<Controls of={stories.Default} />
+<Stories of={stories} />
+
+## Configuring items in a list
+You can configure any item in a `list` array by passing the following params:
+
+<Markdown>
+{`
+|  Key name             | Description                                            | Type           | Default |
+| ----------------------| ------------------------------------------------------ | ---------------| --------|
+| id                    | Unique item identifier                                 | String, Number |    —    |
+| label                 | Item label                                             | String         |    —    |
+| children              | Nested items                                           | Array          |    —    |        
+| crossed               | Controls item style (line-through decoration)          | Boolean        | false   |
+| actions               | Show custom actions buttons                            | Boolean        | true    |
+`}
+</Markdown>
+
+## Default config
+<Source code={getSource(defaultConfig)} language="jsx" dark />

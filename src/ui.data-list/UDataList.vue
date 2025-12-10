@@ -1,0 +1,217 @@
+<script setup lang="ts">
+import { useTemplateRef } from "vue";
+import draggable from "vuedraggable/src/vuedraggable";
+
+import { useUI } from "../composables/useUI";
+import { getDefaults } from "../utils/ui";
+import { hasSlotContent } from "../utils/helper";
+
+import UIcon from "../ui.image-icon/UIcon.vue";
+import UEmpty from "../ui.container-empty/UEmpty.vue";
+
+import { COMPONENT_NAME } from "./constants";
+import defaultConfig from "./config";
+import { useComponentLocaleMessages } from "../composables/useComponentLocaleMassages";
+
+import type { Props, DataListItem, Config } from "./types";
+
+defineOptions({ inheritAttrs: false });
+
+const props = withDefaults(defineProps<Props>(), {
+  ...getDefaults<Props, Config>(defaultConfig, COMPONENT_NAME),
+  list: () => [],
+});
+
+const emit = defineEmits([
+  /**
+   * Triggers when item is sorted (after drag).
+   * @property {array} sortData
+   */
+  "dragSort",
+]);
+
+const wrapperRef = useTemplateRef<HTMLDivElement>("wrapper");
+
+const { localeMessages } = useComponentLocaleMessages<typeof defaultConfig.i18n>(
+  COMPONENT_NAME,
+  defaultConfig.i18n,
+  props?.config?.i18n,
+);
+
+function isCrossed(element: DataListItem) {
+  return Boolean(element.crossed);
+}
+
+function onDragEnd() {
+  const sortData = prepareSortData(props.list);
+
+  emit("dragSort", sortData);
+}
+
+function prepareSortData(list: DataListItem[] = [], parentValue: string | number | null = null) {
+  const sortData: DataListItem[] = [];
+
+  list.forEach((item: DataListItem) => {
+    const hasItemChildren = item?.children?.length;
+
+    if (hasItemChildren) {
+      const childrenItem = prepareSortData(
+        item.children,
+        item[props.valueKey] as string | number | null,
+      );
+
+      childrenItem.forEach((item) => sortData.push(item));
+    }
+
+    const parentItem = { ...item, parentValue };
+
+    sortData.push(parentItem);
+  });
+
+  return sortData;
+}
+
+defineExpose({
+  /**
+   * A reference to the component's wrapper element for direct DOM manipulation.
+   * @property {HTMLDivElement}
+   */
+  wrapperRef,
+});
+
+/**
+ * Get element / nested component attributes for each config token ✨
+ * Applies: `class`, `config`, redefined default `props` and dev `vl-...` attributes.
+ */
+const {
+  getDataTest,
+  config,
+  wrapperAttrs,
+  emptyAttrs,
+  draggableAttrs,
+  nestedAttrs,
+  itemWrapperAttrs,
+  itemAttrs,
+  labelAttrs,
+  labelCrossedAttrs,
+  customActionsAttrs,
+  dragIconAttrs,
+  dragAttrs,
+} = useUI<Config>(defaultConfig);
+</script>
+
+<template>
+  <div ref="wrapper" v-bind="wrapperAttrs">
+    <!--
+      @slot Use it to add custom empty state.
+      @binding {string} empty-title
+      @binding {string} empty-description
+    -->
+    <slot
+      v-if="!hideEmptyStateForNesting && !list?.length"
+      name="empty"
+      :empty-title="localeMessages.emptyTitle"
+      :empty-description="localeMessages.emptyDescription"
+    >
+      <UEmpty
+        :title="localeMessages.emptyTitle"
+        :description="localeMessages.emptyDescription"
+        v-bind="emptyAttrs"
+      />
+    </slot>
+
+    <draggable
+      v-else
+      :list="list"
+      :item-key="valueKey"
+      :group="{ name: group }"
+      handle=".icon-drag"
+      :animation="animationDuration"
+      :ghost-class="config.draggableGhost"
+      :drag-class="config.draggableDrag"
+      v-bind="draggableAttrs"
+      :data-test="getDataTest()"
+      @end="onDragEnd"
+    >
+      <template #item="{ element }">
+        <div :id="element[valueKey]" v-bind="itemWrapperAttrs" :data-test="getDataTest('item')">
+          <div v-bind="itemAttrs" :data-test="getDataTest(`item-${element[valueKey]}`)">
+            <div v-bind="dragAttrs">
+              <!--
+                @slot Use it to add something instead of the drag icon.
+                @binding {object} item
+                @binding {string} icon-name
+              -->
+              <slot name="drag" :item="element" :icon-name="config.defaults.dragIcon">
+                <UIcon
+                  color="neutral"
+                  variant="light"
+                  :name="config.defaults.dragIcon"
+                  v-bind="dragIconAttrs"
+                />
+              </slot>
+            </div>
+
+            <div v-bind="isCrossed(element) ? labelCrossedAttrs : labelAttrs">
+              <!--
+                @slot Use it to modify label.
+                @binding {object} item
+                @binding {boolean} crossed
+              -->
+              <slot name="label" :item="element" :crossed="isCrossed(element)">
+                {{ element[labelKey] }}
+              </slot>
+            </div>
+
+            <template v-if="element.actions !== false">
+              <div
+                v-if="hasSlotContent($slots['actions'], { item: element })"
+                v-bind="customActionsAttrs"
+              >
+                <!--
+                  @slot Use it to add custom actions.
+                  @binding {object} item
+                -->
+                <slot name="actions" :item="element" />
+              </div>
+            </template>
+          </div>
+
+          <UDataList
+            v-if="element.children?.length"
+            hide-empty-state-for-nesting
+            :list="element.children"
+            :group="group"
+            v-bind="nestedAttrs"
+            :data-test="getDataTest('table')"
+            @drag-sort="onDragEnd"
+          >
+            <!-- @vue-ignore -->
+            <template #label="slotProps: { item: DataListItem; crossed: boolean }">
+              <!--
+                @slot Use it to modify label.
+                @binding {object} item
+                @binding {boolean} crossed
+              -->
+              <slot name="label" :item="slotProps.item" :crossed="slotProps.crossed">
+                <div
+                  v-bind="slotProps.crossed ? labelCrossedAttrs : labelAttrs"
+                  v-text="slotProps.item[labelKey]"
+                />
+              </slot>
+            </template>
+
+            <!-- @vue-ignore -->
+            <template #actions="slotProps: { item: DataListItem }">
+              <!--
+                @slot Use it to add custom actions.
+                @binding {object} item
+              -->
+              <slot name="actions" :item="slotProps.item" />
+            </template>
+          </UDataList>
+        </div>
+      </template>
+    </draggable>
+  </div>
+</template>
