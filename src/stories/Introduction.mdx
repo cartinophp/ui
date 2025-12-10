@@ -1,0 +1,94 @@
+# Introduzione
+
+# @cartino/ui
+
+Benvenuto nella documentazione di **@cartino/ui**, una libreria di componenti UI moderna costruita con:
+
+- **Vue 3** - Framework JavaScript progressivo
+- **Vite** - Build tool ultra-veloce
+- **TypeScript** - Type safety e migliore DX
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **Reka UI** - Headless UI components accessibili
+
+## 🚀 Iniziare
+
+### Installazione
+
+```bash
+pnpm add @cartino/ui
+```
+
+### Setup Base
+
+Nella tua applicazione Vue, importa gli stili e registra i componenti:
+
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import { install } from '@cartino/ui'
+import '@cartino/ui/style.css'
+
+const app = createApp(App)
+app.use({ install })
+app.mount('#app')
+```
+
+### Import Singoli Componenti
+
+Oppure importa solo i componenti che ti servono:
+
+```vue
+<script setup lang="ts">
+import { Button, Dialog } from '@cartino/ui'
+import '@cartino/ui/style.css'
+</script>
+
+<template>
+  <Button variant="primary">Click me</Button>
+</template>
+```
+
+## 📚 Componenti
+
+Esplora i componenti disponibili nella sidebar a sinistra:
+
+- **Button** - Bottoni con varianti e dimensioni multiple
+- **Dialog** - Modal/Dialog costruito con Reka UI
+- E molti altri in arrivo...
+
+## 🎨 Customizzazione
+
+Tutti i componenti sono costruiti con Tailwind CSS e possono essere facilmente customizzati modificando il file `src/style.css`:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  /* Aggiungi le tue customizzazioni qui */
+}
+```
+
+## 🔧 Sviluppo
+
+Per contribuire o sviluppare localmente:
+
+```bash
+# Installa le dipendenze
+pnpm install
+
+# Avvia Storybook
+pnpm storybook
+
+# Build della libreria
+pnpm build
+```
+
+## 📝 Licenza
+
+MIT
+
+---
+
+Buon divertimento con **@cartino/ui**! 🎉

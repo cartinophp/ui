@@ -1,15 +1,22 @@
-/** @type { import('@storybook/vue3-vite').StorybookConfig } */
-import { defineConfigWithVueless } from "@vueless/storybook";
+import type { StorybookConfig } from '@storybook/vue3-vite';
 
-export default defineConfigWithVueless({
-  vuelessEnv: "internal",
+const config: StorybookConfig = {
   stories: [
-    /* Path to the project component stories. */
-    // "../src/**/stories.ts",
-    // "../src/**/docs.mdx",
-    //
-    /* Path to the custom vueless component stories. */
-    // "../.vueless/components/**/stories.ts",
-    // "../.vueless/components/**/docs.mdx",
+    "../src/**/*.mdx",
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
-});
+  addons: [
+    "@chromatic-com/storybook",
+    "@storybook/addon-links",
+    "@storybook/addon-a11y",
+    "@storybook/addon-docs",
+    "@storybook/addon-vitest"
+  ],
+  framework: {
+    name: "@storybook/vue3-vite",
+    options: {}
+  },
+  docs: {}
+};
+
+export default config;

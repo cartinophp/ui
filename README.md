@@ -1,158 +1,135 @@
-![vueless-cover.png](public/images/vueless-cover.png)
+# @cartino/ui
 
-# Vueless UI
+Una libreria di componenti UI costruita con Vue 3, Tailwind CSS e Reka UI.
 
-A UI library with Open Architecture for Vue.js 3 and Nuxt.js 3 / 4, powered by [Storybook v10](https://storybook.js.org) and [Tailwind CSS v4](https://tailwindcss.com).
-
-**With Vueless UI, you’re free to:**
-- 🪄️ Customize any component
-- 📋 Copy and extend existing ones
-- 🧱 Build your own from scratch
-- 📕 Document it all seamlessly in Storybook
-
-[Documentation](https://docs.vueless.com/) | [UI Components](https://ui.vueless.com/) | [Theme Builder](https://my.vueless.com/theme) | [About](http://vueless.com/)
-
-### Key features
-
-- 🧩 65+ crafted UI components (including range date picker, multi-select, and nested table)
-- ✨ Open Architecture lets you customize, copy, extend, and create your own components
-- 📕 Built-in Storybook support
-- 🪩 Theme Builder for runtime theme customization
-- 🌈 Beautiful default UI theme
-- 🌀 Unstyled mode
-- 🌗 Light and dark mode
-- 🧬 Design tokens powered by CSS variables
-- ⚙️ Server-side rendering (SSR)
-- 🌍 Internationalization (i18n)
-- ♿️ Accessibility (a11y)
-- 🖼️ Inline SVG icons
-- 🪄 Auto component imports (as you use them)
-- 🧿 Uncompiled source in npm for better DX
-- 🧪️ 1400+ unit tests ensuring consistent logic
-- 🛡️ Full TypeScript support with type safety
-
-## Built-In Storybook
-
-No setup, no hacks — just a fully functional Storybook preset ready to test your Vueless UI design system out of the box.
-
-[Demo](https://ui.vueless.com) | [Package](https://www.npmjs.com/package/@vueless/storybook) | [Docs](https://docs.vueless.com/installation/storybook)
-
-![storybook.png](public/images/storybook.png)
-
-## Theme Builder
-
-Customize colors, rounding, and typography at runtime, generate full palettes, and export a ready-to-use theme to your project.
-
-[Try Vueless UI Theme Builder](https://my.vueless.com/theme) 🚀
-
-![theme-builder.png](public/images/theme-builder.png)
-
-## Quick Start (Vue)
-
-### New project
-
-To get started with Vueless UI, simply paste the following code into your terminal:
+## Installazione
 
 ```bash
-npm create vueless@latest
+pnpm add @cartino/ui
 ```
 
-This command guides you through a few setup options, then generates a new scaffolded Vue + Vueless UI project with the complete application structure.
+## Setup
 
----
+### Opzione 1: Installazione globale (consigliata)
 
-### Existing project
+Nella tua applicazione Vue, importa gli stili e registra i componenti globalmente:
 
-1. Install `vueless` UI library packages.
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import { install } from '@cartino/ui'
+import '@cartino/ui/style.css'
+
+const app = createApp(App)
+app.use({ install })
+app.mount('#app')
+```
+
+### Opzione 2: Import dei singoli componenti
+
+Puoi anche importare i componenti individualmente:
+
+```vue
+<script setup lang="ts">
+import { Button, Dialog } from '@cartino/ui'
+import '@cartino/ui/style.css'
+</script>
+
+<template>
+  <Button variant="primary">Click me</Button>
+
+  <Dialog v-model:open="isOpen">
+    <template #trigger>
+      <Button>Open Dialog</Button>
+    </template>
+    <template #title>Dialog Title</template>
+    Content here
+  </Dialog>
+</template>
+```
+
+## Componenti Disponibili
+
+### Button
+
+Un componente bottone versatile con diverse varianti e dimensioni.
+
+**Props:**
+- `variant`: `'primary' | 'secondary' | 'outline' | 'ghost'` (default: `'primary'`)
+- `size`: `'sm' | 'md' | 'lg'` (default: `'md'`)
+- `disabled`: `boolean` (default: `false`)
+- `type`: `'button' | 'submit' | 'reset'` (default: `'button'`)
+
+**Esempio:**
+```vue
+<Button variant="primary" size="lg">Click me</Button>
+```
+
+### Dialog
+
+Un componente dialog/modal costruito su Reka UI.
+
+**Props:**
+- `open`: `boolean` (v-model supportato)
+- `defaultOpen`: `boolean`
+
+**Slots:**
+- `trigger`: Il contenuto che attiva il dialog
+- `title`: Il titolo del dialog
+- `description`: La descrizione del dialog
+- default: Il contenuto principale
+
+**Esempio:**
+```vue
+<Dialog v-model:open="isOpen">
+  <template #trigger>
+    <Button>Open</Button>
+  </template>
+  <template #title>My Dialog</template>
+  <template #description>Dialog description</template>
+  Dialog content
+</Dialog>
+```
+
+## Sviluppo
 
 ```bash
-npm install vueless
-npx vueless init
+# Installa le dipendenze
+pnpm install
+
+# Avvia Storybook (preview e documentazione)
+pnpm dev
+
+# Build della libreria
+pnpm build
+
+# Build di Storybook per deployment
+pnpm build-storybook
 ```
 
-2. In the file where you create the Vue application, add the following code:
-```javascript
-import { createApp } from 'vue';
-import { createVueless } from "vueless";
-import App from './App.vue';
+## Struttura del progetto
 
-const vueless = createVueless();
-
-createApp(App).use(vueless).mount('#app');
+```
+src/
+  ├── components/          # Componenti UI
+  │   ├── Button.vue
+  │   ├── Button.stories.ts
+  │   ├── Dialog.vue
+  │   └── Dialog.stories.ts
+  ├── stories/             # Documentazione Storybook
+  ├── index.ts             # Entry point della libreria
+  └── style.css            # Stili Tailwind CSS v4
 ```
 
-3. Import Tailwind CSS and Vueless at the top of the main CSS file.
+## Tecnologie
 
-```scss
-@import "tailwindcss";
-@import "vueless";
-```
-
-4. Add Vite plugins.
-
-```javascript
-import { Vueless, TailwindCSS, UnpluginComponents } from "vueless/plugin-vite";
-
-export default defineConfig({
-  plugins: [
-    ...
-    Vueless(),
-    TailwindCSS(),
-    UnpluginComponents(),
-  ],
-  ...
-})
-```
-
-## Quick Start (Nuxt)
-
-1. Install Vueless Nuxt module.
-
-```bash
-npm install @vueless/nuxt
-npx vueless init
-```
-
-
-2. Register `@vueless/nuxt` into the Nuxt config modules section.
-```javascript
-export default defineNuxtConfig({
-  modules: [
-    '@vueless/nuxt'
-  ],
-  ...
-})
-```
-
-3. Import Tailwind CSS and Vueless at the top of the main CSS file.
-
-```scss
-@import "tailwindcss";
-@import "vueless";
-```
-
-## Ecosystem
-
-* [@vueless/storybook](https://github.com/vuelessjs/vueless-storybook) - Storybook preset for Vueless UI component library [(docs)](https://docs.vueless.com/installation/storybook).
-* [@vueless/nuxt](https://github.com/vuelessjs/vueless-module-nuxt) - Vueless UI module for Nuxt.js [(docs)](https://docs.vueless.com/installation/nuxt).
-* [create-vueless](https://github.com/vuelessjs/vueless-create) - CLI tool to quickly start a Vueless UI project from a template [(docs)](https://docs.vueless.com/installation/vue).
-  * [vueless-quickstart](https://github.com/vuelessjs/vueless-quickstart) - Vue + Vueless UI + JavaScript project template.
-  * [vueless-quickstart-ts](https://github.com/vuelessjs/vueless-quickstart-ts) - Vue + Vueless UI + TypeScript project template.
-
-## Contributing
-
-* We encourage you to contribute to Vueless! Please check out the
-[contributing to Vueless](CONTRIBUTING.md) for guidelines.
-* Trying to report a possible security vulnerability in Vueless? Please
-check out our [security policy](SECURITY.md) for guidelines.
-* Everyone interacting in Vueless and its sub-projects' codebases, issue trackers, chats, and mailing lists is expected to follow our [code of conduct](CODE_OF_CONDUCT.md) rules.
+- **Vue 3** - Framework JavaScript progressivo
+- **Vite** - Build tool ultra-veloce
+- **TypeScript** - Type safety
+- **Tailwind CSS v4** - Utility-first CSS framework (CSS-based config)
+- **Reka UI** - Headless UI components accessibili
+- **Storybook** - Preview e documentazione componenti
 
 ## License
 
-Vueless is released under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-From Ukrainians to a Peaceful World 🇺🇦
-
-
-
+MIT
