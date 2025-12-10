@@ -152,7 +152,7 @@ export const FormDialog: Story = {
       })
 
       const handleSubmit = () => {
-        alert(\`Form submitted: \${JSON.stringify(formData.value)}\`)
+        alert('Form submitted: ' + JSON.stringify(formData.value))
         isOpen.value = false
       }
 
