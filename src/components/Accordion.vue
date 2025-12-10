@@ -53,7 +53,7 @@ const itemClasses = computed(() => {
 
 const triggerClasses = 'flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed data-[state=open]:bg-gray-50'
 
-const contentClasses = 'overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down'
+const contentClasses = 'overflow-hidden text-sm'
 
 const bodyClasses = 'px-4 py-3 text-gray-700'
 
@@ -121,30 +121,12 @@ const iconClasses = 'h-4 w-4 shrink-0 text-gray-500 transition-transform duratio
   </AccordionRoot>
 </template>
 
-<style scoped>
-@keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--reka-accordion-content-height);
-  }
-}
-
-@keyframes accordion-up {
-  from {
-    height: var(--reka-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
-}
-
-[data-state=open]:animate-accordion-down {
+<style>
+.overflow-hidden[data-state="open"] {
   animation: accordion-down 0.2s ease-out;
 }
 
-[data-state=closed]:animate-accordion-up {
+.overflow-hidden[data-state="closed"] {
   animation: accordion-up 0.2s ease-out;
 }
 </style>
