@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+
 import { SwitchRoot, SwitchThumb } from 'reka-ui'
 import { ui } from '../utils/ui'
 

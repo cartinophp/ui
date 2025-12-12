@@ -140,7 +140,7 @@ const onKeydown = (index: number, event: KeyboardEvent) => {
   }
 }
 
-const onFocus = (index: number, event: FocusEvent) => {
+const onFocus = (_: number, event: FocusEvent) => {
   const target = event.target as HTMLInputElement
   target.select()
 }

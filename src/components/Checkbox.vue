@@ -28,12 +28,21 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const ui = computed(() => theme({
+const checkboxTheme = computed(() => ui.checkbox({
   size: props.size,
   color: props.color,
   state: props.modelValue ? 'checked' : 'unchecked',
   disabled: props.disabled
 }))
+
+// Extract classes from theme
+const wrapperClasses = computed(() => checkboxTheme.value.wrapper?.() || '')
+const rootClasses = computed(() => checkboxTheme.value.root?.() || '')
+const indicatorClasses = computed(() => checkboxTheme.value.indicator?.() || '')
+const iconClasses = computed(() => checkboxTheme.value.icon?.() || '')
+const contentClasses = computed(() => checkboxTheme.value.content?.() || '')
+const labelClasses = computed(() => checkboxTheme.value.label?.() || '')
+const descriptionClasses = computed(() => checkboxTheme.value.description?.() || '')
 
 const iconSize = computed(() => {
   const sizes = {
@@ -58,20 +67,20 @@ const handleUpdate = (value: boolean) => {
       :required="required"
       :name="name"
       :value="value"
-      :class="ui.root"
+      :class="rootClasses"
       @update:checked="handleUpdate"
     >
-      <CheckboxIndicator :class="ui.indicator">
-        <Icon name="i-lucide-check" :class="ui.icon" />
+      <CheckboxIndicator :class="indicatorClasses">
+        <Icon name="i-lucide-check" :class="iconClasses" />
       </CheckboxIndicator>
     </CheckboxRoot>
 
-    <div v-if="label || description" :class="ui.content">
-      <label v-if="label" :class="ui.label">
+    <div v-if="label || description" :class="contentClasses">
+      <label v-if="label" :class="labelClasses">
         {{ label }}
         <span v-if="required" class="text-red-500">*</span>
       </label>
-      <span v-if="description" :class="ui.description">
+      <span v-if="description" :class="descriptionClasses">
         {{ description }}
       </span>
     </div>

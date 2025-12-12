@@ -16,7 +16,7 @@
       <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
       <option
         v-for="option in normalizedOptions" 
-        :key="getOptionValue(option)"
+        :key="String(getOptionValue(option))"
         :value="getOptionValue(option)"
         :disabled="option.disabled"
         :class="selectTheme.option()"
@@ -50,11 +50,9 @@ export interface SelectProps {
   required?: boolean
   multiple?: boolean
   name?: string
-  size?: 'sm' | 'md' | 'lg'
-  variant?: 'default' | 'filled' | 'ghost'
-  id?: string
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'none'
+  variant?: 'default' | 'filled' | 'ghost' | 'outline' | 'none'
+  id?: string
   color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
   trailingIcon?: string
   valueKey?: string
@@ -97,6 +95,13 @@ const getOptionValue = (option: SelectOption) => {
 const getOptionLabel = (option: SelectOption) => {
   return option[props.labelKey as keyof SelectOption] || option.label
 }
+
+const selectTheme = computed(() => ui.select({
+  size: props.size,
+  variant: props.variant,
+  color: props.color,
+  disabled: props.disabled
+}))
 
 const selectClasses = computed(() => {
   const sizeClasses = {

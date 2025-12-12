@@ -29,11 +29,11 @@ const props = withDefaults(defineProps<RadioProps>(), {
   orientation: 'vertical'
 })
 
-const radioTheme = ui.radioGroup({
-  size: props.size,
-  variant: props.variant,
-  orientation: props.orientation
-})
+// const radioTheme = ui.radioGroup({
+//   size: props.size,
+//   variant: props.variant,
+//   orientation: props.orientation
+// })
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
@@ -63,7 +63,7 @@ const itemClasses = computed(() => {
     error: 'data-[state=checked]:bg-red-600 data-[state=checked]:border-red-600 border-gray-300 focus-visible:ring-red-500'
   }
 
-  return `${base} ${sizes[props.size]} ${colors[props.color]}`
+  return `${base} ${sizes[props.size]} ${colors.primary}`
 })
 
 const indicatorClasses = 'flex items-center justify-center w-full h-full relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-white'

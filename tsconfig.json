@@ -9,6 +9,8 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "checkJs": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -18,6 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
 
     /* Path aliases */
     "baseUrl": ".",
@@ -30,7 +33,7 @@
     "declarationDir": "./dist",
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/themes/index.ts", "src/types/global.d.ts"],
   "exclude": [
     "node_modules",
     "dist",
