@@ -35,5 +35,10 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src')
     }
+  },
+  server: {
+    port: 3001,
+    host: '0.0.0.0',
+    strictPort: true, // Fail se porta occupata invece di usare altra porta
   }
 })

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Popover from './Popover.vue'
-import Button from './Button.vue'
+import Popover from '../components/Popover.vue'
+import Button from '../components/Button.vue'
 
 const meta = {
   title: 'Components/Popover',

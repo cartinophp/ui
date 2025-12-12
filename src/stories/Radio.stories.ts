@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Radio from './Radio.vue'
+import Radio from '../components/Radio.vue'
 
 const meta = {
   title: 'Components/Radio',

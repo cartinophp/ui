@@ -1,96 +1,230 @@
-# Introduzione
+{/* Introduction.mdx */}
 
-<div style="text-align: center; margin: 2rem 0;">
-  <img src="/logo.svg" alt="@cartino/ui" style="max-width: 300px; margin: 0 auto;" />
-</div>
+<Meta title="Introduction" />
 
-Benvenuto nella documentazione di **@cartino/ui**, una libreria di componenti UI moderna costruita con:
+# @cartino/ui
 
-- **Vue 3** - Framework JavaScript progressivo
-- **Vite** - Build tool ultra-veloce
-- **TypeScript** - Type safety e migliore DX
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **Reka UI** - Headless UI components accessibili
+Una libreria di componenti Vue 3 costruita con **Tailwind CSS**, **Reka UI** e **Tailwind Variants**.
 
-## 🚀 Iniziare
+## 🎨 Sistema di Design
+
+Tutti i componenti seguono un'architettura moderna con **separazione completa** tra logica e stili:
+
+- **Componenti Vue** (`src/components/`) - Solo HTML e logica
+- **Themes** (`src/themes/`) - Tutte le classi Tailwind con `tailwind-variants`
+
+## 📦 Componenti Disponibili (20)
+
+### Form Components
+- **Button** - Bottoni con varianti e dimensioni
+- **Input** - Input di testo con label, hint ed errori
+- **Checkbox** - Checkbox singola
+- **Radio** - Radio button
+- **Switch** - Toggle switch
+- **Slider** - Range slider per valori numerici
+
+### Form Groups
+- **CheckboxGroup** - Gruppo di checkbox
+- **RadioGroup** - Gruppo di radio buttons
+
+### Data Display
+- **Avatar** - Immagini avatar con fallback
+- **Badge** - Indicatori di stato
+- **Chip** - Indicatori numerici o di stato
+- **User** - Card utente con avatar e info
+- **Table** - Tabella HTML semplice
+- **DataTable** - Tabella avanzata con TanStack Table
+
+### Navigation
+- **Breadcrumb** - Navigazione gerarchica
+- **Pagination** - Navigazione tra pagine
+
+### Layout
+- **Card** - Container con header, body e footer
+- **Separator** - Divisore visuale
+- **PageHeader** - Intestazione pagina
+
+### Feedback
+- **Alert** - Messaggi di alert
+- **Banner** - Notifiche dismissibili (non in stories)
+
+### Overlay
+- **Dialog** - Finestre modali
+- **Popover** - Contenuti popup
+- **Dropdown** - Menu a tendina
+
+### Disclosure
+- **Accordion** - Pannelli espandibili
+
+## 🚀 Features
+
+- ✅ **TypeScript** - Type-safe components
+- ✅ **Tailwind Variants** - Sistema di theming potente
+- ✅ **Reka UI** - Accessibilità built-in
+- ✅ **TanStack Table** - DataTable con sorting, filtering, pagination
+- ✅ **Dark Mode Ready** - Supporto dark mode
+- ✅ **Personalizzabile** - Override classi con prop `ui`
+- ✅ **Tree-shakable** - Import solo ciò che usi
+- ✅ **SSR Compatible** - Funziona con Nuxt/SSR
+
+## 📖 Come Usare
+
+Esplora i componenti usando il menu laterale. Ogni componente ha:
+- **Canvas** - Preview interattiva
+- **Docs** - Props, slots ed esempi
+- **Controls** - Modifica props in tempo reale
+
+## 🎯 Quick Start
 
 ### Installazione
 
-```bash
-pnpm add @cartino/ui
-```
+\`\`\`bash
+pnpm install @cartino/ui
+\`\`\`
 
-### Setup Base
+### Uso Base
 
-Nella tua applicazione Vue, importa gli stili e registra i componenti:
-
-```ts
-import { createApp } from 'vue'
-import App from './App.vue'
-import { install } from '@cartino/ui'
-import '@cartino/ui/style.css'
-
-const app = createApp(App)
-app.use({ install })
-app.mount('#app')
-```
-
-### Import Singoli Componenti
-
-Oppure importa solo i componenti che ti servono:
-
-```vue
-<script setup lang="ts">
-import { Button, Dialog } from '@cartino/ui'
+\`\`\`vue
+<script setup>
+import { Button, Input, DataTable } from '@cartino/ui'
 import '@cartino/ui/style.css'
 </script>
 
 <template>
-  <Button variant="primary">Click me</Button>
+  <Button variant="solid" color="primary">
+    Click me
+  </Button>
+
+  <Input
+    v-model="email"
+    label="Email"
+    placeholder="mario@example.com"
+  />
 </template>
-```
+\`\`\`
 
-## 📚 Componenti
+### DataTable Esempio
 
-Esplora i componenti disponibili nella sidebar a sinistra:
+\`\`\`vue
+<script setup>
+import { ref } from 'vue'
+import { DataTable } from '@cartino/ui'
 
-- **Button** - Bottoni con varianti e dimensioni multiple
-- **Dialog** - Modal/Dialog costruito con Reka UI
-- E molti altri in arrivo...
+const columns = [
+  { accessorKey: 'name', header: 'Name' },
+  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'role', header: 'Role' }
+]
 
-## 🎨 Customizzazione
+const users = ref([
+  { name: 'Mario', email: 'mario@test.com', role: 'Admin' }
+])
+</script>
 
-Tutti i componenti sono costruiti con Tailwind CSS v4 e possono essere facilmente customizzati modificando il file `src/style.css`:
+<template>
+  <DataTable
+    :columns="columns"
+    :data-source="users"
+    searchable
+    enable-sorting
+    enable-pagination
+  />
+</template>
+\`\`\`
 
-```css
-@import "tailwindcss";
+### Personalizzazione
 
-@theme {
-  --color-primary: #3b82f6;
-  --color-secondary: #8b5cf6;
-  /* Aggiungi le tue customizzazioni qui */
-}
-```
+Ogni componente accetta una prop `ui` per override delle classi:
 
-## 🔧 Sviluppo
+\`\`\`vue
+<Button
+  :ui="{
+    root: 'bg-gradient-to-r from-blue-600 to-purple-600',
+    label: 'font-bold text-white'
+  }"
+>
+  Custom Button
+</Button>
+\`\`\`
 
-Per contribuire o sviluppare localmente:
+## 🔧 Sistema di Themes
 
-```bash
-# Installa le dipendenze
-pnpm install
+I theme sono definiti con `tailwind-variants` in file separati:
 
-# Avvia Storybook
-pnpm dev
+**themes/button.js:**
+\`\`\`js
+import { tv } from 'tailwind-variants'
 
-# Build della libreria
-pnpm build
-```
+export default tv({
+  slots: {
+    root: 'inline-flex items-center justify-center',
+    label: 'font-medium'
+  },
+  variants: {
+    size: {
+      sm: { root: 'h-8 px-3 text-sm' },
+      md: { root: 'h-10 px-4 text-base' },
+      lg: { root: 'h-12 px-6 text-lg' }
+    },
+    variant: {
+      solid: { root: 'bg-primary-600 text-white' },
+      outline: { root: 'border border-primary-600 text-primary-600' }
+    }
+  },
+  defaultVariants: {
+    size: 'md',
+    variant: 'solid'
+  }
+})
+\`\`\`
 
-## 📝 Licenza
+**components/Button.vue:**
+\`\`\`vue
+<script setup>
+import { computed } from 'vue'
+import buttonTheme from '../themes/button'
 
-MIT
+const props = defineProps({
+  size: { type: String, default: 'md' },
+  variant: { type: String, default: 'solid' }
+})
 
----
+const ui = computed(() => buttonTheme({
+  size: props.size,
+  variant: props.variant
+}))
+</script>
 
-Buon divertimento con **@cartino/ui**! 🎉
+<template>
+  <button :class="ui.root({ class: props.ui?.root })">
+    <span :class="ui.label({ class: props.ui?.label })">
+      <slot />
+    </span>
+  </button>
+</template>
+\`\`\`
+
+## 📚 Documentazione Extra
+
+- **THEMES.md** - Guida completa al sistema di theming
+- **DATATABLE.md** - Guida DataTable con TanStack Table
+- **COMPONENTS_EXAMPLES.md** - Esempi pratici di tutti i componenti
+
+## 🎨 Stile NuxtUI v4
+
+Questa libreria è ispirata a **NuxtUI v4** e segue le stesse convenzioni:
+- Sistema di themes con `tailwind-variants`
+- Separazione logica/stili
+- Slot-based theming con `ui` prop
+- Data attributes per styling (`data-slot="root"`)
+
+## 💡 Esplora i Componenti
+
+Usa il menu laterale per esplorare tutti i 20 componenti con esempi interattivi!
+
+Ogni story include:
+- ✅ Esempio base
+- ✅ Tutte le varianti
+- ✅ Stati (loading, error, disabled)
+- ✅ Customizzazione avanzata
+- ✅ Playground interattivo

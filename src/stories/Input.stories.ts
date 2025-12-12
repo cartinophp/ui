@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Input from './Input.vue'
+import Input from '../components/Input.vue'
 
 const meta = {
   title: 'Components/Input',
