@@ -4,7 +4,7 @@ import DataTable from '../components/DataTable.vue'
 import Chip from '../components/Chip.vue'
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Components/DataTable',
+  title: 'Data Display/DataTable',
   component: DataTable,
   tags: ['autodocs'],
   argTypes: {

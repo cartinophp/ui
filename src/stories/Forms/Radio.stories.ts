@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Radio from '../components/Radio.vue'
 
 const meta = {
-  title: 'Components/Radio',
+  title: 'Forms/Radio',
   component: Radio,
   tags: ['autodocs'],
   argTypes: {

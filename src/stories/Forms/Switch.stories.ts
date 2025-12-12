@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Switch from '../components/Switch.vue'
 
 const meta = {
-  title: 'Components/Switch',
+  title: 'Forms/Switch',
   component: Switch,
   tags: ['autodocs'],
   argTypes: {

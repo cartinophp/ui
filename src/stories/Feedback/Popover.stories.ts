@@ -3,7 +3,7 @@ import Popover from '../components/Popover.vue'
 import Button from '../components/Button.vue'
 
 const meta = {
-  title: 'Components/Popover',
+  title: 'Feedback/Popover',
   component: Popover,
   tags: ['autodocs'],
   argTypes: {

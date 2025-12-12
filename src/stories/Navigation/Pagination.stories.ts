@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Pagination from '../components/Pagination.vue'
 
 const meta: Meta<typeof Pagination> = {
-  title: 'Components/Pagination',
+  title: 'Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs'],
   argTypes: {

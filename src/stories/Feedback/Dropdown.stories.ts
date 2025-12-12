@@ -3,7 +3,7 @@ import Dropdown from '../components/Dropdown.vue'
 import Button from '../components/Button.vue'
 
 const meta = {
-  title: 'Components/Dropdown',
+  title: 'Feedback/Dropdown',
   component: Dropdown,
   tags: ['autodocs'],
   argTypes: {

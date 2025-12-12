@@ -221,7 +221,7 @@ export const ImageCard: Story = {
 
 export const ProductCard: Story = {
   render: () => ({
-    components: { Card, Button, Badge: () => import('./Badge.vue') },
+    components: { Card, Button, Badge: () => import('../components/Badge.vue') },
     template: `
       <Card padding="none" hoverable clickable>
         <div class="relative">
