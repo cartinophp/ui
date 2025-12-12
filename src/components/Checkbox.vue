@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CheckboxRoot, CheckboxIndicator } from 'reka-ui'
+import theme from '../themes/checkbox'
+import theme from '../themes/checkbox'
 
 export interface CheckboxProps {
   modelValue?: boolean
@@ -27,52 +29,12 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const rootClasses = computed(() => {
-  const base = 'shrink-0 rounded border-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
-
-  const sizes = {
-    sm: 'h-4 w-4',
-    md: 'h-5 w-5',
-    lg: 'h-6 w-6'
-  }
-
-  const colors = {
-    primary: 'data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 border-gray-300 focus-visible:ring-blue-500',
-    success: 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 border-gray-300 focus-visible:ring-green-500',
-    warning: 'data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600 border-gray-300 focus-visible:ring-yellow-500',
-    error: 'data-[state=checked]:bg-red-600 data-[state=checked]:border-red-600 border-gray-300 focus-visible:ring-red-500'
-  }
-
-  return `${base} ${sizes[props.size]} ${colors[props.color]}`
-})
-
-const indicatorClasses = 'flex items-center justify-center text-white'
-
-const wrapperClasses = 'flex items-start gap-3'
-
-const labelClasses = computed(() => {
-  const base = 'text-gray-900 font-medium cursor-pointer select-none'
-
-  const sizes = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
-  }
-
-  return `${base} ${sizes[props.size]}`
-})
-
-const descriptionClasses = computed(() => {
-  const base = 'text-gray-600'
-
-  const sizes = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
-  }
-
-  return `${base} ${sizes[props.size]}`
-})
+const ui = computed(() => theme({
+  size: props.size,
+  color: props.color,
+  state: props.modelValue ? 'checked' : 'unchecked',
+  disabled: props.disabled
+}))
 
 const iconSize = computed(() => {
   const sizes = {
@@ -97,32 +59,20 @@ const handleUpdate = (value: boolean) => {
       :required="required"
       :name="name"
       :value="value"
-      :class="rootClasses"
+      :class="ui.root"
       @update:checked="handleUpdate"
     >
-      <CheckboxIndicator :class="indicatorClasses">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          :width="iconSize"
-          :height="iconSize"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
+      <CheckboxIndicator :class="ui.indicator">
+        <Icon name="i-lucide-check" :class="ui.icon" />
       </CheckboxIndicator>
     </CheckboxRoot>
 
-    <div v-if="label || description" class="flex flex-col">
-      <label v-if="label" :class="labelClasses">
+    <div v-if="label || description" :class="ui.content">
+      <label v-if="label" :class="ui.label">
         {{ label }}
         <span v-if="required" class="text-red-500">*</span>
       </label>
-      <span v-if="description" :class="descriptionClasses">
+      <span v-if="description" :class="ui.description">
         {{ description }}
       </span>
     </div>

@@ -1,0 +1,154 @@
+<template>
+  <div :class="selectTheme.wrapper()" v-bind="$attrs">
+    <select
+      ref="select"
+      :id="inputId"
+      :name="name"
+      :value="modelValue"
+      :disabled="disabled"
+      :required="required"
+      :multiple="multiple"
+      :class="selectTheme.root()"
+      @change="onChange"
+      @blur="$emit('blur', $event)"
+      @focus="$emit('focus', $event)"
+    >
+      <option v-if="placeholder" value="" disabled>{{ placeholder }}</option>
+      <option
+        v-for="option in normalizedOptions" 
+        :key="getOptionValue(option)"
+        :value="getOptionValue(option)"
+        :disabled="option.disabled"
+        :class="selectTheme.option()"
+      >
+        {{ getOptionLabel(option) }}
+      </option>
+    </select>
+    
+    <!-- Icon -->
+    <div v-if="trailingIcon" :class="selectTheme.iconWrapper()">
+      <Icon :name="trailingIcon" :class="selectTheme.icon()" />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { ui } from '../utils/ui'
+
+export interface SelectOption {
+  label: string
+  value: string | number
+  disabled?: boolean
+}
+
+export interface SelectProps {
+  modelValue?: string | number | string[] | number[]
+  options?: (SelectOption | string | number)[]
+  placeholder?: string
+  disabled?: boolean
+  required?: boolean
+  multiple?: boolean
+  name?: string
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'default' | 'filled' | 'ghost'
+  id?: string
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  variant?: 'outline' | 'none'
+  color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
+  trailingIcon?: string
+  valueKey?: string
+  labelKey?: string
+}
+
+const props = withDefaults(defineProps<SelectProps>(), {
+  size: 'md',
+  variant: 'outline',
+  color: 'primary',
+  trailingIcon: 'i-lucide-chevron-down',
+  valueKey: 'value',
+  labelKey: 'label'
+})
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string | number | string[] | number[] | undefined]
+  blur: [event: FocusEvent]
+  focus: [event: FocusEvent]
+  change: [event: Event]
+}>()
+
+const select = ref<HTMLSelectElement>()
+
+const inputId = computed(() => props.id || `select-${Math.random().toString(36).substr(2, 9)}`)
+
+const normalizedOptions = computed(() => {
+  return props.options?.map(option => {
+    if (typeof option === 'string' || typeof option === 'number') {
+      return { label: String(option), value: option }
+    }
+    return option
+  }) || []
+})
+
+const getOptionValue = (option: SelectOption) => {
+  return option[props.valueKey as keyof SelectOption] || option.value
+}
+
+const getOptionLabel = (option: SelectOption) => {
+  return option[props.labelKey as keyof SelectOption] || option.label
+}
+
+const selectClasses = computed(() => {
+  const sizeClasses = {
+    xs: 'text-xs px-2.5 py-1.5',
+    sm: 'text-sm px-2.5 py-1.5', 
+    md: 'text-sm px-3 py-2',
+    lg: 'text-sm px-3.5 py-2.5',
+    xl: 'text-base px-3.5 py-2.5'
+  }
+
+  const variantClasses = {
+    outline: 'border border-default bg-default',
+    none: 'border-0 bg-transparent'
+  }
+
+  const colorClasses = {
+    primary: 'focus:border-primary focus:ring-primary',
+    error: 'border-error focus:border-error focus:ring-error',
+    success: 'border-success focus:border-success focus:ring-success', 
+    warning: 'border-warning focus:border-warning focus:ring-warning',
+    info: 'border-info focus:border-info focus:ring-info'
+  }
+
+  return [
+    'block w-full rounded-md shadow-sm transition-colors',
+    'focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-opacity-50',
+    'disabled:cursor-not-allowed disabled:opacity-75',
+    'appearance-none bg-no-repeat',
+    sizeClasses[props.size],
+    variantClasses[props.variant],
+    props.disabled ? 'cursor-not-allowed opacity-75' : colorClasses[props.color],
+    props.trailingIcon ? 'pr-10' : ''
+  ].filter(Boolean).join(' ')
+})
+
+const onChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement
+  let value: string | number | string[] | number[] | undefined
+
+  if (props.multiple) {
+    value = Array.from(target.selectedOptions).map(option => option.value)
+  } else {
+    value = target.value || undefined
+  }
+
+  emit('update:modelValue', value)
+  emit('change', event)
+}
+
+defineExpose({
+  select,
+  focus: () => select.value?.focus(),
+  blur: () => select.value?.blur()
+})
+</script>

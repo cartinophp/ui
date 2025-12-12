@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
   AccordionContent
 } from 'reka-ui'
+import { ui } from '../utils/ui'
 
 export interface AccordionItem {
   label?: string
@@ -23,41 +24,20 @@ export interface AccordionProps {
   collapsible?: boolean
   defaultValue?: string | string[]
   disabled?: boolean
-  variant?: 'default' | 'bordered' | 'separated'
+  variant?: 'default' | 'separated' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
 }
 
 const props = withDefaults(defineProps<AccordionProps>(), {
   type: 'single',
-  collapsible: true,
-  disabled: false,
-  variant: 'default'
+  variant: 'default',
+  size: 'md'
 })
 
-const rootClasses = computed(() => {
-  const base = 'w-full'
-
-  const variants = {
-    default: 'divide-y divide-gray-200',
-    bordered: 'border border-gray-200 rounded-lg divide-y divide-gray-200',
-    separated: 'space-y-2'
-  }
-
-  return `${base} ${variants[props.variant]}`
+const accordionTheme = ui.accordion({
+  variant: props.variant,
+  size: props.size
 })
-
-const itemClasses = computed(() => {
-  return props.variant === 'separated'
-    ? 'border border-gray-200 rounded-lg overflow-hidden'
-    : ''
-})
-
-const triggerClasses = 'flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed data-[state=open]:bg-gray-50'
-
-const contentClasses = 'overflow-hidden text-sm'
-
-const bodyClasses = 'px-4 py-3 text-gray-700'
-
-const iconClasses = 'h-4 w-4 shrink-0 text-gray-500 transition-transform duration-200 data-[state=open]:rotate-180'
 </script>
 
 <template>
@@ -66,20 +46,20 @@ const iconClasses = 'h-4 w-4 shrink-0 text-gray-500 transition-transform duratio
     :collapsible="collapsible"
     :default-value="defaultValue"
     :disabled="disabled"
-    :class="rootClasses"
+    :class="accordionTheme.root()"
   >
     <AccordionItem
       v-for="(item, index) in items"
       :key="item.value || index"
       :value="item.value || String(index)"
       :disabled="item.disabled || disabled"
-      :class="itemClasses"
+      :class="accordionTheme.item()"
     >
       <AccordionHeader as-child>
-        <AccordionTrigger :class="triggerClasses">
+        <AccordionTrigger :class="accordionTheme.trigger()">
           <div class="flex items-center gap-2">
             <slot name="leading" :item="item" :index="index">
-              <span v-if="item.icon" class="text-gray-500">
+              <span v-if="item.icon" class="text-muted-foreground">
                 {{ item.icon }}
               </span>
             </slot>
@@ -102,7 +82,7 @@ const iconClasses = 'h-4 w-4 shrink-0 text-gray-500 transition-transform duratio
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              :class="iconClasses"
+              :class="accordionTheme.icon()"
             >
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -110,8 +90,8 @@ const iconClasses = 'h-4 w-4 shrink-0 text-gray-500 transition-transform duratio
         </AccordionTrigger>
       </AccordionHeader>
 
-      <AccordionContent :class="contentClasses">
-        <div :class="bodyClasses">
+      <AccordionContent :class="accordionTheme.content()">
+        <div :class="accordionTheme.contentInner()">
           <slot name="content" :item="item" :index="index">
             {{ item.content }}
           </slot>

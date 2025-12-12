@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel
 } from 'reka-ui'
+import theme from '../themes/dropdown'
 
 export interface DropdownItem {
   label?: string
@@ -25,24 +26,26 @@ export interface DropdownProps {
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'right' | 'bottom' | 'left'
   sideOffset?: number
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'default' | 'minimal' | 'glass'
+  rounded?: 'sm' | 'md' | 'lg'
 }
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   disabled: false,
   align: 'start',
   side: 'bottom',
-  sideOffset: 4
+  sideOffset: 4,
+  size: 'md',
+  variant: 'default',
+  rounded: 'md'
 })
 
-const contentClasses = computed(() => {
-  return 'dropdown-content z-50 min-w-[200px] rounded-lg border border-gray-200 bg-white p-1 shadow-lg'
-})
-
-const itemClasses = 'relative flex cursor-pointer select-none items-center gap-2 rounded-md px-3 py-2 text-sm outline-none transition-colors hover:bg-gray-100 focus:bg-gray-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-
-const separatorClasses = 'my-1 h-px bg-gray-200'
-
-const labelClasses = 'px-3 py-2 text-xs font-semibold text-gray-500'
+const ui = computed(() => theme({
+  size: props.size,
+  variant: props.variant,
+  rounded: props.rounded
+}))
 
 const handleItemClick = (item: DropdownItem) => {
   if (!item.disabled && item.onClick) {
@@ -59,34 +62,36 @@ const handleItemClick = (item: DropdownItem) => {
 
     <DropdownMenuPortal>
       <DropdownMenuContent
-        :class="contentClasses"
+        :class="ui.content"
         :align="align"
         :side="side"
         :side-offset="sideOffset"
       >
-        <slot>
-          <template v-for="(item, index) in items" :key="index">
-            <DropdownMenuSeparator
-              v-if="item.separator"
-              :class="separatorClasses"
-            />
-            <DropdownMenuLabel
-              v-else-if="item.label && !item.value"
-              :class="labelClasses"
-            >
-              {{ item.label }}
-            </DropdownMenuLabel>
-            <DropdownMenuItem
-              v-else
-              :class="itemClasses"
-              :disabled="item.disabled"
-              @click="handleItemClick(item)"
-            >
-              <span v-if="item.icon" class="shrink-0">{{ item.icon }}</span>
-              <span>{{ item.label }}</span>
-            </DropdownMenuItem>
-          </template>
-        </slot>
+        <div :class="ui.viewport">
+          <slot>
+            <template v-for="(item, index) in items" :key="index">
+              <DropdownMenuSeparator
+                v-if="item.separator"
+                :class="ui.separator"
+              />
+              <DropdownMenuLabel
+                v-else-if="item.label && !item.value"
+                :class="ui.label"
+              >
+                {{ item.label }}
+              </DropdownMenuLabel>
+              <DropdownMenuItem
+                v-else
+                :class="ui.item"
+                :disabled="item.disabled"
+                @click="handleItemClick(item)"
+              >
+                <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon" />
+                <span :class="ui.itemLabel">{{ item.label }}</span>
+              </DropdownMenuItem>
+            </template>
+          </slot>
+        </div>
       </DropdownMenuContent>
     </DropdownMenuPortal>
   </DropdownMenuRoot>

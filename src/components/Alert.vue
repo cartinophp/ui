@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Button from './Button.vue'
+import { ui } from '../utils/ui'
 
 export interface AlertProps {
   title?: string
   description?: string
   icon?: string
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-  variant?: 'solid' | 'soft' | 'outline'
+  variant?: 'default' | 'destructive' | 'success' | 'warning'
+  style?: 'default' | 'filled' | 'outlined'
   closable?: boolean
   actions?: Array<{
     label: string
@@ -17,8 +18,8 @@ export interface AlertProps {
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
-  color: 'primary',
-  variant: 'soft',
+  variant: 'default',
+  style: 'default',
   closable: false
 })
 
@@ -26,68 +27,27 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const rootClasses = computed(() => {
-  const base = 'relative flex gap-3 rounded-lg p-4'
-
-  const colorVariants = {
-    solid: {
-      primary: 'bg-blue-600 text-white',
-      success: 'bg-green-600 text-white',
-      warning: 'bg-yellow-600 text-white',
-      error: 'bg-red-600 text-white',
-      info: 'bg-cyan-600 text-white',
-      neutral: 'bg-gray-600 text-white'
-    },
-    soft: {
-      primary: 'bg-blue-50 text-blue-900 border border-blue-100',
-      success: 'bg-green-50 text-green-900 border border-green-100',
-      warning: 'bg-yellow-50 text-yellow-900 border border-yellow-100',
-      error: 'bg-red-50 text-red-900 border border-red-100',
-      info: 'bg-cyan-50 text-cyan-900 border border-cyan-100',
-      neutral: 'bg-gray-50 text-gray-900 border border-gray-100'
-    },
-    outline: {
-      primary: 'border-2 border-blue-600 text-blue-900',
-      success: 'border-2 border-green-600 text-green-900',
-      warning: 'border-2 border-yellow-600 text-yellow-900',
-      error: 'border-2 border-red-600 text-red-900',
-      info: 'border-2 border-cyan-600 text-cyan-900',
-      neutral: 'border-2 border-gray-600 text-gray-900'
-    }
-  }
-
-  return `${base} ${colorVariants[props.variant][props.color]}`
+const alertTheme = ui.alert({
+  variant: props.variant,
+  style: props.style
 })
 
-const iconClasses = computed(() => {
-  const base = 'shrink-0 text-xl'
+const displayIcon = computed(() => {
+  if (props.icon) return props.icon
 
-  const iconColors = {
-    solid: 'text-white',
-    soft: {
-      primary: 'text-blue-600',
-      success: 'text-green-600',
-      warning: 'text-yellow-600',
-      error: 'text-red-600',
-      info: 'text-cyan-600',
-      neutral: 'text-gray-600'
-    },
-    outline: {
-      primary: 'text-blue-600',
-      success: 'text-green-600',
-      warning: 'text-yellow-600',
-      error: 'text-red-600',
-      info: 'text-cyan-600',
-      neutral: 'text-gray-600'
-    }
+  const defaultIcons = {
+    default: '💡',
+    success: '✅',
+    warning: '⚠️',
+    destructive: '❌'
   }
 
-  if (props.variant === 'solid') {
-    return `${base} ${iconColors.solid}`
-  }
-
-  return `${base} ${iconColors[props.variant][props.color]}`
+  return defaultIcons[props.variant]
 })
+
+const handleClose = () => {
+  emit('close')
+}
 
 const defaultIcons = {
   primary: 'ℹ️',
@@ -136,30 +96,30 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div :class="rootClasses">
+  <div :class="alertTheme.root()">
     <!-- Icon -->
-    <div v-if="displayIcon || $slots.icon" :class="iconClasses">
+    <div v-if="displayIcon || $slots.icon" :class="alertTheme.icon()">
       <slot name="icon">
         {{ displayIcon }}
       </slot>
     </div>
 
     <!-- Content -->
-    <div class="flex-1 space-y-1">
-      <div v-if="title || $slots.title" class="font-semibold">
+    <div :class="alertTheme.content()">
+      <div v-if="title || $slots.title" :class="alertTheme.title()">
         <slot name="title">
           {{ title }}
         </slot>
       </div>
 
-      <div v-if="description || $slots.description" class="text-sm opacity-90">
+      <div v-if="description || $slots.description" :class="alertTheme.description()">
         <slot name="description">
           {{ description }}
         </slot>
       </div>
 
       <!-- Actions -->
-      <div v-if="actions?.length || $slots.actions" class="mt-3 flex flex-wrap gap-2">
+      <div v-if="actions?.length || $slots.actions" :class="alertTheme.actions()">
         <slot name="actions">
           <Button
             v-for="(action, index) in actions"
@@ -177,7 +137,7 @@ const handleClose = () => {
     <!-- Close Button -->
     <button
       v-if="closable"
-      :class="closeButtonClasses"
+      :class="alertTheme.close()"
       @click="handleClose"
       aria-label="Close alert"
     >

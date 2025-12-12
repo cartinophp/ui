@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RadioGroupRoot, RadioGroupItem, RadioGroupIndicator } from 'reka-ui'
+import { ui } from '../utils/ui'
 
 export interface RadioOption {
   label: string
@@ -16,7 +17,7 @@ export interface RadioProps {
   disabled?: boolean
   required?: boolean
   size?: 'sm' | 'md' | 'lg'
-  color?: 'primary' | 'success' | 'warning' | 'error'
+  variant?: 'default' | 'card'
   orientation?: 'horizontal' | 'vertical'
 }
 
@@ -24,8 +25,14 @@ const props = withDefaults(defineProps<RadioProps>(), {
   disabled: false,
   required: false,
   size: 'md',
-  color: 'primary',
+  variant: 'default',
   orientation: 'vertical'
+})
+
+const radioTheme = ui.radioGroup({
+  size: props.size,
+  variant: props.variant,
+  orientation: props.orientation
 })
 
 const emit = defineEmits<{
