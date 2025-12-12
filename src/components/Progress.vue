@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import theme from '../themes/progress'
+import theme from '@/themes/progress'
 
 export interface ProgressProps {
   value?: number

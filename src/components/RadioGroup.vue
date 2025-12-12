@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { RadioGroupRoot } from 'reka-ui'
-import radioGroupTheme from '../themes/radio-group'
+import radioGroupTheme from '@/themes/radio-group'
 import URadio from './Radio.vue'
 
 const props = defineProps({

@@ -10,7 +10,7 @@
  */
 
 import { computed } from 'vue'
-import componentTheme from '../themes/component' // Cambia con il tuo theme
+import componentTheme from '@/themes/component' // Cambia con il tuo theme
 
 const props = defineProps({
   // Props base per variants

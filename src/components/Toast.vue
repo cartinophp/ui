@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue'
-import theme from '../themes/toast'
+import theme from '@/themes/toast'
 
 export interface ToastAction {
   label: string

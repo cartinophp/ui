@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
-import theme from '../themes/modal'
+import theme from '@/themes/modal'
 
 export interface ModalProps {
   open?: boolean

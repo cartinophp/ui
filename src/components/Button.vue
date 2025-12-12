@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import theme from '../themes/button'
+import theme from '@/themes/button'
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost'

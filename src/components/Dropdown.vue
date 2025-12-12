@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel
 } from 'reka-ui'
-import theme from '../themes/dropdown'
+import theme from '@/themes/dropdown'
 
 export interface DropdownItem {
   label?: string

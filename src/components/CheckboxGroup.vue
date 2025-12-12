@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import checkboxGroupTheme from '../themes/checkbox-group'
+import checkboxGroupTheme from '@/themes/checkbox-group'
 import UCheckbox from './Checkbox.vue'
 
 const props = defineProps({

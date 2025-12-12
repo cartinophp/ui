@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import tableTheme from '../themes/table'
+import tableTheme from '@/themes/table'
 
 const props = defineProps({
   data: {

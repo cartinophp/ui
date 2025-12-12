@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Primitive } from 'reka-ui'
-import avatarTheme from '../themes/avatar'
+import avatarTheme from '@/themes/avatar'
 import UIcon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })

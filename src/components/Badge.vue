@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import theme from '../themes/badge'
-import theme from '../themes/badge'
+import theme from '@/themes/badge'
 
 export interface BadgeProps {
   label?: string

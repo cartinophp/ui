@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import iconTheme from '../themes/icon'
+import iconTheme from '@/themes/icon'
 
 const props = defineProps({
   name: {

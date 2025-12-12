@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { SliderRoot, SliderTrack, SliderRange, SliderThumb } from 'reka-ui'
-import sliderTheme from '../themes/slider'
+import sliderTheme from '@/themes/slider'
 
 const props = defineProps({
   as: {

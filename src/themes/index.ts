@@ -1,3 +1,7 @@
+// Type definitions for themes
+export type ThemeFunction = (...args: any[]) => any
+
+// Export all theme functions with proper types
 export { default as alert } from './alert'
 export { default as avatar } from './avatar'
 export { default as badge } from './badge'
@@ -35,3 +39,7 @@ export { default as statCard } from './stat-card'
 export { default as metricCard } from './metric-card'
 export { default as modalEnhanced } from './modal-enhanced'
 export { default as tag } from './tag'
+export { default as inputGroup } from './input-group'
+export { default as popover } from './popover'
+export { default as pinInput } from './pin-input'
+export { default as toastTheme } from './toast-theme'

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import inputTheme from '../themes/input'
+import inputTheme from '@/themes/input'
 
 const props = defineProps({
   modelValue: {

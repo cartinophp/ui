@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import pageHeaderTheme from '../themes/page-header'
+import pageHeaderTheme from '@/themes/page-header'
 import UButton from './Button.vue'
 
 defineOptions({ inheritAttrs: false })

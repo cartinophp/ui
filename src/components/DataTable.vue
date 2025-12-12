@@ -8,7 +8,7 @@ import {
   getSortedRowModel,
   FlexRender
 } from '@tanstack/vue-table'
-import dataTableTheme from '../themes/data-table'
+import dataTableTheme from '@/themes/data-table'
 import UInput from './Input.vue'
 import UButton from './Button.vue'
 import UIcon from './Icon.vue'

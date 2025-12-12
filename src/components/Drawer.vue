@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
-import theme from '../themes/drawer'
+import theme from '@/themes/drawer'
 
 export interface DrawerProps {
   open?: boolean

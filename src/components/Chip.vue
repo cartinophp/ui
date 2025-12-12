@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import chipTheme from '../themes/chip'
+import chipTheme from '@/themes/chip'
 
 const props = defineProps({
   as: {

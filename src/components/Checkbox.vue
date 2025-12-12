@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CheckboxRoot, CheckboxIndicator } from 'reka-ui'
-import theme from '../themes/checkbox'
-import theme from '../themes/checkbox'
+import { ui } from '../utils/ui'
 
 export interface CheckboxProps {
   modelValue?: boolean

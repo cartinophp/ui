@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import userTheme from '../themes/user'
+import userTheme from '@/themes/user'
 import Link from './link.vue'
 
 defineOptions({ inheritAttrs: false })

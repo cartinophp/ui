@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import paginationTheme from '../themes/pagination'
+import paginationTheme from '@/themes/pagination'
 import UButton from './Button.vue'
 
 defineOptions({ inheritAttrs: false })

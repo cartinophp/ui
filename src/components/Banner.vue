@@ -1,7 +1,7 @@
 <script setup>
 import { computed, watch } from 'vue'
 import { Primitive } from 'reka-ui'
-import bannerTheme from '../themes/banner'
+import bannerTheme from '@/themes/banner'
 import Link from './link.vue'
 import Icon from './Icon.vue'
 import Button from './Button.vue'
