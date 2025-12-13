@@ -14,7 +14,7 @@ import {
   ComboboxEmpty
 } from 'reka-ui'
 import theme from '@/themes/command'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 export interface CommandItem {
   label: string

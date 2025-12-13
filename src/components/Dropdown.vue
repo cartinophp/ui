@@ -14,7 +14,7 @@ import {
   DropdownMenuSubContent
 } from 'reka-ui'
 import theme from '@/themes/dropdown'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 export interface DropdownItem {
   type?: 'item' | 'label' | 'separator' | 'checkbox'

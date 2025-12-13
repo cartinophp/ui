@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import theme from '@/themes/button'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 export interface ButtonProps {
   label?: string

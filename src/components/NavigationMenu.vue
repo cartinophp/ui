@@ -9,7 +9,7 @@ import {
   NavigationMenuLink
 } from 'reka-ui'
 import theme from '@/themes/navigation-menu'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 export interface NavigationMenuItem {
   label: string

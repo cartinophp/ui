@@ -11,7 +11,7 @@ import {
   ContextMenuCheckboxItem
 } from 'reka-ui'
 import theme from '@/themes/context-menu'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 export interface ContextMenuItem {
   type?: 'item' | 'label' | 'separator' | 'checkbox'

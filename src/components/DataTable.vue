@@ -10,7 +10,7 @@ import {
 } from '@tanstack/vue-table'
 import dataTableTheme from '@/themes/data-table'
 import Input from './Input.vue'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 import Pagination from './Pagination.vue'
 
 export interface DataTableProps {
