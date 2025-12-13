@@ -1,157 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
-import DataTable from '@/components/DataTable.vue'
-import Chip from '@/components/Chip.vue'
+import DataTable from '../../components/DataTable.vue'
+type User = { id: number; name: string; email: string; role: string }
+
+const users: User[] = [
+  { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' },
+  { id: 2, name: 'Bob', email: 'bob@example.com', role: 'editor' },
+  { id: 3, name: 'Carol', email: 'carol@example.com', role: 'viewer' }
+]
+
+const columns = [
+  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: 'name', header: 'Name' },
+  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'role', header: 'Role' }
+]
 
 const meta: Meta<typeof DataTable> = {
   title: 'Data Display/DataTable',
   component: DataTable,
-  tags: ['autodocs'],
-  argTypes: {
-    enableSorting: {
-      control: 'boolean'
-    },
-    enableFiltering: {
-      control: 'boolean'
-    },
-    enablePagination: {
-      control: 'boolean'
-    },
-    searchable: {
-      control: 'boolean'
-    },
-    striped: {
-      control: 'boolean'
-    },
-    bordered: {
-      control: 'boolean'
-    },
-    compact: {
-      control: 'boolean'
-    }
+  args: {
+    columns,
+    dataSource: users,
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    pageSize: 10,
+    searchable: true
   }
 }
 
 export default meta
-type Story = StoryObj<typeof DataTable>
+export type Story = StoryObj<typeof DataTable>
 
-const sampleData = [
-  { id: 1, name: 'Mario Rossi', email: 'mario@example.com', role: 'Admin', status: 'active' },
-  { id: 2, name: 'Luigi Verdi', email: 'luigi@example.com', role: 'Editor', status: 'active' },
-  { id: 3, name: 'Anna Bianchi', email: 'anna@example.com', role: 'Viewer', status: 'inactive' },
-  { id: 4, name: 'Carlo Neri', email: 'carlo@example.com', role: 'Editor', status: 'active' },
-  { id: 5, name: 'Laura Gialli', email: 'laura@example.com', role: 'Admin', status: 'active' }
-]
+export const Basic: Story = {}
 
-const baseColumns = [
-  {
-    accessorKey: 'name',
-    header: 'Name'
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email'
-  },
-  {
-    accessorKey: 'role',
-    header: 'Role'
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status'
-  }
-]
-
-export const Default: Story = {
-  render: (args) => ({
-    components: { DataTable },
-    setup() {
-      return { args, columns: baseColumns, data: sampleData }
-    },
-    template: `<DataTable v-bind="args" :columns="columns" :data-source="data" />`
-  }),
+export const DynamicColumns: Story = {
   args: {
-    searchable: true,
-    enableSorting: true,
-    enablePagination: true
+    columns: [
+      { accessorKey: 'name', header: 'Full Name' },
+      { accessorKey: 'email', header: 'Contact' }
+    ]
   }
-}
-
-export const WithCustomCells: Story = {
-  render: () => ({
-    components: { DataTable, Chip },
-    setup() {
-      const columns = [
-        { accessorKey: 'name', header: 'Name' },
-        { accessorKey: 'email', header: 'Email' },
-        { accessorKey: 'role', header: 'Role' },
-        { accessorKey: 'status', header: 'Status' }
-      ]
-      return { columns, data: sampleData }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        searchable
-        enable-sorting
-      >
-        <template #cell:status="{ value }">
-          <Chip
-            :text="value"
-            :color="value === 'active' ? 'success' : 'neutral'"
-            size="sm"
-            standalone
-          />
-        </template>
-
-        <template #cell:role="{ value }">
-          <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium"
-                :class="{
-                  'bg-purple-100 text-purple-800': value === 'Admin',
-                  'bg-blue-100 text-blue-800': value === 'Editor',
-                  'bg-gray-100 text-gray-800': value === 'Viewer'
-                }">
-            {{ value }}
-          </span>
-        </template>
-      </DataTable>
-    `
-  })
-}
-
-export const Striped: Story = {
-  render: () => ({
-    components: { DataTable },
-    setup() {
-      return { columns: baseColumns, data: sampleData }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        striped
-        searchable
-      />
-    `
-  })
-}
-
-export const Bordered: Story = {
-  render: () => ({
-    components: { DataTable },
-    setup() {
-      return { columns: baseColumns, data: sampleData }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        bordered
-        searchable
-      />
-    `
-  })
 }
 
 export const Compact: Story = {
