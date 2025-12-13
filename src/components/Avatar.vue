@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { Primitive } from 'reka-ui'
 import avatarTheme from '@/themes/avatar'
-import Icon from './Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
