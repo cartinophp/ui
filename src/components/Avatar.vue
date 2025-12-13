@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { Primitive } from 'reka-ui'
 import avatarTheme from '@/themes/avatar'
-import UIcon from './Icon.vue'
+import Icon from './Icon.vue'
 
 defineOptions({ inheritAttrs: false })
 
@@ -95,7 +95,7 @@ const handleImageError = () => {
         @error="handleImageError"
       />
 
-      <UIcon
+      <Icon
         v-else-if="props.icon"
         :name="props.icon"
         data-slot="icon"

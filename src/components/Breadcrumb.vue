@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import breadcrumbTheme from '@/themes/breadcrumb'
 import Link from './link.vue'
-import UIcon from './Icon.vue'
+import Icon from './Icon.vue'
 import UAvatar from './Avatar.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -85,7 +85,7 @@ const getItemUi = (item, index) => {
                 data-slot="link-leading-avatar"
                 :class="getItemUi(item, index).linkLeadingAvatar({ class: props.ui?.linkLeadingAvatar })"
               />
-              <UIcon
+              <Icon
                 v-else-if="item.icon"
                 :name="item.icon"
                 data-slot="link-leading-icon"
@@ -103,7 +103,7 @@ const getItemUi = (item, index) => {
             </slot>
 
             <slot name="item-trailing" :item="item" :index="index">
-              <UIcon
+              <Icon
                 v-if="item.trailingIcon"
                 :name="item.trailingIcon"
                 data-slot="link-trailing-icon"
@@ -125,7 +125,7 @@ const getItemUi = (item, index) => {
                 data-slot="link-leading-avatar"
                 :class="getItemUi(item, index).linkLeadingAvatar({ class: props.ui?.linkLeadingAvatar })"
               />
-              <UIcon
+              <Icon
                 v-else-if="item.icon"
                 :name="item.icon"
                 data-slot="link-leading-icon"
@@ -143,7 +143,7 @@ const getItemUi = (item, index) => {
             </slot>
 
             <slot name="item-trailing" :item="item" :index="index">
-              <UIcon
+              <Icon
                 v-if="item.trailingIcon"
                 :name="item.trailingIcon"
                 data-slot="link-trailing-icon"
@@ -155,7 +155,7 @@ const getItemUi = (item, index) => {
 
         <slot v-if="index < items.length - 1" name="separator">
           <div data-slot="separator" :class="breadcrumbTheme().separator({ class: props.ui?.separator })">
-            <UIcon
+            <Icon
               :name="separatorIcon"
               data-slot="separator-icon"
               :class="breadcrumbTheme().separatorIcon({ class: props.ui?.separatorIcon })"
