@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CheckboxRoot, CheckboxIndicator } from 'reka-ui'
-import { ui } from '../utils/ui'
+import checkboxTheme from '@/themes/checkbox'
 
 export interface CheckboxProps {
   modelValue?: boolean
@@ -28,7 +28,7 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const checkboxTheme = computed(() => ui.checkbox({
+const checkboxThemeObj = computed(() => checkboxTheme({
   size: props.size,
   color: props.color,
   state: props.modelValue ? 'checked' : 'unchecked',
@@ -36,13 +36,13 @@ const checkboxTheme = computed(() => ui.checkbox({
 }))
 
 // Extract classes from theme
-const wrapperClasses = computed(() => checkboxTheme.value.wrapper?.() || '')
-const rootClasses = computed(() => checkboxTheme.value.root?.() || '')
-const indicatorClasses = computed(() => checkboxTheme.value.indicator?.() || '')
-const iconClasses = computed(() => checkboxTheme.value.icon?.() || '')
-const contentClasses = computed(() => checkboxTheme.value.content?.() || '')
-const labelClasses = computed(() => checkboxTheme.value.label?.() || '')
-const descriptionClasses = computed(() => checkboxTheme.value.description?.() || '')
+const wrapperClasses = computed(() => checkboxThemeObj.value.wrapper?.() || '')
+const rootClasses = computed(() => checkboxThemeObj.value.root?.() || '')
+const indicatorClasses = computed(() => checkboxThemeObj.value.indicator?.() || '')
+const iconClasses = computed(() => checkboxThemeObj.value.icon?.() || '')
+const contentClasses = computed(() => checkboxThemeObj.value.content?.() || '')
+const labelClasses = computed(() => checkboxThemeObj.value.label?.() || '')
+const descriptionClasses = computed(() => checkboxThemeObj.value.description?.() || '')
 
 const handleUpdate = (value: boolean) => {
   emit('update:modelValue', value)

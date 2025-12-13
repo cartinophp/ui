@@ -1,16 +1,21 @@
-// Import all themes
+// Import all themes (global)
 import * as themes from '@/themes'
 
-// Create ui utility object
-export const ui = new Proxy(themes, {
-  get(target, prop) {
-    const theme = target[prop as keyof typeof target]
-    if (typeof theme === 'function') {
-      return theme
-    }
-    throw new Error(`Theme "${String(prop)}" not found`)
-  }
-})
+type ThemeName = keyof typeof themes
+type ThemeFunc = (typeof themes)[ThemeName]
 
-// Export individual themes for direct use if needed
+// Minimal, global API per ottenere una variante tema
+export const ui = {
+  variant(name: ThemeName): ThemeFunc {
+    const theme = themes[name]
+    if (typeof theme !== 'function') {
+      throw new Error(`Theme "${String(name)}" not found`)
+    }
+    return theme as ThemeFunc
+  },
+  // Accesso diretto anche come ui.<nomeTema>
+  ...themes,
+}
+
+// Esportazioni dirette dei temi se necessarie
 export * from '@/themes'

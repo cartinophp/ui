@@ -1,5 +1,7 @@
 import type { App } from 'vue'
 import './style.css'
+// Inizializza ed espone API tema globale minimale
+export { ui } from './utils/ui'
 
 // Importa i componenti
 import Accordion from './components/Accordion.vue'

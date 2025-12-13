@@ -3,11 +3,12 @@ declare module 'tailwind-variants' {
     [key: string]: any
   }
 
-  export interface ClassValue {
+  export type ClassValue = string | {
     [key: string]: string | boolean | undefined
   }
 
   export interface TVConfig {
+    base?: string
     slots?: Record<string, string>
     variants?: Record<string, Record<string, ClassValue>>
     compoundVariants?: Array<Record<string, any>>
