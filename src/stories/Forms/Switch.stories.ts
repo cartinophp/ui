@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Switch from '../components/Switch.vue'
+import Switch from '@/components/Switch.vue'
 
 const meta = {
   title: 'Forms/Switch',

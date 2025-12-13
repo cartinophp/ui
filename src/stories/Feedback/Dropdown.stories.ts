@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Dropdown from '../components/Dropdown.vue'
-import Button from '../components/Button.vue'
+import Dropdown from '@/components/Dropdown.vue'
+import Button from '@/components/Button.vue'
 
 const meta = {
   title: 'Feedback/Dropdown',

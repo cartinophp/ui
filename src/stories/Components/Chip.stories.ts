@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Chip from '../components/Chip.vue'
-import Avatar from '../components/Avatar.vue'
+import Chip from '@/components/Chip.vue'
+import Avatar from '@/components/Avatar.vue'
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',

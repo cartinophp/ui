@@ -25,7 +25,9 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/themes": ["src/themes/"],
+      "@/components": ["src/components/"]
     },
 
     /* Library mode */

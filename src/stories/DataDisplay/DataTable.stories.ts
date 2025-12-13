@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import DataTable from '../components/DataTable.vue'
-import Chip from '../components/Chip.vue'
+import DataTable from '@/components/DataTable.vue'
+import Chip from '@/components/Chip.vue'
 
 const meta: Meta<typeof DataTable> = {
   title: 'Data Display/DataTable',
