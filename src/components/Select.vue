@@ -103,40 +103,6 @@ const selectTheme = computed(() => ui.select({
   disabled: props.disabled
 }))
 
-const selectClasses = computed(() => {
-  const sizeClasses = {
-    xs: 'text-xs px-2.5 py-1.5',
-    sm: 'text-sm px-2.5 py-1.5', 
-    md: 'text-sm px-3 py-2',
-    lg: 'text-sm px-3.5 py-2.5',
-    xl: 'text-base px-3.5 py-2.5'
-  }
-
-  const variantClasses = {
-    outline: 'border border-default bg-default',
-    none: 'border-0 bg-transparent'
-  }
-
-  const colorClasses = {
-    primary: 'focus:border-primary focus:ring-primary',
-    error: 'border-error focus:border-error focus:ring-error',
-    success: 'border-success focus:border-success focus:ring-success', 
-    warning: 'border-warning focus:border-warning focus:ring-warning',
-    info: 'border-info focus:border-info focus:ring-info'
-  }
-
-  return [
-    'block w-full rounded-md shadow-sm transition-colors',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-opacity-50',
-    'disabled:cursor-not-allowed disabled:opacity-75',
-    'appearance-none bg-no-repeat',
-    sizeClasses[props.size],
-    variantClasses[props.variant],
-    props.disabled ? 'cursor-not-allowed opacity-75' : colorClasses[props.color],
-    props.trailingIcon ? 'pr-10' : ''
-  ].filter(Boolean).join(' ')
-})
-
 const onChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
   let value: string | number | string[] | number[] | undefined

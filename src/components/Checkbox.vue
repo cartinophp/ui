@@ -44,15 +44,6 @@ const contentClasses = computed(() => checkboxTheme.value.content?.() || '')
 const labelClasses = computed(() => checkboxTheme.value.label?.() || '')
 const descriptionClasses = computed(() => checkboxTheme.value.description?.() || '')
 
-const iconSize = computed(() => {
-  const sizes = {
-    sm: 12,
-    md: 14,
-    lg: 16
-  }
-  return sizes[props.size]
-})
-
 const handleUpdate = (value: boolean) => {
   emit('update:modelValue', value)
 }

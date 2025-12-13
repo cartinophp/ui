@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import {
   useVueTable,
@@ -9,109 +9,65 @@ import {
   FlexRender
 } from '@tanstack/vue-table'
 import dataTableTheme from '@/themes/data-table'
-import UInput from './Input.vue'
-import UButton from './Button.vue'
-import UIcon from './Icon.vue'
-import UPagination from './Pagination.vue'
+import Input from './Input.vue'
+import Icon from './Icon.vue'
+import Pagination from './Pagination.vue'
 
-const props = defineProps({
-  // Data
-  columns: {
-    type: Array,
-    required: true
-  },
-  dataSource: {
-    type: Array,
-    default: () => []
-  },
-  // Features
-  enableSorting: {
-    type: Boolean,
-    default: true
-  },
-  enableFiltering: {
-    type: Boolean,
-    default: true
-  },
-  enablePagination: {
-    type: Boolean,
-    default: true
-  },
-  enableRowSelection: {
-    type: Boolean,
-    default: false
-  },
-  // Pagination
-  pageSize: {
-    type: Number,
-    default: 10
-  },
-  pageSizeOptions: {
-    type: Array,
-    default: () => [10, 20, 50, 100]
-  },
-  // Search
-  searchPlaceholder: {
-    type: String,
-    default: 'Search...'
-  },
-  searchable: {
-    type: Boolean,
-    default: true
-  },
-  // Styling
-  striped: {
-    type: Boolean,
-    default: false
-  },
-  bordered: {
-    type: Boolean,
-    default: false
-  },
-  compact: {
-    type: Boolean,
-    default: false
-  },
-  hoverable: {
-    type: Boolean,
-    default: true
-  },
-  sticky: {
-    type: Boolean,
-    default: false
-  },
-  // States
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  empty: {
-    type: String,
-    default: 'No data available'
-  },
-  // Model
-  modelValue: {
-    type: Object,
-    default: () => ({})
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+export interface DataTableProps {
+  columns: any[]
+  dataSource?: any[]
+  enableSorting?: boolean
+  enableFiltering?: boolean
+  enablePagination?: boolean
+  enableRowSelection?: boolean
+  pageSize?: number
+  pageSizeOptions?: number[]
+  searchPlaceholder?: string
+  searchable?: boolean
+  striped?: boolean
+  bordered?: boolean
+  compact?: boolean
+  hoverable?: boolean
+  sticky?: boolean
+  loading?: boolean
+  empty?: string
+  modelValue?: Record<string, any>
+  class?: string | string[] | Record<string, boolean>
+  ui?: Record<string, any>
+}
+
+const props = withDefaults(defineProps<DataTableProps>(), {
+  dataSource: () => [],
+  enableSorting: true,
+  enableFiltering: true,
+  enablePagination: true,
+  enableRowSelection: false,
+  pageSize: 10,
+  pageSizeOptions: () => [10, 20, 50, 100],
+  searchPlaceholder: 'Search...',
+  searchable: true,
+  striped: false,
+  bordered: false,
+  compact: false,
+  hoverable: true,
+  sticky: false,
+  loading: false,
+  empty: 'No data available',
+  modelValue: () => ({})
 })
 
-const emit = defineEmits(['update:modelValue', 'row:click', 'row:select'])
+const emit = defineEmits<{
+  'update:modelValue': [value: Record<string, any>]
+  'row:click': [row: any]
+  'row:select': [selection: Record<string, boolean>]
+}>()
 
 const slots = defineSlots()
 
 // Local state
 const globalFilter = ref('')
-const sorting = ref([])
-const columnFilters = ref([])
+const sorting = ref<any[]>([])
+const columnFilters = ref<any[]>([])
 const rowSelection = ref({})
 const pagination = ref({
   pageIndex: 0,
@@ -177,7 +133,6 @@ const ui = computed(() => dataTableTheme({
 
 const totalRows = computed(() => table.getFilteredRowModel().rows.length)
 const currentPage = computed(() => pagination.value.pageIndex + 1)
-const totalPages = computed(() => table.getPageCount())
 
 const paginationText = computed(() => {
   const start = pagination.value.pageIndex * pagination.value.pageSize + 1
@@ -200,10 +155,11 @@ const handlePageChange = (page) => {
     <div v-if="searchable || slots.toolbar || slots.actions" data-slot="toolbar" :class="ui.toolbar({ class: props.ui?.toolbar })">
       <slot name="toolbar">
         <div v-if="searchable" data-slot="search" :class="ui.search({ class: props.ui?.search })">
-          <UInput
+          <Input
             v-model="globalFilter"
             :placeholder="searchPlaceholder"
             leading-icon="🔍"
+            aria-label="Search table"
           />
         </div>
 
@@ -244,18 +200,20 @@ const handlePageChange = (page) => {
                   <button
                     v-if="header.column.getCanSort() && enableSorting"
                     :class="ui.sortButton({ class: props.ui?.sortButton })"
+                    :aria-label="`Sort by ${header.column.columnDef.header}`"
+                    :aria-sort="header.column.getIsSorted() === 'asc' ? 'ascending' : header.column.getIsSorted() === 'desc' ? 'descending' : 'none'"
                     @click="header.column.getToggleSortingHandler()?.($event)"
                   >
                     <FlexRender
                       :render="header.column.columnDef.header"
                       :props="header.getContext()"
                     />
-                    <UIcon
+                    <Icon
                       v-if="header.column.getIsSorted() === 'asc'"
                       name="i-heroicons-arrow-up"
                       :class="ui.sortIcon({ class: props.ui?.sortIcon })"
                     />
-                    <UIcon
+                    <Icon
                       v-else-if="header.column.getIsSorted() === 'desc'"
                       name="i-heroicons-arrow-down"
                       :class="ui.sortIcon({ class: props.ui?.sortIcon })"
@@ -283,7 +241,12 @@ const handlePageChange = (page) => {
             :key="row.id"
             data-slot="tr"
             :class="ui.tr({ class: props.ui?.tr })"
+            :role="enableRowSelection ? 'button' : undefined"
+            :tabindex="enableRowSelection ? 0 : undefined"
+            :aria-selected="enableRowSelection ? !!rowSelection[row.id] : undefined"
             @click="handleRowClick(row)"
+            @keydown.enter="handleRowClick(row)"
+            @keydown.space.prevent="handleRowClick(row)"
           >
             <td
               v-for="cell in row.getVisibleCells()"
@@ -308,9 +271,10 @@ const handlePageChange = (page) => {
       </table>
 
       <!-- Loading State -->
-      <div v-if="loading" data-slot="loading" :class="ui.loading({ class: props.ui?.loading })">
+      <div v-if="loading" data-slot="loading" :class="ui.loading({ class: props.ui?.loading })" role="status" aria-live="polite">
         <slot name="loading">
-          <UIcon name="i-heroicons-arrow-path" :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })" />
+          <Icon name="i-heroicons-arrow-path" :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })" />
+          <span class="sr-only">Loading...</span>
         </slot>
       </div>
 
@@ -319,9 +283,10 @@ const handlePageChange = (page) => {
         v-else-if="!table.getRowModel().rows.length"
         data-slot="empty"
         :class="ui.empty({ class: props.ui?.empty })"
+        role="status"
       >
         <slot name="empty">
-          <UIcon name="i-heroicons-inbox" :class="ui.emptyIcon({ class: props.ui?.emptyIcon })" />
+          <Icon name="i-heroicons-inbox" :class="ui.emptyIcon({ class: props.ui?.emptyIcon })" />
           <div :class="ui.emptyTitle({ class: props.ui?.emptyTitle })">
             No results found
           </div>
@@ -344,7 +309,7 @@ const handlePageChange = (page) => {
 
       <div data-slot="footer-actions" :class="ui.footerActions({ class: props.ui?.footerActions })">
         <slot name="pagination" :table="table">
-          <UPagination
+          <Pagination
             :page="currentPage"
             :total="totalRows"
             :items-per-page="pagination.pageSize"

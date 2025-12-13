@@ -1,40 +1,23 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import iconTheme from '@/themes/icon'
 
-const props = defineProps({
-  name: {
-    type: [String, Object],
-    required: true
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  mode: {
-    type: String,
-    default: undefined
-  },
-  customize: {
-    type: Function,
-    default: undefined
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  }
+export interface IconProps {
+  name: string
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  class?: string | string[] | Record<string, boolean>
+}
+
+const props = withDefaults(defineProps<IconProps>(), {
+  size: 'md'
 })
 
 const ui = computed(() => iconTheme({
   size: props.size
 }))
 
-// Check if name is a string (icon name) or component
-const isString = computed(() => typeof props.name === 'string')
-
 // Simple emoji detection
 const isEmoji = computed(() => {
-  if (!isString.value) return false
   return /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/u.test(props.name)
 })
 </script>
@@ -45,23 +28,15 @@ const isEmoji = computed(() => {
     v-if="isEmoji"
     :class="ui({ class: props.class })"
     role="img"
+    aria-label="icon"
   >
-    {{ props.name }}
+    {{ name }}
   </span>
 
-  <!-- Icon component (from iconify or nuxt/icon) -->
-  <Icon
-    v-else-if="isString"
-    :name="props.name"
-    :mode="props.mode"
-    :customize="props.customize"
-    :class="ui({ class: props.class })"
-  />
-
-  <!-- Custom component -->
-  <component
-    :is="props.name"
+  <!-- Icon rendering (iconify/unocss pattern: i-heroicons-home, etc.) -->
+  <i
     v-else
-    :class="ui({ class: props.class })"
+    :class="[name, ui({ class: props.class })]"
+    aria-hidden="true"
   />
 </template>

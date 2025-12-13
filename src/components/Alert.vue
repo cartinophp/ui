@@ -12,7 +12,7 @@ export interface AlertProps {
   closable?: boolean
   actions?: Array<{
     label: string
-    variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+    variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
     onClick?: () => void
   }>
 }
