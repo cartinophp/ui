@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import breadcrumbTheme from '@/themes/breadcrumb'
-import Link from './link.vue'
+import Link from './Link.vue'
 import Icon from '@/components/Icon.vue'
 import UAvatar from './Avatar.vue'
 

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import userTheme from '@/themes/user'
-import Link from './link.vue'
+import Link from './Link.vue'
 
 defineOptions({ inheritAttrs: false })
 

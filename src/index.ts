@@ -25,7 +25,7 @@ import Drawer from './components/Drawer.vue'
 import Dropdown from './components/Dropdown.vue'
 import Icon from './components/Icon.vue'
 import Input from './components/Input.vue'
-import Link from './components/link.vue'
+import Link from './components/Link.vue'
 import Modal from './components/Modal.vue'
 import NavigationMenu from './components/NavigationMenu.vue'
 import PageHeader from './components/PageHeader.vue'
@@ -37,6 +37,7 @@ import Radio from './components/Radio.vue'
 import RadioGroup from './components/RadioGroup.vue'
 import Select from './components/Select.vue'
 import Separator from './components/Separator.vue'
+import Sheet from './components/Sheet.vue'
 import Sidebar from './components/Sidebar.vue'
 import Skeleton from './components/Skeleton.vue'
 import Slider from './components/Slider.vue'
@@ -47,7 +48,7 @@ import Tabs from './components/Tabs.vue'
 import Textarea from './components/Textarea.vue'
 import Toast from './components/Toast.vue'
 import Tooltip from './components/Tooltip.vue'
-import User from './components/user.vue'
+import User from './components/User.vue'
 
 // Plugin di installazione per Vue
 export const install = (app: App) => {
@@ -84,6 +85,7 @@ export const install = (app: App) => {
   app.component('CartinoRadioGroup', RadioGroup)
   app.component('CartinoSelect', Select)
   app.component('CartinoSeparator', Separator)
+  app.component('CartinoSheet', Sheet)
   app.component('CartinoSidebar', Sidebar)
   app.component('CartinoSkeleton', Skeleton)
   app.component('CartinoSlider', Slider)
@@ -132,6 +134,7 @@ export {
   RadioGroup,
   Select,
   Separator,
+  Sheet,
   Sidebar,
   Skeleton,
   Slider,
@@ -162,6 +165,7 @@ export type { CommandProps, CommandItem, CommandGroup } from './components/Comma
 export type { ContextMenuProps, ContextMenuItem } from './components/ContextMenu.vue'
 export type { NavigationMenuProps, NavigationMenuItem } from './components/NavigationMenu.vue'
 export type { DataTableProps } from './components/DataTable.vue'
+export type { SheetProps } from './components/Sheet.vue'
 
 // Re-esporta componenti Reka UI per convenienza
 export * from 'reka-ui'

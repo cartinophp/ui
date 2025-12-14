@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { ref } from 'vue'
 import DataTable from '../../components/DataTable.vue'
 type User = { id: number; name: string; email: string; role: string }
 
@@ -20,7 +21,7 @@ const meta: Meta<typeof DataTable> = {
   component: DataTable,
   args: {
     columns,
-    dataSource: users,
+    data: users,
     enableSorting: true,
     enableFiltering: true,
     enablePagination: true,
@@ -44,52 +45,23 @@ export const DynamicColumns: Story = {
 }
 
 export const Compact: Story = {
-  render: () => ({
-    components: { DataTable },
-    setup() {
-      return { columns: baseColumns, data: sampleData }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        compact
-        searchable
-      />
-    `
-  })
+  args: {
+    compact: true,
+    striped: true
+  }
 }
 
 export const Loading: Story = {
-  render: () => ({
-    components: { DataTable },
-    setup() {
-      return { columns: baseColumns, data: [] }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        loading
-      />
-    `
-  })
+  args: {
+    loading: true
+  }
 }
 
 export const Empty: Story = {
-  render: () => ({
-    components: { DataTable },
-    setup() {
-      return { columns: baseColumns, data: [] }
-    },
-    template: `
-      <DataTable
-        :columns="columns"
-        :data-source="data"
-        empty="No users found. Try adjusting your search."
-      />
-    `
-  })
+  args: {
+    data: [],
+    empty: 'No users found. Try adjusting your search.'
+  }
 }
 
 export const WithActions: Story = {
@@ -111,12 +83,12 @@ export const WithActions: Story = {
         alert(`Delete ${user.name}`)
       }
 
-      return { columns, data: sampleData, handleEdit, handleDelete }
+      return { columns, data: users, handleEdit, handleDelete }
     },
     template: `
       <DataTable
         :columns="columns"
-        :data-source="data"
+        :data="data"
         searchable
       >
         <template #cell:actions="{ row }">
@@ -152,12 +124,12 @@ export const LargeDataset: Story = {
         status: i % 3 === 0 ? 'inactive' : 'active'
       }))
 
-      return { columns: baseColumns, data: largeData }
+      return { columns, data: largeData }
     },
     template: `
       <DataTable
         :columns="columns"
-        :data-source="data"
+        :data="data"
         :page-size="10"
         searchable
         enable-sorting
@@ -178,13 +150,13 @@ export const WithToolbar: Story = {
         alert('Exporting selected rows...')
       }
 
-      return { columns: baseColumns, data: sampleData, selectedRows, handleExport }
+      return { columns, data: users, selectedRows, handleExport }
     },
     template: `
       <DataTable
         :columns="columns"
-        :data-source="data"
-        v-model="selectedRows"
+        :data="data"
+        v-model:row-selection="selectedRows"
         enable-row-selection
         searchable
       >

@@ -6,42 +6,85 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   FlexRender
+} from '@tanstack/vue-table'
+import type {
+  SortingState,
+  ColumnFiltersState,
+  VisibilityState,
+  RowSelectionState,
+  ExpandedState,
+  PaginationState
 } from '@tanstack/vue-table'
 import dataTableTheme from '@/themes/data-table'
 import Input from './Input.vue'
-import Icon from '@/components/Icon.vue'
+import Icon from './Icon.vue'
 import Pagination from './Pagination.vue'
 
 export interface DataTableProps {
+  // Data
   columns: any[]
-  dataSource?: any[]
+  data?: any[]
+
+  // Features
   enableSorting?: boolean
   enableFiltering?: boolean
   enablePagination?: boolean
   enableRowSelection?: boolean
+  enableColumnVisibility?: boolean
+  enableExpanding?: boolean
+  enableGrouping?: boolean
+
+  // Models (v-model support)
+  sorting?: SortingState
+  columnFilters?: ColumnFiltersState
+  columnVisibility?: VisibilityState
+  rowSelection?: RowSelectionState
+  expanded?: ExpandedState
+  pagination?: PaginationState
+  globalFilter?: string
+
+  // Config
   pageSize?: number
   pageSizeOptions?: number[]
   searchPlaceholder?: string
   searchable?: boolean
+
+  // Styling
   striped?: boolean
   bordered?: boolean
   compact?: boolean
   hoverable?: boolean
   sticky?: boolean
+
+  // States
   loading?: boolean
   empty?: string
-  modelValue?: Record<string, any>
+
+  // Customization
   class?: string | string[] | Record<string, boolean>
   ui?: Record<string, any>
+
+  // TanStack Table options (passthrough)
+  meta?: any
+  getRowId?: (row: any, index: number) => string
+  onHover?: (row: any) => void
+  onSelect?: (row: any) => void
 }
 
 const props = withDefaults(defineProps<DataTableProps>(), {
-  dataSource: () => [],
+  data: () => [],
   enableSorting: true,
   enableFiltering: true,
   enablePagination: true,
   enableRowSelection: false,
+  enableColumnVisibility: false,
+  enableExpanding: false,
+  enableGrouping: false,
   pageSize: 10,
   pageSizeOptions: () => [10, 20, 50, 100],
   searchPlaceholder: 'Search...',
@@ -52,74 +95,172 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   hoverable: true,
   sticky: false,
   loading: false,
-  empty: 'No data available',
-  modelValue: () => ({})
+  empty: 'No data available'
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: Record<string, any>]
+  'update:sorting': [value: SortingState]
+  'update:columnFilters': [value: ColumnFiltersState]
+  'update:columnVisibility': [value: VisibilityState]
+  'update:rowSelection': [value: RowSelectionState]
+  'update:expanded': [value: ExpandedState]
+  'update:pagination': [value: PaginationState]
+  'update:globalFilter': [value: string]
   'row:click': [row: any]
-  'row:select': [selection: Record<string, boolean>]
+  'row:hover': [row: any]
+  'row:select': [row: any]
 }>()
 
 const slots = defineSlots()
 
-// Local state
-const globalFilter = ref('')
-const sorting = ref<any[]>([])
-const columnFilters = ref<any[]>([])
-const rowSelection = ref({})
-const pagination = ref({
+// Internal state (used when no v-model)
+const internalGlobalFilter = ref(props.globalFilter ?? '')
+const internalSorting = ref<SortingState>(props.sorting ?? [])
+const internalColumnFilters = ref<ColumnFiltersState>(props.columnFilters ?? [])
+const internalColumnVisibility = ref<VisibilityState>(props.columnVisibility ?? {})
+const internalRowSelection = ref<RowSelectionState>(props.rowSelection ?? {})
+const internalExpanded = ref<ExpandedState>(props.expanded ?? {})
+const internalPagination = ref<PaginationState>(props.pagination ?? {
   pageIndex: 0,
   pageSize: props.pageSize
+})
+
+// Use v-model if provided, otherwise internal state
+const globalFilterModel = computed({
+  get: () => props.globalFilter !== undefined ? props.globalFilter : internalGlobalFilter.value,
+  set: (value) => {
+    internalGlobalFilter.value = value
+    emit('update:globalFilter', value)
+  }
+})
+
+const sortingModel = computed({
+  get: () => props.sorting !== undefined ? props.sorting : internalSorting.value,
+  set: (value) => {
+    internalSorting.value = value
+    emit('update:sorting', value)
+  }
+})
+
+const columnFiltersModel = computed({
+  get: () => props.columnFilters !== undefined ? props.columnFilters : internalColumnFilters.value,
+  set: (value) => {
+    internalColumnFilters.value = value
+    emit('update:columnFilters', value)
+  }
+})
+
+const columnVisibilityModel = computed({
+  get: () => props.columnVisibility !== undefined ? props.columnVisibility : internalColumnVisibility.value,
+  set: (value) => {
+    internalColumnVisibility.value = value
+    emit('update:columnVisibility', value)
+  }
+})
+
+const rowSelectionModel = computed({
+  get: () => props.rowSelection !== undefined ? props.rowSelection : internalRowSelection.value,
+  set: (value) => {
+    internalRowSelection.value = value
+    emit('update:rowSelection', value)
+  }
+})
+
+const expandedModel = computed({
+  get: () => props.expanded !== undefined ? props.expanded : internalExpanded.value,
+  set: (value) => {
+    internalExpanded.value = value
+    emit('update:expanded', value)
+  }
+})
+
+const paginationModel = computed({
+  get: () => props.pagination !== undefined ? props.pagination : internalPagination.value,
+  set: (value) => {
+    internalPagination.value = value
+    emit('update:pagination', value)
+  }
 })
 
 // TanStack Table instance
 const table = useVueTable({
   get data() {
-    return props.dataSource
+    return props.data ?? []
   },
   get columns() {
     return props.columns
   },
   state: {
     get globalFilter() {
-      return globalFilter.value
+      return globalFilterModel.value
     },
     get sorting() {
-      return sorting.value
+      return sortingModel.value
     },
     get columnFilters() {
-      return columnFilters.value
+      return columnFiltersModel.value
+    },
+    get columnVisibility() {
+      return columnVisibilityModel.value
     },
     get rowSelection() {
-      return rowSelection.value
+      return rowSelectionModel.value
+    },
+    get expanded() {
+      return expandedModel.value
     },
     get pagination() {
-      return pagination.value
+      return paginationModel.value
     }
   },
   enableRowSelection: props.enableRowSelection,
+  enableExpanding: props.enableExpanding,
+  enableGrouping: props.enableGrouping,
   onGlobalFilterChange: (updater) => {
-    globalFilter.value = typeof updater === 'function' ? updater(globalFilter.value) : updater
+    globalFilterModel.value = typeof updater === 'function'
+      ? updater(globalFilterModel.value)
+      : updater
   },
   onSortingChange: (updater) => {
-    sorting.value = typeof updater === 'function' ? updater(sorting.value) : updater
+    sortingModel.value = typeof updater === 'function'
+      ? updater(sortingModel.value)
+      : updater
   },
   onColumnFiltersChange: (updater) => {
-    columnFilters.value = typeof updater === 'function' ? updater(columnFilters.value) : updater
+    columnFiltersModel.value = typeof updater === 'function'
+      ? updater(columnFiltersModel.value)
+      : updater
+  },
+  onColumnVisibilityChange: (updater) => {
+    columnVisibilityModel.value = typeof updater === 'function'
+      ? updater(columnVisibilityModel.value)
+      : updater
   },
   onRowSelectionChange: (updater) => {
-    rowSelection.value = typeof updater === 'function' ? updater(rowSelection.value) : updater
-    emit('row:select', rowSelection.value)
+    rowSelectionModel.value = typeof updater === 'function'
+      ? updater(rowSelectionModel.value)
+      : updater
+  },
+  onExpandedChange: (updater) => {
+    expandedModel.value = typeof updater === 'function'
+      ? updater(expandedModel.value)
+      : updater
   },
   onPaginationChange: (updater) => {
-    pagination.value = typeof updater === 'function' ? updater(pagination.value) : updater
+    paginationModel.value = typeof updater === 'function'
+      ? updater(paginationModel.value)
+      : updater
   },
   getCoreRowModel: getCoreRowModel(),
   getFilteredRowModel: props.enableFiltering ? getFilteredRowModel() : undefined,
   getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
-  getPaginationRowModel: props.enablePagination ? getPaginationRowModel() : undefined
+  getPaginationRowModel: props.enablePagination ? getPaginationRowModel() : undefined,
+  getExpandedRowModel: props.enableExpanding ? getExpandedRowModel() : undefined,
+  getGroupedRowModel: props.enableGrouping ? getGroupedRowModel() : undefined,
+  getFacetedRowModel: props.enableFiltering ? getFacetedRowModel() : undefined,
+  getFacetedUniqueValues: props.enableFiltering ? getFacetedUniqueValues() : undefined,
+  meta: props.meta,
+  getRowId: props.getRowId
 })
 
 const ui = computed(() => dataTableTheme({
@@ -132,31 +273,58 @@ const ui = computed(() => dataTableTheme({
 }))
 
 const totalRows = computed(() => table.getFilteredRowModel().rows.length)
-const currentPage = computed(() => pagination.value.pageIndex + 1)
+const currentPage = computed(() => paginationModel.value.pageIndex + 1)
 
 const paginationText = computed(() => {
-  const start = pagination.value.pageIndex * pagination.value.pageSize + 1
-  const end = Math.min((pagination.value.pageIndex + 1) * pagination.value.pageSize, totalRows.value)
+  const start = paginationModel.value.pageIndex * paginationModel.value.pageSize + 1
+  const end = Math.min((paginationModel.value.pageIndex + 1) * paginationModel.value.pageSize, totalRows.value)
   return `Showing ${start} to ${end} of ${totalRows.value} entries`
 })
 
-const handleRowClick = (row) => {
+const handleRowClick = (row: any) => {
+  const event = window.event as MouseEvent | KeyboardEvent
+  const target = event.target as HTMLElement
+
+  // Don't trigger if clicking on buttons or links
+  if (target.closest('button') || target.closest('a')) {
+    return
+  }
+
   emit('row:click', row.original)
+  props.onSelect?.(row.original)
+
+  if (props.enableRowSelection) {
+    row.toggleSelected()
+    emit('row:select', row.original)
+  }
 }
 
-const handlePageChange = (page) => {
+const handleRowHover = (row: any) => {
+  emit('row:hover', row.original)
+  props.onHover?.(row.original)
+}
+
+const handlePageChange = (page: number) => {
   table.setPageIndex(page - 1)
 }
+
+// Expose TanStack Table API
+const tableRef = ref<HTMLTableElement>()
+defineExpose({
+  table,
+  tableRef,
+  tableApi: table
+})
 </script>
 
 <template>
   <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
     <!-- Toolbar -->
     <div v-if="searchable || slots.toolbar || slots.actions" data-slot="toolbar" :class="ui.toolbar({ class: props.ui?.toolbar })">
-      <slot name="toolbar">
+      <slot name="toolbar" :table="table">
         <div v-if="searchable" data-slot="search" :class="ui.search({ class: props.ui?.search })">
           <Input
-            v-model="globalFilter"
+            v-model="globalFilterModel"
             :placeholder="searchPlaceholder"
             leading-icon="🔍"
             aria-label="Search table"
@@ -164,14 +332,14 @@ const handlePageChange = (page) => {
         </div>
 
         <div data-slot="actions" :class="ui.actions({ class: props.ui?.actions })">
-          <slot name="actions" />
+          <slot name="actions" :table="table" />
         </div>
       </slot>
     </div>
 
     <!-- Table Wrapper -->
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <table data-slot="table" :class="ui.table({ class: props.ui?.table })">
+      <table ref="tableRef" data-slot="table" :class="ui.table({ class: props.ui?.table })">
         <!-- Header -->
         <thead data-slot="thead" :class="ui.thead({ class: props.ui?.thead })">
           <tr
@@ -185,6 +353,7 @@ const handlePageChange = (page) => {
               :key="header.id"
               data-slot="th"
               :class="ui.th({ class: props.ui?.th })"
+              :colspan="header.colSpan"
               :style="{ width: header.getSize() !== 150 ? `${header.getSize()}px` : undefined }"
             >
               <div
@@ -193,9 +362,10 @@ const handlePageChange = (page) => {
                 :class="ui.thContent({ class: props.ui?.thContent })"
               >
                 <slot
-                  :name="`header:${header.column.id}`"
+                  :name="`header-${header.column.id}`"
                   :header="header"
                   :column="header.column"
+                  :table="table"
                 >
                   <button
                     v-if="header.column.getCanSort() && enableSorting"
@@ -236,37 +406,47 @@ const handlePageChange = (page) => {
           data-slot="tbody"
           :class="ui.tbody({ class: props.ui?.tbody })"
         >
-          <tr
-            v-for="row in table.getRowModel().rows"
-            :key="row.id"
-            data-slot="tr"
-            :class="ui.tr({ class: props.ui?.tr })"
-            :role="enableRowSelection ? 'button' : undefined"
-            :tabindex="enableRowSelection ? 0 : undefined"
-            :aria-selected="enableRowSelection ? !!rowSelection[row.id] : undefined"
-            @click="handleRowClick(row)"
-            @keydown.enter="handleRowClick(row)"
-            @keydown.space.prevent="handleRowClick(row)"
-          >
-            <td
-              v-for="cell in row.getVisibleCells()"
-              :key="cell.id"
-              data-slot="td"
-              :class="ui.td({ class: props.ui?.td })"
+          <template v-for="row in table.getRowModel().rows" :key="row.id">
+            <tr
+              data-slot="tr"
+              :class="ui.tr({ class: props.ui?.tr })"
+              :role="enableRowSelection || onSelect ? 'button' : undefined"
+              :tabindex="enableRowSelection || onSelect ? 0 : undefined"
+              :aria-selected="enableRowSelection ? row.getIsSelected() : undefined"
+              :data-expanded="row.getIsExpanded()"
+              @click="handleRowClick(row)"
+              @keydown.enter="handleRowClick(row)"
+              @keydown.space.prevent="handleRowClick(row)"
+              @mouseenter="handleRowHover(row)"
             >
-              <slot
-                :name="`cell:${cell.column.id}`"
-                :cell="cell"
-                :row="row.original"
-                :value="cell.getValue()"
+              <td
+                v-for="cell in row.getVisibleCells()"
+                :key="cell.id"
+                data-slot="td"
+                :class="ui.td({ class: props.ui?.td })"
               >
-                <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
-                />
-              </slot>
-            </td>
-          </tr>
+                <slot
+                  :name="`cell-${cell.column.id}`"
+                  :cell="cell"
+                  :row="row.original"
+                  :value="cell.getValue()"
+                  :table="table"
+                >
+                  <FlexRender
+                    :render="cell.column.columnDef.cell"
+                    :props="cell.getContext()"
+                  />
+                </slot>
+              </td>
+            </tr>
+
+            <!-- Expanded Row Content -->
+            <tr v-if="row.getIsExpanded() && slots['expand-row']" :key="`${row.id}-expanded`">
+              <td :colspan="row.getVisibleCells().length">
+                <slot name="expand-row" :row="row.original" :table="table" />
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
 
@@ -304,15 +484,17 @@ const handlePageChange = (page) => {
       :class="ui.footer({ class: props.ui?.footer })"
     >
       <div data-slot="footer-text" :class="ui.footerText({ class: props.ui?.footerText })">
-        {{ paginationText }}
+        <slot name="footer-text" :table="table">
+          {{ paginationText }}
+        </slot>
       </div>
 
       <div data-slot="footer-actions" :class="ui.footerActions({ class: props.ui?.footerActions })">
-        <slot name="pagination" :table="table">
+        <slot name="pagination" :table="table" :page="currentPage" :total="totalRows">
           <Pagination
             :page="currentPage"
             :total="totalRows"
-            :items-per-page="pagination.pageSize"
+            :items-per-page="paginationModel.pageSize"
             :sibling-count="1"
             show-controls
             @update:page="handlePageChange"
