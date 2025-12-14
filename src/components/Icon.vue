@@ -12,9 +12,12 @@ const props = withDefaults(defineProps<IconProps>(), {
   size: 'md'
 })
 
-const ui = computed(() => iconTheme({
-  size: props.size
-}))
+const iconClasses = computed(() =>
+  iconTheme({
+    size: props.size,
+    class: props.class
+  })
+)
 
 // Simple emoji detection
 const isEmoji = computed(() => {
@@ -24,19 +27,10 @@ const isEmoji = computed(() => {
 
 <template>
   <!-- Emoji rendering -->
-  <span
-    v-if="isEmoji"
-    :class="ui({ class: props.class })"
-    role="img"
-    aria-label="icon"
-  >
+  <span v-if="isEmoji" :class="iconClasses" role="img" aria-label="icon">
     {{ name }}
   </span>
 
   <!-- Icon rendering (iconify/unocss pattern: i-heroicons-home, etc.) -->
-  <i
-    v-else
-    :class="[name, ui({ class: props.class })]"
-    aria-hidden="true"
-  />
+  <i v-else :class="[name, iconClasses]" aria-hidden="true" />
 </template>

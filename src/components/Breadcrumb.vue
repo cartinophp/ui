@@ -62,20 +62,32 @@ const getItemUi = (item, index) => {
     :class="breadcrumbTheme().root({ class: [props.ui?.root, props.class] })"
     v-bind="$attrs"
   >
-    <ol data-slot="list" :class="breadcrumbTheme().list({ class: props.ui?.list })">
+    <ol
+      data-slot="list"
+      :class="breadcrumbTheme().list({ class: props.ui?.list })"
+    >
       <li
         v-for="(item, index) in items"
         :key="index"
         data-slot="item"
         :class="breadcrumbTheme().item({ class: props.ui?.item })"
       >
-        <slot name="item" :item="item" :index="index" :ui="getItemUi(item, index)">
+        <slot
+          name="item"
+          :item="item"
+          :index="index"
+          :ui="getItemUi(item, index)"
+        >
           <Link
             v-if="item.to && !item.disabled"
             v-bind="item"
             :aria-current="index === items.length - 1 ? 'page' : undefined"
             data-slot="link"
-            :class="getItemUi(item, index).link({ class: [props.ui?.link, item.class] })"
+            :class="
+              getItemUi(item, index).link({
+                class: [props.ui?.link, item.class]
+              })
+            "
           >
             <slot name="item-leading" :item="item" :index="index">
               <UAvatar
@@ -83,20 +95,32 @@ const getItemUi = (item, index) => {
                 v-bind="item.avatar"
                 size="3xs"
                 data-slot="link-leading-avatar"
-                :class="getItemUi(item, index).linkLeadingAvatar({ class: props.ui?.linkLeadingAvatar })"
+                :class="
+                  getItemUi(item, index).linkLeadingAvatar({
+                    class: props.ui?.linkLeadingAvatar
+                  })
+                "
               />
               <Icon
                 v-else-if="item.icon"
                 :name="item.icon"
                 data-slot="link-leading-icon"
-                :class="getItemUi(item, index).linkLeadingIcon({ class: props.ui?.linkLeadingIcon })"
+                :class="
+                  getItemUi(item, index).linkLeadingIcon({
+                    class: props.ui?.linkLeadingIcon
+                  })
+                "
               />
             </slot>
 
             <slot name="item-label" :item="item" :index="index">
               <span
                 data-slot="link-label"
-                :class="getItemUi(item, index).linkLabel({ class: props.ui?.linkLabel })"
+                :class="
+                  getItemUi(item, index).linkLabel({
+                    class: props.ui?.linkLabel
+                  })
+                "
               >
                 {{ getItemLabel(item) }}
               </span>
@@ -107,7 +131,11 @@ const getItemUi = (item, index) => {
                 v-if="item.trailingIcon"
                 :name="item.trailingIcon"
                 data-slot="link-trailing-icon"
-                :class="getItemUi(item, index).linkTrailingIcon({ class: props.ui?.linkTrailingIcon })"
+                :class="
+                  getItemUi(item, index).linkTrailingIcon({
+                    class: props.ui?.linkTrailingIcon
+                  })
+                "
               />
             </slot>
           </Link>
@@ -115,7 +143,11 @@ const getItemUi = (item, index) => {
           <span
             v-else
             data-slot="link"
-            :class="getItemUi(item, index).link({ class: [props.ui?.link, item.class] })"
+            :class="
+              getItemUi(item, index).link({
+                class: [props.ui?.link, item.class]
+              })
+            "
           >
             <slot name="item-leading" :item="item" :index="index">
               <UAvatar
@@ -123,20 +155,32 @@ const getItemUi = (item, index) => {
                 v-bind="item.avatar"
                 size="3xs"
                 data-slot="link-leading-avatar"
-                :class="getItemUi(item, index).linkLeadingAvatar({ class: props.ui?.linkLeadingAvatar })"
+                :class="
+                  getItemUi(item, index).linkLeadingAvatar({
+                    class: props.ui?.linkLeadingAvatar
+                  })
+                "
               />
               <Icon
                 v-else-if="item.icon"
                 :name="item.icon"
                 data-slot="link-leading-icon"
-                :class="getItemUi(item, index).linkLeadingIcon({ class: props.ui?.linkLeadingIcon })"
+                :class="
+                  getItemUi(item, index).linkLeadingIcon({
+                    class: props.ui?.linkLeadingIcon
+                  })
+                "
               />
             </slot>
 
             <slot name="item-label" :item="item" :index="index">
               <span
                 data-slot="link-label"
-                :class="getItemUi(item, index).linkLabel({ class: props.ui?.linkLabel })"
+                :class="
+                  getItemUi(item, index).linkLabel({
+                    class: props.ui?.linkLabel
+                  })
+                "
               >
                 {{ getItemLabel(item) }}
               </span>
@@ -147,18 +191,29 @@ const getItemUi = (item, index) => {
                 v-if="item.trailingIcon"
                 :name="item.trailingIcon"
                 data-slot="link-trailing-icon"
-                :class="getItemUi(item, index).linkTrailingIcon({ class: props.ui?.linkTrailingIcon })"
+                :class="
+                  getItemUi(item, index).linkTrailingIcon({
+                    class: props.ui?.linkTrailingIcon
+                  })
+                "
               />
             </slot>
           </span>
         </slot>
 
         <slot v-if="index < items.length - 1" name="separator">
-          <div data-slot="separator" :class="breadcrumbTheme().separator({ class: props.ui?.separator })">
+          <div
+            data-slot="separator"
+            :class="breadcrumbTheme().separator({ class: props.ui?.separator })"
+          >
             <Icon
               :name="separatorIcon"
               data-slot="separator-icon"
-              :class="breadcrumbTheme().separatorIcon({ class: props.ui?.separatorIcon })"
+              :class="
+                breadcrumbTheme().separatorIcon({
+                  class: props.ui?.separatorIcon
+                })
+              "
             />
           </div>
         </slot>

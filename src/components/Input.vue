@@ -72,15 +72,17 @@ const slots = defineSlots()
 const inputRef = ref()
 const isFocused = ref(false)
 
-const ui = computed(() => inputTheme({
-  size: props.size,
-  variant: props.variant,
-  color: props.color,
-  focused: isFocused.value,
-  disabled: props.disabled,
-  hasLeading: !!(props.leadingIcon || slots.leading),
-  hasError: !!props.error
-}))
+const ui = computed(() =>
+  inputTheme({
+    size: props.size,
+    variant: props.variant,
+    color: props.color,
+    focused: isFocused.value,
+    disabled: props.disabled,
+    hasLeading: !!(props.leadingIcon || slots.leading),
+    hasError: !!props.error
+  })
+)
 
 const handleInput = (event) => {
   const target = event.target
@@ -112,11 +114,14 @@ defineExpose({
   <div :class="ui.root({ class: props.ui?.root })">
     <label v-if="label" :class="ui.label({ class: props.ui?.label })">
       {{ label }}
-      <span v-if="required" class="text-red-500">*</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
     <div :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <div v-if="leadingIcon || slots.leading" :class="ui.leadingIcon({ class: props.ui?.leadingIcon })">
+      <div
+        v-if="leadingIcon || slots.leading"
+        :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
+      >
         <slot name="leading">
           {{ leadingIcon }}
         </slot>
@@ -137,7 +142,10 @@ defineExpose({
         @change="handleChange"
       />
 
-      <div v-if="trailingIcon || slots.trailing" :class="ui.trailingIcon({ class: props.ui?.trailingIcon })">
+      <div
+        v-if="trailingIcon || slots.trailing"
+        :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
+      >
         <slot name="trailing">
           {{ trailingIcon }}
         </slot>

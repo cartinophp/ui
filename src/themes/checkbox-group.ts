@@ -3,10 +3,10 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'space-y-3',
-    label: 'block text-sm font-medium text-gray-900 mb-2',
-    description: 'text-sm text-gray-600 mb-3',
+    label: 'block text-sm font-medium text-foreground mb-2',
+    description: 'text-sm text-muted-foreground mb-3',
     items: 'space-y-2',
-    error: 'text-sm text-red-600 mt-2'
+    error: 'text-sm text-error mt-2'
   },
   variants: {
     orientation: {

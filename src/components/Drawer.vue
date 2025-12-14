@@ -38,7 +38,10 @@
             </button>
 
             <!-- Header -->
-            <div v-if="title || description || $slots.header" :class="ui.header">
+            <div
+              v-if="title || description || $slots.header"
+              :class="ui.header"
+            >
               <slot name="header">
                 <h2 v-if="title" id="drawer-title" :class="ui.title">
                   {{ title }}
@@ -95,26 +98,32 @@ const props = withDefaults(defineProps<DrawerProps>(), {
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
-  'close': []
-  'open': []
+  close: []
+  open: []
 }>()
 
 const drawerRef = ref<HTMLElement>()
 
-const ui = computed(() => theme({
-  side: props.side,
-  size: props.size
-}))
+const ui = computed(() =>
+  theme({
+    side: props.side,
+    size: props.size
+  })
+)
 
 // Animation classes based on side
-const enterActiveClass = computed(() => 'transition-transform duration-200 ease-out')
-const leaveActiveClass = computed(() => 'transition-transform duration-200 ease-in')
+const enterActiveClass = computed(
+  () => 'transition-transform duration-200 ease-out'
+)
+const leaveActiveClass = computed(
+  () => 'transition-transform duration-200 ease-in'
+)
 
 const enterFromClass = computed(() => {
   const classes = {
     left: '-translate-x-full',
     right: 'translate-x-full',
-    top: '-translate-y-full', 
+    top: '-translate-y-full',
     bottom: 'translate-y-full'
   }
   return classes[props.side]
@@ -154,20 +163,23 @@ const onEscapeKey = (event: KeyboardEvent) => {
 // Handle body scroll
 const originalStyle = ref<string>('')
 
-watch(() => props.open, (isOpen) => {
-  if (props.preventScroll) {
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (props.preventScroll) {
+      if (isOpen) {
+        originalStyle.value = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = originalStyle.value
+      }
+    }
+
     if (isOpen) {
-      originalStyle.value = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = originalStyle.value
+      emit('open')
     }
   }
-  
-  if (isOpen) {
-    emit('open')
-  }
-})
+)
 
 onMounted(() => {
   document.addEventListener('keydown', onEscapeKey)
@@ -175,7 +187,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', onEscapeKey)
-  
+
   if (props.preventScroll && props.open) {
     document.body.style.overflow = originalStyle.value
   }

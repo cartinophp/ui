@@ -4,6 +4,7 @@ import Tabs from '../../components/Tabs.vue'
 const meta: Meta<typeof Tabs> = {
   title: 'Navigation/Tabs',
   component: Tabs,
+  tags: ['autodocs'],
   args: {
     items: [
       { label: 'Tab 1', value: 'one' },

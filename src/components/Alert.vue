@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Button from './Button.vue'
-import { ui } from '../utils/ui'
+import theme from '@/themes/alert'
 
 export interface AlertProps {
   title?: string
   description?: string
   icon?: string
-  variant?: 'default' | 'destructive' | 'success' | 'warning'
-  style?: 'default' | 'filled' | 'outlined'
+  variant?: 'default' | 'destructive' | 'success' | 'warning' | 'info'
   closable?: boolean
   actions?: Array<{
     label: string
     variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
     onClick?: () => void
   }>
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
   variant: 'default',
-  style: 'default',
   closable: false
 })
 
@@ -27,10 +26,11 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const alertTheme = ui.alert({
-  variant: props.variant,
-  style: props.style
-})
+const alertTheme = computed(() =>
+  theme({
+    variant: props.variant
+  })
+)
 
 const displayIcon = computed(() => {
   if (props.icon) return props.icon
@@ -51,30 +51,39 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div :class="alertTheme.root()">
+  <div :class="alertTheme.root({ class: ui?.root })">
     <!-- Icon -->
-    <div v-if="displayIcon || $slots.icon" :class="alertTheme.icon()">
+    <div
+      v-if="displayIcon || $slots.icon"
+      :class="alertTheme.icon({ class: ui?.icon })"
+    >
       <slot name="icon">
         {{ displayIcon }}
       </slot>
     </div>
 
     <!-- Content -->
-    <div :class="alertTheme.content()">
-      <div v-if="title || $slots.title" :class="alertTheme.title()">
+    <div>
+      <div
+        v-if="title || $slots.title"
+        :class="alertTheme.title({ class: ui?.title })"
+      >
         <slot name="title">
           {{ title }}
         </slot>
       </div>
 
-      <div v-if="description || $slots.description" :class="alertTheme.description()">
+      <div
+        v-if="description || $slots.description"
+        :class="alertTheme.description({ class: ui?.description })"
+      >
         <slot name="description">
           {{ description }}
         </slot>
       </div>
 
       <!-- Actions -->
-      <div v-if="actions?.length || $slots.actions" :class="alertTheme.actions()">
+      <div v-if="actions?.length || $slots.actions" class="mt-3 flex gap-2">
         <slot name="actions">
           <Button
             v-for="(action, index) in actions"
@@ -92,7 +101,7 @@ const handleClose = () => {
     <!-- Close Button -->
     <button
       v-if="closable"
-      :class="alertTheme.close()"
+      :class="alertTheme.closeButton({ class: ui?.closeButton })"
       @click="handleClose"
       aria-label="Close alert"
     >

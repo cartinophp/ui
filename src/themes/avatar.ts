@@ -2,10 +2,10 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'inline-flex items-center justify-center shrink-0 select-none rounded-full overflow-hidden bg-gray-100',
+    root: 'inline-flex items-center justify-center shrink-0 select-none rounded-full overflow-hidden bg-muted',
     image: 'h-full w-full rounded-[inherit] object-cover',
-    fallback: 'font-medium leading-none text-gray-600 truncate',
-    icon: 'text-gray-500 shrink-0'
+    fallback: 'font-medium leading-none text-muted-foreground truncate',
+    icon: 'text-muted-foreground shrink-0'
   },
   variants: {
     size: {

@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import theme from '@/themes/card'
 
 export interface CardProps {
   title?: string
   description?: string
-  variant?: 'default' | 'outlined' | 'elevated'
-  padding?: 'none' | 'sm' | 'md' | 'lg'
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
-  hoverable?: boolean
+  variant?: 'default' | 'outline' | 'elevated' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
+  hover?: boolean
   clickable?: boolean
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
   variant: 'default',
-  padding: 'md',
-  rounded: 'lg',
-  hoverable: false,
+  size: 'md',
+  hover: false,
   clickable: false
 })
 
@@ -23,50 +23,13 @@ const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
 
-const rootClasses = computed(() => {
-  const base = 'bg-white transition-all'
-
-  const variants = {
-    default: 'border border-gray-200',
-    outlined: 'border-2 border-gray-300',
-    elevated: 'shadow-lg border border-gray-100'
-  }
-
-  const roundedSizes = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    md: 'rounded-md',
-    lg: 'rounded-lg',
-    xl: 'rounded-xl'
-  }
-
-  const interactive = props.hoverable || props.clickable
-    ? 'hover:shadow-md hover:border-gray-300'
-    : ''
-
-  const cursor = props.clickable ? 'cursor-pointer' : ''
-
-  return `${base} ${variants[props.variant]} ${roundedSizes[props.rounded]} ${interactive} ${cursor}`
-})
-
-const contentClasses = computed(() => {
-  const paddingSizes = {
-    none: 'p-0',
-    sm: 'p-3',
-    md: 'p-6',
-    lg: 'p-8'
-  }
-
-  return paddingSizes[props.padding]
-})
-
-const headerClasses = computed(() => {
-  return props.padding === 'none' ? 'p-6 pb-0' : ''
-})
-
-const footerClasses = computed(() => {
-  return props.padding === 'none' ? 'p-6 pt-0' : ''
-})
+const cardTheme = computed(() =>
+  theme({
+    variant: props.variant,
+    size: props.size,
+    hover: props.hover
+  })
+)
 
 const handleClick = (event: MouseEvent) => {
   if (props.clickable) {
@@ -76,23 +39,29 @@ const handleClick = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div :class="rootClasses" @click="handleClick">
-    <div v-if="title || description || $slots.header" :class="headerClasses">
+  <div :class="cardTheme.root({ class: ui?.root })" @click="handleClick">
+    <div
+      v-if="title || description || $slots.header"
+      :class="cardTheme.header({ class: ui?.header })"
+    >
       <slot name="header">
-        <div v-if="title" class="text-lg font-semibold text-gray-900">
+        <div v-if="title" :class="cardTheme.title({ class: ui?.title })">
           {{ title }}
         </div>
-        <div v-if="description" class="mt-1 text-sm text-gray-600">
+        <div
+          v-if="description"
+          :class="cardTheme.description({ class: ui?.description })"
+        >
           {{ description }}
         </div>
       </slot>
     </div>
 
-    <div :class="contentClasses">
+    <div :class="cardTheme.content({ class: ui?.content })">
       <slot />
     </div>
 
-    <div v-if="$slots.footer" :class="footerClasses">
+    <div v-if="$slots.footer" :class="cardTheme.footer({ class: ui?.footer })">
       <slot name="footer" />
     </div>
   </div>

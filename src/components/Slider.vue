@@ -70,12 +70,14 @@ const emit = defineEmits(['update:modelValue', 'change'])
 
 const slots = defineSlots()
 
-const ui = computed(() => sliderTheme({
-  size: props.size,
-  color: props.color,
-  orientation: props.orientation,
-  disabled: props.disabled
-}))
+const ui = computed(() =>
+  sliderTheme({
+    size: props.size,
+    color: props.color,
+    orientation: props.orientation,
+    disabled: props.disabled
+  })
+)
 
 const handleValueChange = (value) => {
   emit('update:modelValue', value)

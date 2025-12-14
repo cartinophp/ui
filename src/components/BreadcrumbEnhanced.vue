@@ -1,5 +1,9 @@
 <template>
-  <nav class="flex items-center space-x-1" aria-label="Breadcrumb" v-bind="$attrs">
+  <nav
+    class="flex items-center space-x-1"
+    aria-label="Breadcrumb"
+    v-bind="$attrs"
+  >
     <ol class="flex items-center space-x-1">
       <li v-for="(item, index) in items" :key="index" class="flex items-center">
         <component
@@ -11,8 +15,8 @@
           <Icon v-if="item.icon" :name="item.icon" class="shrink-0 size-4" />
           <span>{{ item.label }}</span>
         </component>
-        
-        <Icon 
+
+        <Icon
           v-if="index < items.length - 1"
           :name="separatorIcon"
           class="mx-2 size-4 text-muted shrink-0"
@@ -23,8 +27,6 @@
 </template>
 
 <script setup lang="ts">
-
-
 export interface BreadcrumbItem {
   label: string
   to?: string
@@ -47,7 +49,7 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 const getLinkClasses = (item: BreadcrumbItem, index: number) => {
   const isLast = index === props.items.length - 1
   const isActive = item.active || isLast
-  
+
   const sizeClasses = {
     xs: 'text-xs',
     sm: 'text-sm',
@@ -65,9 +67,7 @@ const getLinkClasses = (item: BreadcrumbItem, index: number) => {
       'text-muted hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded'
     )
   } else {
-    baseClasses.push(
-      isActive ? 'text-foreground font-medium' : 'text-muted'
-    )
+    baseClasses.push(isActive ? 'text-foreground font-medium' : 'text-muted')
   }
 
   return baseClasses.join(' ')

@@ -48,12 +48,14 @@ const emit = defineEmits([
 const slots = defineSlots()
 
 // Genera le classi CSS dal theme
-const ui = computed(() => componentTheme({
-  size: props.size,
-  color: props.color,
-  disabled: props.disabled
-  // ... altre variants
-}))
+const ui = computed(() =>
+  componentTheme({
+    size: props.size,
+    color: props.color,
+    disabled: props.disabled
+    // ... altre variants
+  })
+)
 
 // Funzioni del componente
 const handleClick = (event) => {
@@ -65,10 +67,7 @@ const handleClick = (event) => {
 
 <template>
   <!-- Root element con classe dal theme -->
-  <div
-    :class="ui.root({ class: props.ui?.root })"
-    @click="handleClick"
-  >
+  <div :class="ui.root({ class: props.ui?.root })" @click="handleClick">
     <!-- Altri elementi con le rispettive classi -->
     <div v-if="label" :class="ui.element1({ class: props.ui?.element1 })">
       {{ label }}

@@ -38,10 +38,12 @@ const slots = defineSlots<{
   footer?: () => any
 }>()
 
-const ui = computed(() => theme({
-  side: props.side,
-  size: props.size
-}))
+const ui = computed(() =>
+  theme({
+    side: props.side,
+    size: props.size
+  })
+)
 
 const handleOpenChange = (value: boolean) => {
   emit('update:open', value)
@@ -51,7 +53,9 @@ const handleOpenChange = (value: boolean) => {
 <template>
   <DialogRoot :open="open" @update:open="handleOpenChange">
     <DialogPortal>
-      <DialogOverlay class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+      <DialogOverlay
+        class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      />
 
       <DialogContent :class="ui.root({ class: props.ui?.root })">
         <!-- Close Button -->
@@ -61,12 +65,21 @@ const handleOpenChange = (value: boolean) => {
         </DialogClose>
 
         <!-- Header -->
-        <div v-if="title || description || slots.header" :class="ui.header({ class: props.ui?.header })">
+        <div
+          v-if="title || description || slots.header"
+          :class="ui.header({ class: props.ui?.header })"
+        >
           <slot name="header">
-            <DialogTitle v-if="title" :class="ui.title({ class: props.ui?.title })">
+            <DialogTitle
+              v-if="title"
+              :class="ui.title({ class: props.ui?.title })"
+            >
               {{ title }}
             </DialogTitle>
-            <DialogDescription v-if="description" :class="ui.description({ class: props.ui?.description })">
+            <DialogDescription
+              v-if="description"
+              :class="ui.description({ class: props.ui?.description })"
+            >
               {{ description }}
             </DialogDescription>
           </slot>
@@ -78,7 +91,10 @@ const handleOpenChange = (value: boolean) => {
         </div>
 
         <!-- Footer -->
-        <div v-if="slots.footer" :class="ui.footer({ class: props.ui?.footer })">
+        <div
+          v-if="slots.footer"
+          :class="ui.footer({ class: props.ui?.footer })"
+        >
           <slot name="footer" />
         </div>
       </DialogContent>

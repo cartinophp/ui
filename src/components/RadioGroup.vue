@@ -63,9 +63,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const slots = defineSlots()
 
-const ui = computed(() => radioGroupTheme({
-  orientation: props.orientation
-}))
+const ui = computed(() =>
+  radioGroupTheme({
+    orientation: props.orientation
+  })
+)
 
 const handleUpdate = (value) => {
   emit('update:modelValue', value)
@@ -76,10 +78,13 @@ const handleUpdate = (value) => {
   <div :class="ui.root({ class: [props.ui?.root, props.class] })">
     <label v-if="label" :class="ui.label({ class: props.ui?.label })">
       {{ label }}
-      <span v-if="required" class="text-red-500">*</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
-    <p v-if="description" :class="ui.description({ class: props.ui?.description })">
+    <p
+      v-if="description"
+      :class="ui.description({ class: props.ui?.description })"
+    >
       {{ description }}
     </p>
 

@@ -65,24 +65,26 @@ const emit = defineEmits(['update:modelValue', 'select', 'hover'])
 
 const slots = defineSlots()
 
-const ui = computed(() => tableTheme({
-  striped: props.striped,
-  hoverable: props.hoverable,
-  bordered: props.bordered,
-  compact: props.compact,
-  sticky: props.sticky
-}))
+const ui = computed(() =>
+  tableTheme({
+    striped: props.striped,
+    hoverable: props.hoverable,
+    bordered: props.bordered,
+    compact: props.compact,
+    sticky: props.sticky
+  })
+)
 
 const isRowSelected = (row) => {
   if (!props.selectable) return false
-  return props.modelValue.some(selected => selected === row)
+  return props.modelValue.some((selected) => selected === row)
 }
 
 const toggleRowSelection = (row) => {
   if (!props.selectable) return
 
   const newValue = [...props.modelValue]
-  const index = newValue.findIndex(selected => selected === row)
+  const index = newValue.findIndex((selected) => selected === row)
 
   if (index > -1) {
     newValue.splice(index, 1)
@@ -110,15 +112,26 @@ const getCellValue = (row, column) => {
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+  >
     <table data-slot="base" :class="ui.base({ class: props.ui?.base })">
-      <caption v-if="caption || slots.caption" data-slot="caption" :class="ui.caption({ class: props.ui?.caption })">
+      <caption
+        v-if="caption || slots.caption"
+        data-slot="caption"
+        :class="ui.caption({ class: props.ui?.caption })"
+      >
         <slot name="caption">
           {{ caption }}
         </slot>
       </caption>
 
-      <thead v-if="columns.length" data-slot="thead" :class="ui.thead({ class: props.ui?.thead })">
+      <thead
+        v-if="columns.length"
+        data-slot="thead"
+        :class="ui.thead({ class: props.ui?.thead })"
+      >
         <tr data-slot="tr" :class="ui.tr({ class: props.ui?.tr })">
           <th
             v-if="selectable"
@@ -144,7 +157,11 @@ const getCellValue = (row, column) => {
 
       <slot name="body-top" />
 
-      <tbody v-if="!loading && data.length" data-slot="tbody" :class="ui.tbody({ class: props.ui?.tbody })">
+      <tbody
+        v-if="!loading && data.length"
+        data-slot="tbody"
+        :class="ui.tbody({ class: props.ui?.tbody })"
+      >
         <tr
           v-for="(row, rowIndex) in data"
           :key="rowIndex"
@@ -165,7 +182,7 @@ const getCellValue = (row, column) => {
             <input
               type="checkbox"
               :checked="isRowSelected(row)"
-              class="rounded border-gray-300"
+              class="rounded border-border"
             />
           </td>
 
@@ -176,7 +193,12 @@ const getCellValue = (row, column) => {
             :class="[ui.td({ class: props.ui?.td }), column.meta?.class]"
             :style="column.meta?.style"
           >
-            <slot :name="`${column.accessorKey}-cell`" :row="row" :column="column" :value="getCellValue(row, column)">
+            <slot
+              :name="`${column.accessorKey}-cell`"
+              :row="row"
+              :column="column"
+              :value="getCellValue(row, column)"
+            >
               {{ getCellValue(row, column) }}
             </slot>
           </td>
@@ -185,18 +207,28 @@ const getCellValue = (row, column) => {
 
       <slot name="body-bottom" />
 
-      <tfoot v-if="slots.footer" data-slot="tfoot" :class="ui.tfoot({ class: props.ui?.tfoot })">
+      <tfoot
+        v-if="slots.footer"
+        data-slot="tfoot"
+        :class="ui.tfoot({ class: props.ui?.tfoot })"
+      >
         <slot name="footer" />
       </tfoot>
     </table>
 
-    <div v-if="loading" data-slot="loading" :class="ui.loading({ class: props.ui?.loading })">
-      <slot name="loading">
-        Loading...
-      </slot>
+    <div
+      v-if="loading"
+      data-slot="loading"
+      :class="ui.loading({ class: props.ui?.loading })"
+    >
+      <slot name="loading"> Loading... </slot>
     </div>
 
-    <div v-else-if="!data.length" data-slot="empty" :class="ui.empty({ class: props.ui?.empty })">
+    <div
+      v-else-if="!data.length"
+      data-slot="empty"
+      :class="ui.empty({ class: props.ui?.empty })"
+    >
       <slot name="empty">
         {{ empty }}
       </slot>

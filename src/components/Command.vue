@@ -82,10 +82,16 @@ const handleSelect = (item: CommandItem) => {
           <slot>
             <template v-if="groups">
               <template v-for="(group, groupIndex) in groups" :key="groupIndex">
-                <ComboboxSeparator v-if="groupIndex > 0" :class="ui.separator({ class: props.ui?.separator })" />
+                <ComboboxSeparator
+                  v-if="groupIndex > 0"
+                  :class="ui.separator({ class: props.ui?.separator })"
+                />
 
                 <ComboboxGroup>
-                  <ComboboxLabel v-if="group.heading" :class="ui.groupLabel({ class: props.ui?.groupLabel })">
+                  <ComboboxLabel
+                    v-if="group.heading"
+                    :class="ui.groupLabel({ class: props.ui?.groupLabel })"
+                  >
                     {{ group.heading }}
                   </ComboboxLabel>
 
@@ -107,7 +113,9 @@ const handleSelect = (item: CommandItem) => {
                     </span>
                     <span
                       v-if="item.shortcut"
-                      :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+                      :class="
+                        ui.itemShortcut({ class: props.ui?.itemShortcut })
+                      "
                     >
                       {{ item.shortcut }}
                     </span>

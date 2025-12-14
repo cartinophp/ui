@@ -1,3 +1,84 @@
+/**
+ * ============================================
+ * CARTINO UI - THEMING SYSTEM
+ * ============================================
+ *
+ * INTEGRATION GUIDE FOR COMPONENTS
+ *
+ * This theming system provides a complete, type-safe styling solution
+ * using tailwind-variants with our custom color system.
+ *
+ * === STEP 1: IMPORT THE THEME ===
+ * In your component's <script setup>:
+ *
+ *   import theme from '@/themes/your-component'
+ *
+ * === STEP 2: COMPUTE THE UI CLASSES ===
+ * Create a computed property that applies the theme with your props:
+ *
+ *   const ui = computed(() => theme({
+ *     variant: props.variant,
+ *     color: props.color,
+ *     size: props.size,
+ *     disabled: props.disabled
+ *   }))
+ *
+ * === STEP 3: APPLY TO TEMPLATE ===
+ * Use the ui object in your template (supports slot-based theming):
+ *
+ *   <button :class="ui.base({ class: props.ui?.base })">
+ *     <span :class="ui.label({ class: props.ui?.label })">
+ *       {{ label }}
+ *     </span>
+ *   </button>
+ *
+ * === STEP 4: ALLOW UI CUSTOMIZATION ===
+ * Accept a `ui` prop for component-level customization:
+ *
+ *   interface Props {
+ *     // ... other props
+ *     ui?: Record<string, any>
+ *   }
+ *
+ * === AVAILABLE COLOR TOKENS ===
+ * Use these in your themes for consistent, accessible colors:
+ *
+ * Primary Colors:
+ *   - primary, primary-foreground
+ *   - secondary, secondary-foreground
+ *
+ * Semantic Colors:
+ *   - success, success-foreground
+ *   - warning, warning-foreground
+ *   - error/destructive, error-foreground
+ *   - info, info-foreground
+ *
+ * Neutral Colors:
+ *   - background, foreground
+ *   - default, elevated
+ *   - muted, muted-foreground
+ *   - accent, accent-foreground
+ *   - card, card-foreground
+ *
+ * Borders & Interactive:
+ *   - border, input, ring
+ *   - highlighted (primary text)
+ *
+ * All colors support light/dark mode automatically!
+ *
+ * === EXAMPLE USAGE ===
+ * See Button.vue and Radio.vue for complete examples.
+ *
+ * === CREATING NEW THEMES ===
+ * 1. Copy src/themes/_template.ts
+ * 2. Rename it to your component name
+ * 3. Define slots for each element
+ * 4. Add variants (size, color, variant, states)
+ * 5. Use compoundVariants for complex combinations
+ * 6. Set defaultVariants
+ * 7. Export the theme
+ */
+
 // Type definitions for themes
 export type ThemeFunction = (...args: any[]) => any
 

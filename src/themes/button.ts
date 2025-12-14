@@ -1,19 +1,24 @@
 import { tv } from 'tailwind-variants'
 
+/**
+ * Button Component Theme
+ * Supports all variants, colors, sizes, and states
+ * Uses the Cartino UI color system tokens
+ */
 export default tv({
   slots: {
-    base: 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
+    base: 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
     label: 'truncate',
     leadingIcon: 'shrink-0',
     trailingIcon: 'shrink-0'
   },
   variants: {
     variant: {
-      solid: '',
-      outline: 'border-2',
+      solid: 'shadow-sm',
+      outline: 'border-2 bg-transparent',
       soft: '',
-      ghost: '',
-      link: 'underline-offset-4 hover:underline'
+      ghost: 'bg-transparent shadow-none',
+      link: 'bg-transparent shadow-none underline-offset-4 hover:underline px-0'
     },
     color: {
       primary: '',
@@ -21,7 +26,7 @@ export default tv({
       success: '',
       warning: '',
       error: '',
-      neutral: ''
+      info: ''
     },
     size: {
       xs: {
@@ -51,7 +56,9 @@ export default tv({
       }
     },
     loading: {
-      true: 'cursor-wait opacity-75'
+      true: {
+        base: 'cursor-wait opacity-75'
+      }
     },
     block: {
       true: {
@@ -66,7 +73,7 @@ export default tv({
     }
   },
   compoundVariants: [
-    // Solid variants
+    // ===== SOLID VARIANT =====
     {
       variant: 'solid',
       color: 'primary',
@@ -85,31 +92,32 @@ export default tv({
       variant: 'solid',
       color: 'success',
       class: {
-        base: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500'
+        base: 'bg-success text-success-foreground hover:bg-success/90 focus:ring-success'
       }
     },
     {
       variant: 'solid',
       color: 'warning',
       class: {
-        base: 'bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500'
+        base: 'bg-warning text-warning-foreground hover:bg-warning/90 focus:ring-warning'
       }
     },
     {
       variant: 'solid',
       color: 'error',
       class: {
-        base: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
+        base: 'bg-error text-error-foreground hover:bg-error/90 focus:ring-error'
       }
     },
     {
       variant: 'solid',
-      color: 'neutral',
+      color: 'info',
       class: {
-        base: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500'
+        base: 'bg-info text-info-foreground hover:bg-info/90 focus:ring-info'
       }
     },
-    // Outline variants
+
+    // ===== OUTLINE VARIANT =====
     {
       variant: 'outline',
       color: 'primary',
@@ -121,24 +129,39 @@ export default tv({
       variant: 'outline',
       color: 'secondary',
       class: {
-        base: 'border-secondary text-secondary hover:bg-secondary/10 focus:ring-secondary'
+        base: 'border-border text-foreground hover:bg-accent focus:ring-ring'
       }
     },
     {
       variant: 'outline',
       color: 'success',
       class: {
-        base: 'border-green-600 text-green-600 hover:bg-green-50 focus:ring-green-500'
+        base: 'border-success text-success hover:bg-success/10 focus:ring-success'
+      }
+    },
+    {
+      variant: 'outline',
+      color: 'warning',
+      class: {
+        base: 'border-warning text-warning hover:bg-warning/10 focus:ring-warning'
       }
     },
     {
       variant: 'outline',
       color: 'error',
       class: {
-        base: 'border-red-600 text-red-600 hover:bg-red-50 focus:ring-red-500'
+        base: 'border-error text-error hover:bg-error/10 focus:ring-error'
       }
     },
-    // Soft variants
+    {
+      variant: 'outline',
+      color: 'info',
+      class: {
+        base: 'border-info text-info hover:bg-info/10 focus:ring-info'
+      }
+    },
+
+    // ===== SOFT VARIANT =====
     {
       variant: 'soft',
       color: 'primary',
@@ -148,19 +171,41 @@ export default tv({
     },
     {
       variant: 'soft',
+      color: 'secondary',
+      class: {
+        base: 'bg-secondary/10 text-secondary-foreground hover:bg-secondary/20 focus:ring-ring'
+      }
+    },
+    {
+      variant: 'soft',
       color: 'success',
       class: {
-        base: 'bg-green-50 text-green-700 hover:bg-green-100 focus:ring-green-500'
+        base: 'bg-success/10 text-success hover:bg-success/20 focus:ring-success'
+      }
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      class: {
+        base: 'bg-warning/10 text-warning hover:bg-warning/20 focus:ring-warning'
       }
     },
     {
       variant: 'soft',
       color: 'error',
       class: {
-        base: 'bg-red-50 text-red-700 hover:bg-red-100 focus:ring-red-500'
+        base: 'bg-error/10 text-error hover:bg-error/20 focus:ring-error'
       }
     },
-    // Ghost variants
+    {
+      variant: 'soft',
+      color: 'info',
+      class: {
+        base: 'bg-info/10 text-info hover:bg-info/20 focus:ring-info'
+      }
+    },
+
+    // ===== GHOST VARIANT =====
     {
       variant: 'ghost',
       color: 'primary',
@@ -170,12 +215,41 @@ export default tv({
     },
     {
       variant: 'ghost',
-      color: 'error',
+      color: 'secondary',
       class: {
-        base: 'text-red-600 hover:bg-red-50 focus:ring-red-500'
+        base: 'text-foreground hover:bg-accent focus:ring-ring'
       }
     },
-    // Link variants
+    {
+      variant: 'ghost',
+      color: 'success',
+      class: {
+        base: 'text-success hover:bg-success/10 focus:ring-success'
+      }
+    },
+    {
+      variant: 'ghost',
+      color: 'warning',
+      class: {
+        base: 'text-warning hover:bg-warning/10 focus:ring-warning'
+      }
+    },
+    {
+      variant: 'ghost',
+      color: 'error',
+      class: {
+        base: 'text-error hover:bg-error/10 focus:ring-error'
+      }
+    },
+    {
+      variant: 'ghost',
+      color: 'info',
+      class: {
+        base: 'text-info hover:bg-info/10 focus:ring-info'
+      }
+    },
+
+    // ===== LINK VARIANT =====
     {
       variant: 'link',
       color: 'primary',
@@ -183,46 +257,67 @@ export default tv({
         base: 'text-primary hover:text-primary/80'
       }
     },
-    // Square size adjustments
+    {
+      variant: 'link',
+      color: 'secondary',
+      class: {
+        base: 'text-muted hover:text-foreground'
+      }
+    },
+    {
+      variant: 'link',
+      color: 'error',
+      class: {
+        base: 'text-error hover:text-error/80'
+      }
+    },
+    // ===== SQUARE SIZE ADJUSTMENTS =====
     {
       square: true,
       size: 'xs',
       class: {
-        base: 'p-1'
+        base: 'p-1 aspect-square'
       }
     },
     {
       square: true,
       size: 'sm',
       class: {
-        base: 'p-1.5'
+        base: 'p-1.5 aspect-square'
       }
     },
     {
       square: true,
       size: 'md',
       class: {
-        base: 'p-2'
+        base: 'p-2 aspect-square'
       }
     },
     {
       square: true,
       size: 'lg',
       class: {
-        base: 'p-3'
+        base: 'p-3 aspect-square'
       }
     },
     {
       square: true,
       size: 'xl',
       class: {
-        base: 'p-4'
+        base: 'p-4 aspect-square'
       }
     }
   ],
   defaultVariants: {
     variant: 'solid',
     color: 'primary',
-    size: 'md'
+    size: 'md',
+    loading: false,
+    block: false,
+    square: false,
+    disabled: false
   }
 })
+
+// Export type for TypeScript support
+export type ButtonThemeVariants = Parameters<typeof tv>[0]

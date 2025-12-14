@@ -4,6 +4,7 @@ import Skeleton from '../../components/Skeleton.vue'
 const meta: Meta<typeof Skeleton> = {
   title: 'Components/Skeleton',
   component: Skeleton,
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',

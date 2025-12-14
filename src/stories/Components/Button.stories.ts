@@ -6,19 +6,36 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
+      description: 'Button color theme'
+    },
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'outline', 'ghost'],
+      options: ['solid', 'outline', 'soft', 'ghost', 'link'],
       description: 'Button variant style'
     },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
       description: 'Button size'
     },
     disabled: {
       control: 'boolean',
       description: 'Disabled state'
+    },
+    loading: {
+      control: 'boolean',
+      description: 'Loading state'
+    },
+    square: {
+      control: 'boolean',
+      description: 'Square shape (no horizontal padding)'
+    },
+    block: {
+      control: 'boolean',
+      description: 'Full width button'
     },
     type: {
       control: 'select',
@@ -27,118 +44,129 @@ const meta = {
     }
   },
   args: {
-    variant: 'primary',
+    color: 'primary',
+    variant: 'solid',
     size: 'md',
     disabled: false,
-    type: 'button'
+    loading: false,
+    square: false,
+    block: false,
+    type: 'button',
+    label: 'Button'
   }
 } satisfies Meta<typeof Button>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Solid: Story = {
   args: {
-    variant: 'primary'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Primary Button</Button>'
-  })
-}
-
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Secondary Button</Button>'
-  })
+    color: 'primary',
+    variant: 'solid',
+    label: 'Solid Button'
+  }
 }
 
 export const Outline: Story = {
   args: {
-    variant: 'outline'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Outline Button</Button>'
-  })
+    variant: 'outline',
+    label: 'Outline Button'
+  }
+}
+
+export const Soft: Story = {
+  args: {
+    variant: 'soft',
+    label: 'Soft Button'
+  }
 }
 
 export const Ghost: Story = {
   args: {
-    variant: 'ghost'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Ghost Button</Button>'
-  })
+    variant: 'ghost',
+    label: 'Ghost Button'
+  }
+}
+
+export const Link: Story = {
+  args: {
+    variant: 'link',
+    label: 'Link Button'
+  }
+}
+
+export const Success: Story = {
+  args: {
+    color: 'success',
+    variant: 'solid',
+    label: 'Success'
+  }
+}
+
+export const Warning: Story = {
+  args: {
+    color: 'warning',
+    variant: 'solid',
+    label: 'Warning'
+  }
+}
+
+export const Error: Story = {
+  args: {
+    color: 'error',
+    variant: 'solid',
+    label: 'Error'
+  }
 }
 
 export const Small: Story = {
   args: {
-    size: 'sm'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Small Button</Button>'
-  })
+    size: 'sm',
+    label: 'Small Button'
+  }
 }
 
 export const Medium: Story = {
   args: {
-    size: 'md'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Medium Button</Button>'
-  })
+    size: 'md',
+    label: 'Medium Button'
+  }
 }
 
 export const Large: Story = {
   args: {
-    size: 'lg'
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Large Button</Button>'
-  })
+    size: 'lg',
+    label: 'Large Button'
+  }
 }
 
 export const Disabled: Story = {
   args: {
-    disabled: true
-  },
-  render: (args) => ({
-    components: { Button },
-    setup() {
-      return { args }
-    },
-    template: '<Button v-bind="args">Disabled Button</Button>'
-  })
+    disabled: true,
+    label: 'Disabled Button'
+  }
+}
+
+export const Loading: Story = {
+  args: {
+    loading: true,
+    label: 'Loading...'
+  }
+}
+
+export const Block: Story = {
+  args: {
+    block: true,
+    label: 'Block Button'
+  }
+}
+
+export const WithIcons: Story = {
+  args: {
+    leadingIcon: 'i-heroicons-plus',
+    trailingIcon: 'i-heroicons-arrow-right',
+    label: 'With Icons'
+  }
 }
 
 export const AllVariants: Story = {
@@ -147,18 +175,26 @@ export const AllVariants: Story = {
     template: `
       <div class="space-y-4">
         <div class="flex flex-wrap gap-4">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
+          <Button color="primary" variant="solid">Solid</Button>
+          <Button color="primary" variant="outline">Outline</Button>
+          <Button color="primary" variant="soft">Soft</Button>
+          <Button color="primary" variant="ghost">Ghost</Button>
+          <Button color="primary" variant="link">Link</Button>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <Button color="primary">Primary</Button>
+          <Button color="secondary">Secondary</Button>
+          <Button color="success">Success</Button>
+          <Button color="warning">Warning</Button>
+          <Button color="error">Error</Button>
+          <Button color="info">Info</Button>
         </div>
         <div class="flex flex-wrap items-center gap-4">
+          <Button size="xs">XS</Button>
           <Button size="sm">Small</Button>
           <Button size="md">Medium</Button>
           <Button size="lg">Large</Button>
-        </div>
-        <div class="flex flex-wrap gap-4">
-          <Button disabled>Disabled</Button>
+          <Button size="xl">XL</Button>
         </div>
       </div>
     `

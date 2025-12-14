@@ -8,25 +8,25 @@ export default tv({
   variants: {
     color: {
       primary: {
-        base: 'bg-primary-500 text-white'
+        base: 'bg-primary text-primary-foreground'
       },
       secondary: {
-        base: 'bg-gray-500 text-white'
+        base: 'bg-secondary text-secondary-foreground'
       },
       success: {
-        base: 'bg-green-500 text-white'
+        base: 'bg-success text-success-foreground'
       },
       info: {
-        base: 'bg-blue-500 text-white'
+        base: 'bg-info text-info-foreground'
       },
       warning: {
-        base: 'bg-yellow-500 text-white'
+        base: 'bg-warning text-warning-foreground'
       },
       error: {
-        base: 'bg-red-500 text-white'
+        base: 'bg-error text-error-foreground'
       },
       neutral: {
-        base: 'bg-gray-100 text-gray-900'
+        base: 'bg-muted text-foreground'
       }
     },
     size: {

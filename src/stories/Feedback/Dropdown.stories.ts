@@ -32,8 +32,16 @@ export const Default: Story = {
     components: { Dropdown, Button },
     setup() {
       const items = [
-        { label: 'Profile', icon: '👤', onClick: () => alert('Profile clicked') },
-        { label: 'Settings', icon: '⚙️', onClick: () => alert('Settings clicked') },
+        {
+          label: 'Profile',
+          icon: '👤',
+          onClick: () => alert('Profile clicked')
+        },
+        {
+          label: 'Settings',
+          icon: '⚙️',
+          onClick: () => alert('Settings clicked')
+        },
         { separator: true },
         { label: 'Logout', icon: '🚪', onClick: () => alert('Logout clicked') }
       ]
@@ -55,14 +63,39 @@ export const WithLabels: Story = {
     setup() {
       const items = [
         { label: 'Account' },
-        { label: 'Profile', icon: '👤', value: 'profile', onClick: () => alert('Profile') },
-        { label: 'Billing', icon: '💳', value: 'billing', onClick: () => alert('Billing') },
+        {
+          label: 'Profile',
+          icon: '👤',
+          value: 'profile',
+          onClick: () => alert('Profile')
+        },
+        {
+          label: 'Billing',
+          icon: '💳',
+          value: 'billing',
+          onClick: () => alert('Billing')
+        },
         { separator: true },
         { label: 'Settings' },
-        { label: 'Preferences', icon: '⚙️', value: 'preferences', onClick: () => alert('Preferences') },
-        { label: 'Keyboard Shortcuts', icon: '⌨️', value: 'shortcuts', onClick: () => alert('Shortcuts') },
+        {
+          label: 'Preferences',
+          icon: '⚙️',
+          value: 'preferences',
+          onClick: () => alert('Preferences')
+        },
+        {
+          label: 'Keyboard Shortcuts',
+          icon: '⌨️',
+          value: 'shortcuts',
+          onClick: () => alert('Shortcuts')
+        },
         { separator: true },
-        { label: 'Logout', icon: '🚪', value: 'logout', onClick: () => alert('Logout') }
+        {
+          label: 'Logout',
+          icon: '🚪',
+          value: 'logout',
+          onClick: () => alert('Logout')
+        }
       ]
       return { args, items }
     },
@@ -135,10 +168,20 @@ export const WithDisabledItems: Story = {
     setup() {
       const items = [
         { label: 'New File', icon: '📄', onClick: () => alert('New File') },
-        { label: 'New Folder', icon: '📁', disabled: true, onClick: () => alert('New Folder') },
+        {
+          label: 'New Folder',
+          icon: '📁',
+          disabled: true,
+          onClick: () => alert('New Folder')
+        },
         { separator: true },
         { label: 'Save', icon: '💾', onClick: () => alert('Save') },
-        { label: 'Save As...', icon: '💾', disabled: true, onClick: () => alert('Save As') }
+        {
+          label: 'Save As...',
+          icon: '💾',
+          disabled: true,
+          onClick: () => alert('Save As')
+        }
       ]
       return { args, items }
     },

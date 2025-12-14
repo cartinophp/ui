@@ -9,6 +9,7 @@ export interface BadgeProps {
   size?: 'sm' | 'md' | 'lg'
   rounded?: boolean
   closable?: boolean
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<BadgeProps>(), {
@@ -23,12 +24,14 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const ui = computed(() => theme({
-  variant: props.variant,
-  color: props.color,
-  size: props.size,
-  rounded: props.rounded
-}))
+const badgeTheme = computed(() =>
+  theme({
+    variant: props.variant,
+    color: props.color,
+    size: props.size,
+    rounded: props.rounded
+  })
+)
 
 const handleClose = () => {
   emit('close')
@@ -36,7 +39,7 @@ const handleClose = () => {
 </script>
 
 <template>
-  <span :class="ui.root">
+  <span :class="badgeTheme.root({ class: ui?.root })">
     <slot name="leading" />
 
     <span v-if="label || $slots.default">
@@ -47,7 +50,7 @@ const handleClose = () => {
 
     <button
       v-if="closable"
-      :class="ui.closeButton"
+      :class="badgeTheme.closeButton({ class: ui?.closeButton })"
       @click="handleClose"
       aria-label="Close badge"
     >

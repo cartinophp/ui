@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+import { computed } from 'vue'
 import {
   AccordionRoot,
   AccordionItem,
@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
   AccordionContent
 } from 'reka-ui'
-import { ui } from '../utils/ui'
+import theme from '@/themes/accordion'
 
 export interface AccordionItem {
   label?: string
@@ -26,6 +26,7 @@ export interface AccordionProps {
   disabled?: boolean
   variant?: 'default' | 'separated' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<AccordionProps>(), {
@@ -34,10 +35,12 @@ const props = withDefaults(defineProps<AccordionProps>(), {
   size: 'md'
 })
 
-const accordionTheme = ui.accordion({
-  variant: props.variant,
-  size: props.size
-})
+const accordionTheme = computed(() =>
+  theme({
+    variant: props.variant,
+    size: props.size
+  })
+)
 </script>
 
 <template>
@@ -46,17 +49,19 @@ const accordionTheme = ui.accordion({
     :collapsible="collapsible"
     :default-value="defaultValue"
     :disabled="disabled"
-    :class="accordionTheme.root()"
+    :class="accordionTheme.root({ class: ui?.root })"
   >
     <AccordionItem
       v-for="(item, index) in items"
       :key="item.value || index"
       :value="item.value || String(index)"
       :disabled="item.disabled || disabled"
-      :class="accordionTheme.item()"
+      :class="accordionTheme.item({ class: ui?.item })"
     >
       <AccordionHeader as-child>
-        <AccordionTrigger :class="accordionTheme.trigger()">
+        <AccordionTrigger
+          :class="accordionTheme.trigger({ class: ui?.trigger })"
+        >
           <div class="flex items-center gap-2">
             <slot name="leading" :item="item" :index="index">
               <span v-if="item.icon" class="text-muted-foreground">
@@ -82,7 +87,7 @@ const accordionTheme = ui.accordion({
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              :class="accordionTheme.icon()"
+              :class="accordionTheme.icon({ class: ui?.icon })"
             >
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -90,8 +95,8 @@ const accordionTheme = ui.accordion({
         </AccordionTrigger>
       </AccordionHeader>
 
-      <AccordionContent :class="accordionTheme.content()">
-        <div :class="accordionTheme.contentInner()">
+      <AccordionContent :class="accordionTheme.content({ class: ui?.content })">
+        <div :class="accordionTheme.contentInner({ class: ui?.contentInner })">
           <slot name="content" :item="item" :index="index">
             {{ item.content }}
           </slot>
@@ -102,11 +107,11 @@ const accordionTheme = ui.accordion({
 </template>
 
 <style>
-.overflow-hidden[data-state="open"] {
+.overflow-hidden[data-state='open'] {
   animation: accordion-down 0.2s ease-out;
 }
 
-.overflow-hidden[data-state="closed"] {
+.overflow-hidden[data-state='closed'] {
   animation: accordion-up 0.2s ease-out;
 }
 </style>

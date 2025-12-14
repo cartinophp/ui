@@ -4,8 +4,8 @@ export default tv({
   slots: {
     root: 'relative group/user',
     wrapper: '',
-    name: 'font-medium text-gray-900',
-    description: 'text-gray-500',
+    name: 'font-medium text-foreground',
+    description: 'text-muted-foreground',
     avatar: 'shrink-0'
   },
   variants: {
@@ -60,8 +60,9 @@ export default tv({
     to: {
       true: {
         root: 'cursor-pointer',
-        name: 'transition-colors hover:text-gray-700',
-        description: 'transition-colors group-hover/user:text-gray-600',
+        name: 'transition-colors hover:text-foreground/80',
+        description:
+          'transition-colors group-hover/user:text-muted-foreground/80',
         avatar: 'transition-transform group-hover/user:scale-105'
       }
     }

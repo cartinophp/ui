@@ -97,10 +97,12 @@ const emit = defineEmits(['update:page'])
 
 const slots = defineSlots()
 
-const ui = computed(() => paginationTheme({
-  size: props.size,
-  disabled: props.disabled
-}))
+const ui = computed(() =>
+  paginationTheme({
+    size: props.size,
+    disabled: props.disabled
+  })
+)
 
 const pageCount = computed(() => Math.ceil(props.total / props.itemsPerPage))
 
@@ -158,8 +160,16 @@ const goToLast = () => goToPage(pageCount.value)
   >
     <ul data-slot="list" :class="ui.list({ class: props.ui?.list })">
       <!-- First button -->
-      <li v-if="showControls" data-slot="first" :class="ui.first({ class: props.ui?.first })">
-        <slot name="first" :disabled="isFirstPage || disabled" :onClick="goToFirst">
+      <li
+        v-if="showControls"
+        data-slot="first"
+        :class="ui.first({ class: props.ui?.first })"
+      >
+        <slot
+          name="first"
+          :disabled="isFirstPage || disabled"
+          :onClick="goToFirst"
+        >
           <UButton
             :icon="firstIcon"
             :color="color"
@@ -173,8 +183,16 @@ const goToLast = () => goToPage(pageCount.value)
       </li>
 
       <!-- Previous button -->
-      <li v-if="showControls" data-slot="prev" :class="ui.prev({ class: props.ui?.prev })">
-        <slot name="prev" :disabled="isFirstPage || disabled" :onClick="goToPrev">
+      <li
+        v-if="showControls"
+        data-slot="prev"
+        :class="ui.prev({ class: props.ui?.prev })"
+      >
+        <slot
+          name="prev"
+          :disabled="isFirstPage || disabled"
+          :onClick="goToPrev"
+        >
           <UButton
             :icon="prevIcon"
             :color="color"
@@ -210,14 +228,20 @@ const goToLast = () => goToPage(pageCount.value)
             :to="to ? to(item) : undefined"
             @click="() => goToPage(item)"
           >
-            <span data-slot="label" :class="ui.label({ class: props.ui?.label })">
+            <span
+              data-slot="label"
+              :class="ui.label({ class: props.ui?.label })"
+            >
               {{ item }}
             </span>
           </UButton>
         </slot>
 
         <slot v-else name="ellipsis">
-          <div data-slot="ellipsis" :class="ui.ellipsis({ class: props.ui?.ellipsis })">
+          <div
+            data-slot="ellipsis"
+            :class="ui.ellipsis({ class: props.ui?.ellipsis })"
+          >
             <UButton
               :icon="ellipsisIcon"
               :color="color"
@@ -230,8 +254,16 @@ const goToLast = () => goToPage(pageCount.value)
       </li>
 
       <!-- Next button -->
-      <li v-if="showControls" data-slot="next" :class="ui.next({ class: props.ui?.next })">
-        <slot name="next" :disabled="isLastPage || disabled" :onClick="goToNext">
+      <li
+        v-if="showControls"
+        data-slot="next"
+        :class="ui.next({ class: props.ui?.next })"
+      >
+        <slot
+          name="next"
+          :disabled="isLastPage || disabled"
+          :onClick="goToNext"
+        >
           <UButton
             :icon="nextIcon"
             :color="color"
@@ -245,8 +277,16 @@ const goToLast = () => goToPage(pageCount.value)
       </li>
 
       <!-- Last button -->
-      <li v-if="showControls" data-slot="last" :class="ui.last({ class: props.ui?.last })">
-        <slot name="last" :disabled="isLastPage || disabled" :onClick="goToLast">
+      <li
+        v-if="showControls"
+        data-slot="last"
+        :class="ui.last({ class: props.ui?.last })"
+      >
+        <slot
+          name="last"
+          :disabled="isLastPage || disabled"
+          :onClick="goToLast"
+        >
           <UButton
             :icon="lastIcon"
             :color="color"
