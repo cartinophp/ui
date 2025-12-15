@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import {
   DialogClose,
   DialogContent,
@@ -9,17 +10,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'reka-ui'
+import theme from '@/themes/dialog'
 
 export interface DialogProps {
   open?: boolean
   defaultOpen?: boolean
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
-const props = defineProps<DialogProps>()
+const { open, defaultOpen, size } = withDefaults(defineProps<DialogProps>(), {
+  size: 'lg'
+})
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
 }>()
+
+const ui = computed(() => theme({
+  size
+}))
 </script>
 
 <template>
@@ -33,34 +42,26 @@ const emit = defineEmits<{
     </DialogTrigger>
 
     <DialogPortal>
-      <DialogOverlay
-        class="dialog-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-      />
-      <DialogContent
-        class="dialog-content fixed left-1/2 top-1/2 z-50 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-6 shadow-lg"
-      >
-        <DialogTitle
-          v-if="$slots.title"
-          class="text-lg font-semibold text-gray-900"
-        >
-          <slot name="title" />
-        </DialogTitle>
+      <DialogOverlay :class="ui.overlay()" />
+      <DialogContent :class="ui.content()" style="transform: translate(-50%, -50%)">
+        <div v-if="$slots.title || $slots.description" :class="ui.header()">
+          <DialogTitle v-if="$slots.title" :class="ui.title()">
+            <slot name="title" />
+          </DialogTitle>
+          <DialogDescription v-if="$slots.description" :class="ui.description()">
+            <slot name="description" />
+          </DialogDescription>
+        </div>
 
-        <DialogDescription
-          v-if="$slots.description"
-          class="mt-2 text-sm text-gray-600"
-        >
-          <slot name="description" />
-        </DialogDescription>
-
-        <div class="mt-4">
+        <div :class="ui.body()">
           <slot />
         </div>
 
-        <DialogClose
-          class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none"
-        >
-          <span class="sr-only">Close</span>
+        <div v-if="$slots.footer" :class="ui.footer()">
+          <slot name="footer" />
+        </div>
+
+        <DialogClose :class="ui.close()" aria-label="Close dialog">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -81,25 +82,3 @@ const emit = defineEmits<{
     </DialogPortal>
   </DialogRoot>
 </template>
-
-<style>
-.dialog-overlay[data-state="open"] {
-  animation: fade-in 0.2s ease-out;
-}
-
-.dialog-overlay[data-state="closed"] {
-  animation: fade-out 0.2s ease-out;
-}
-
-.dialog-content {
-  transform: translate(-50%, -50%);
-}
-
-.dialog-content[data-state="open"] {
-  animation: zoom-in 0.2s ease-out;
-}
-
-.dialog-content[data-state="closed"] {
-  animation: zoom-out 0.2s ease-out;
-}
-</style>
