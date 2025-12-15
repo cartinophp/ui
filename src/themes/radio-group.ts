@@ -2,23 +2,58 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'space-y-3',
-    label: 'block text-sm font-medium text-gray-900 mb-2',
-    description: 'text-sm text-gray-600 mb-3',
-    items: '',
-    error: 'text-sm text-red-600 mt-2'
+    root: 'flex gap-3',
+    wrapper: 'flex items-start gap-3',
+    item: 'shrink-0 rounded-full border-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+    indicator: 'flex items-center justify-center w-full h-full relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-white',
+    content: 'flex flex-col',
+    label: 'text-sm font-medium cursor-pointer select-none',
+    description: 'text-xs text-muted-foreground'
   },
   variants: {
-    orientation: {
-      vertical: {
-        items: 'flex flex-col gap-3'
+    size: {
+      sm: {
+        item: 'h-4 w-4',
+        label: 'text-sm',
+        description: 'text-xs'
       },
+      md: {
+        item: 'h-5 w-5',
+        label: 'text-base',
+        description: 'text-sm'
+      },
+      lg: {
+        item: 'h-6 w-6',
+        label: 'text-lg',
+        description: 'text-base'
+      }
+    },
+    orientation: {
       horizontal: {
-        items: 'flex flex-row flex-wrap gap-4'
+        root: 'flex-row flex-wrap'
+      },
+      vertical: {
+        root: 'flex-col'
+      }
+    },
+    color: {
+      primary: {
+        item: 'data-[state=checked]:bg-primary data-[state=checked]:border-primary border-border focus-visible:ring-primary'
+      },
+      success: {
+        item: 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 border-border focus-visible:ring-green-500'
+      },
+      warning: {
+        item: 'data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600 border-border focus-visible:ring-yellow-500'
+      },
+      error: {
+        item: 'data-[state=checked]:bg-red-600 data-[state=checked]:border-red-600 border-border focus-visible:ring-red-500'
       }
     }
   },
   defaultVariants: {
-    orientation: 'vertical'
+    size: 'md',
+    orientation: 'vertical',
+    color: 'primary'
   }
 })
