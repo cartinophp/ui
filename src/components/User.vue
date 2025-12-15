@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
-import userTheme from '@/themes/user'
+import theme from '@/themes/user'
 import Link from './Link.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -59,13 +59,7 @@ const props = defineProps({
 
 const slots = defineSlots()
 
-const ui = computed(() =>
-  userTheme({
-    size: props.size,
-    orientation: props.orientation,
-    to: !!props.to || !!props.onClick
-  })
-)
+const ui = computed(() => theme())
 </script>
 
 <template>

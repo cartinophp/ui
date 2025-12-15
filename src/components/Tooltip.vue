@@ -16,6 +16,7 @@ export interface TooltipProps {
   sideOffset?: number
   delayDuration?: number
   arrow?: boolean
+  size?: 'sm' | 'md' | 'lg'
   ui?: Record<string, any>
 }
 
@@ -24,7 +25,8 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   align: 'center',
   sideOffset: 4,
   delayDuration: 200,
-  arrow: true
+  arrow: true,
+  size: 'md'
 })
 
 const slots = defineSlots<{
@@ -32,7 +34,7 @@ const slots = defineSlots<{
   content?: () => any
 }>()
 
-const ui = computed(() => theme())
+const ui = computed(() =>theme())
 </script>
 
 <template>

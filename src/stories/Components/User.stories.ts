@@ -48,7 +48,7 @@ export const WithImage: Story = {
 
 export const Vertical: Story = {
   args: {
-    name: 'John Doe',
+    name: 'John Voe',
     description: 'Software Engineer',
     orientation: 'vertical',
     avatar: {

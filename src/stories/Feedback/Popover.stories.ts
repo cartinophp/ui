@@ -173,19 +173,19 @@ export const UserProfile: Story = {
         <template #trigger>
           <button class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100">
             <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
-              JD
+              JV
             </div>
-            <span class="text-sm font-medium">John Doe</span>
+            <span class="text-sm font-medium">John Voe</span>
           </button>
         </template>
 
         <div class="w-64">
           <div class="flex items-center gap-3 pb-3 border-b border-gray-200">
             <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-lg">
-              JD
+              JV
             </div>
             <div>
-              <p class="font-semibold text-gray-900">John Doe</p>
+              <p class="font-semibold text-gray-900">John Voe</p>
               <p class="text-sm text-gray-600">john@example.com</p>
             </div>
           </div>

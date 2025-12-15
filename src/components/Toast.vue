@@ -10,29 +10,29 @@
     >
       <div
         v-if="visible"
-        :class="toastTheme.root({ class: ui?.root })"
+        :class="ui.root({ class: ui?.root })"
         role="alert"
         @click="onClick"
       >
         <!-- Icon -->
         <div
           v-if="icon || typeIcon"
-          :class="toastTheme.iconContainer({ class: ui?.iconContainer })"
+          :class="ui.iconContainer({ class: ui?.iconContainer })"
         >
           <Icon
             :name="icon || typeIcon"
-            :class="toastTheme.icon({ class: ui?.icon })"
+            :class="ui.icon({ class: ui?.icon })"
           />
         </div>
 
         <!-- Content -->
-        <div :class="toastTheme.content({ class: ui?.content })">
-          <h4 v-if="title" :class="toastTheme.title({ class: ui?.title })">
+        <div :class="ui.content({ class: ui?.content })">
+          <h4 v-if="title" :class="ui.title({ class: ui?.title })">
             {{ title }}
           </h4>
           <p
             v-if="description"
-            :class="toastTheme.description({ class: ui?.description })"
+            :class="ui.description({ class: ui?.description })"
           >
             {{ description }}
           </p>
@@ -42,7 +42,7 @@
         <!-- Actions -->
         <div
           v-if="actions?.length || closable"
-          :class="toastTheme.actions({ class: ui?.actions })"
+          :class="ui.actions({ class: ui?.actions })"
         >
           <button
             v-for="action in actions"
@@ -57,7 +57,7 @@
           <button
             v-if="closable"
             type="button"
-            :class="toastTheme.closeButton({ class: ui?.closeButton })"
+            :class="ui.closeButton({ class: ui?.closeButton })"
             @click="close"
             aria-label="Close toast"
           >
@@ -126,10 +126,11 @@ const typeIcon = computed(() => {
   return icons[props.type]
 })
 
-const toastTheme = computed(() =>
+const ui = computed(() =>
   theme({
     type: props.type,
     position: props.position,
+    size: 'md', // Default size
     hasTitle: !!props.title
   })
 )
@@ -144,7 +145,7 @@ const getActionClasses = (action: ToastAction) => {
   }
 
   return [
-    toastTheme.value.action({ class: props.ui?.action }),
+    ui.value.action({ class: props.ui?.action }),
     variantClasses[action.variant || 'default']
   ].join(' ')
 }

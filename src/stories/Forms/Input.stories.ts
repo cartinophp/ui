@@ -70,7 +70,7 @@ export const WithLabel: Story = {
   }),
   args: {
     label: 'Full Name',
-    placeholder: 'John Doe'
+    placeholder: 'John Voe'
   }
 }
 

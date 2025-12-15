@@ -1,5 +1,5 @@
 <template>
-  <div :class="textareaTheme.wrapper({ class: ui?.wrapper })" v-bind="$attrs">
+  <div :class="ui.wrapper({ class: ui?.wrapper })" v-bind="$attrs">
     <textarea
       ref="textarea"
       :id="inputId"
@@ -13,7 +13,7 @@
       :cols="cols"
       :maxlength="maxlength"
       :minlength="minlength"
-      :class="textareaTheme.root({ class: ui?.root })"
+      :class="ui.root({ class: ui?.root })"
       @input="onInput"
       @change="$emit('change', $event)"
       @blur="$emit('blur', $event)"
@@ -24,11 +24,11 @@
     <!-- Resize handle -->
     <div
       v-if="resize && !disabled"
-      :class="textareaTheme.resizeHandle({ class: ui?.resizeHandle })"
+      :class="ui.resizeHandle({ class: ui?.resizeHandle })"
     >
       <Icon
         name="i-lucide-grip-horizontal"
-        :class="textareaTheme.resizeIcon({ class: ui?.resizeIcon })"
+        :class="ui.resizeIcon({ class: ui?.resizeIcon })"
       />
     </div>
   </div>
@@ -68,15 +68,7 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   autoresize: false
 })
 
-const textareaTheme = computed(() =>
-  theme({
-    size: props.size,
-    variant: props.variant,
-    color: props.color,
-    disabled: props.disabled,
-    resize: props.resize
-  })
-)
+const ui = computed(() => theme())
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]

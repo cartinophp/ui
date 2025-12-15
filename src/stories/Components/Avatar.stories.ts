@@ -30,21 +30,21 @@ type Story = StoryObj<typeof Avatar>
 
 export const Default: Story = {
   args: {
-    alt: 'John Doe'
+    alt: 'John Voe'
   }
 }
 
 export const WithImage: Story = {
   args: {
     src: 'https://i.pravatar.cc/150?img=1',
-    alt: 'John Doe'
+    alt: 'John Voe'
   }
 }
 
 export const WithText: Story = {
   args: {
-    text: 'JD',
-    alt: 'John Doe'
+    text: 'JV',
+    alt: 'John Voe'
   }
 }
 
@@ -89,11 +89,11 @@ export const Fallback: Story = {
     components: { Avatar },
     template: `
       <div class="flex items-center gap-4">
-        <Avatar src="invalid-url" alt="John Doe" />
+        <Avatar src="invalid-url" alt="John Voe" />
         <Avatar src="invalid-url" alt="Jane Smith" />
         <Avatar src="invalid-url" alt="Bob Johnson" />
         <Avatar src="invalid-url" icon="👤" />
-        <Avatar src="invalid-url" text="JD" />
+        <Avatar src="invalid-url" text="JV" />
       </div>
     `
   })

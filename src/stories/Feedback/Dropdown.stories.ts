@@ -208,7 +208,7 @@ export const CustomContent: Story = {
         </template>
 
         <div class="p-3 space-y-2">
-          <div class="text-sm font-semibold text-gray-700">John Doe</div>
+          <div class="text-sm font-semibold text-gray-700">John Voe</div>
           <div class="text-xs text-gray-500">john.doe@example.com</div>
 
           <div class="pt-2 mt-2 border-t border-gray-200 space-y-1">
