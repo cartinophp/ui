@@ -39,9 +39,11 @@ const props = defineProps({
 
 const slots = defineSlots()
 
-const ui = computed(() => pageHeaderTheme({
-  title: !!(props.title || slots.title)
-}))
+const ui = computed(() =>
+  pageHeaderTheme({
+    title: !!(props.title || slots.title)
+  })
+)
 </script>
 
 <template>
@@ -51,21 +53,39 @@ const ui = computed(() => pageHeaderTheme({
     :class="ui.root({ class: [props.ui?.root, props.class] })"
     v-bind="$attrs"
   >
-    <div data-slot="container" :class="ui.container({ class: props.ui?.container })">
-      <div v-if="headline || slots.headline" data-slot="headline" :class="ui.headline({ class: props.ui?.headline })">
+    <div
+      data-slot="container"
+      :class="ui.container({ class: props.ui?.container })"
+    >
+      <div
+        v-if="headline || slots.headline"
+        data-slot="headline"
+        :class="ui.headline({ class: props.ui?.headline })"
+      >
         <slot name="headline">
           {{ props.headline }}
         </slot>
       </div>
 
-      <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-        <h1 v-if="title || slots.title" data-slot="title" :class="ui.title({ class: props.ui?.title })">
+      <div
+        data-slot="wrapper"
+        :class="ui.wrapper({ class: props.ui?.wrapper })"
+      >
+        <h1
+          v-if="title || slots.title"
+          data-slot="title"
+          :class="ui.title({ class: props.ui?.title })"
+        >
           <slot name="title">
             {{ props.title }}
           </slot>
         </h1>
 
-        <div v-if="links?.length || slots.links" data-slot="links" :class="ui.links({ class: props.ui?.links })">
+        <div
+          v-if="links?.length || slots.links"
+          data-slot="links"
+          :class="ui.links({ class: props.ui?.links })"
+        >
           <slot name="links">
             <UButton
               v-for="(link, index) in props.links"
@@ -78,7 +98,11 @@ const ui = computed(() => pageHeaderTheme({
         </div>
       </div>
 
-      <div v-if="description || slots.description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+      <div
+        v-if="description || slots.description"
+        data-slot="description"
+        :class="ui.description({ class: props.ui?.description })"
+      >
         <slot name="description">
           {{ props.description }}
         </slot>

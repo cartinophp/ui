@@ -58,9 +58,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const slots = defineSlots()
 
-const ui = computed(() => checkboxGroupTheme({
-  orientation: props.orientation
-}))
+const ui = computed(() =>
+  checkboxGroupTheme({
+    orientation: props.orientation
+  })
+)
 
 const isChecked = (value) => {
   return props.modelValue.includes(value)
@@ -74,7 +76,7 @@ const handleChange = (value, checked) => {
       newValue.push(value)
     }
   } else {
-    newValue = newValue.filter(v => v !== value)
+    newValue = newValue.filter((v) => v !== value)
   }
 
   emit('update:modelValue', newValue)
@@ -85,10 +87,13 @@ const handleChange = (value, checked) => {
   <div :class="ui.root({ class: [props.ui?.root, props.class] })">
     <label v-if="label" :class="ui.label({ class: props.ui?.label })">
       {{ label }}
-      <span v-if="required" class="text-red-500">*</span>
+      <span v-if="required" class="text-error">*</span>
     </label>
 
-    <p v-if="description" :class="ui.description({ class: props.ui?.description })">
+    <p
+      v-if="description"
+      :class="ui.description({ class: props.ui?.description })"
+    >
       {{ description }}
     </p>
 

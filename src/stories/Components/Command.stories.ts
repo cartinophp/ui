@@ -5,7 +5,8 @@ import type { CommandGroup } from '../../components/Command.vue'
 
 const meta: Meta<typeof Command> = {
   title: 'Components/Command',
-  component: Command
+  component: Command,
+  tags: ['autodocs']
 }
 
 export default meta

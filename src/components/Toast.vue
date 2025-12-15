@@ -8,21 +8,42 @@
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 translate-y-2"
     >
-      <div v-if="visible" :class="ui.root" role="alert" @click="onClick">
+      <div
+        v-if="visible"
+        :class="toastTheme.root({ class: ui?.root })"
+        role="alert"
+        @click="onClick"
+      >
         <!-- Icon -->
-        <div v-if="icon || typeIcon" :class="ui.iconContainer">
-          <Icon :name="icon || typeIcon" :class="ui.icon" />
+        <div
+          v-if="icon || typeIcon"
+          :class="toastTheme.iconContainer({ class: ui?.iconContainer })"
+        >
+          <Icon
+            :name="icon || typeIcon"
+            :class="toastTheme.icon({ class: ui?.icon })"
+          />
         </div>
 
         <!-- Content -->
-        <div :class="ui.content">
-          <h4 v-if="title" :class="ui.title">{{ title }}</h4>
-          <p v-if="description" :class="ui.description">{{ description }}</p>
+        <div :class="toastTheme.content({ class: ui?.content })">
+          <h4 v-if="title" :class="toastTheme.title({ class: ui?.title })">
+            {{ title }}
+          </h4>
+          <p
+            v-if="description"
+            :class="toastTheme.description({ class: ui?.description })"
+          >
+            {{ description }}
+          </p>
           <slot />
         </div>
 
         <!-- Actions -->
-        <div v-if="actions?.length || closable" :class="ui.actions">
+        <div
+          v-if="actions?.length || closable"
+          :class="toastTheme.actions({ class: ui?.actions })"
+        >
           <button
             v-for="action in actions"
             :key="action.label"
@@ -36,7 +57,7 @@
           <button
             v-if="closable"
             type="button"
-            :class="ui.closeButton"
+            :class="toastTheme.closeButton({ class: ui?.closeButton })"
             @click="close"
             aria-label="Close toast"
           >
@@ -67,8 +88,15 @@ export interface ToastProps {
   duration?: number
   closable?: boolean
   closeIcon?: string
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'
+  position?:
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'top-center'
+    | 'bottom-center'
   actions?: ToastAction[]
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<ToastProps>(), {
@@ -98,21 +126,25 @@ const typeIcon = computed(() => {
   return icons[props.type]
 })
 
-const ui = computed(() => theme({
-  type: props.type,
-  position: props.position,
-  hasTitle: !!props.title
-}))
+const toastTheme = computed(() =>
+  theme({
+    type: props.type,
+    position: props.position,
+    hasTitle: !!props.title
+  })
+)
 
 const getActionClasses = (action: ToastAction) => {
   const variantClasses = {
-    default: 'px-3 py-1.5 text-sm font-medium rounded-md border border-default hover:bg-elevated',
-    primary: 'px-3 py-1.5 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90',
-    ghost: 'px-3 py-1.5 text-sm font-medium rounded-md hover:bg-elevated'
+    default:
+      'px-3 py-1.5 text-sm font-medium rounded-md border border-border hover:bg-muted',
+    primary:
+      'px-3 py-1.5 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90',
+    ghost: 'px-3 py-1.5 text-sm font-medium rounded-md hover:bg-muted'
   }
 
   return [
-    ui.value.action,
+    toastTheme.value.action({ class: props.ui?.action }),
     variantClasses[action.variant || 'default']
   ].join(' ')
 }

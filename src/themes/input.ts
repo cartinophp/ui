@@ -3,11 +3,11 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'w-full',
-    label: 'block mb-1.5 font-medium text-gray-700',
+    label: 'block mb-1.5 font-medium text-foreground',
     wrapper: 'relative flex items-center transition-all',
     input: 'flex-1 outline-none bg-transparent',
-    leadingIcon: 'shrink-0 text-gray-400 absolute left-3',
-    trailingIcon: 'shrink-0 text-gray-400 absolute right-3',
+    leadingIcon: 'shrink-0 text-muted-foreground absolute left-3',
+    trailingIcon: 'shrink-0 text-muted-foreground absolute right-3',
     hint: 'mt-1.5'
   },
   variants: {
@@ -39,10 +39,10 @@ export default tv({
     },
     variant: {
       outline: {
-        wrapper: 'border rounded-lg bg-white'
+        wrapper: 'border rounded-lg bg-background'
       },
       filled: {
-        wrapper: 'border-0 rounded-lg'
+        wrapper: 'border-0 rounded-lg bg-muted'
       },
       ghost: {
         wrapper: 'border-0'
@@ -69,10 +69,10 @@ export default tv({
     },
     hasError: {
       true: {
-        hint: 'text-red-600'
+        hint: 'text-error'
       },
       false: {
-        hint: 'text-gray-500'
+        hint: 'text-muted-foreground'
       }
     }
   },
@@ -83,7 +83,7 @@ export default tv({
       color: 'primary',
       focused: false,
       class: {
-        wrapper: 'border-gray-300 hover:border-gray-400'
+        wrapper: 'border-border hover:border-border/80'
       }
     },
     {
@@ -91,28 +91,28 @@ export default tv({
       color: 'primary',
       focused: true,
       class: {
-        wrapper: 'border-blue-500 ring-2 ring-blue-100'
+        wrapper: 'border-primary ring-2 ring-ring'
       }
     },
     {
       variant: 'outline',
       color: 'success',
       class: {
-        wrapper: 'border-green-500 ring-2 ring-green-100'
+        wrapper: 'border-success ring-2 ring-success/20'
       }
     },
     {
       variant: 'outline',
       color: 'warning',
       class: {
-        wrapper: 'border-yellow-500 ring-2 ring-yellow-100'
+        wrapper: 'border-warning ring-2 ring-warning/20'
       }
     },
     {
       variant: 'outline',
       color: 'error',
       class: {
-        wrapper: 'border-red-500 ring-2 ring-red-100'
+        wrapper: 'border-error ring-2 ring-error/20'
       }
     },
     // Filled variant colors
@@ -121,7 +121,7 @@ export default tv({
       color: 'primary',
       focused: false,
       class: {
-        wrapper: 'bg-gray-50'
+        wrapper: 'bg-muted'
       }
     },
     {
@@ -129,28 +129,28 @@ export default tv({
       color: 'primary',
       focused: true,
       class: {
-        wrapper: 'bg-blue-50 ring-2 ring-blue-100'
+        wrapper: 'bg-accent ring-2 ring-ring'
       }
     },
     {
       variant: 'filled',
       color: 'success',
       class: {
-        wrapper: 'bg-green-50 ring-2 ring-green-100'
+        wrapper: 'bg-success/10 ring-2 ring-success/20'
       }
     },
     {
       variant: 'filled',
       color: 'warning',
       class: {
-        wrapper: 'bg-yellow-50 ring-2 ring-yellow-100'
+        wrapper: 'bg-warning/10 ring-2 ring-warning/20'
       }
     },
     {
       variant: 'filled',
       color: 'error',
       class: {
-        wrapper: 'bg-red-50 ring-2 ring-red-100'
+        wrapper: 'bg-error/10 ring-2 ring-error/20'
       }
     },
     // Ghost variant colors
@@ -167,28 +167,28 @@ export default tv({
       color: 'primary',
       focused: true,
       class: {
-        wrapper: 'bg-gray-50'
+        wrapper: 'bg-muted'
       }
     },
     {
       variant: 'ghost',
       color: 'success',
       class: {
-        wrapper: 'bg-green-50'
+        wrapper: 'bg-success/10'
       }
     },
     {
       variant: 'ghost',
       color: 'warning',
       class: {
-        wrapper: 'bg-yellow-50'
+        wrapper: 'bg-warning/10'
       }
     },
     {
       variant: 'ghost',
       color: 'error',
       class: {
-        wrapper: 'bg-red-50'
+        wrapper: 'bg-error/10'
       }
     }
   ],

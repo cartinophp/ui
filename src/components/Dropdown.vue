@@ -56,11 +56,13 @@ const emit = defineEmits<{
   'update:checked': [item: DropdownItem, checked: boolean]
 }>()
 
-const ui = computed(() => theme({
-  size: props.size,
-  variant: props.variant,
-  rounded: props.rounded
-}))
+const ui = computed(() =>
+  theme({
+    size: props.size,
+    variant: props.variant,
+    rounded: props.rounded
+  })
+)
 
 const handleItemClick = (item: DropdownItem, e: Event) => {
   if (!item.disabled) {
@@ -113,30 +115,74 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
                 :class="ui.item({ class: props.ui?.item })"
                 :disabled="item.disabled"
                 :checked="item.checked"
-                @update:checked="(checked) => handleCheckboxChange(item, checked)"
+                @update:checked="
+                  (checked) => handleCheckboxChange(item, checked)
+                "
               >
-                <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-                <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-                <span v-if="item.shortcut" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })">{{ item.shortcut }}</span>
+                <Icon
+                  v-if="item.icon"
+                  :name="item.icon"
+                  :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+                />
+                <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{
+                  item.label
+                }}</span>
+                <span
+                  v-if="item.shortcut"
+                  :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+                  >{{ item.shortcut }}</span
+                >
               </DropdownMenuCheckboxItem>
 
               <!-- Sub Menu -->
-              <DropdownMenuSub v-else-if="item.children && item.children.length > 0">
-                <DropdownMenuSubTrigger :class="ui.item({ class: props.ui?.item })" :disabled="item.disabled">
-                  <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-                  <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-                  <Icon name="i-heroicons-chevron-right" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })" />
+              <DropdownMenuSub
+                v-else-if="item.children && item.children.length > 0"
+              >
+                <DropdownMenuSubTrigger
+                  :class="ui.item({ class: props.ui?.item })"
+                  :disabled="item.disabled"
+                >
+                  <Icon
+                    v-if="item.icon"
+                    :name="item.icon"
+                    :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+                  />
+                  <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{
+                    item.label
+                  }}</span>
+                  <Icon
+                    name="i-heroicons-chevron-right"
+                    :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+                  />
                 </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent :class="ui.content({ class: props.ui?.content })">
-                  <template v-for="(child, childIndex) in item.children" :key="childIndex">
+                <DropdownMenuSubContent
+                  :class="ui.content({ class: props.ui?.content })"
+                >
+                  <template
+                    v-for="(child, childIndex) in item.children"
+                    :key="childIndex"
+                  >
                     <DropdownMenuItem
                       :class="ui.item({ class: props.ui?.item })"
                       :disabled="child.disabled"
                       @click="(e) => handleItemClick(child, e)"
                     >
-                      <Icon v-if="child.icon" :name="child.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-                      <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ child.label }}</span>
-                      <span v-if="child.shortcut" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })">{{ child.shortcut }}</span>
+                      <Icon
+                        v-if="child.icon"
+                        :name="child.icon"
+                        :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+                      />
+                      <span
+                        :class="ui.itemLabel({ class: props.ui?.itemLabel })"
+                        >{{ child.label }}</span
+                      >
+                      <span
+                        v-if="child.shortcut"
+                        :class="
+                          ui.itemShortcut({ class: props.ui?.itemShortcut })
+                        "
+                        >{{ child.shortcut }}</span
+                      >
                     </DropdownMenuItem>
                   </template>
                 </DropdownMenuSubContent>
@@ -149,9 +195,19 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
                 :disabled="item.disabled"
                 @click="(e) => handleItemClick(item, e)"
               >
-                <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-                <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-                <span v-if="item.shortcut" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })">{{ item.shortcut }}</span>
+                <Icon
+                  v-if="item.icon"
+                  :name="item.icon"
+                  :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+                />
+                <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{
+                  item.label
+                }}</span>
+                <span
+                  v-if="item.shortcut"
+                  :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+                  >{{ item.shortcut }}</span
+                >
               </DropdownMenuItem>
             </template>
           </slot>
@@ -162,11 +218,11 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
 </template>
 
 <style>
-.dropdown-content[data-state="open"] {
+.dropdown-content[data-state='open'] {
   animation: fade-in 0.15s ease-out;
 }
 
-.dropdown-content[data-state="closed"] {
+.dropdown-content[data-state='closed'] {
   animation: fade-out 0.15s ease-out;
 }
 </style>

@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverClose
 } from 'reka-ui'
+import theme from '@/themes/popover'
 
 export interface PopoverProps {
   open?: boolean
@@ -15,22 +16,30 @@ export interface PopoverProps {
   side?: 'top' | 'right' | 'bottom' | 'left'
   align?: 'start' | 'center' | 'end'
   sideOffset?: number
+  variant?: 'default' | 'outline' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<PopoverProps>(), {
   modal: false,
   side: 'bottom',
   align: 'center',
-  sideOffset: 8
+  sideOffset: 8,
+  variant: 'default',
+  size: 'md'
 })
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
 }>()
 
-const contentClasses = computed(() => {
-  return 'popover-content z-50 rounded-lg border border-gray-200 bg-white p-4 shadow-lg outline-none'
-})
+const popoverTheme = computed(() =>
+  theme({
+    variant: props.variant,
+    size: props.size
+  })
+)
 </script>
 
 <template>
@@ -46,7 +55,7 @@ const contentClasses = computed(() => {
 
     <PopoverPortal>
       <PopoverContent
-        :class="contentClasses"
+        :class="popoverTheme.content({ class: ui?.content })"
         :side="side"
         :align="align"
         :side-offset="sideOffset"
@@ -55,7 +64,7 @@ const contentClasses = computed(() => {
 
         <PopoverClose
           v-if="$slots.close"
-          class="absolute right-2 top-2 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="absolute right-2 top-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
         >
           <slot name="close" />
         </PopoverClose>
@@ -65,11 +74,11 @@ const contentClasses = computed(() => {
 </template>
 
 <style>
-.popover-content[data-state="open"] {
+.popover-content[data-state='open'] {
   animation: fade-in 0.15s ease-out;
 }
 
-.popover-content[data-state="closed"] {
+.popover-content[data-state='closed'] {
   animation: fade-out 0.15s ease-out;
 }
 </style>

@@ -19,6 +19,7 @@ const columns = [
 const meta: Meta<typeof DataTable> = {
   title: 'Data Display/DataTable',
   component: DataTable,
+  tags: ['autodocs'],
   args: {
     columns,
     data: users,

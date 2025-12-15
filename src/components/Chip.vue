@@ -49,13 +49,15 @@ const emit = defineEmits(['update:show'])
 
 const slots = defineSlots()
 
-const ui = computed(() => chipTheme({
-  color: props.color,
-  size: props.size,
-  position: props.position,
-  inset: props.inset,
-  standalone: props.standalone
-}))
+const ui = computed(() =>
+  chipTheme({
+    color: props.color,
+    size: props.size,
+    position: props.position,
+    inset: props.inset,
+    standalone: props.standalone
+  })
+)
 </script>
 
 <template>

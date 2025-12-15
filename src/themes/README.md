@@ -1,6 +1,6 @@
-# Themes - Sistema di Stili con Tailwind Variants
+# Cartino UI - Theming System
 
-Questa cartella contiene tutte le definizioni di stile dei componenti usando **tailwind-variants**.
+Complete theming system for Vue UI components using **tailwind-variants** with full TypeScript support and a semantic color system based on #0e5bff.
 
 ## File
 
@@ -61,11 +61,8 @@ import inputTheme from '../themes/input'
 ### 2. Crea computed per le classi
 
 ```vue
-const ui = computed(() => inputTheme({
-  size: props.size,
-  variant: props.variant,
-  focused: isFocused.value
-}))
+const ui = computed(() => inputTheme({ size: props.size, variant: props.variant,
+focused: isFocused.value }))
 ```
 
 ### 3. Applica nel template
@@ -84,10 +81,13 @@ const ui = computed(() => inputTheme({
 ```vue
 <template>
   <div :class="ui.root({ class: props.ui?.root })">
-    <label :class="ui.label({ class: props.ui?.label })">
+    <label :class="ui.label({ class: props.ui?.label })"></label>
+  </div>
+</template>
 ```
 
 Uso:
+
 ```vue
 <Input :ui="{ root: 'my-custom-class', label: 'text-red-500' }" />
 ```
@@ -99,6 +99,7 @@ Uso:
 Usa nomi descrittivi che rappresentano la funzione dell'elemento:
 
 ✅ **BUONO**
+
 ```js
 slots: {
   root: '...',
@@ -110,6 +111,7 @@ slots: {
 ```
 
 ❌ **CATTIVO**
+
 ```js
 slots: {
   div1: '...',
@@ -136,6 +138,7 @@ variants: {
 Usa `compoundVariants` invece di creare variants troppo specifiche:
 
 ✅ **BUONO**
+
 ```js
 compoundVariants: [
   {
@@ -148,6 +151,7 @@ compoundVariants: [
 ```
 
 ❌ **CATTIVO**
+
 ```js
 variants: {
   outlinePrimaryFocused: { ... },

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import {
   DialogClose,
   DialogContent,
@@ -7,19 +8,30 @@ import {
   DialogPortal,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from 'reka-ui'
+import theme from '@/themes/dialog'
 
 export interface DialogProps {
   open?: boolean
   defaultOpen?: boolean
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  ui?: Record<string, any>
 }
 
-const props = defineProps<DialogProps>()
+const props = withDefaults(defineProps<DialogProps>(), {
+  size: 'md'
+})
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
 }>()
+
+const dialogTheme = computed(() =>
+  theme({
+    size: props.size
+  })
+)
 </script>
 
 <template>
@@ -33,33 +45,39 @@ const emit = defineEmits<{
     </DialogTrigger>
 
     <DialogPortal>
-      <DialogOverlay
-        class="dialog-overlay fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-      />
-      <DialogContent
-        class="dialog-content fixed left-1/2 top-1/2 z-50 w-full max-w-lg rounded-lg border border-gray-200 bg-white p-6 shadow-lg"
-      >
-        <DialogTitle
-          v-if="$slots.title"
-          class="text-lg font-semibold text-gray-900"
+      <DialogOverlay :class="dialogTheme.overlay({ class: ui?.overlay })" />
+      <DialogContent :class="dialogTheme.content({ class: ui?.content })">
+        <div
+          v-if="$slots.title || $slots.description"
+          :class="dialogTheme.header({ class: ui?.header })"
         >
-          <slot name="title" />
-        </DialogTitle>
+          <DialogTitle
+            v-if="$slots.title"
+            :class="dialogTheme.title({ class: ui?.title })"
+          >
+            <slot name="title" />
+          </DialogTitle>
 
-        <DialogDescription
-          v-if="$slots.description"
-          class="mt-2 text-sm text-gray-600"
-        >
-          <slot name="description" />
-        </DialogDescription>
+          <DialogDescription
+            v-if="$slots.description"
+            :class="dialogTheme.description({ class: ui?.description })"
+          >
+            <slot name="description" />
+          </DialogDescription>
+        </div>
 
-        <div class="mt-4">
+        <div :class="dialogTheme.body({ class: ui?.body })">
           <slot />
         </div>
 
-        <DialogClose
-          class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none"
+        <div
+          v-if="$slots.footer"
+          :class="dialogTheme.footer({ class: ui?.footer })"
         >
+          <slot name="footer" />
+        </div>
+
+        <DialogClose :class="dialogTheme.close({ class: ui?.close })">
           <span class="sr-only">Close</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -83,11 +101,11 @@ const emit = defineEmits<{
 </template>
 
 <style>
-.dialog-overlay[data-state="open"] {
+.dialog-overlay[data-state='open'] {
   animation: fade-in 0.2s ease-out;
 }
 
-.dialog-overlay[data-state="closed"] {
+.dialog-overlay[data-state='closed'] {
   animation: fade-out 0.2s ease-out;
 }
 
@@ -95,11 +113,11 @@ const emit = defineEmits<{
   transform: translate(-50%, -50%);
 }
 
-.dialog-content[data-state="open"] {
+.dialog-content[data-state='open'] {
   animation: zoom-in 0.2s ease-out;
 }
 
-.dialog-content[data-state="closed"] {
+.dialog-content[data-state='closed'] {
   animation: zoom-out 0.2s ease-out;
 }
 </style>

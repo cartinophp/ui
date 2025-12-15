@@ -28,21 +28,27 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const checkboxThemeObj = computed(() => checkboxTheme({
-  size: props.size,
-  color: props.color,
-  state: props.modelValue ? 'checked' : 'unchecked',
-  disabled: props.disabled
-}))
+const checkboxThemeObj = computed(() =>
+  checkboxTheme({
+    size: props.size,
+    color: props.color,
+    state: props.modelValue ? 'checked' : 'unchecked',
+    disabled: props.disabled
+  })
+)
 
 // Extract classes from theme
 const wrapperClasses = computed(() => checkboxThemeObj.value.wrapper?.() || '')
 const rootClasses = computed(() => checkboxThemeObj.value.root?.() || '')
-const indicatorClasses = computed(() => checkboxThemeObj.value.indicator?.() || '')
+const indicatorClasses = computed(
+  () => checkboxThemeObj.value.indicator?.() || ''
+)
 const iconClasses = computed(() => checkboxThemeObj.value.icon?.() || '')
 const contentClasses = computed(() => checkboxThemeObj.value.content?.() || '')
 const labelClasses = computed(() => checkboxThemeObj.value.label?.() || '')
-const descriptionClasses = computed(() => checkboxThemeObj.value.description?.() || '')
+const descriptionClasses = computed(
+  () => checkboxThemeObj.value.description?.() || ''
+)
 
 const handleUpdate = (value: boolean) => {
   emit('update:modelValue', value)
@@ -69,7 +75,7 @@ const handleUpdate = (value: boolean) => {
     <div v-if="label || description" :class="contentClasses">
       <label v-if="label" :class="labelClasses">
         {{ label }}
-        <span v-if="required" class="text-red-500">*</span>
+        <span v-if="required" class="text-error">*</span>
       </label>
       <span v-if="description" :class="descriptionClasses">
         {{ description }}

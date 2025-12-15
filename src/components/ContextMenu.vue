@@ -87,9 +87,19 @@ const handleCheckboxChange = (item: ContextMenuItem, checked: boolean) => {
             :checked="item.checked"
             @update:checked="(checked) => handleCheckboxChange(item, checked)"
           >
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-            <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-            <span v-if="item.shortcut" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })">{{ item.shortcut }}</span>
+            <Icon
+              v-if="item.icon"
+              :name="item.icon"
+              :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+            />
+            <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{
+              item.label
+            }}</span>
+            <span
+              v-if="item.shortcut"
+              :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+              >{{ item.shortcut }}</span
+            >
           </ContextMenuCheckboxItem>
 
           <!-- Regular Item -->
@@ -99,9 +109,19 @@ const handleCheckboxChange = (item: ContextMenuItem, checked: boolean) => {
             :disabled="item.disabled"
             @select="() => handleItemClick(item)"
           >
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.itemIcon({ class: props.ui?.itemIcon })" />
-            <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{ item.label }}</span>
-            <span v-if="item.shortcut" :class="ui.itemShortcut({ class: props.ui?.itemShortcut })">{{ item.shortcut }}</span>
+            <Icon
+              v-if="item.icon"
+              :name="item.icon"
+              :class="ui.itemIcon({ class: props.ui?.itemIcon })"
+            />
+            <span :class="ui.itemLabel({ class: props.ui?.itemLabel })">{{
+              item.label
+            }}</span>
+            <span
+              v-if="item.shortcut"
+              :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
+              >{{ item.shortcut }}</span
+            >
           </ContextMenuItem>
         </template>
       </ContextMenuContent>

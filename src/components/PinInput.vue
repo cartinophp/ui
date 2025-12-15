@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex gap-1" v-bind="$attrs">
+  <div :class="pinInputTheme.root({ class: ui?.root })" v-bind="$attrs">
     <input
       v-for="(digit, index) in digits"
       :key="index"
@@ -7,7 +7,7 @@
       type="text"
       :value="digit"
       :disabled="disabled"
-      :class="inputClasses"
+      :class="pinInputTheme.input({ class: ui?.input })"
       :maxlength="1"
       :inputmode="type === 'number' ? 'numeric' : 'text'"
       :pattern="type === 'number' ? '[0-9]' : undefined"
@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick, watch } from 'vue'
+import theme from '@/themes/pin-input'
 
 export interface PinInputProps {
   modelValue?: string
@@ -28,18 +29,19 @@ export interface PinInputProps {
   disabled?: boolean
   type?: 'text' | 'number'
   mask?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'none'
-  color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'default' | 'filled' | 'outline'
+  error?: boolean
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<PinInputProps>(), {
   length: 4,
   type: 'text',
   mask: false,
-  size: 'md', 
-  variant: 'outline',
-  color: 'primary'
+  size: 'md',
+  variant: 'default',
+  error: false
 })
 
 const emit = defineEmits<{
@@ -57,37 +59,13 @@ const setInputRef = (el: HTMLInputElement, index: number) => {
   }
 }
 
-const inputClasses = computed(() => {
-  const sizeClasses = {
-    xs: 'size-8 text-xs',
-    sm: 'size-9 text-sm',
-    md: 'size-10 text-base',
-    lg: 'size-12 text-lg',
-    xl: 'size-14 text-xl'
-  }
-
-  const variantClasses = {
-    outline: 'border border-default bg-default',
-    none: 'border-0 bg-transparent'
-  }
-
-  const colorClasses = {
-    primary: 'focus:border-primary focus:ring-primary',
-    error: 'border-error focus:border-error focus:ring-error',
-    success: 'border-success focus:border-success focus:ring-success',
-    warning: 'border-warning focus:border-warning focus:ring-warning',
-    info: 'border-info focus:border-info focus:ring-info'
-  }
-
-  return [
-    'rounded-md text-center font-mono transition-colors',
-    'focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-opacity-50',
-    'disabled:cursor-not-allowed disabled:opacity-75',
-    sizeClasses[props.size],
-    variantClasses[props.variant],
-    props.disabled ? 'cursor-not-allowed opacity-75' : colorClasses[props.color]
-  ].filter(Boolean).join(' ')
-})
+const pinInputTheme = computed(() =>
+  theme({
+    variant: props.variant,
+    size: props.size,
+    hasError: props.error
+  })
+)
 
 const onInput = (index: number, event: Event) => {
   const target = event.target as HTMLInputElement
@@ -111,7 +89,10 @@ const onInput = (index: number, event: Event) => {
   }
 
   // Check if complete
-  if (digits.value.every(d => d !== '') && digits.value.join('').length === props.length) {
+  if (
+    digits.value.every((d) => d !== '') &&
+    digits.value.join('').length === props.length
+  ) {
     emit('complete', digits.value.join(''))
   }
 }
@@ -125,14 +106,14 @@ const onKeydown = (index: number, event: KeyboardEvent) => {
       inputRefs.value[index - 1]?.focus()
     })
   }
-  
+
   // Handle arrow keys
   if (event.key === 'ArrowLeft' && index > 0) {
     nextTick(() => {
       inputRefs.value[index - 1]?.focus()
     })
   }
-  
+
   if (event.key === 'ArrowRight' && index < props.length - 1) {
     nextTick(() => {
       inputRefs.value[index + 1]?.focus()
@@ -148,32 +129,33 @@ const onFocus = (_: number, event: FocusEvent) => {
 const onPaste = (event: ClipboardEvent) => {
   event.preventDefault()
   const pastedData = event.clipboardData?.getData('text') || ''
-  
+
   if (pastedData.length <= props.length) {
     const newDigits = pastedData.split('').slice(0, props.length)
-    
+
     // Type validation for pasted content
-    if (props.type === 'number' && newDigits.some(d => !/^\d$/.test(d))) {
+    if (props.type === 'number' && newDigits.some((d) => !/^\d$/.test(d))) {
       return
     }
-    
+
     // Fill the digits
     for (let i = 0; i < props.length; i++) {
       digits.value[i] = newDigits[i] || ''
     }
-    
+
     updateModelValue()
-    
+
     // Focus the next empty input or the last one
-    const nextEmptyIndex = digits.value.findIndex(d => d === '')
-    const targetIndex = nextEmptyIndex !== -1 ? nextEmptyIndex : props.length - 1
-    
+    const nextEmptyIndex = digits.value.findIndex((d) => d === '')
+    const targetIndex =
+      nextEmptyIndex !== -1 ? nextEmptyIndex : props.length - 1
+
     nextTick(() => {
       inputRefs.value[targetIndex]?.focus()
     })
-    
+
     // Check if complete
-    if (digits.value.every(d => d !== '')) {
+    if (digits.value.every((d) => d !== '')) {
       emit('complete', digits.value.join(''))
     }
   }
@@ -185,14 +167,18 @@ const updateModelValue = () => {
 }
 
 // Watch for external changes
-watch(() => props.modelValue, (newValue) => {
-  if (newValue !== digits.value.join('')) {
-    const newDigits = (newValue || '').split('').slice(0, props.length)
-    for (let i = 0; i < props.length; i++) {
-      digits.value[i] = newDigits[i] || ''
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (newValue !== digits.value.join('')) {
+      const newDigits = (newValue || '').split('').slice(0, props.length)
+      for (let i = 0; i < props.length; i++) {
+        digits.value[i] = newDigits[i] || ''
+      }
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true }
+)
 
 defineExpose({
   focus: () => inputRefs.value[0]?.focus(),

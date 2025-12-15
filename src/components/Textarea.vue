@@ -1,5 +1,5 @@
 <template>
-  <div :class="textareaTheme.wrapper()" v-bind="$attrs">
+  <div :class="textareaTheme.wrapper({ class: ui?.wrapper })" v-bind="$attrs">
     <textarea
       ref="textarea"
       :id="inputId"
@@ -13,24 +13,31 @@
       :cols="cols"
       :maxlength="maxlength"
       :minlength="minlength"
-      :class="textareaTheme.root()"
+      :class="textareaTheme.root({ class: ui?.root })"
       @input="onInput"
       @change="$emit('change', $event)"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
       @keydown="$emit('keydown', $event)"
     />
-    
+
     <!-- Resize handle -->
-    <div v-if="resize && !disabled" :class="textareaTheme.resizeHandle()">
-      <Icon name="i-lucide-grip-horizontal" :class="textareaTheme.resizeIcon()" />
+    <div
+      v-if="resize && !disabled"
+      :class="textareaTheme.resizeHandle({ class: ui?.resizeHandle })"
+    >
+      <Icon
+        name="i-lucide-grip-horizontal"
+        :class="textareaTheme.resizeIcon({ class: ui?.resizeIcon })"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, nextTick, watch } from 'vue'
-import { ui } from '../utils/ui'
+import theme from '@/themes/textarea'
+import Icon from './Icon.vue'
 
 export interface TextareaProps {
   modelValue?: string
@@ -45,43 +52,52 @@ export interface TextareaProps {
   maxlength?: number
   minlength?: number
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'default' | 'filled' | 'ghost'
+  variant?: 'outline' | 'filled' | 'flushed' | 'unstyled'
+  color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
   resize?: boolean
   autoresize?: boolean
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<TextareaProps>(), {
   rows: 4,
   size: 'md',
-  variant: 'default',
+  variant: 'outline',
+  color: 'primary',
   resize: true,
   autoresize: false
 })
 
-const textareaTheme = ui.textarea({
-  size: props.size,
-  variant: props.variant,
-  resize: props.resize
-})
+const textareaTheme = computed(() =>
+  theme({
+    size: props.size,
+    variant: props.variant,
+    color: props.color,
+    disabled: props.disabled,
+    resize: props.resize
+  })
+)
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   input: [event: Event]
   change: [event: Event]
   blur: [event: FocusEvent]
-  focus: [event: FocusEvent] 
+  focus: [event: FocusEvent]
   keydown: [event: KeyboardEvent]
 }>()
 
 const textarea = ref<HTMLTextAreaElement>()
 
-const inputId = computed(() => props.id || `textarea-${Math.random().toString(36).substr(2, 9)}`)
+const inputId = computed(
+  () => props.id || `textarea-${Math.random().toString(36).substr(2, 9)}`
+)
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLTextAreaElement
   emit('update:modelValue', target.value)
   emit('input', event)
-  
+
   if (props.autoresize) {
     nextTick(() => {
       autoResize()
@@ -97,13 +113,16 @@ const autoResize = () => {
 }
 
 // Watch for external changes to resize
-watch(() => props.modelValue, () => {
-  if (props.autoresize) {
-    nextTick(() => {
-      autoResize()
-    })
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.autoresize) {
+      nextTick(() => {
+        autoResize()
+      })
+    }
   }
-})
+)
 
 defineExpose({
   textarea,

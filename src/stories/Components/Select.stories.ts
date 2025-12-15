@@ -4,6 +4,7 @@ import Select from '../../components/Select.vue'
 const meta: Meta<typeof Select> = {
   title: 'Forms/Select',
   component: Select,
+  tags: ['autodocs'],
   args: {
     label: 'Seleziona opzione',
     placeholder: 'Scegli...',

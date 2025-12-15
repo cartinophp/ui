@@ -42,9 +42,11 @@ const emit = defineEmits<{
   select: [item: NavigationMenuItem]
 }>()
 
-const ui = computed(() => theme({
-  orientation: props.orientation
-}))
+const ui = computed(() =>
+  theme({
+    orientation: props.orientation
+  })
+)
 
 const handleSelect = (item: NavigationMenuItem) => {
   if (!item.disabled) {
@@ -54,7 +56,10 @@ const handleSelect = (item: NavigationMenuItem) => {
 </script>
 
 <template>
-  <NavigationMenuRoot :class="ui.root({ class: props.ui?.root })" :orientation="orientation">
+  <NavigationMenuRoot
+    :class="ui.root({ class: props.ui?.root })"
+    :orientation="orientation"
+  >
     <NavigationMenuList :class="ui.list({ class: props.ui?.list })">
       <NavigationMenuItem
         v-for="(item, index) in items"
@@ -63,13 +68,25 @@ const handleSelect = (item: NavigationMenuItem) => {
       >
         <!-- Item with children (dropdown) -->
         <template v-if="item.children && item.children.length > 0">
-          <NavigationMenuTrigger :class="ui.trigger({ class: props.ui?.trigger })" :disabled="item.disabled">
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.triggerIcon({ class: props.ui?.triggerIcon })" />
+          <NavigationMenuTrigger
+            :class="ui.trigger({ class: props.ui?.trigger })"
+            :disabled="item.disabled"
+          >
+            <Icon
+              v-if="item.icon"
+              :name="item.icon"
+              :class="ui.triggerIcon({ class: props.ui?.triggerIcon })"
+            />
             <span>{{ item.label }}</span>
-            <Icon name="i-heroicons-chevron-down" :class="ui.triggerCaret({ class: props.ui?.triggerCaret })" />
+            <Icon
+              name="i-heroicons-chevron-down"
+              :class="ui.triggerCaret({ class: props.ui?.triggerCaret })"
+            />
           </NavigationMenuTrigger>
 
-          <NavigationMenuContent :class="ui.content({ class: props.ui?.content })">
+          <NavigationMenuContent
+            :class="ui.content({ class: props.ui?.content })"
+          >
             <div :class="ui.grid({ class: props.ui?.grid })">
               <component
                 :is="child.to ? 'router-link' : child.href ? 'a' : 'div'"
@@ -85,13 +102,25 @@ const handleSelect = (item: NavigationMenuItem) => {
                   :name="child.icon"
                   :class="ui.gridItemIcon({ class: props.ui?.gridItemIcon })"
                 />
-                <div :class="ui.gridItemContent({ class: props.ui?.gridItemContent })">
-                  <div :class="ui.gridItemLabel({ class: props.ui?.gridItemLabel })">
+                <div
+                  :class="
+                    ui.gridItemContent({ class: props.ui?.gridItemContent })
+                  "
+                >
+                  <div
+                    :class="
+                      ui.gridItemLabel({ class: props.ui?.gridItemLabel })
+                    "
+                  >
                     {{ child.label }}
                   </div>
                   <div
                     v-if="child.description"
-                    :class="ui.gridItemDescription({ class: props.ui?.gridItemDescription })"
+                    :class="
+                      ui.gridItemDescription({
+                        class: props.ui?.gridItemDescription
+                      })
+                    "
                   >
                     {{ child.description }}
                   </div>
@@ -102,10 +131,7 @@ const handleSelect = (item: NavigationMenuItem) => {
         </template>
 
         <!-- Simple link item -->
-        <NavigationMenuLink
-          v-else
-          as-child
-        >
+        <NavigationMenuLink v-else as-child>
           <component
             :is="item.to ? 'router-link' : item.href ? 'a' : 'button'"
             :to="item.to"
@@ -114,7 +140,11 @@ const handleSelect = (item: NavigationMenuItem) => {
             :disabled="item.disabled"
             @click="() => handleSelect(item)"
           >
-            <Icon v-if="item.icon" :name="item.icon" :class="ui.linkIcon({ class: props.ui?.linkIcon })" />
+            <Icon
+              v-if="item.icon"
+              :name="item.icon"
+              :class="ui.linkIcon({ class: props.ui?.linkIcon })"
+            />
             <span>{{ item.label }}</span>
           </component>
         </NavigationMenuLink>

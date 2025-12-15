@@ -53,10 +53,13 @@ const slots = defineSlots()
 
 const imageError = ref(false)
 
-const ui = computed(() => avatarTheme({
-  size: props.size,
-  chipPosition: typeof props.chip === 'object' ? props.chip.position : 'top-right'
-}))
+const ui = computed(() =>
+  avatarTheme({
+    size: props.size,
+    chipPosition:
+      typeof props.chip === 'object' ? props.chip.position : 'top-right'
+  })
+)
 
 const fallbackText = computed(() => {
   if (props.text) return props.text
@@ -64,7 +67,7 @@ const fallbackText = computed(() => {
     return props.alt
       .split(' ')
       .slice(0, 2)
-      .map(word => word.charAt(0).toUpperCase())
+      .map((word) => word.charAt(0).toUpperCase())
       .join('')
   }
   return '?'
@@ -112,12 +115,16 @@ const handleImageError = () => {
     </slot>
 
     <!-- TODO: Add Chip component when available -->
-    <div v-if="chip" class="absolute" :class="{
-      'top-0 right-0': !chip.position || chip.position === 'top-right',
-      'top-0 left-0': chip.position === 'top-left',
-      'bottom-0 right-0': chip.position === 'bottom-right',
-      'bottom-0 left-0': chip.position === 'bottom-left'
-    }">
+    <div
+      v-if="chip"
+      class="absolute"
+      :class="{
+        'top-0 right-0': !chip.position || chip.position === 'top-right',
+        'top-0 left-0': chip.position === 'top-left',
+        'bottom-0 right-0': chip.position === 'bottom-right',
+        'bottom-0 left-0': chip.position === 'bottom-left'
+      }"
+    >
       <!-- Chip placeholder -->
     </div>
   </Primitive>

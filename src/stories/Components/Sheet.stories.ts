@@ -6,6 +6,7 @@ import Button from '../../components/Button.vue'
 const meta: Meta<typeof Sheet> = {
   title: 'Components/Sheet',
   component: Sheet,
+  tags: ['autodocs'],
   argTypes: {
     side: {
       control: 'select',

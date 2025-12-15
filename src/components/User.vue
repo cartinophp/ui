@@ -59,11 +59,13 @@ const props = defineProps({
 
 const slots = defineSlots()
 
-const ui = computed(() => userTheme({
-  size: props.size,
-  orientation: props.orientation,
-  to: !!props.to || !!props.onClick
-}))
+const ui = computed(() =>
+  userTheme({
+    size: props.size,
+    orientation: props.orientation,
+    to: !!props.to || !!props.onClick
+  })
+)
 </script>
 
 <template>
@@ -82,7 +84,7 @@ const ui = computed(() => userTheme({
         :class="ui.avatar({ class: props.ui?.avatar })"
       >
         <div
-          class="rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium"
+          class="rounded-full bg-muted flex items-center justify-center text-muted-foreground font-medium"
           :class="{
             'w-6 h-6 text-xs': size === '3xs' || size === '2xs',
             'w-8 h-8 text-sm': size === 'xs' || size === 'sm',
@@ -90,7 +92,10 @@ const ui = computed(() => userTheme({
             'w-12 h-12 text-lg': size === 'lg'
           }"
         >
-          {{ avatar.text || (props.name ? props.name.charAt(0).toUpperCase() : '?') }}
+          {{
+            avatar.text ||
+            (props.name ? props.name.charAt(0).toUpperCase() : '?')
+          }}
         </div>
       </div>
     </slot>
@@ -107,12 +112,20 @@ const ui = computed(() => userTheme({
       </Link>
 
       <slot>
-        <p v-if="props.name || !!slots.name" data-slot="name" :class="ui.name({ class: props.ui?.name })">
+        <p
+          v-if="props.name || !!slots.name"
+          data-slot="name"
+          :class="ui.name({ class: props.ui?.name })"
+        >
           <slot name="name">
             {{ props.name }}
           </slot>
         </p>
-        <p v-if="props.description || !!slots.description" data-slot="description" :class="ui.description({ class: props.ui?.description })">
+        <p
+          v-if="props.description || !!slots.description"
+          data-slot="description"
+          :class="ui.description({ class: props.ui?.description })"
+        >
           <slot name="description">
             {{ props.description }}
           </slot>

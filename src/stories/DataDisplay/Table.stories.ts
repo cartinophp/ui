@@ -4,6 +4,7 @@ import Table from '../../components/Table.vue'
 const meta: Meta<typeof Table> = {
   title: 'Data Display/Table',
   component: Table,
+  tags: ['autodocs'],
   args: {
     headers: ['ID', 'Name', 'Email'],
     rows: [

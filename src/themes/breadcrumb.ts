@@ -11,21 +11,21 @@ export default tv({
     linkLabel: 'text-sm font-medium truncate',
     linkTrailingIcon: 'shrink-0',
     separator: 'flex',
-    separatorIcon: 'shrink-0 text-gray-400'
+    separatorIcon: 'shrink-0 text-muted-foreground'
   },
   variants: {
     active: {
       true: {
-        linkLabel: 'text-gray-900'
+        linkLabel: 'text-foreground'
       },
       false: {
-        linkLabel: 'text-gray-500 group-hover:text-gray-700'
+        linkLabel: 'text-muted-foreground group-hover:text-foreground'
       }
     },
     disabled: {
       true: {
         link: 'cursor-not-allowed opacity-50',
-        linkLabel: 'text-gray-400'
+        linkLabel: 'text-muted-foreground/50'
       }
     },
     to: {

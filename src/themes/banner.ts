@@ -15,29 +15,29 @@ export default tv({
   variants: {
     color: {
       primary: {
-        root: 'bg-primary-500 text-white',
-        icon: 'text-white/90',
-        title: 'text-white'
+        root: 'bg-primary text-primary-foreground',
+        icon: 'text-primary-foreground/90',
+        title: 'text-primary-foreground'
       },
       success: {
-        root: 'bg-green-500 text-white',
-        icon: 'text-white/90',
-        title: 'text-white'
+        root: 'bg-success text-success-foreground',
+        icon: 'text-success-foreground/90',
+        title: 'text-success-foreground'
       },
       warning: {
-        root: 'bg-yellow-500 text-gray-900',
-        icon: 'text-gray-900/90',
-        title: 'text-gray-900'
+        root: 'bg-warning text-warning-foreground',
+        icon: 'text-warning-foreground/90',
+        title: 'text-warning-foreground'
       },
       error: {
-        root: 'bg-red-500 text-white',
-        icon: 'text-white/90',
-        title: 'text-white'
+        root: 'bg-error text-error-foreground',
+        icon: 'text-error-foreground/90',
+        title: 'text-error-foreground'
       },
       neutral: {
-        root: 'bg-gray-100 text-gray-900',
-        icon: 'text-gray-700',
-        title: 'text-gray-900'
+        root: 'bg-muted text-foreground',
+        icon: 'text-muted-foreground',
+        title: 'text-foreground'
       }
     },
     to: {

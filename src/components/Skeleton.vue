@@ -15,10 +15,12 @@ const props = withDefaults(defineProps<SkeletonProps>(), {
   animation: 'pulse'
 })
 
-const ui = computed(() => theme({
-  variant: props.variant,
-  animation: props.animation
-}))
+const ui = computed(() =>
+  theme({
+    variant: props.variant,
+    animation: props.animation
+  })
+)
 
 const style = computed(() => ({
   width: props.width,

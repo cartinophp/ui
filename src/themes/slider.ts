@@ -3,9 +3,10 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'relative flex items-center select-none touch-none',
-    track: 'relative grow rounded-full bg-gray-200',
-    range: 'absolute rounded-full bg-primary-500',
-    thumb: 'block rounded-full bg-white border-2 border-primary-500 hover:border-primary-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+    track: 'relative grow rounded-full bg-muted',
+    range: 'absolute rounded-full bg-primary',
+    thumb:
+      'block rounded-full bg-background border-2 border-primary hover:border-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
   },
   variants: {
     size: {
@@ -27,32 +28,34 @@ export default tv({
     },
     color: {
       primary: {
-        range: 'bg-primary-500',
-        thumb: 'border-primary-500 hover:border-primary-600 focus-visible:ring-primary-500'
+        range: 'bg-primary',
+        thumb: 'border-primary hover:border-primary/80 focus-visible:ring-ring'
       },
       secondary: {
-        range: 'bg-gray-500',
-        thumb: 'border-gray-500 hover:border-gray-600 focus-visible:ring-gray-500'
+        range: 'bg-secondary',
+        thumb:
+          'border-secondary hover:border-secondary/80 focus-visible:ring-ring'
       },
       success: {
-        range: 'bg-green-500',
-        thumb: 'border-green-500 hover:border-green-600 focus-visible:ring-green-500'
+        range: 'bg-success',
+        thumb: 'border-success hover:border-success/80 focus-visible:ring-ring'
       },
       info: {
-        range: 'bg-blue-500',
-        thumb: 'border-blue-500 hover:border-blue-600 focus-visible:ring-blue-500'
+        range: 'bg-info',
+        thumb: 'border-info hover:border-info/80 focus-visible:ring-ring'
       },
       warning: {
-        range: 'bg-yellow-500',
-        thumb: 'border-yellow-500 hover:border-yellow-600 focus-visible:ring-yellow-500'
+        range: 'bg-warning',
+        thumb: 'border-warning hover:border-warning/80 focus-visible:ring-ring'
       },
       error: {
-        range: 'bg-red-500',
-        thumb: 'border-red-500 hover:border-red-600 focus-visible:ring-red-500'
+        range: 'bg-error',
+        thumb: 'border-error hover:border-error/80 focus-visible:ring-ring'
       },
       neutral: {
-        range: 'bg-gray-400',
-        thumb: 'border-gray-400 hover:border-gray-500 focus-visible:ring-gray-400'
+        range: 'bg-muted',
+        thumb:
+          'border-muted-foreground hover:border-muted-foreground/80 focus-visible:ring-ring'
       }
     },
     orientation: {

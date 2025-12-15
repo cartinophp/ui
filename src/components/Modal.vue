@@ -8,7 +8,11 @@
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div v-if="open" :class="ui.overlay" @click="onOverlayClick">
+      <div
+        v-if="open"
+        :class="modalTheme.overlay({ class: ui?.overlay })"
+        @click="onOverlayClick"
+      >
         <!-- Modal dialog -->
         <Transition
           enter-active-class="transition-all duration-200"
@@ -21,7 +25,7 @@
           <div
             v-if="open"
             ref="dialogRef"
-            :class="ui.dialog"
+            :class="modalTheme.dialog({ class: ui?.dialog })"
             role="dialog"
             :aria-modal="true"
             :aria-labelledby="title ? 'modal-title' : undefined"
@@ -32,7 +36,7 @@
             <button
               v-if="closable"
               type="button"
-              :class="ui.closeButton"
+              :class="modalTheme.closeButton({ class: ui?.closeButton })"
               @click="close"
               aria-label="Close modal"
             >
@@ -40,24 +44,38 @@
             </button>
 
             <!-- Header -->
-            <div v-if="title || description || $slots.header" :class="ui.header">
+            <div
+              v-if="title || description || $slots.header"
+              :class="modalTheme.header({ class: ui?.header })"
+            >
               <slot name="header">
-                <h2 v-if="title" id="modal-title" :class="ui.title">
+                <h2
+                  v-if="title"
+                  id="modal-title"
+                  :class="modalTheme.title({ class: ui?.title })"
+                >
                   {{ title }}
                 </h2>
-                <p v-if="description" id="modal-description" :class="ui.description">
+                <p
+                  v-if="description"
+                  id="modal-description"
+                  :class="modalTheme.description({ class: ui?.description })"
+                >
                   {{ description }}
                 </p>
               </slot>
             </div>
 
             <!-- Body -->
-            <div :class="ui.body">
+            <div :class="modalTheme.body({ class: ui?.body })">
               <slot />
             </div>
 
             <!-- Footer -->
-            <div v-if="$slots.footer" :class="ui.footer">
+            <div
+              v-if="$slots.footer"
+              :class="modalTheme.footer({ class: ui?.footer })"
+            >
               <slot name="footer" />
             </div>
           </div>
@@ -81,6 +99,9 @@ export interface ModalProps {
   closeOnEscape?: boolean
   closeIcon?: string
   preventScroll?: boolean
+  fullscreen?: boolean
+  centered?: boolean
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<ModalProps>(), {
@@ -95,15 +116,19 @@ const props = withDefaults(defineProps<ModalProps>(), {
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
-  'close': []
-  'open': []
+  close: []
+  open: []
 }>()
 
 const dialogRef = ref<HTMLElement>()
 
-const ui = computed(() => theme({
-  size: props.size
-}))
+const modalTheme = computed(() =>
+  theme({
+    size: props.size,
+    fullscreen: props.fullscreen,
+    centered: props.centered
+  })
+)
 
 const close = () => {
   emit('update:open', false)
@@ -125,20 +150,23 @@ const onEscapeKey = (event: KeyboardEvent) => {
 // Handle body scroll
 const originalStyle = ref<string>('')
 
-watch(() => props.open, (isOpen) => {
-  if (props.preventScroll) {
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (props.preventScroll) {
+      if (isOpen) {
+        originalStyle.value = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = originalStyle.value
+      }
+    }
+
     if (isOpen) {
-      originalStyle.value = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = originalStyle.value
+      emit('open')
     }
   }
-  
-  if (isOpen) {
-    emit('open')
-  }
-})
+)
 
 onMounted(() => {
   document.addEventListener('keydown', onEscapeKey)
@@ -146,7 +174,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', onEscapeKey)
-  
+
   if (props.preventScroll && props.open) {
     document.body.style.overflow = originalStyle.value
   }

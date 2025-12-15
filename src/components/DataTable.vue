@@ -117,17 +117,24 @@ const slots = defineSlots()
 const internalGlobalFilter = ref(props.globalFilter ?? '')
 const internalSorting = ref<SortingState>(props.sorting ?? [])
 const internalColumnFilters = ref<ColumnFiltersState>(props.columnFilters ?? [])
-const internalColumnVisibility = ref<VisibilityState>(props.columnVisibility ?? {})
+const internalColumnVisibility = ref<VisibilityState>(
+  props.columnVisibility ?? {}
+)
 const internalRowSelection = ref<RowSelectionState>(props.rowSelection ?? {})
 const internalExpanded = ref<ExpandedState>(props.expanded ?? {})
-const internalPagination = ref<PaginationState>(props.pagination ?? {
-  pageIndex: 0,
-  pageSize: props.pageSize
-})
+const internalPagination = ref<PaginationState>(
+  props.pagination ?? {
+    pageIndex: 0,
+    pageSize: props.pageSize
+  }
+)
 
 // Use v-model if provided, otherwise internal state
 const globalFilterModel = computed({
-  get: () => props.globalFilter !== undefined ? props.globalFilter : internalGlobalFilter.value,
+  get: () =>
+    props.globalFilter !== undefined
+      ? props.globalFilter
+      : internalGlobalFilter.value,
   set: (value) => {
     internalGlobalFilter.value = value
     emit('update:globalFilter', value)
@@ -135,7 +142,8 @@ const globalFilterModel = computed({
 })
 
 const sortingModel = computed({
-  get: () => props.sorting !== undefined ? props.sorting : internalSorting.value,
+  get: () =>
+    props.sorting !== undefined ? props.sorting : internalSorting.value,
   set: (value) => {
     internalSorting.value = value
     emit('update:sorting', value)
@@ -143,7 +151,10 @@ const sortingModel = computed({
 })
 
 const columnFiltersModel = computed({
-  get: () => props.columnFilters !== undefined ? props.columnFilters : internalColumnFilters.value,
+  get: () =>
+    props.columnFilters !== undefined
+      ? props.columnFilters
+      : internalColumnFilters.value,
   set: (value) => {
     internalColumnFilters.value = value
     emit('update:columnFilters', value)
@@ -151,7 +162,10 @@ const columnFiltersModel = computed({
 })
 
 const columnVisibilityModel = computed({
-  get: () => props.columnVisibility !== undefined ? props.columnVisibility : internalColumnVisibility.value,
+  get: () =>
+    props.columnVisibility !== undefined
+      ? props.columnVisibility
+      : internalColumnVisibility.value,
   set: (value) => {
     internalColumnVisibility.value = value
     emit('update:columnVisibility', value)
@@ -159,7 +173,10 @@ const columnVisibilityModel = computed({
 })
 
 const rowSelectionModel = computed({
-  get: () => props.rowSelection !== undefined ? props.rowSelection : internalRowSelection.value,
+  get: () =>
+    props.rowSelection !== undefined
+      ? props.rowSelection
+      : internalRowSelection.value,
   set: (value) => {
     internalRowSelection.value = value
     emit('update:rowSelection', value)
@@ -167,7 +184,8 @@ const rowSelectionModel = computed({
 })
 
 const expandedModel = computed({
-  get: () => props.expanded !== undefined ? props.expanded : internalExpanded.value,
+  get: () =>
+    props.expanded !== undefined ? props.expanded : internalExpanded.value,
   set: (value) => {
     internalExpanded.value = value
     emit('update:expanded', value)
@@ -175,7 +193,10 @@ const expandedModel = computed({
 })
 
 const paginationModel = computed({
-  get: () => props.pagination !== undefined ? props.pagination : internalPagination.value,
+  get: () =>
+    props.pagination !== undefined
+      ? props.pagination
+      : internalPagination.value,
   set: (value) => {
     internalPagination.value = value
     emit('update:pagination', value)
@@ -217,67 +238,78 @@ const table = useVueTable({
   enableExpanding: props.enableExpanding,
   enableGrouping: props.enableGrouping,
   onGlobalFilterChange: (updater) => {
-    globalFilterModel.value = typeof updater === 'function'
-      ? updater(globalFilterModel.value)
-      : updater
+    globalFilterModel.value =
+      typeof updater === 'function' ? updater(globalFilterModel.value) : updater
   },
   onSortingChange: (updater) => {
-    sortingModel.value = typeof updater === 'function'
-      ? updater(sortingModel.value)
-      : updater
+    sortingModel.value =
+      typeof updater === 'function' ? updater(sortingModel.value) : updater
   },
   onColumnFiltersChange: (updater) => {
-    columnFiltersModel.value = typeof updater === 'function'
-      ? updater(columnFiltersModel.value)
-      : updater
+    columnFiltersModel.value =
+      typeof updater === 'function'
+        ? updater(columnFiltersModel.value)
+        : updater
   },
   onColumnVisibilityChange: (updater) => {
-    columnVisibilityModel.value = typeof updater === 'function'
-      ? updater(columnVisibilityModel.value)
-      : updater
+    columnVisibilityModel.value =
+      typeof updater === 'function'
+        ? updater(columnVisibilityModel.value)
+        : updater
   },
   onRowSelectionChange: (updater) => {
-    rowSelectionModel.value = typeof updater === 'function'
-      ? updater(rowSelectionModel.value)
-      : updater
+    rowSelectionModel.value =
+      typeof updater === 'function' ? updater(rowSelectionModel.value) : updater
   },
   onExpandedChange: (updater) => {
-    expandedModel.value = typeof updater === 'function'
-      ? updater(expandedModel.value)
-      : updater
+    expandedModel.value =
+      typeof updater === 'function' ? updater(expandedModel.value) : updater
   },
   onPaginationChange: (updater) => {
-    paginationModel.value = typeof updater === 'function'
-      ? updater(paginationModel.value)
-      : updater
+    paginationModel.value =
+      typeof updater === 'function' ? updater(paginationModel.value) : updater
   },
   getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: props.enableFiltering ? getFilteredRowModel() : undefined,
+  getFilteredRowModel: props.enableFiltering
+    ? getFilteredRowModel()
+    : undefined,
   getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
-  getPaginationRowModel: props.enablePagination ? getPaginationRowModel() : undefined,
-  getExpandedRowModel: props.enableExpanding ? getExpandedRowModel() : undefined,
+  getPaginationRowModel: props.enablePagination
+    ? getPaginationRowModel()
+    : undefined,
+  getExpandedRowModel: props.enableExpanding
+    ? getExpandedRowModel()
+    : undefined,
   getGroupedRowModel: props.enableGrouping ? getGroupedRowModel() : undefined,
   getFacetedRowModel: props.enableFiltering ? getFacetedRowModel() : undefined,
-  getFacetedUniqueValues: props.enableFiltering ? getFacetedUniqueValues() : undefined,
+  getFacetedUniqueValues: props.enableFiltering
+    ? getFacetedUniqueValues()
+    : undefined,
   meta: props.meta,
   getRowId: props.getRowId
 })
 
-const ui = computed(() => dataTableTheme({
-  striped: props.striped,
-  bordered: props.bordered,
-  compact: props.compact,
-  hoverable: props.hoverable,
-  sticky: props.sticky,
-  loading: props.loading
-}))
+const ui = computed(() =>
+  dataTableTheme({
+    striped: props.striped,
+    bordered: props.bordered,
+    compact: props.compact,
+    hoverable: props.hoverable,
+    sticky: props.sticky,
+    loading: props.loading
+  })
+)
 
 const totalRows = computed(() => table.getFilteredRowModel().rows.length)
 const currentPage = computed(() => paginationModel.value.pageIndex + 1)
 
 const paginationText = computed(() => {
-  const start = paginationModel.value.pageIndex * paginationModel.value.pageSize + 1
-  const end = Math.min((paginationModel.value.pageIndex + 1) * paginationModel.value.pageSize, totalRows.value)
+  const start =
+    paginationModel.value.pageIndex * paginationModel.value.pageSize + 1
+  const end = Math.min(
+    (paginationModel.value.pageIndex + 1) * paginationModel.value.pageSize,
+    totalRows.value
+  )
   return `Showing ${start} to ${end} of ${totalRows.value} entries`
 })
 
@@ -318,11 +350,22 @@ defineExpose({
 </script>
 
 <template>
-  <div data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <div
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+  >
     <!-- Toolbar -->
-    <div v-if="searchable || slots.toolbar || slots.actions" data-slot="toolbar" :class="ui.toolbar({ class: props.ui?.toolbar })">
+    <div
+      v-if="searchable || slots.toolbar || slots.actions"
+      data-slot="toolbar"
+      :class="ui.toolbar({ class: props.ui?.toolbar })"
+    >
       <slot name="toolbar" :table="table">
-        <div v-if="searchable" data-slot="search" :class="ui.search({ class: props.ui?.search })">
+        <div
+          v-if="searchable"
+          data-slot="search"
+          :class="ui.search({ class: props.ui?.search })"
+        >
           <Input
             v-model="globalFilterModel"
             :placeholder="searchPlaceholder"
@@ -331,7 +374,10 @@ defineExpose({
           />
         </div>
 
-        <div data-slot="actions" :class="ui.actions({ class: props.ui?.actions })">
+        <div
+          data-slot="actions"
+          :class="ui.actions({ class: props.ui?.actions })"
+        >
           <slot name="actions" :table="table" />
         </div>
       </slot>
@@ -339,7 +385,11 @@ defineExpose({
 
     <!-- Table Wrapper -->
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
-      <table ref="tableRef" data-slot="table" :class="ui.table({ class: props.ui?.table })">
+      <table
+        ref="tableRef"
+        data-slot="table"
+        :class="ui.table({ class: props.ui?.table })"
+      >
         <!-- Header -->
         <thead data-slot="thead" :class="ui.thead({ class: props.ui?.thead })">
           <tr
@@ -354,7 +404,10 @@ defineExpose({
               data-slot="th"
               :class="ui.th({ class: props.ui?.th })"
               :colspan="header.colSpan"
-              :style="{ width: header.getSize() !== 150 ? `${header.getSize()}px` : undefined }"
+              :style="{
+                width:
+                  header.getSize() !== 150 ? `${header.getSize()}px` : undefined
+              }"
             >
               <div
                 v-if="!header.isPlaceholder"
@@ -371,7 +424,13 @@ defineExpose({
                     v-if="header.column.getCanSort() && enableSorting"
                     :class="ui.sortButton({ class: props.ui?.sortButton })"
                     :aria-label="`Sort by ${header.column.columnDef.header}`"
-                    :aria-sort="header.column.getIsSorted() === 'asc' ? 'ascending' : header.column.getIsSorted() === 'desc' ? 'descending' : 'none'"
+                    :aria-sort="
+                      header.column.getIsSorted() === 'asc'
+                        ? 'ascending'
+                        : header.column.getIsSorted() === 'desc'
+                          ? 'descending'
+                          : 'none'
+                    "
                     @click="header.column.getToggleSortingHandler()?.($event)"
                   >
                     <FlexRender
@@ -412,7 +471,9 @@ defineExpose({
               :class="ui.tr({ class: props.ui?.tr })"
               :role="enableRowSelection || onSelect ? 'button' : undefined"
               :tabindex="enableRowSelection || onSelect ? 0 : undefined"
-              :aria-selected="enableRowSelection ? row.getIsSelected() : undefined"
+              :aria-selected="
+                enableRowSelection ? row.getIsSelected() : undefined
+              "
               :data-expanded="row.getIsExpanded()"
               @click="handleRowClick(row)"
               @keydown.enter="handleRowClick(row)"
@@ -441,7 +502,10 @@ defineExpose({
             </tr>
 
             <!-- Expanded Row Content -->
-            <tr v-if="row.getIsExpanded() && slots['expand-row']" :key="`${row.id}-expanded`">
+            <tr
+              v-if="row.getIsExpanded() && slots['expand-row']"
+              :key="`${row.id}-expanded`"
+            >
               <td :colspan="row.getVisibleCells().length">
                 <slot name="expand-row" :row="row.original" :table="table" />
               </td>
@@ -451,9 +515,18 @@ defineExpose({
       </table>
 
       <!-- Loading State -->
-      <div v-if="loading" data-slot="loading" :class="ui.loading({ class: props.ui?.loading })" role="status" aria-live="polite">
+      <div
+        v-if="loading"
+        data-slot="loading"
+        :class="ui.loading({ class: props.ui?.loading })"
+        role="status"
+        aria-live="polite"
+      >
         <slot name="loading">
-          <Icon name="i-heroicons-arrow-path" :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })" />
+          <Icon
+            name="i-heroicons-arrow-path"
+            :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })"
+          />
           <span class="sr-only">Loading...</span>
         </slot>
       </div>
@@ -466,11 +539,16 @@ defineExpose({
         role="status"
       >
         <slot name="empty">
-          <Icon name="i-heroicons-inbox" :class="ui.emptyIcon({ class: props.ui?.emptyIcon })" />
+          <Icon
+            name="i-heroicons-inbox"
+            :class="ui.emptyIcon({ class: props.ui?.emptyIcon })"
+          />
           <div :class="ui.emptyTitle({ class: props.ui?.emptyTitle })">
             No results found
           </div>
-          <div :class="ui.emptyDescription({ class: props.ui?.emptyDescription })">
+          <div
+            :class="ui.emptyDescription({ class: props.ui?.emptyDescription })"
+          >
             {{ empty }}
           </div>
         </slot>
@@ -483,14 +561,25 @@ defineExpose({
       data-slot="footer"
       :class="ui.footer({ class: props.ui?.footer })"
     >
-      <div data-slot="footer-text" :class="ui.footerText({ class: props.ui?.footerText })">
+      <div
+        data-slot="footer-text"
+        :class="ui.footerText({ class: props.ui?.footerText })"
+      >
         <slot name="footer-text" :table="table">
           {{ paginationText }}
         </slot>
       </div>
 
-      <div data-slot="footer-actions" :class="ui.footerActions({ class: props.ui?.footerActions })">
-        <slot name="pagination" :table="table" :page="currentPage" :total="totalRows">
+      <div
+        data-slot="footer-actions"
+        :class="ui.footerActions({ class: props.ui?.footerActions })"
+      >
+        <slot
+          name="pagination"
+          :table="table"
+          :page="currentPage"
+          :total="totalRows"
+        >
           <Pagination
             :page="currentPage"
             :total="totalRows"

@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'bg-gray-200 dark:bg-gray-700'
+    root: 'bg-muted'
   },
   variants: {
     variant: {
@@ -24,7 +24,7 @@ export default tv({
         root: 'animate-pulse'
       },
       wave: {
-        root: 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent'
+        root: 'relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-background/20 before:to-transparent'
       },
       none: {}
     }

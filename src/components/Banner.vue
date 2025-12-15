@@ -63,21 +63,28 @@ const slots = defineSlots()
 
 const emits = defineEmits(['close'])
 
-const ui = computed(() => bannerTheme({
-  color: props.color,
-  to: !!props.to
-}))
+const ui = computed(() =>
+  bannerTheme({
+    color: props.color,
+    to: !!props.to
+  })
+)
 
 const id = computed(() => `banner-${props.id || '1'}`)
 
-watch(id, (newId) => {
-  if (typeof document === 'undefined' || typeof localStorage === 'undefined') return
+watch(
+  id,
+  (newId) => {
+    if (typeof document === 'undefined' || typeof localStorage === 'undefined')
+      return
 
-  const isClosed = localStorage.getItem(newId) === 'true'
-  const htmlElement = document.querySelector('html')
+    const isClosed = localStorage.getItem(newId) === 'true'
+    const htmlElement = document.querySelector('html')
 
-  htmlElement?.classList.toggle('hide-banner', isClosed)
-}, { immediate: true })
+    htmlElement?.classList.toggle('hide-banner', isClosed)
+  },
+  { immediate: true }
+)
 
 const onClose = () => {
   if (typeof localStorage !== 'undefined') {
@@ -91,7 +98,12 @@ const onClose = () => {
 </script>
 
 <template>
-  <Primitive :as="props.as" class="banner" data-slot="root" :class="ui.root({ class: [props.ui?.root, props.class] })">
+  <Primitive
+    :as="props.as"
+    class="banner"
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+  >
     <Link
       v-if="props.to"
       :aria-label="props.title"
@@ -100,26 +112,49 @@ const onClose = () => {
       tabindex="-1"
       raw
     >
-      <span class="absolute inset-0 " aria-hidden="true" />
+      <span class="absolute inset-0" aria-hidden="true" />
     </Link>
 
-    <div class="container" data-slot="container" :class="ui.container({ class: props.ui?.container })">
+    <div
+      class="container"
+      data-slot="container"
+      :class="ui.container({ class: props.ui?.container })"
+    >
       <div data-slot="left" :class="ui.left({ class: props.ui?.left })" />
 
       <div data-slot="center" :class="ui.center({ class: props.ui?.center })">
         <slot name="leading" :ui="ui">
-          <Icon v-if="props.icon" :name="props.icon" data-slot="icon" :class="ui.icon({ class: props.ui?.icon })" />
+          <Icon
+            v-if="props.icon"
+            :name="props.icon"
+            data-slot="icon"
+            :class="ui.icon({ class: props.ui?.icon })"
+          />
         </slot>
 
-        <div v-if="props.title || !!slots.title" data-slot="title" :class="ui.title({ class: props.ui?.title })">
+        <div
+          v-if="props.title || !!slots.title"
+          data-slot="title"
+          :class="ui.title({ class: props.ui?.title })"
+        >
           <slot name="title">
             {{ props.title }}
           </slot>
         </div>
 
-        <div v-if="props.actions?.length || !!slots.actions" data-slot="actions" :class="ui.actions({ class: props.ui?.actions })">
+        <div
+          v-if="props.actions?.length || !!slots.actions"
+          data-slot="actions"
+          :class="ui.actions({ class: props.ui?.actions })"
+        >
           <slot name="actions">
-            <Button v-for="(action, index) in props.actions" :key="index" color="neutral" size="xs" v-bind="action" />
+            <Button
+              v-for="(action, index) in props.actions"
+              :key="index"
+              color="neutral"
+              size="xs"
+              v-bind="action"
+            />
           </slot>
         </div>
       </div>
@@ -133,7 +168,7 @@ const onClose = () => {
             color="neutral"
             variant="ghost"
             aria-label="Close banner"
-            v-bind="(typeof props.close === 'object' ? props.close : {})"
+            v-bind="typeof props.close === 'object' ? props.close : {}"
             data-slot="close"
             :class="ui.close({ class: props.ui?.close })"
             @click="onClose"

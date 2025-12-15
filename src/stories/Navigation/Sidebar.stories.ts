@@ -4,6 +4,7 @@ import Sidebar from '../../components/Sidebar.vue'
 const meta: Meta<typeof Sidebar> = {
   title: 'Navigation/Sidebar',
   component: Sidebar,
+  tags: ['autodocs'],
   args: {
     links: [
       { label: 'Dashboard', icon: 'i-heroicons-home', to: '/' },

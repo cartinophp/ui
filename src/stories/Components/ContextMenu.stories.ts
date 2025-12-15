@@ -4,7 +4,8 @@ import type { ContextMenuItem } from '../../components/ContextMenu.vue'
 
 const meta: Meta<typeof ContextMenu> = {
   title: 'Components/ContextMenu',
-  component: ContextMenu
+  component: ContextMenu,
+  tags: ['autodocs']
 }
 
 export default meta
