@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Progress from '@/components/Progress.vue'
+import Progress from '../../components/Progress.vue'
 
 const meta: Meta<typeof Progress> = {
   title: 'DataDisplay/Progress',

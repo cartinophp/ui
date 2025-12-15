@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Card from '@/components/Card.vue'
-import Button from '@/components/Button.vue'
+import Card from '../../components/Card.vue'
+import Button from '../../components/Button.vue'
 
 const meta = {
   title: 'Components/Card',
@@ -221,7 +221,7 @@ export const ImageCard: Story = {
 
 export const ProductCard: Story = {
   render: () => ({
-    components: { Card, Button, Badge: () => import('@/components/Badge.vue') },
+    components: { Card, Button, Badge: () => import('../../components/Badge.vue') },
     template: `
       <Card padding="none" hoverable clickable>
         <div class="relative">

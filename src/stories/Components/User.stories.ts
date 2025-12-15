@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import User from '@/components/user.vue'
+import User from '../../components/User.vue'
 
 const meta: Meta<typeof User> = {
   title: 'Components/User',

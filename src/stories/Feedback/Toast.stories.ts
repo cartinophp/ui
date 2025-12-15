@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Toast from '@/components/Toast.vue'
+import Toast from '../../components/Toast.vue'
 
 const meta: Meta<typeof Toast> = {
   title: 'Feedback/Toast',
