@@ -18,9 +18,12 @@ export interface DialogProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 }
 
-const { open, defaultOpen, size } = withDefaults(defineProps<DialogProps>(), {
-  size: 'lg'
-})
+const {
+  open,
+  defaultOpen,
+  size = 'lg'
+} = defineProps<DialogProps>()
+
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
