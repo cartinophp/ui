@@ -39,6 +39,7 @@
     "@storybook/addon-a11y": "^10.1.9",
     "@storybook/addon-docs": "^10.1.9",
     "@storybook/addon-links": "^10.1.9",
+    "@storybook/addon-themes": "^10.1.9",
     "@storybook/vue3-vite": "^10.1.9",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^25.0.2",

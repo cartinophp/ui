@@ -3,12 +3,14 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'w-full',
-    label: 'text-sm font-medium text-foreground',
-    value: 'text-sm text-muted',
+    label: 'text-sm font-medium text-secondary-950 dark:text-secondary-50',
+    value: 'text-sm text-secondary-600 dark:text-secondary-400',
     labelContainer: 'flex justify-between items-center mb-2',
-    track: 'w-full bg-muted rounded-full overflow-hidden',
+    track:
+      'w-full bg-secondary-200 dark:bg-secondary-800 rounded-full overflow-hidden',
     fill: 'h-full rounded-full relative transition-all duration-300 ease-out',
-    stripes: 'absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse',
+    stripes:
+      'absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse',
     stepsContainer: 'flex justify-between mt-2 px-1',
     step: 'rounded-full transition-colors'
   },
@@ -66,31 +68,31 @@ export default tv({
     {
       color: 'primary',
       class: {
-        step: 'data-[active=true]:bg-primary data-[active=false]:bg-muted'
+        step: 'data-[active=true]:bg-primary data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
       }
     },
     {
       color: 'success',
       class: {
-        step: 'data-[active=true]:bg-success data-[active=false]:bg-muted'
+        step: 'data-[active=true]:bg-success data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
       }
     },
     {
       color: 'warning',
       class: {
-        step: 'data-[active=true]:bg-warning data-[active=false]:bg-muted'
+        step: 'data-[active=true]:bg-warning data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
       }
     },
     {
       color: 'error',
       class: {
-        step: 'data-[active=true]:bg-error data-[active=false]:bg-muted'
+        step: 'data-[active=true]:bg-error data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
       }
     },
     {
       color: 'info',
       class: {
-        step: 'data-[active=true]:bg-info data-[active=false]:bg-muted'
+        step: 'data-[active=true]:bg-info data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
       }
     }
   ],

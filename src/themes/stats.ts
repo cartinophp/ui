@@ -6,17 +6,19 @@ export default tv({
     iconContainer: 'rounded-lg shrink-0',
     icon: '',
     content: 'flex-1 min-w-0',
-    label: 'font-medium text-muted',
+    label: 'font-medium text-muted-foreground',
     value: 'font-bold text-foreground tracking-tight',
-    prefix: 'text-muted',
-    suffix: 'text-muted',
-    description: 'text-sm text-muted',
+    prefix: 'text-muted-foreground',
+    suffix: 'text-muted-foreground',
+    description: 'text-sm text-muted-foreground',
     change: 'flex items-center gap-1 text-sm font-medium',
     changeIcon: 'size-3',
+    changePeriod: 'text-muted-foreground',
     progressContainer: 'flex items-center gap-2 mt-2',
-    progressTrack: 'flex-1 h-1 bg-muted rounded-full overflow-hidden',
+    progressTrack:
+      'flex-1 h-1 bg-muted-foreground/10 rounded-full overflow-hidden',
     progressFill: 'h-full transition-all duration-300 ease-out',
-    progressText: 'text-xs text-muted font-medium',
+    progressText: 'text-xs text-muted-foreground font-medium',
     trend: 'shrink-0'
   },
   variants: {
@@ -46,7 +48,7 @@ export default tv({
     color: {
       default: {
         iconContainer: 'bg-muted',
-        icon: 'text-muted',
+        icon: 'text-muted-foreground',
         progressFill: 'bg-foreground'
       },
       primary: {
@@ -91,7 +93,7 @@ export default tv({
         change: 'text-error'
       },
       neutral: {
-        change: 'text-muted'
+        change: 'text-muted-foreground'
       }
     },
     loading: {

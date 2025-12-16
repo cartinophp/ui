@@ -9,8 +9,8 @@ export default tv({
   slots: {
     root: 'relative inline-block w-full',
     input:
-      'w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10',
-    icon: 'absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none'
+      'w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10 text-foreground placeholder:text-muted-foreground',
+    icon: 'absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-muted-foreground'
   },
   variants: {
     size: {

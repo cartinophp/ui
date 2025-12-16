@@ -8,7 +8,8 @@ export default tv({
     title: 'font-medium text-card-foreground',
     description: 'text-xs text-muted-foreground mt-0.5',
     action: 'shrink-0',
-    close: 'size-4 text-muted-foreground hover:text-foreground transition-colors cursor-pointer'
+    close:
+      'size-4 text-muted-foreground hover:text-foreground transition-colors cursor-pointer'
   },
   variants: {
     variant: {
@@ -16,24 +17,24 @@ export default tv({
         root: 'border-border bg-card text-card-foreground'
       },
       destructive: {
-        root: 'border-destructive/50 bg-destructive/10 text-destructive-foreground',
-        icon: 'text-destructive',
-        title: 'text-destructive'
+        root: 'border-destructive bg-destructive text-destructive-foreground',
+        icon: 'text-destructive-foreground',
+        title: 'text-destructive-foreground'
       },
       success: {
-        root: 'border-success/50 bg-success/10 text-success-foreground',
-        icon: 'text-success',
-        title: 'text-success'
+        root: 'border-success bg-success text-success-foreground',
+        icon: 'text-success-foreground',
+        title: 'text-success-foreground'
       },
       warning: {
-        root: 'border-warning/50 bg-warning/10 text-warning-foreground',
-        icon: 'text-warning',
-        title: 'text-warning'
+        root: 'border-warning bg-warning text-warning-foreground',
+        icon: 'text-warning-foreground',
+        title: 'text-warning-foreground'
       },
       info: {
-        root: 'border-primary/50 bg-primary/10 text-primary-foreground',
-        icon: 'text-primary',
-        title: 'text-primary'
+        root: 'border-primary bg-primary text-primary-foreground',
+        icon: 'text-primary-foreground',
+        title: 'text-primary-foreground'
       }
     },
     size: {

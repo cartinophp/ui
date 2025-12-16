@@ -5,9 +5,11 @@ export default tv({
     root: 'w-full',
     item: 'border-b border-border last:border-b-0',
     header: '',
-    trigger: 'flex w-full items-center justify-between py-4 text-left font-medium transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&[data-state=open]>svg]:rotate-180',
-    icon: 'size-4 shrink-0 transition-transform duration-200',
-    content: 'overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+    trigger:
+      'flex w-full items-center justify-between py-4 text-left font-medium transition-all text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&[data-state=open]>svg]:rotate-180',
+    icon: 'size-4 shrink-0 transition-transform duration-200 text-foreground',
+    content:
+      'overflow-hidden text-sm text-muted-foreground data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
     contentInner: 'pb-4 pt-0'
   },
   variants: {

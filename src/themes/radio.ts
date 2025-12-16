@@ -9,7 +9,7 @@ export default tv({
   slots: {
     root: 'shrink-0 rounded-full border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
     indicator:
-      'flex items-center justify-center w-full h-full relative after:content-[""] after:block after:rounded-full after:bg-current'
+      'flex items-center justify-center w-full h-full relative after:content-[""] after:block after:rounded-full after:shadow-sm'
   },
   variants: {
     size: {
@@ -57,7 +57,8 @@ export default tv({
       color: 'primary',
       checked: true,
       class: {
-        root: 'border-primary bg-primary text-primary-foreground'
+        root: 'border-primary bg-primary',
+        indicator: 'after:bg-primary-foreground'
       }
     },
 
@@ -73,7 +74,8 @@ export default tv({
       color: 'secondary',
       checked: true,
       class: {
-        root: 'border-secondary bg-secondary text-secondary-foreground'
+        root: 'border-secondary bg-secondary',
+        indicator: 'after:bg-secondary-foreground'
       }
     },
 
@@ -89,7 +91,8 @@ export default tv({
       color: 'success',
       checked: true,
       class: {
-        root: 'border-success bg-success text-success-foreground'
+        root: 'border-success bg-success',
+        indicator: 'after:bg-success-foreground'
       }
     },
 
@@ -105,7 +108,8 @@ export default tv({
       color: 'warning',
       checked: true,
       class: {
-        root: 'border-warning bg-warning text-warning-foreground'
+        root: 'border-warning bg-warning',
+        indicator: 'after:bg-warning-foreground'
       }
     },
 
@@ -121,7 +125,8 @@ export default tv({
       color: 'error',
       checked: true,
       class: {
-        root: 'border-error bg-error text-error-foreground'
+        root: 'border-error bg-error',
+        indicator: 'after:bg-error-foreground'
       }
     },
 
@@ -137,7 +142,8 @@ export default tv({
       color: 'info',
       checked: true,
       class: {
-        root: 'border-info bg-info text-info-foreground'
+        root: 'border-info bg-info',
+        indicator: 'after:bg-info-foreground'
       }
     }
   ],

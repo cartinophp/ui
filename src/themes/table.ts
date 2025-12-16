@@ -41,8 +41,8 @@ export default tv({
     },
     sticky: {
       true: {
-        thead: 'sticky top-0 bg-white z-10',
-        tfoot: 'sticky bottom-0 bg-white z-10'
+        thead: 'sticky top-0 bg-background z-10',
+        tfoot: 'sticky bottom-0 bg-background z-10'
       }
     }
   },

@@ -5,7 +5,8 @@ export default tv({
     root: 'w-full',
     label: 'block mb-1.5 font-medium text-foreground',
     wrapper: 'relative flex items-center transition-all',
-    input: 'flex-1 outline-none bg-transparent',
+    input:
+      'flex-1 outline-none bg-transparent text-foreground placeholder:text-muted-foreground',
     leadingIcon: 'shrink-0 text-muted-foreground absolute left-3',
     trailingIcon: 'shrink-0 text-muted-foreground absolute right-3',
     hint: 'mt-1.5'

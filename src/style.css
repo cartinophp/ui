@@ -182,10 +182,11 @@
 }
 
 /* === Dark Mode Overrides === */
+/* System preference dark mode - only applies when no explicit theme is set */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: var(--color-primary-500);
-    --color-primary-foreground: oklch(1 0 0);
+  :root:not([data-theme]) {
+    --color-primary: var(--color-primary-400);
+    --color-primary-foreground: var(--color-secondary-950);
 
     --color-secondary: var(--color-secondary-800);
     --color-secondary-foreground: var(--color-secondary-100);
@@ -229,6 +230,54 @@
 
     --color-highlighted: var(--color-secondary-50);
   }
+}
+
+/* Explicit dark mode via data-theme attribute (takes priority) */
+:root[data-theme='dark'] {
+  --color-primary: var(--color-primary-400);
+  --color-primary-foreground: var(--color-secondary-950);
+
+  --color-secondary: var(--color-secondary-800);
+  --color-secondary-foreground: var(--color-secondary-100);
+
+  --color-success: var(--color-success-400);
+  --color-success-foreground: var(--color-secondary-950);
+
+  --color-warning: var(--color-warning-400);
+  --color-warning-foreground: var(--color-secondary-950);
+
+  --color-error: var(--color-error-400);
+  --color-error-foreground: var(--color-secondary-950);
+
+  --color-destructive: var(--color-error-400);
+  --color-destructive-foreground: var(--color-secondary-950);
+
+  --color-info: var(--color-info-400);
+  --color-info-foreground: var(--color-secondary-950);
+
+  --color-muted: var(--color-secondary-800);
+  --color-muted-foreground: var(--color-secondary-300);
+
+  --color-accent: var(--color-secondary-800);
+  --color-accent-foreground: var(--color-secondary-100);
+
+  --color-background: var(--color-secondary-950);
+  --color-foreground: var(--color-secondary-50);
+
+  --color-default: var(--color-secondary-900);
+  --color-elevated: var(--color-secondary-900);
+
+  --color-card: var(--color-secondary-900);
+  --color-card-foreground: var(--color-secondary-50);
+
+  --color-popover: var(--color-secondary-900);
+  --color-popover-foreground: var(--color-secondary-50);
+
+  --color-border: var(--color-secondary-700);
+  --color-input: var(--color-secondary-700);
+  --color-ring: var(--color-primary-400);
+
+  --color-highlighted: var(--color-secondary-50);
 }
 
 /* Accordion Animations */
@@ -302,6 +351,102 @@
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+/* Sheet/Slideover Animations */
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out-to-top {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out-to-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Modal Scale Animations */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    scale: 0.95;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes scale-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.95;
   }
 }
 

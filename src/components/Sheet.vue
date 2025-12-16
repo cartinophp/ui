@@ -54,13 +54,13 @@ const handleOpenChange = (value: boolean) => {
   <DialogRoot :open="open" @update:open="handleOpenChange">
     <DialogPortal>
       <DialogOverlay
-        class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-[fade-in_200ms_ease-out] data-[state=closed]:animate-[fade-out_200ms_ease-in]"
       />
 
       <DialogContent :class="ui.root({ class: props.ui?.root })">
         <!-- Close Button -->
         <DialogClose :class="ui.close({ class: props.ui?.close })">
-          <Icon name="✕" />
+          <Icon name="✕" class="size-4" />
           <span class="sr-only">Close</span>
         </DialogClose>
 

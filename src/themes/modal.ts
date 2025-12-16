@@ -2,87 +2,54 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    overlay: 'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm',
-    dialog: 'relative bg-default border border-default rounded-lg shadow-xl max-h-[90vh] overflow-y-auto',
+    overlay:
+      'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-[fade-in_200ms_ease-out] data-[state=closed]:animate-[fade-out_200ms_ease-in]',
+    content:
+      'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-background border border-default rounded-lg shadow-xl max-h-[90vh] overflow-y-auto focus:outline-none data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
     header: 'space-y-2 p-6 pb-4',
     title: 'text-xl font-semibold text-foreground',
-    description: 'text-muted',
+    description: 'text-muted-foreground text-sm',
     body: 'px-6 py-4 text-foreground',
     footer: 'flex justify-end gap-2 p-6 pt-4 border-t border-default',
-    closeButton: 'absolute top-4 right-4 p-1 rounded-md text-muted hover:text-foreground hover:bg-elevated focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors'
+    closeButton:
+      'absolute top-4 right-4 p-1 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
   },
   variants: {
     size: {
       xs: {
-        dialog: 'max-w-xs'
+        content: 'w-[300px]'
       },
       sm: {
-        dialog: 'max-w-sm'
+        content: 'w-[400px]'
       },
       md: {
-        dialog: 'max-w-md'
+        content: 'w-[500px]'
       },
       lg: {
-        dialog: 'max-w-lg'
+        content: 'w-[600px]'
       },
       xl: {
-        dialog: 'max-w-xl'
+        content: 'w-[700px]'
       },
       '2xl': {
-        dialog: 'max-w-2xl'
+        content: 'w-[800px]'
       },
       '3xl': {
-        dialog: 'max-w-3xl'
-      },
-      '4xl': {
-        dialog: 'max-w-4xl'
-      },
-      '5xl': {
-        dialog: 'max-w-5xl'
-      },
-      '6xl': {
-        dialog: 'max-w-6xl'
-      },
-      '7xl': {
-        dialog: 'max-w-7xl'
+        content: 'w-[900px]'
       },
       full: {
-        dialog: 'max-w-full'
+        content: 'w-[95vw]'
       }
     },
     fullscreen: {
       true: {
-        dialog: 'w-full h-full max-w-none max-h-none rounded-none'
+        content:
+          'w-screen h-screen max-w-none max-h-none rounded-none left-0 top-0 translate-x-0 translate-y-0'
       }
-    },
-    centered: {
-      true: {
-        overlay: 'flex items-center justify-center p-4'
-      },
-      false: {
-        overlay: 'flex items-start justify-center pt-16 pb-4 px-4'
-      }
-    },
-    scrollBehavior: {
-      inside: {
-        dialog: 'flex flex-col max-h-[90vh]',
-        body: 'flex-1 overflow-y-auto'
-      },
-      outside: {}
     }
   },
-  compoundVariants: [
-    {
-      fullscreen: true,
-      class: {
-        overlay: 'p-0'
-      }
-    }
-  ],
   defaultVariants: {
     size: 'md',
-    fullscreen: false,
-    centered: true,
-    scrollBehavior: 'outside'
+    fullscreen: false
   }
 })

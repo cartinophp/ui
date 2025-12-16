@@ -5,7 +5,8 @@ export default tv({
     root: 'peer shrink-0 rounded-md border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 hover:border-primary/60',
     indicator: 'flex size-full items-center justify-center text-current',
     icon: 'size-3.5',
-    label: 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer',
+    label:
+      'text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer',
     description: 'text-sm text-muted-foreground',
     wrapper: 'flex items-center space-x-3',
     content: 'grid gap-2'

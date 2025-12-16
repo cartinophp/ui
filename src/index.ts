@@ -19,8 +19,6 @@ import Command from './components/Command.vue'
 import ContextMenu from './components/ContextMenu.vue'
 import DataTable from './components/DataTable.vue'
 import DatePicker from './components/DatePicker.vue'
-import Divider from './components/Divider.vue'
-import Drawer from './components/Drawer.vue'
 import Dropdown from './components/Dropdown.vue'
 import Icon from './components/Icon.vue'
 import Input from './components/Input.vue'
@@ -65,8 +63,6 @@ export const install = (app: App) => {
   app.component('CartinoContextMenu', ContextMenu)
   app.component('CartinoDataTable', DataTable)
   app.component('CartinoDatePicker', DatePicker)
-  app.component('CartinoDivider', Divider)
-  app.component('CartinoDrawer', Drawer)
   app.component('CartinoDropdown', Dropdown)
   app.component('CartinoIcon', Icon)
   app.component('CartinoInput', Input)
@@ -112,8 +108,6 @@ export {
   ContextMenu,
   DataTable,
   DatePicker,
-  Divider,
-  Drawer,
   Dropdown,
   Icon,
   Input,
@@ -165,8 +159,6 @@ export type {
 } from './components/ContextMenu.vue'
 export type { DataTableProps } from './components/DataTable.vue'
 export type { DatePickerProps } from './components/DatePicker.vue'
-export type { DividerProps } from './components/Divider.vue'
-export type { DrawerProps } from './components/Drawer.vue'
 export type { DropdownProps, DropdownItem } from './components/Dropdown.vue'
 export type { IconProps } from './components/Icon.vue'
 export type { InputProps } from './components/Input.vue'

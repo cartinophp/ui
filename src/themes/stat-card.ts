@@ -19,22 +19,22 @@ export default tv({
       primary: {
         root: 'bg-primary/5 border-primary/20',
         title: 'text-primary/80',
-        value: 'text-primary'
+        value: 'text-primary-foreground'
       },
       success: {
         root: 'bg-success/5 border-success/20',
         title: 'text-success/80',
-        value: 'text-success'
+        value: 'text-success-foreground'
       },
       warning: {
         root: 'bg-warning/5 border-warning/20',
         title: 'text-warning/80',
-        value: 'text-warning'
+        value: 'text-warning-foreground'
       },
       destructive: {
         root: 'bg-destructive/5 border-destructive/20',
         title: 'text-destructive/80',
-        value: 'text-destructive'
+        value: 'text-destructive-foreground'
       }
     },
     size: {

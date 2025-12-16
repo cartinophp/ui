@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'bg-muted'
+    root: 'bg-muted-foreground/20'
   },
   variants: {
     variant: {

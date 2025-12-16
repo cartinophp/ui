@@ -45,7 +45,12 @@
           :class="statsTheme.changeIcon({ class: ui?.changeIcon })"
         />
         <span>{{ formattedChange }}</span>
-        <span v-if="changePeriod" class="text-muted">{{ changePeriod }}</span>
+        <span
+          v-if="changePeriod"
+          :class="statsTheme.changePeriod({ class: ui?.changePeriod })"
+        >
+          {{ changePeriod }}
+        </span>
       </div>
 
       <!-- Progress -->

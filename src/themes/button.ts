@@ -88,21 +88,21 @@ export default tv({
       variant: 'primary',
       tone: 'default',
       class: {
-        base: 'bg-primary text-white hover:bg-primary-600 active:bg-primary-700 disabled:bg-secondary-300 disabled:text-secondary-500'
+        base: 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 disabled:opacity-50'
       }
     },
     {
       variant: 'primary',
       tone: 'success',
       class: {
-        base: 'bg-success text-white hover:bg-success-600 active:bg-success-700 disabled:bg-success-200 disabled:text-success-400'
+        base: 'bg-success text-success-foreground hover:bg-success/90 active:bg-success/80 disabled:opacity-50'
       }
     },
     {
       variant: 'primary',
       tone: 'critical',
       class: {
-        base: 'bg-error text-white hover:bg-error-600 active:bg-error-700 disabled:bg-error-200 disabled:text-error-400'
+        base: 'bg-error text-error-foreground hover:bg-error/90 active:bg-error/80 disabled:opacity-50'
       }
     },
 
@@ -111,21 +111,21 @@ export default tv({
       variant: 'secondary',
       tone: 'default',
       class: {
-        base: 'bg-white dark:bg-secondary-900 text-secondary-900 dark:text-secondary-100 hover:bg-secondary-50 dark:hover:bg-secondary-800 active:bg-secondary-100 dark:active:bg-secondary-700 disabled:bg-secondary-50 dark:disabled:bg-secondary-800 disabled:text-secondary-400'
+        base: 'bg-card text-foreground border border-border hover:bg-accent active:bg-accent/80 disabled:opacity-50'
       }
     },
     {
       variant: 'secondary',
       tone: 'success',
       class: {
-        base: 'bg-white dark:bg-secondary-900 text-success hover:bg-success-50 dark:hover:bg-success-950/20 active:bg-success-100 dark:active:bg-success-950/30 disabled:text-success-300'
+        base: 'bg-card text-success border border-success/30 hover:bg-success/10 active:bg-success/20 disabled:opacity-50'
       }
     },
     {
       variant: 'secondary',
       tone: 'critical',
       class: {
-        base: 'bg-white dark:bg-secondary-900 text-error hover:bg-error-50 dark:hover:bg-error-950/20 active:bg-error-100 dark:active:bg-error-950/30 disabled:text-error-300'
+        base: 'bg-card text-error border border-error/30 hover:bg-error/10 active:bg-error/20 disabled:opacity-50'
       }
     },
 
@@ -134,21 +134,21 @@ export default tv({
       variant: 'tertiary',
       tone: 'default',
       class: {
-        base: 'text-secondary-900 dark:text-secondary-100 hover:bg-secondary-100 dark:hover:bg-secondary-800 active:bg-secondary-200 dark:active:bg-secondary-700 disabled:text-secondary-400'
+        base: 'text-foreground hover:bg-accent active:bg-accent/80 disabled:opacity-50'
       }
     },
     {
       variant: 'tertiary',
       tone: 'success',
       class: {
-        base: 'text-success hover:bg-success-50 dark:hover:bg-success-950/20 active:bg-success-100 dark:active:bg-success-950/30 disabled:text-success-300'
+        base: 'text-success hover:bg-success/10 active:bg-success/20 disabled:opacity-50'
       }
     },
     {
       variant: 'tertiary',
       tone: 'critical',
       class: {
-        base: 'text-error hover:bg-error-50 dark:hover:bg-error-950/20 active:bg-error-100 dark:active:bg-error-950/30 disabled:text-error-300'
+        base: 'text-error hover:bg-error/10 active:bg-error/20 disabled:opacity-50'
       }
     },
 
@@ -157,21 +157,21 @@ export default tv({
       variant: 'plain',
       tone: 'default',
       class: {
-        base: 'text-primary hover:text-primary-700 active:text-primary-800 disabled:text-primary-300'
+        base: 'text-primary hover:text-primary/80 active:text-primary/70 disabled:opacity-50'
       }
     },
     {
       variant: 'plain',
       tone: 'success',
       class: {
-        base: 'text-success hover:text-success-700 active:text-success-800 disabled:text-success-300'
+        base: 'text-success hover:text-success/80 active:text-success/70 disabled:opacity-50'
       }
     },
     {
       variant: 'plain',
       tone: 'critical',
       class: {
-        base: 'text-error hover:text-error-700 active:text-error-800 disabled:text-error-300'
+        base: 'text-error hover:text-error/80 active:text-error/70 disabled:opacity-50'
       }
     },
 
@@ -179,7 +179,7 @@ export default tv({
     {
       variant: 'monochromePlain',
       class: {
-        base: 'text-current hover:bg-secondary-100 dark:hover:bg-secondary-800 active:bg-secondary-200 dark:active:bg-secondary-700 disabled:bg-transparent'
+        base: 'text-foreground hover:bg-accent active:bg-accent/80 disabled:opacity-50'
       }
     },
     // ===== ICON ONLY (SQUARE) ADJUSTMENTS =====

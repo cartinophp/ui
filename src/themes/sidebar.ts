@@ -12,7 +12,7 @@ export default tv({
     linkIcon: 'shrink-0 size-5 text-foreground',
     linkLabel: 'flex-1 truncate text-foreground',
     linkBadge:
-      'shrink-0 px-2 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary',
+      'shrink-0 px-2 py-0.5 text-xs font-medium rounded-full bg-primary text-primary-foreground',
     collapseButton:
       'absolute -right-3 top-1/2 -translate-y-1/2 flex items-center justify-center size-6 rounded-full bg-background border border-border shadow-sm hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-primary',
     collapseIcon: 'size-4 text-foreground'

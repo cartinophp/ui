@@ -3,7 +3,8 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'inline-flex items-center gap-1.5 font-medium transition-colors',
-    closeButton: 'p-0.5 rounded-sm hover:bg-black/10 focus:outline-none focus:ring-1 focus:ring-current transition-colors'
+    closeButton:
+      'p-0.5 rounded-sm hover:bg-black/10 focus:outline-none focus:ring-1 focus:ring-current transition-colors'
   },
   variants: {
     size: {
@@ -86,47 +87,47 @@ export default tv({
         root: 'bg-muted text-muted-foreground'
       }
     },
-    // Soft variants
+    // Soft variants - lighter backgrounds with same foreground pattern
     {
       variant: 'soft',
       color: 'primary',
       class: {
-        root: 'bg-primary/10 text-primary border border-primary/20'
+        root: 'bg-primary/80 text-primary-foreground border border-primary'
       }
     },
     {
       variant: 'soft',
       color: 'success',
       class: {
-        root: 'bg-success/10 text-success border border-success/20'
+        root: 'bg-success/80 text-success-foreground border border-success'
       }
     },
     {
       variant: 'soft',
       color: 'warning',
       class: {
-        root: 'bg-warning/10 text-warning border border-warning/20'
+        root: 'bg-warning/80 text-warning-foreground border border-warning'
       }
     },
     {
       variant: 'soft',
       color: 'error',
       class: {
-        root: 'bg-error/10 text-error border border-error/20'
+        root: 'bg-error/80 text-error-foreground border border-error'
       }
     },
     {
       variant: 'soft',
       color: 'info',
       class: {
-        root: 'bg-info/10 text-info border border-info/20'
+        root: 'bg-info/80 text-info-foreground border border-info'
       }
     },
     {
       variant: 'soft',
       color: 'neutral',
       class: {
-        root: 'bg-muted/10 text-muted border border-muted/20'
+        root: 'bg-muted/80 text-muted-foreground border border-muted'
       }
     },
     // Outline variants
