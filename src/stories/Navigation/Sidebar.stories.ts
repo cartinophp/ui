@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Sidebar from '../../components/Sidebar.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 const meta: Meta<typeof Sidebar> = {
   title: 'Navigation/Sidebar',

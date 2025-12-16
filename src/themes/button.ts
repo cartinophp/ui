@@ -2,57 +2,67 @@ import { tv } from 'tailwind-variants'
 
 /**
  * Button Component Theme
- * Supports all variants, colors, sizes, and states
- * Uses the Cartino UI color system tokens
+ * Polaris-inspired design with Cartino primary color (#0e5bff)
+ * Matches Shopify Polaris Button component specs exactly
  */
 export default tv({
   slots: {
-    base: 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
-    label: 'truncate',
-    leadingIcon: 'shrink-0',
-    trailingIcon: 'shrink-0'
+    base: 'relative box-border inline-flex items-center justify-center gap-[2px] select-none cursor-pointer touch-manipulation transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1',
+    label: 'transition-transform',
+    leadingIcon: 'shrink-0 -my-[2px] transition-transform',
+    trailingIcon: 'shrink-0 -my-[2px] transition-transform'
   },
   variants: {
     variant: {
-      solid: 'shadow-sm',
-      outline: 'border-2 bg-transparent',
-      soft: '',
-      ghost: 'bg-transparent shadow-none',
-      link: 'bg-transparent shadow-none underline-offset-4 hover:underline px-0'
+      primary: {
+        base: 'active:shadow-[0_3px_0_0_rgb(0,0,0)_inset]',
+        label: 'active:translate-y-[1px]',
+        leadingIcon: 'active:translate-y-[1px]',
+        trailingIcon: 'active:translate-y-[1px]'
+      },
+
+      secondary: {
+        base: 'active:shadow-[-1px_0_1px_0_rgba(26,26,26,0.122)_inset,1px_0_1px_0_rgba(26,26,26,0.122)_inset,0_2px_1px_0_rgba(26,26,26,0.2)_inset]',
+        label: 'active:translate-y-[1px]',
+        leadingIcon: 'active:translate-y-[1px]',
+        trailingIcon: 'active:translate-y-[1px]'
+      },
+
+      tertiary: 'bg-transparent',
+
+      plain: 'bg-transparent -mx-3 -my-1.5 hover:underline',
+
+      monochromePlain: 'bg-transparent -mx-3 -my-1.5'
     },
-    color: {
-      primary: '',
-      secondary: '',
-      success: '',
-      warning: '',
-      error: '',
-      info: ''
+    tone: {
+      default: '',
+      critical: '',
+      success: ''
     },
     size: {
+      // Extra Small - very small buttons
       xs: {
-        base: 'px-2 py-1 text-xs gap-1.5',
-        leadingIcon: 'size-3',
-        trailingIcon: 'size-3'
+        base: 'min-h-[28px] min-w-[28px] px-2 py-1 text-[12px] rounded-lg md:min-h-[24px] md:min-w-[24px]',
+        leadingIcon: 'size-3.5',
+        trailingIcon: 'size-3.5'
       },
+      // Small - Polaris "slim"
       sm: {
-        base: 'px-3 py-1.5 text-sm gap-2',
+        base: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-[13px] font-medium rounded-lg md:min-h-[28px] md:min-w-[28px]',
         leadingIcon: 'size-4',
         trailingIcon: 'size-4'
       },
+      // Medium - Polaris default
       md: {
-        base: 'px-4 py-2 text-base gap-2',
+        base: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-[14px] font-medium rounded-lg md:min-h-[28px] md:min-w-[28px]',
+        leadingIcon: 'size-[18px]',
+        trailingIcon: 'size-[18px]'
+      },
+      // Large - bigger buttons
+      lg: {
+        base: 'min-h-[36px] min-w-[36px] px-4 py-2 text-[15px] font-medium rounded-lg md:min-h-[32px] md:min-w-[32px]',
         leadingIcon: 'size-5',
         trailingIcon: 'size-5'
-      },
-      lg: {
-        base: 'px-6 py-3 text-lg gap-2.5',
-        leadingIcon: 'size-6',
-        trailingIcon: 'size-6'
-      },
-      xl: {
-        base: 'px-8 py-4 text-xl gap-3',
-        leadingIcon: 'size-7',
-        trailingIcon: 'size-7'
       }
     },
     loading: {
@@ -73,244 +83,138 @@ export default tv({
     }
   },
   compoundVariants: [
-    // ===== SOLID VARIANT =====
+    // ===== PRIMARY VARIANT (with tone variations) =====
     {
-      variant: 'solid',
-      color: 'primary',
+      variant: 'primary',
+      tone: 'default',
       class: {
-        base: 'bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary'
+        base: 'bg-primary text-white hover:bg-primary-600 active:bg-primary-700 disabled:bg-secondary-300 disabled:text-secondary-500'
       }
     },
     {
-      variant: 'solid',
-      color: 'secondary',
+      variant: 'primary',
+      tone: 'success',
       class: {
-        base: 'bg-secondary text-secondary-foreground hover:bg-secondary/90 focus:ring-secondary'
+        base: 'bg-success text-white hover:bg-success-600 active:bg-success-700 disabled:bg-success-200 disabled:text-success-400'
       }
     },
     {
-      variant: 'solid',
-      color: 'success',
+      variant: 'primary',
+      tone: 'critical',
       class: {
-        base: 'bg-success text-success-foreground hover:bg-success/90 focus:ring-success'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'warning',
-      class: {
-        base: 'bg-warning text-warning-foreground hover:bg-warning/90 focus:ring-warning'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'error',
-      class: {
-        base: 'bg-error text-error-foreground hover:bg-error/90 focus:ring-error'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'info',
-      class: {
-        base: 'bg-info text-info-foreground hover:bg-info/90 focus:ring-info'
+        base: 'bg-error text-white hover:bg-error-600 active:bg-error-700 disabled:bg-error-200 disabled:text-error-400'
       }
     },
 
-    // ===== OUTLINE VARIANT =====
+    // ===== SECONDARY VARIANT (with tone variations) =====
     {
-      variant: 'outline',
-      color: 'primary',
+      variant: 'secondary',
+      tone: 'default',
       class: {
-        base: 'border-primary text-primary hover:bg-primary/10 focus:ring-primary'
+        base: 'bg-white dark:bg-secondary-900 text-secondary-900 dark:text-secondary-100 hover:bg-secondary-50 dark:hover:bg-secondary-800 active:bg-secondary-100 dark:active:bg-secondary-700 disabled:bg-secondary-50 dark:disabled:bg-secondary-800 disabled:text-secondary-400'
       }
     },
     {
-      variant: 'outline',
-      color: 'secondary',
+      variant: 'secondary',
+      tone: 'success',
       class: {
-        base: 'border-border text-foreground hover:bg-accent focus:ring-ring'
+        base: 'bg-white dark:bg-secondary-900 text-success hover:bg-success-50 dark:hover:bg-success-950/20 active:bg-success-100 dark:active:bg-success-950/30 disabled:text-success-300'
       }
     },
     {
-      variant: 'outline',
-      color: 'success',
+      variant: 'secondary',
+      tone: 'critical',
       class: {
-        base: 'border-success text-success hover:bg-success/10 focus:ring-success'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'warning',
-      class: {
-        base: 'border-warning text-warning hover:bg-warning/10 focus:ring-warning'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'error',
-      class: {
-        base: 'border-error text-error hover:bg-error/10 focus:ring-error'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'info',
-      class: {
-        base: 'border-info text-info hover:bg-info/10 focus:ring-info'
+        base: 'bg-white dark:bg-secondary-900 text-error hover:bg-error-50 dark:hover:bg-error-950/20 active:bg-error-100 dark:active:bg-error-950/30 disabled:text-error-300'
       }
     },
 
-    // ===== SOFT VARIANT =====
+    // ===== TERTIARY VARIANT (with tone variations) =====
     {
-      variant: 'soft',
-      color: 'primary',
+      variant: 'tertiary',
+      tone: 'default',
       class: {
-        base: 'bg-primary/10 text-primary hover:bg-primary/20 focus:ring-primary'
+        base: 'text-secondary-900 dark:text-secondary-100 hover:bg-secondary-100 dark:hover:bg-secondary-800 active:bg-secondary-200 dark:active:bg-secondary-700 disabled:text-secondary-400'
       }
     },
     {
-      variant: 'soft',
-      color: 'secondary',
+      variant: 'tertiary',
+      tone: 'success',
       class: {
-        base: 'bg-secondary/10 text-secondary-foreground hover:bg-secondary/20 focus:ring-ring'
+        base: 'text-success hover:bg-success-50 dark:hover:bg-success-950/20 active:bg-success-100 dark:active:bg-success-950/30 disabled:text-success-300'
       }
     },
     {
-      variant: 'soft',
-      color: 'success',
+      variant: 'tertiary',
+      tone: 'critical',
       class: {
-        base: 'bg-success/10 text-success hover:bg-success/20 focus:ring-success'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'warning',
-      class: {
-        base: 'bg-warning/10 text-warning hover:bg-warning/20 focus:ring-warning'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'error',
-      class: {
-        base: 'bg-error/10 text-error hover:bg-error/20 focus:ring-error'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'info',
-      class: {
-        base: 'bg-info/10 text-info hover:bg-info/20 focus:ring-info'
+        base: 'text-error hover:bg-error-50 dark:hover:bg-error-950/20 active:bg-error-100 dark:active:bg-error-950/30 disabled:text-error-300'
       }
     },
 
-    // ===== GHOST VARIANT =====
+    // ===== PLAIN VARIANT (with tone variations) =====
     {
-      variant: 'ghost',
-      color: 'primary',
+      variant: 'plain',
+      tone: 'default',
       class: {
-        base: 'text-primary hover:bg-primary/10 focus:ring-primary'
+        base: 'text-primary hover:text-primary-700 active:text-primary-800 disabled:text-primary-300'
       }
     },
     {
-      variant: 'ghost',
-      color: 'secondary',
+      variant: 'plain',
+      tone: 'success',
       class: {
-        base: 'text-foreground hover:bg-accent focus:ring-ring'
+        base: 'text-success hover:text-success-700 active:text-success-800 disabled:text-success-300'
       }
     },
     {
-      variant: 'ghost',
-      color: 'success',
+      variant: 'plain',
+      tone: 'critical',
       class: {
-        base: 'text-success hover:bg-success/10 focus:ring-success'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'warning',
-      class: {
-        base: 'text-warning hover:bg-warning/10 focus:ring-warning'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'error',
-      class: {
-        base: 'text-error hover:bg-error/10 focus:ring-error'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'info',
-      class: {
-        base: 'text-info hover:bg-info/10 focus:ring-info'
+        base: 'text-error hover:text-error-700 active:text-error-800 disabled:text-error-300'
       }
     },
 
-    // ===== LINK VARIANT =====
+    // ===== MONOCHROME PLAIN VARIANT =====
     {
-      variant: 'link',
-      color: 'primary',
+      variant: 'monochromePlain',
       class: {
-        base: 'text-primary hover:text-primary/80'
+        base: 'text-current hover:bg-secondary-100 dark:hover:bg-secondary-800 active:bg-secondary-200 dark:active:bg-secondary-700 disabled:bg-transparent'
       }
     },
-    {
-      variant: 'link',
-      color: 'secondary',
-      class: {
-        base: 'text-muted hover:text-foreground'
-      }
-    },
-    {
-      variant: 'link',
-      color: 'error',
-      class: {
-        base: 'text-error hover:text-error/80'
-      }
-    },
-    // ===== SQUARE SIZE ADJUSTMENTS =====
+    // ===== ICON ONLY (SQUARE) ADJUSTMENTS =====
     {
       square: true,
       size: 'xs',
       class: {
-        base: 'p-1 aspect-square'
+        base: 'px-[2px] py-[2px] min-w-[24px] aspect-square'
       }
     },
     {
       square: true,
       size: 'sm',
       class: {
-        base: 'p-1.5 aspect-square'
+        base: 'px-1 py-1 min-w-[28px] aspect-square'
       }
     },
     {
       square: true,
       size: 'md',
       class: {
-        base: 'p-2 aspect-square'
+        base: 'px-1 py-1 min-w-[28px] aspect-square'
       }
     },
     {
       square: true,
       size: 'lg',
       class: {
-        base: 'p-3 aspect-square'
-      }
-    },
-    {
-      square: true,
-      size: 'xl',
-      class: {
-        base: 'p-4 aspect-square'
+        base: 'px-1.5 py-1.5 min-w-[32px] aspect-square'
       }
     }
   ],
   defaultVariants: {
-    variant: 'solid',
-    color: 'primary',
+    variant: 'primary',
+    tone: 'default',
     size: 'md',
     loading: false,
     block: false,
@@ -319,5 +223,12 @@ export default tv({
   }
 })
 
-// Export type for TypeScript support
-export type ButtonThemeVariants = Parameters<typeof tv>[0]
+// Export types for TypeScript support
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'plain'
+  | 'monochromePlain'
+export type ButtonTone = 'default' | 'success' | 'critical'
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'

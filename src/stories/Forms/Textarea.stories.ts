@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Textarea from '../../components/Textarea.vue'
+import Textarea from '@/components/Textarea.vue'
 
 const meta: Meta<typeof Textarea> = {
   title: 'Forms/Textarea',

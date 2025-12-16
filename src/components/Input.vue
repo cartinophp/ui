@@ -1,68 +1,43 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import inputTheme from '@/themes/input'
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number],
-    default: undefined
-  },
-  type: {
-    type: String,
-    default: 'text'
-  },
-  placeholder: {
-    type: String,
-    default: undefined
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  readonly: {
-    type: Boolean,
-    default: false
-  },
-  required: {
-    type: Boolean,
-    default: false
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  variant: {
-    type: String,
-    default: 'outline'
-  },
-  label: {
-    type: String,
-    default: undefined
-  },
-  hint: {
-    type: String,
-    default: undefined
-  },
-  error: {
-    type: String,
-    default: undefined
-  },
-  leadingIcon: {
-    type: String,
-    default: undefined
-  },
-  trailingIcon: {
-    type: String,
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface InputProps {
+  modelValue?: string | number
+  type?: string
+  placeholder?: string
+  disabled?: boolean
+  readonly?: boolean
+  required?: boolean
+  size?: string
+  color?: string
+  variant?: string
+  label?: string
+  hint?: string
+  error?: string
+  leadingIcon?: string
+  trailingIcon?: string
+  ui?: {
+    root?: string
+    wrapper?: string
+    base?: string
+    input?: string
+    label?: string
+    hint?: string
+    error?: string
+    leadingIcon?: string
+    trailingIcon?: string
   }
+}
+
+const props = withDefaults(defineProps<InputProps>(), {
+  type: 'text',
+  disabled: false,
+  readonly: false,
+  required: false,
+  size: 'md',
+  color: 'primary',
+  variant: 'outline'
 })
 
 const emit = defineEmits(['update:modelValue', 'blur', 'focus', 'change'])

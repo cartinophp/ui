@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Accordion from '../../components/Accordion.vue'
+import Accordion from '@/components/Accordion.vue'
 
 const meta = {
   title: 'Data Display/Accordion',
@@ -35,15 +35,18 @@ export const Default: Story = {
     items: [
       {
         label: 'What is Vue 3?',
-        content: 'Vue 3 is the latest major version of Vue.js, a progressive JavaScript framework for building user interfaces.'
+        content:
+          'Vue 3 is the latest major version of Vue.js, a progressive JavaScript framework for building user interfaces.'
       },
       {
         label: 'What is Vite?',
-        content: 'Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.'
+        content:
+          'Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.'
       },
       {
         label: 'What is Tailwind CSS?',
-        content: 'Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.'
+        content:
+          'Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.'
       }
     ]
   }
@@ -55,11 +58,13 @@ export const Bordered: Story = {
     items: [
       {
         label: 'Shipping Information',
-        content: 'We offer free shipping on orders over $50. Standard shipping takes 3-5 business days.'
+        content:
+          'We offer free shipping on orders over $50. Standard shipping takes 3-5 business days.'
       },
       {
         label: 'Return Policy',
-        content: 'You can return items within 30 days of purchase for a full refund. Items must be in original condition.'
+        content:
+          'You can return items within 30 days of purchase for a full refund. Items must be in original condition.'
       },
       {
         label: 'Payment Methods',
@@ -75,15 +80,18 @@ export const Separated: Story = {
     items: [
       {
         label: 'Personal Information',
-        content: 'Your personal information is securely stored and never shared with third parties.'
+        content:
+          'Your personal information is securely stored and never shared with third parties.'
       },
       {
         label: 'Account Settings',
-        content: 'You can update your account settings at any time from your profile page.'
+        content:
+          'You can update your account settings at any time from your profile page.'
       },
       {
         label: 'Notifications',
-        content: 'Choose how you want to receive notifications: email, SMS, or push notifications.'
+        content:
+          'Choose how you want to receive notifications: email, SMS, or push notifications.'
       }
     ]
   }
@@ -95,19 +103,23 @@ export const Multiple: Story = {
     items: [
       {
         label: 'Features',
-        content: 'Built with Vue 3, Vite, TypeScript, Tailwind CSS v4, and Reka UI.'
+        content:
+          'Built with Vue 3, Vite, TypeScript, Tailwind CSS v4, and Reka UI.'
       },
       {
         label: 'Customization',
-        content: 'Easily customize colors, spacing, and other design tokens using Tailwind CSS.'
+        content:
+          'Easily customize colors, spacing, and other design tokens using Tailwind CSS.'
       },
       {
         label: 'Accessibility',
-        content: 'All components are built with accessibility in mind, following WAI-ARIA guidelines.'
+        content:
+          'All components are built with accessibility in mind, following WAI-ARIA guidelines.'
       },
       {
         label: 'Documentation',
-        content: 'Comprehensive documentation with live examples and code snippets.'
+        content:
+          'Comprehensive documentation with live examples and code snippets.'
       }
     ]
   }
@@ -196,7 +208,8 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
       },
       {
         label: 'Medium Content',
-        content: 'This answer is somewhere in between. It has a few sentences but is not as long as the previous example. It still demonstrates the smooth animation.'
+        content:
+          'This answer is somewhere in between. It has a few sentences but is not as long as the previous example. It still demonstrates the smooth animation.'
       }
     ]
   }

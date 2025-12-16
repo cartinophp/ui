@@ -24,12 +24,14 @@ export default defineConfig({
           vue: 'Vue'
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name?.endsWith('.css')) return 'style.css'
-          return assetInfo.name || ''
+          if (assetInfo.names?.[0]?.endsWith('.css')) {
+            return 'style.css'
+          }
+          return assetInfo.names?.[0] || 'asset'
         }
       }
     },
-    cssCodeSplit: false
+    cssCodeSplit: false // Bundle all CSS into single file
   },
   resolve: {
     alias: {
@@ -39,6 +41,6 @@ export default defineConfig({
   server: {
     port: 3001,
     host: '0.0.0.0',
-    strictPort: true, // Fail se porta occupata invece di usare altra porta
+    strictPort: true // Fail se porta occupata invece di usare altra porta
   }
 })

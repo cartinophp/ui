@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Select from '../../components/Select.vue'
+import Select from '@/components/Select.vue'
 
 const meta: Meta<typeof Select> = {
   title: 'Forms/Select',

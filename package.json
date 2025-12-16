@@ -12,17 +12,24 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./*.css": "./dist/*.css"
   },
   "files": [
     "dist"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.vue"
   ],
   "scripts": {
     "dev": "CARTINO_DEV=true vite",
     "dev:storybook": "storybook dev -p 6006",
     "dev:watch": "CARTINO_DEV=true vite build --watch",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "generate:types": "tsx scripts/generate-type-exports.ts",
+    "generate:types:write": "tsx scripts/generate-type-exports.ts --write"
   },
   "peerDependencies": {
     "vue": "^3.4.0"
@@ -34,9 +41,11 @@
     "@storybook/addon-links": "^10.1.9",
     "@storybook/vue3-vite": "^10.1.9",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/node": "^25.0.2",
     "@vitejs/plugin-vue": "^6.0.3",
     "storybook": "^10.1.9",
     "tailwindcss": "^4.1.18",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
     "vue": "^3.5.25",
@@ -58,5 +67,10 @@
     "reka-ui": "^2.6.1",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "none"
   }
 }

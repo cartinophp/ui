@@ -1,57 +1,40 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import checkboxGroupTheme from '@/themes/checkbox-group'
 import UCheckbox from './Checkbox.vue'
 
-const props = defineProps({
-  modelValue: {
-    type: Array,
-    default: () => []
-  },
-  options: {
-    type: Array,
-    default: () => []
-  },
-  label: {
-    type: String,
-    default: undefined
-  },
-  description: {
-    type: String,
-    default: undefined
-  },
-  error: {
-    type: String,
-    default: undefined
-  },
-  orientation: {
-    type: String,
-    default: 'vertical'
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  required: {
-    type: Boolean,
-    default: false
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface CheckboxGroupProps {
+  modelValue?: any[]
+  options?: any[]
+  label?: string
+  description?: string
+  error?: string
+  orientation?: string
+  disabled?: boolean
+  required?: boolean
+  size?: 'sm' | 'md' | 'lg'
+  color?: 'primary' | 'success' | 'warning' | 'error'
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    label?: string
+    description?: string
+    error?: string
+    fieldset?: string
+    legend?: string
+    container?: string
+    items?: string
   }
+}
+
+const props = withDefaults(defineProps<CheckboxGroupProps>(), {
+  modelValue: () => [],
+  options: () => [],
+  orientation: 'vertical',
+  disabled: false,
+  required: false,
+  size: 'md',
+  color: 'primary'
 })
 
 const emit = defineEmits(['update:modelValue'])

@@ -1,48 +1,31 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import chipTheme from '@/themes/chip'
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'div'
-  },
-  text: {
-    type: [String, Number],
-    default: undefined
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  position: {
-    type: String,
-    default: 'top-right'
-  },
-  inset: {
-    type: Boolean,
-    default: false
-  },
-  standalone: {
-    type: Boolean,
-    default: false
-  },
-  show: {
-    type: Boolean,
-    default: true
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface ChipProps {
+  as?: string | object
+  text?: string | number
+  color?: string
+  size?: string
+  position?: string
+  inset?: boolean
+  standalone?: boolean
+  show?: boolean
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    base?: string
   }
+}
+
+const props = withDefaults(defineProps<ChipProps>(), {
+  as: 'div',
+  color: 'primary',
+  size: 'md',
+  position: 'top-right',
+  inset: false,
+  standalone: false,
+  show: true
 })
 
 const emit = defineEmits(['update:show'])

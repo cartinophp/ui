@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, watch } from 'vue'
 import { Primitive } from 'reka-ui'
 import bannerTheme from '@/themes/banner'
@@ -6,57 +6,40 @@ import Link from './Link.vue'
 import Icon from '@/components/Icon.vue'
 import Button from './Button.vue'
 
+export interface BannerProps {
+  as?: string
+  id?: string
+  icon?: string
+  title?: string
+  actions?: any[]
+  to?: string | object
+  target?: string
+  color?: string
+  close?: boolean | object
+  closeIcon?: string
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    container?: string
+    left?: string
+    center?: string
+    right?: string
+    content?: string
+    icon?: string
+    title?: string
+    description?: string
+    actions?: string
+    close?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: String,
-    default: 'div'
-  },
-  id: {
-    type: String,
-    default: undefined
-  },
-  icon: {
-    type: String,
-    default: undefined
-  },
-  title: {
-    type: String,
-    default: undefined
-  },
-  actions: {
-    type: Array,
-    default: () => []
-  },
-  to: {
-    type: [String, Object],
-    default: undefined
-  },
-  target: {
-    type: String,
-    default: undefined
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  close: {
-    type: [Boolean, Object],
-    default: false
-  },
-  closeIcon: {
-    type: String,
-    default: undefined
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<BannerProps>(), {
+  as: 'div',
+  color: 'primary',
+  close: false,
+  actions: () => []
 })
 
 const slots = defineSlots()
@@ -165,8 +148,7 @@ const onClose = () => {
             v-if="props.close"
             :icon="props.closeIcon || 'i-heroicons-x-mark'"
             size="md"
-            color="neutral"
-            variant="ghost"
+            variant="plain"
             aria-label="Close banner"
             v-bind="typeof props.close === 'object' ? props.close : {}"
             data-slot="close"

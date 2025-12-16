@@ -1,64 +1,51 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import tableTheme from '@/themes/table'
 
-const props = defineProps({
-  data: {
-    type: Array,
-    default: () => []
-  },
-  columns: {
-    type: Array,
-    default: () => []
-  },
-  caption: {
-    type: String,
-    default: undefined
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  empty: {
-    type: String,
-    default: 'No data available'
-  },
-  striped: {
-    type: Boolean,
-    default: false
-  },
-  hoverable: {
-    type: Boolean,
-    default: true
-  },
-  bordered: {
-    type: Boolean,
-    default: false
-  },
-  compact: {
-    type: Boolean,
-    default: false
-  },
-  sticky: {
-    type: Boolean,
-    default: false
-  },
-  selectable: {
-    type: Boolean,
-    default: false
-  },
-  modelValue: {
-    type: Array,
-    default: () => []
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface TableProps {
+  data?: any[]
+  columns?: any[]
+  caption?: string
+  loading?: boolean
+  empty?: string
+  striped?: boolean
+  hoverable?: boolean
+  bordered?: boolean
+  compact?: boolean
+  sticky?: boolean
+  selectable?: boolean
+  modelValue?: any[]
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    wrapper?: string
+    table?: string
+    base?: string
+    caption?: string
+    thead?: string
+    tbody?: string
+    tfoot?: string
+    tr?: string
+    th?: string
+    td?: string
+    checkbox?: string
+    empty?: string
+    loading?: string
   }
+}
+
+const props = withDefaults(defineProps<TableProps>(), {
+  data: () => [],
+  columns: () => [],
+  empty: 'No data available',
+  loading: false,
+  striped: false,
+  hoverable: true,
+  bordered: false,
+  compact: false,
+  sticky: false,
+  selectable: false,
+  modelValue: () => []
 })
 
 const emit = defineEmits(['update:modelValue', 'select', 'hover'])

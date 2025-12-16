@@ -87,6 +87,7 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
 
     <DropdownMenuPortal>
       <DropdownMenuContent
+        class="dropdown-content"
         :class="ui.content({ class: props.ui?.content })"
         :align="align"
         :side="side"

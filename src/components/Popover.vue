@@ -55,6 +55,7 @@ const popoverTheme = computed(() =>
 
     <PopoverPortal>
       <PopoverContent
+        class="popover-content"
         :class="popoverTheme.content({ class: ui?.content })"
         :side="side"
         :align="align"

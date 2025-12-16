@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Command from '../../components/Command.vue'
-import type { CommandGroup } from '../../components/Command.vue'
+import Command from '@/components/Command.vue'
+import type { CommandGroup } from '@/components/Command.vue'
 
 const meta: Meta<typeof Command> = {
   title: 'Components/Command',

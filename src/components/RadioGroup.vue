@@ -1,62 +1,38 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { RadioGroupRoot } from 'reka-ui'
 import radioGroupTheme from '@/themes/radio-group'
 import URadio from './Radio.vue'
 
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: undefined
-  },
-  options: {
-    type: Array,
-    default: () => []
-  },
-  label: {
-    type: String,
-    default: undefined
-  },
-  description: {
-    type: String,
-    default: undefined
-  },
-  error: {
-    type: String,
-    default: undefined
-  },
-  orientation: {
-    type: String,
-    default: 'vertical'
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  required: {
-    type: Boolean,
-    default: false
-  },
-  name: {
-    type: String,
-    default: undefined
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface RadioGroupProps {
+  modelValue?: string
+  options?: any[]
+  label?: string
+  description?: string
+  error?: string
+  orientation?: 'vertical' | 'horizontal'
+  disabled?: boolean
+  required?: boolean
+  name?: string
+  size?: 'sm' | 'md' | 'lg'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    label?: string
+    description?: string
+    error?: string
+    items?: string
   }
+}
+
+const props = withDefaults(defineProps<RadioGroupProps>(), {
+  options: () => [],
+  orientation: 'vertical',
+  disabled: false,
+  required: false,
+  size: 'md',
+  color: 'primary'
 })
 
 const emit = defineEmits(['update:modelValue'])

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import DataTable from '../../components/DataTable.vue'
+import DataTable from '@/components/DataTable.vue'
 type User = { id: number; name: string; email: string; role: string }
 
 const users: User[] = [

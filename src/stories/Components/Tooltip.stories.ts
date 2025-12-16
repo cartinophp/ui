@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { TooltipProvider } from 'reka-ui'
-import Tooltip from '../../components/Tooltip.vue'
-import Button from '../../components/Button.vue'
+import Tooltip from '@/components/Tooltip.vue'
+import Button from '@/components/Button.vue'
 
 const meta: Meta<typeof Tooltip> = {
   title: 'Feedback/Tooltip',

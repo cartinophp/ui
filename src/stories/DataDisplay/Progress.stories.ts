@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Progress from '../../components/Progress.vue'
+import Progress from '@/components/Progress.vue'
 
 const meta: Meta<typeof Progress> = {
   title: 'DataDisplay/Progress',
@@ -11,7 +11,7 @@ const meta: Meta<typeof Progress> = {
       options: ['sm', 'md', 'lg']
     },
     color: {
-      control: 'select', 
+      control: 'select',
       options: ['primary', 'success', 'warning', 'error', 'info']
     },
     variant: {

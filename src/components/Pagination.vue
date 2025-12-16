@@ -1,96 +1,70 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import paginationTheme from '@/themes/pagination'
 import UButton from './Button.vue'
 
+export interface PaginationProps {
+  as?: string | object
+  page?: number
+  total?: number
+  itemsPerPage?: number
+  siblingCount?: number
+  showEdges?: boolean
+  showControls?: boolean
+  disabled?: boolean
+  color?: string
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
+  activeColor?: string
+  activeVariant?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'plain'
+    | 'monochromePlain'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  to?: (page: number) => string | object
+  firstIcon?: string
+  prevIcon?: string
+  nextIcon?: string
+  lastIcon?: string
+  ellipsisIcon?: string
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    list?: string
+    first?: string
+    prev?: string
+    item?: string
+    button?: string
+    label?: string
+    ellipsis?: string
+    next?: string
+    last?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'nav'
-  },
-  page: {
-    type: Number,
-    default: 1
-  },
-  total: {
-    type: Number,
-    default: 0
-  },
-  itemsPerPage: {
-    type: Number,
-    default: 10
-  },
-  siblingCount: {
-    type: Number,
-    default: 2
-  },
-  showEdges: {
-    type: Boolean,
-    default: false
-  },
-  showControls: {
-    type: Boolean,
-    default: true
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  color: {
-    type: String,
-    default: 'neutral'
-  },
-  variant: {
-    type: String,
-    default: 'outline'
-  },
-  activeColor: {
-    type: String,
-    default: 'primary'
-  },
-  activeVariant: {
-    type: String,
-    default: 'solid'
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  to: {
-    type: Function,
-    default: undefined
-  },
-  firstIcon: {
-    type: String,
-    default: 'i-heroicons-chevron-double-left'
-  },
-  prevIcon: {
-    type: String,
-    default: 'i-heroicons-chevron-left'
-  },
-  nextIcon: {
-    type: String,
-    default: 'i-heroicons-chevron-right'
-  },
-  lastIcon: {
-    type: String,
-    default: 'i-heroicons-chevron-double-right'
-  },
-  ellipsisIcon: {
-    type: String,
-    default: 'i-heroicons-ellipsis-horizontal'
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<PaginationProps>(), {
+  as: 'nav',
+  page: 1,
+  total: 0,
+  itemsPerPage: 10,
+  siblingCount: 2,
+  showEdges: false,
+  showControls: true,
+  disabled: false,
+  color: 'neutral',
+  variant: 'plain',
+  activeColor: 'primary',
+  activeVariant: 'primary',
+  size: 'md',
+  firstIcon: 'i-heroicons-chevron-double-left',
+  prevIcon: 'i-heroicons-chevron-left',
+  nextIcon: 'i-heroicons-chevron-right',
+  lastIcon: 'i-heroicons-chevron-double-right',
+  ellipsisIcon: 'i-heroicons-ellipsis-horizontal'
 })
 
 const emit = defineEmits(['update:page'])
@@ -110,7 +84,7 @@ const isFirstPage = computed(() => props.page === 1)
 const isLastPage = computed(() => props.page >= pageCount.value)
 
 const pages = computed(() => {
-  const pages = []
+  const pages: (number | string)[] = []
   const { siblingCount, showEdges } = props
   const currentPage = props.page
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Chip from '../../components/Chip.vue'
-import Avatar from '../../components/Avatar.vue'
+import Chip from '@/components/Chip.vue'
+import Avatar from '@/components/Avatar.vue'
 
 const meta: Meta<typeof Chip> = {
   title: 'Components/Chip',
@@ -12,7 +12,15 @@ const meta: Meta<typeof Chip> = {
     },
     color: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']
+      options: [
+        'primary',
+        'secondary',
+        'success',
+        'info',
+        'warning',
+        'error',
+        'neutral'
+      ]
     },
     size: {
       control: 'select',

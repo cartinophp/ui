@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Alert from '../../components/Alert.vue'
+import Alert from '@/components/Alert.vue'
 
 const meta = {
   title: 'Feedback/Alert',
@@ -61,7 +61,8 @@ export const Info: Story = {
   args: {
     color: 'info',
     title: 'Did you know?',
-    description: 'You can customize the appearance of this alert using the variant prop.'
+    description:
+      'You can customize the appearance of this alert using the variant prop.'
   }
 }
 

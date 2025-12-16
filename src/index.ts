@@ -19,7 +19,6 @@ import Command from './components/Command.vue'
 import ContextMenu from './components/ContextMenu.vue'
 import DataTable from './components/DataTable.vue'
 import DatePicker from './components/DatePicker.vue'
-import Dialog from './components/Dialog.vue'
 import Divider from './components/Divider.vue'
 import Drawer from './components/Drawer.vue'
 import Dropdown from './components/Dropdown.vue'
@@ -27,7 +26,6 @@ import Icon from './components/Icon.vue'
 import Input from './components/Input.vue'
 import Link from './components/Link.vue'
 import Modal from './components/Modal.vue'
-import NavigationMenu from './components/NavigationMenu.vue'
 import PageHeader from './components/PageHeader.vue'
 import Pagination from './components/Pagination.vue'
 import PinInput from './components/PinInput.vue'
@@ -67,7 +65,6 @@ export const install = (app: App) => {
   app.component('CartinoContextMenu', ContextMenu)
   app.component('CartinoDataTable', DataTable)
   app.component('CartinoDatePicker', DatePicker)
-  app.component('CartinoDialog', Dialog)
   app.component('CartinoDivider', Divider)
   app.component('CartinoDrawer', Drawer)
   app.component('CartinoDropdown', Dropdown)
@@ -75,7 +72,6 @@ export const install = (app: App) => {
   app.component('CartinoInput', Input)
   app.component('CartinoLink', Link)
   app.component('CartinoModal', Modal)
-  app.component('CartinoNavigationMenu', NavigationMenu)
   app.component('CartinoPageHeader', PageHeader)
   app.component('CartinoPagination', Pagination)
   app.component('CartinoPinInput', PinInput)
@@ -116,7 +112,6 @@ export {
   ContextMenu,
   DataTable,
   DatePicker,
-  Dialog,
   Divider,
   Drawer,
   Dropdown,
@@ -124,7 +119,6 @@ export {
   Input,
   Link,
   Modal,
-  NavigationMenu,
   PageHeader,
   Pagination,
   PinInput,
@@ -148,24 +142,61 @@ export {
   User
 }
 
-// Esporta i tipi
+// Esporta i tipi (verified exports only)
 export type { AccordionProps, AccordionItem } from './components/Accordion.vue'
 export type { AlertProps } from './components/Alert.vue'
+export type { AvatarProps } from './components/Avatar.vue'
 export type { BadgeProps } from './components/Badge.vue'
+export type { BannerProps } from './components/Banner.vue'
+export type { BreadcrumbProps } from './components/Breadcrumb.vue'
 export type { ButtonProps } from './components/Button.vue'
 export type { CardProps } from './components/Card.vue'
 export type { CheckboxProps } from './components/Checkbox.vue'
-export type { DialogProps } from './components/Dialog.vue'
+export type { CheckboxGroupProps } from './components/CheckboxGroup.vue'
+export type { ChipProps } from './components/Chip.vue'
+export type {
+  CommandProps,
+  CommandItem,
+  CommandGroup
+} from './components/Command.vue'
+export type {
+  ContextMenuProps,
+  ContextMenuItem
+} from './components/ContextMenu.vue'
+export type { DataTableProps } from './components/DataTable.vue'
+export type { DatePickerProps } from './components/DatePicker.vue'
+export type { DividerProps } from './components/Divider.vue'
+export type { DrawerProps } from './components/Drawer.vue'
 export type { DropdownProps, DropdownItem } from './components/Dropdown.vue'
-export type { SwitchProps } from './components/Switch.vue'
+export type { IconProps } from './components/Icon.vue'
+export type { InputProps } from './components/Input.vue'
+export type { LinkProps } from './components/Link.vue'
+export type { ModalProps } from './components/Modal.vue'
+export type { PageHeaderProps } from './components/PageHeader.vue'
+export type { PaginationProps } from './components/Pagination.vue'
+export type { PinInputProps } from './components/PinInput.vue'
+export type { PopoverProps } from './components/Popover.vue'
+export type { ProgressProps } from './components/Progress.vue'
+export type { RadioProps, RadioOption } from './components/Radio.vue'
+export type { RadioGroupProps } from './components/RadioGroup.vue'
+export type { SelectProps, SelectOption } from './components/Select.vue'
+export type { SeparatorProps } from './components/Separator.vue'
+export type { SheetProps } from './components/Sheet.vue'
 export type { SidebarProps, SidebarLink } from './components/Sidebar.vue'
 export type { SkeletonProps } from './components/Skeleton.vue'
+export type { SliderProps } from './components/Slider.vue'
+export type { StatsProps } from './components/Stats.vue'
+export type { SwitchProps } from './components/Switch.vue'
+export type { TableProps } from './components/Table.vue'
+export type { TabsProps } from './components/Tabs.vue'
+export type { TextareaProps } from './components/Textarea.vue'
+export type { ToastProps, ToastAction } from './components/Toast.vue'
 export type { TooltipProps } from './components/Tooltip.vue'
-export type { CommandProps, CommandItem, CommandGroup } from './components/Command.vue'
-export type { ContextMenuProps, ContextMenuItem } from './components/ContextMenu.vue'
-export type { NavigationMenuProps, NavigationMenuItem } from './components/NavigationMenu.vue'
-export type { DataTableProps } from './components/DataTable.vue'
-export type { SheetProps } from './components/Sheet.vue'
+export type { UserProps } from './components/User.vue'
 
-// Re-esporta componenti Reka UI per convenienza
-export * from 'reka-ui'
+// Composables
+export { useToast } from './composables/useToast'
+
+// NOTE: avoid re-exporting the entire primitive library to keep bundle small.
+// If you need specific Reka primitives, import them explicitly where used.
+// export * from 'reka-ui'

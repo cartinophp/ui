@@ -1,5 +1,5 @@
 <template>
-  <div :class="datePickerTheme.wrapper({ class: ui?.wrapper })" v-bind="$attrs">
+  <div :class="datePickerTheme.root({ class: ui?.root })" v-bind="$attrs">
     <input
       ref="input"
       type="date"
@@ -18,8 +18,8 @@
     />
 
     <!-- Calendar Icon -->
-    <div :class="datePickerTheme.iconWrapper({ class: ui?.iconWrapper })">
-      <Icon :name="icon" :class="datePickerTheme.icon({ class: ui?.icon })" />
+    <div :class="datePickerTheme.icon({ class: ui?.icon })">
+      <Icon :name="icon" />
     </div>
   </div>
 </template>
@@ -85,15 +85,13 @@ const formattedValue = computed(() => {
   return ''
 })
 
-const datePickerTheme = computed(() =>
-  theme({
-    size: props.size,
-    variant: props.variant,
-    color: props.color,
-    error: props.error,
-    disabled: props.disabled
-  })
-)
+const datePickerTheme = theme({
+  size: props.size,
+  variant: props.variant,
+  color: props.color,
+  error: props.error,
+  disabled: props.disabled
+})
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement

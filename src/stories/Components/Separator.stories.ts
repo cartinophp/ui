@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Separator from '../../components/Separator.vue'
+import Separator from '@/components/Separator.vue'
 
 const meta = {
   title: 'Components/Separator',

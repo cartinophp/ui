@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Toast from '../../components/Toast.vue'
+import Toast from '@/components/Toast.vue'
+import Button from '@/components/Button.vue'
+import { useToast } from '@/composables/useToast'
 
 const meta: Meta<typeof Toast> = {
   title: 'Feedback/Toast',
@@ -12,7 +14,14 @@ const meta: Meta<typeof Toast> = {
     },
     position: {
       control: 'select',
-      options: ['top-right', 'top-left', 'bottom-right', 'bottom-left', 'top-center', 'bottom-center']
+      options: [
+        'top-right',
+        'top-left',
+        'bottom-right',
+        'bottom-left',
+        'top-center',
+        'bottom-center'
+      ]
     },
     duration: {
       control: 'number'
@@ -129,4 +138,149 @@ export const LongDuration: Story = {
     type: 'info',
     duration: 10000
   }
+}
+
+// Interactive stories using useToast composable
+export const WithComposable: Story = {
+  render: () => ({
+    components: { Button },
+    setup() {
+      const toast = useToast()
+
+      const showSuccess = () => {
+        toast.success('Success!', 'Your changes have been saved.')
+      }
+
+      const showError = () => {
+        toast.error('Error', 'Something went wrong. Please try again.')
+      }
+
+      const showWarning = () => {
+        toast.warning('Warning', 'Please check your input.')
+      }
+
+      const showInfo = () => {
+        toast.info('Information', 'Here is some useful information.')
+      }
+
+      return { showSuccess, showError, showWarning, showInfo }
+    },
+    template: `
+      <div class="flex flex-wrap gap-3">
+        <Button @click="showSuccess" variant="primary">
+          Show Success Toast
+        </Button>
+        <Button @click="showError" variant="destructive">
+          Show Error Toast
+        </Button>
+        <Button @click="showWarning">
+          Show Warning Toast
+        </Button>
+        <Button @click="showInfo" variant="secondary">
+          Show Info Toast
+        </Button>
+      </div>
+    `
+  })
+}
+
+export const MultipleToasts: Story = {
+  render: () => ({
+    components: { Button },
+    setup() {
+      const toast = useToast()
+
+      const showMultiple = () => {
+        toast.success('First toast', 'This is the first notification')
+        setTimeout(() => {
+          toast.info('Second toast', 'This is the second notification')
+        }, 500)
+        setTimeout(() => {
+          toast.warning('Third toast', 'This is the third notification')
+        }, 1000)
+      }
+
+      return { showMultiple }
+    },
+    template: `
+      <Button @click="showMultiple">
+        Show Multiple Toasts
+      </Button>
+    `
+  })
+}
+
+export const WithCustomActions: Story = {
+  render: () => ({
+    components: { Button },
+    setup() {
+      const toast = useToast()
+
+      const showWithActions = () => {
+        toast.toast({
+          title: 'Confirm deletion',
+          description: 'Are you sure you want to delete this item?',
+          type: 'warning',
+          duration: 0,
+          actions: [
+            {
+              label: 'Cancel',
+              onClick: () => {
+                console.log('Cancelled')
+              },
+              variant: 'ghost'
+            },
+            {
+              label: 'Delete',
+              onClick: () => {
+                console.log('Deleted')
+                toast.success('Deleted!', 'Item has been removed')
+              },
+              variant: 'primary'
+            }
+          ]
+        })
+      }
+
+      return { showWithActions }
+    },
+    template: `
+      <Button @click="showWithActions">
+        Show Toast with Actions
+      </Button>
+    `
+  })
+}
+
+export const DismissAll: Story = {
+  render: () => ({
+    components: { Button },
+    setup() {
+      const toast = useToast()
+
+      const showMany = () => {
+        for (let i = 1; i <= 5; i++) {
+          setTimeout(() => {
+            toast.info('Toast ' + i, 'This is toast number ' + i)
+          }, i * 200)
+        }
+      }
+
+      const dismissAll = () => {
+        toast.dismissAll()
+      }
+
+      return { showMany, dismissAll }
+    },
+    template: `
+      <div class="flex gap-3">
+        <Button @click="showMany">
+          Show 5 Toasts
+        </Button>
+        <Button @click="dismissAll" variant="secondary">
+          Dismiss All
+        </Button>
+      </div>
+    `
+  })
 }

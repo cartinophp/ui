@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Checkbox from '../../components/Checkbox.vue'
+import Checkbox from '@/components/Checkbox.vue'
 
 const meta = {
   title: 'Forms/Checkbox',

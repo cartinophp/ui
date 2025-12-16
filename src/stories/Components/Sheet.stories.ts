@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Sheet from '../../components/Sheet.vue'
-import Button from '../../components/Button.vue'
+import Sheet from '@/components/Sheet.vue'
+import Button from '@/components/Button.vue'
 
 const meta: Meta<typeof Sheet> = {
   title: 'Components/Sheet',

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import PageHeader from '../../components/PageHeader.vue'
+import PageHeader from '@/components/PageHeader.vue'
 
 const meta: Meta<typeof PageHeader> = {
   title: 'Layout/PageHeader',
@@ -35,7 +35,7 @@ export const WithHeadline: Story = {
   args: {
     headline: 'Welcome back',
     title: 'Dashboard',
-    description: 'Here\'s what\'s happening with your projects today'
+    description: "Here's what's happening with your projects today"
   }
 }
 

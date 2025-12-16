@@ -1,49 +1,41 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import pageHeaderTheme from '@/themes/page-header'
 import UButton from './Button.vue'
 
+export interface PageHeaderProps {
+  as?: string | object
+  headline?: string
+  title?: string
+  description?: string
+  links?: any[]
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    container?: string
+    headline?: string
+    wrapper?: string
+    title?: string
+    description?: string
+    links?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'div'
-  },
-  headline: {
-    type: String,
-    default: undefined
-  },
-  title: {
-    type: String,
-    default: undefined
-  },
-  description: {
-    type: String,
-    default: undefined
-  },
-  links: {
-    type: Array,
-    default: () => []
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<PageHeaderProps>(), {
+  as: 'div',
+  links: () => []
 })
 
 const slots = defineSlots()
 
-const ui = computed(() =>
-  pageHeaderTheme({
-    title: !!(props.title || slots.title)
-  })
-)
+const theme = pageHeaderTheme({
+  title: !!(props.title || slots.title)
+})
+
+const ui = computed(() => theme)
 </script>
 
 <template>

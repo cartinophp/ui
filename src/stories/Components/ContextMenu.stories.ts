@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import ContextMenu from '../../components/ContextMenu.vue'
-import type { ContextMenuItem } from '../../components/ContextMenu.vue'
+import ContextMenu from '@/components/ContextMenu.vue'
+import type { ContextMenuItem } from '@/components/ContextMenu.vue'
 
 const meta: Meta<typeof ContextMenu> = {
   title: 'Components/ContextMenu',

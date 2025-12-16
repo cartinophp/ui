@@ -1,74 +1,45 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { SliderRoot, SliderTrack, SliderRange, SliderThumb } from 'reka-ui'
 import sliderTheme from '@/themes/slider'
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'div'
-  },
-  modelValue: {
-    type: [Number, Array],
-    default: undefined
-  },
-  defaultValue: {
-    type: [Number, Array],
-    default: undefined
-  },
-  min: {
-    type: Number,
-    default: 0
-  },
-  max: {
-    type: Number,
-    default: 100
-  },
-  step: {
-    type: Number,
-    default: 1
-  },
-  minStepsBetweenThumbs: {
-    type: Number,
-    default: 0
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  color: {
-    type: String,
-    default: 'primary'
-  },
-  orientation: {
-    type: String,
-    default: 'horizontal'
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  inverted: {
-    type: Boolean,
-    default: false
-  },
-  name: {
-    type: String,
-    default: undefined
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
+export interface SliderProps {
+  as?: string | object
+  modelValue?: number | number[]
+  defaultValue?: number | number[]
+  min?: number
+  max?: number
+  step?: number
+  minStepsBetweenThumbs?: number
+  size?: string
+  color?: string
+  orientation?: 'horizontal' | 'vertical'
+  disabled?: boolean
+  inverted?: boolean
+  name?: string
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    track?: string
+    range?: string
+    thumb?: string
   }
+}
+
+const props = withDefaults(defineProps<SliderProps>(), {
+  as: 'div',
+  min: 0,
+  max: 100,
+  step: 1,
+  minStepsBetweenThumbs: 0,
+  size: 'md',
+  color: 'primary',
+  orientation: 'horizontal',
+  disabled: false,
+  inverted: false
 })
 
 const emit = defineEmits(['update:modelValue', 'change'])
-
-const slots = defineSlots()
 
 const ui = computed(() =>
   sliderTheme({
@@ -93,13 +64,26 @@ const thumbCount = computed(() => {
   if (Array.isArray(props.defaultValue)) return props.defaultValue.length
   return 1
 })
+
+// Normalize values to arrays for reka-ui
+const normalizedModelValue = computed(() => {
+  if (props.modelValue === undefined) return undefined
+  return Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
+})
+
+const normalizedDefaultValue = computed(() => {
+  if (props.defaultValue === undefined) return undefined
+  return Array.isArray(props.defaultValue)
+    ? props.defaultValue
+    : [props.defaultValue]
+})
 </script>
 
 <template>
   <SliderRoot
     :as="props.as"
-    :model-value="modelValue"
-    :default-value="defaultValue"
+    :model-value="normalizedModelValue"
+    :default-value="normalizedDefaultValue"
     :min="min"
     :max="max"
     :step="step"

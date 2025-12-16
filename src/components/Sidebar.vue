@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import theme from '@/themes/sidebar'
 import Icon from '@/components/Icon.vue'
 
@@ -40,11 +39,9 @@ const slots = defineSlots<{
   footer?: () => any
 }>()
 
-const sidebarTheme = computed(() =>
-  theme({
-    collapsed: props.collapsed
-  })
-)
+const sidebarTheme = theme({
+  collapsed: props.collapsed
+})
 
 const handleLinkClick = (link: SidebarLink) => {
   if (!link.disabled) {

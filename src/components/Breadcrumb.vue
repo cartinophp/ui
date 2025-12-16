@@ -1,38 +1,38 @@
-<script setup>
-import { computed } from 'vue'
+<script setup lang="ts">
 import { Primitive } from 'reka-ui'
 import breadcrumbTheme from '@/themes/breadcrumb'
 import Link from './Link.vue'
 import Icon from '@/components/Icon.vue'
 import UAvatar from './Avatar.vue'
 
+export interface BreadcrumbProps {
+  as?: string | object
+  items?: any[]
+  separatorIcon?: string
+  labelKey?: string | number
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    list?: string
+    item?: string
+    link?: string
+    linkActive?: string
+    linkLeadingAvatar?: string
+    linkLeadingIcon?: string
+    linkLabel?: string
+    linkTrailingIcon?: string
+    separator?: string
+    separatorIcon?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'nav'
-  },
-  items: {
-    type: Array,
-    default: () => []
-  },
-  separatorIcon: {
-    type: String,
-    default: 'i-heroicons-chevron-right'
-  },
-  labelKey: {
-    type: [String, Number],
-    default: 'label'
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<BreadcrumbProps>(), {
+  as: 'nav',
+  separatorIcon: 'i-heroicons-chevron-right',
+  labelKey: 'label',
+  items: () => []
 })
 
 const slots = defineSlots()

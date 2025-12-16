@@ -1,60 +1,37 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import theme from '@/themes/user'
 import Link from './Link.vue'
 
+export interface UserProps {
+  as?: string | object
+  name?: string
+  description?: string
+  avatar?: any
+  chip?: boolean | object
+  size?: string
+  orientation?: 'horizontal' | 'vertical'
+  to?: string | object
+  target?: string
+  onClick?: () => void
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    avatar?: string
+    wrapper?: string
+    content?: string
+    name?: string
+    description?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'div'
-  },
-  name: {
-    type: String,
-    default: undefined
-  },
-  description: {
-    type: String,
-    default: undefined
-  },
-  avatar: {
-    type: Object,
-    default: undefined
-  },
-  chip: {
-    type: [Boolean, Object],
-    default: undefined
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  orientation: {
-    type: String,
-    default: 'horizontal'
-  },
-  to: {
-    type: [String, Object],
-    default: undefined
-  },
-  target: {
-    type: String,
-    default: undefined
-  },
-  onClick: {
-    type: Function,
-    default: undefined
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<UserProps>(), {
+  as: 'div',
+  size: 'md',
+  orientation: 'horizontal'
 })
 
 const slots = defineSlots()

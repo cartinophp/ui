@@ -11,7 +11,7 @@ export interface AlertProps {
   closable?: boolean
   actions?: Array<{
     label: string
-    variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
     onClick?: () => void
   }>
   ui?: Record<string, any>
@@ -89,7 +89,7 @@ const handleClose = () => {
             v-for="(action, index) in actions"
             :key="index"
             size="sm"
-            :variant="action.variant || 'outline'"
+            :variant="action.variant || 'secondary'"
             @click="action.onClick"
           >
             {{ action.label }}

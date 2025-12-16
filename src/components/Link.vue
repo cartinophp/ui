@@ -13,6 +13,8 @@ export interface LinkBaseProps {
   active?: boolean
   isExternal?: boolean
 }
+
+export type LinkProps = LinkBaseProps
 </script>
 
 <script setup lang="ts">
@@ -56,14 +58,14 @@ function onClickWrapper(e: MouseEvent) {
             tabindex: disabled ? -1 : undefined
           }
         : as === 'button'
-          ? {
-              as,
-              type,
-              disabled
-            }
-          : {
-              as
-            }
+        ? {
+            as,
+            type,
+            disabled
+          }
+        : {
+            as
+          }
     "
     :rel="rel"
     :target="target"

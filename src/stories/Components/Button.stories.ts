@@ -1,25 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Button from '../../components/Button.vue'
+import Button from '@/components/Button.vue'
 
 const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info'],
-      description: 'Button color theme'
-    },
     variant: {
       control: 'select',
-      options: ['solid', 'outline', 'soft', 'ghost', 'link'],
-      description: 'Button variant style'
+      options: ['primary', 'secondary', 'tertiary', 'plain', 'monochromePlain'],
+      description: 'Button variant style (Polaris-inspired)'
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'success', 'critical'],
+      description: 'Button tone/color'
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-      description: 'Button size'
+      options: ['xs', 'sm', 'md', 'lg'],
+      description: 'Button size (xs=extra small, sm=small, md=medium, lg=large)'
     },
     disabled: {
       control: 'boolean',
@@ -31,7 +31,7 @@ const meta = {
     },
     square: {
       control: 'boolean',
-      description: 'Square shape (no horizontal padding)'
+      description: 'Square shape (icon only)'
     },
     block: {
       control: 'boolean',
@@ -44,9 +44,9 @@ const meta = {
     }
   },
   args: {
-    color: 'primary',
-    variant: 'solid',
-    size: 'md',
+    variant: 'primary',
+    tone: 'default',
+    size: 'xs',
     disabled: false,
     loading: false,
     square: false,
@@ -59,63 +59,58 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Solid: Story = {
+export const Primary: Story = {
   args: {
-    color: 'primary',
-    variant: 'solid',
-    label: 'Solid Button'
+    variant: 'primary',
+    tone: 'default',
+    label: 'Primary Button'
   }
 }
 
-export const Outline: Story = {
+export const Secondary: Story = {
   args: {
-    variant: 'outline',
-    label: 'Outline Button'
+    variant: 'secondary',
+    tone: 'default',
+    label: 'Secondary Button'
   }
 }
 
-export const Soft: Story = {
+export const Tertiary: Story = {
   args: {
-    variant: 'soft',
-    label: 'Soft Button'
+    variant: 'tertiary',
+    tone: 'default',
+    label: 'Tertiary Button'
   }
 }
 
-export const Ghost: Story = {
+export const Plain: Story = {
   args: {
-    variant: 'ghost',
-    label: 'Ghost Button'
+    variant: 'plain',
+    tone: 'default',
+    label: 'Plain Button'
   }
 }
 
-export const Link: Story = {
+export const MonochromePlain: Story = {
   args: {
-    variant: 'link',
-    label: 'Link Button'
+    variant: 'monochromePlain',
+    label: 'Monochrome Plain'
   }
 }
 
 export const Success: Story = {
   args: {
-    color: 'success',
-    variant: 'solid',
+    variant: 'primary',
+    tone: 'success',
     label: 'Success'
   }
 }
 
-export const Warning: Story = {
+export const Critical: Story = {
   args: {
-    color: 'warning',
-    variant: 'solid',
-    label: 'Warning'
-  }
-}
-
-export const Error: Story = {
-  args: {
-    color: 'error',
-    variant: 'solid',
-    label: 'Error'
+    variant: 'primary',
+    tone: 'critical',
+    label: 'Critical'
   }
 }
 
@@ -175,26 +170,22 @@ export const AllVariants: Story = {
     template: `
       <div class="space-y-4">
         <div class="flex flex-wrap gap-4">
-          <Button color="primary" variant="solid">Solid</Button>
-          <Button color="primary" variant="outline">Outline</Button>
-          <Button color="primary" variant="soft">Soft</Button>
-          <Button color="primary" variant="ghost">Ghost</Button>
-          <Button color="primary" variant="link">Link</Button>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="tertiary">Tertiary</Button>
+          <Button variant="plain">Plain</Button>
+          <Button variant="monochromePlain">Monochrome</Button>
         </div>
         <div class="flex flex-wrap gap-4">
-          <Button color="primary">Primary</Button>
-          <Button color="secondary">Secondary</Button>
-          <Button color="success">Success</Button>
-          <Button color="warning">Warning</Button>
-          <Button color="error">Error</Button>
-          <Button color="info">Info</Button>
+          <Button variant="primary" tone="default">Default</Button>
+          <Button variant="primary" tone="success">Success</Button>
+          <Button variant="primary" tone="critical">Critical</Button>
         </div>
         <div class="flex flex-wrap items-center gap-4">
           <Button size="xs">XS</Button>
           <Button size="sm">Small</Button>
           <Button size="md">Medium</Button>
           <Button size="lg">Large</Button>
-          <Button size="xl">XL</Button>
         </div>
       </div>
     `

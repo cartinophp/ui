@@ -113,7 +113,7 @@ const emit = defineEmits<{
 }>()
 
 const visible = ref(true)
-const timeoutId = ref<number>()
+const timeoutId = ref<ReturnType<typeof setTimeout>>()
 
 const typeIcon = computed(() => {
   const icons = {

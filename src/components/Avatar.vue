@@ -1,52 +1,34 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Primitive } from 'reka-ui'
 import avatarTheme from '@/themes/avatar'
 import Icon from '@/components/Icon.vue'
 
+export interface AvatarProps {
+  as?: string | object
+  src?: string
+  alt?: string
+  icon?: string
+  text?: string
+  size?: string
+  chip?:
+    | boolean
+    | { position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' }
+  loading?: 'eager' | 'lazy'
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    image?: string
+    icon?: string
+    fallback?: string
+  }
+}
+
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps({
-  as: {
-    type: [String, Object],
-    default: 'span'
-  },
-  src: {
-    type: String,
-    default: undefined
-  },
-  alt: {
-    type: String,
-    default: undefined
-  },
-  icon: {
-    type: String,
-    default: undefined
-  },
-  text: {
-    type: String,
-    default: undefined
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  chip: {
-    type: [Boolean, Object],
-    default: undefined
-  },
-  loading: {
-    type: String,
-    default: undefined
-  },
-  class: {
-    type: [String, Object, Array],
-    default: undefined
-  },
-  ui: {
-    type: Object,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<AvatarProps>(), {
+  as: 'span',
+  size: 'md'
 })
 
 const slots = defineSlots()
@@ -119,10 +101,16 @@ const handleImageError = () => {
       v-if="chip"
       class="absolute"
       :class="{
-        'top-0 right-0': !chip.position || chip.position === 'top-right',
-        'top-0 left-0': chip.position === 'top-left',
-        'bottom-0 right-0': chip.position === 'bottom-right',
-        'bottom-0 left-0': chip.position === 'bottom-left'
+        'top-0 right-0':
+          typeof chip !== 'object' ||
+          !chip.position ||
+          chip.position === 'top-right',
+        'top-0 left-0':
+          typeof chip === 'object' && chip.position === 'top-left',
+        'bottom-0 right-0':
+          typeof chip === 'object' && chip.position === 'bottom-right',
+        'bottom-0 left-0':
+          typeof chip === 'object' && chip.position === 'bottom-left'
       }"
     >
       <!-- Chip placeholder -->
