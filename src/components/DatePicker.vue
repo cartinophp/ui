@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   size: 'md',
   variant: 'outline',
   color: 'primary',
-  icon: 'i-lucide-calendar',
+  icon: 'solar:calendar-bold',
   error: false,
   format: 'YYYY-MM-DD'
 })

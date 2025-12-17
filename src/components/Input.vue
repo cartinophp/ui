@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import inputTheme from '@/themes/input'
+import Icon from './Icon.vue'
 
 export interface InputProps {
   modelValue?: string | number
@@ -98,7 +99,7 @@ defineExpose({
         :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       >
         <slot name="leading">
-          {{ leadingIcon }}
+          <Icon v-if="leadingIcon" :name="leadingIcon" />
         </slot>
       </div>
 
@@ -122,7 +123,7 @@ defineExpose({
         :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       >
         <slot name="trailing">
-          {{ trailingIcon }}
+          <Icon v-if="trailingIcon" :name="trailingIcon" />
         </slot>
       </div>
     </div>

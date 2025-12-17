@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   size: 'md',
   variant: 'outline',
   color: 'primary',
-  trailingIcon: 'i-lucide-chevron-down',
+  trailingIcon: 'solar:alt-arrow-down-linear',
   valueKey: 'value',
   labelKey: 'label'
 })

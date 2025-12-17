@@ -158,9 +158,17 @@ export const Block: Story = {
 
 export const WithIcons: Story = {
   args: {
-    leadingIcon: 'i-heroicons-plus',
-    trailingIcon: 'i-heroicons-arrow-right',
+    leadingIcon: 'solar:add-circle-bold',
+    trailingIcon: 'solar:arrow-right-linear',
     label: 'With Icons'
+  }
+}
+
+export const IconOnly: Story = {
+  args: {
+    leadingIcon: 'solar:heart-bold',
+    square: true,
+    label: undefined
   }
 }
 

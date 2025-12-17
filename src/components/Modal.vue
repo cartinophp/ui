@@ -80,7 +80,7 @@ const props = withDefaults(defineProps<ModalProps>(), {
   open: false,
   size: 'md',
   closable: true,
-  closeIcon: '✕',
+  closeIcon: 'solar:close-circle-linear',
   fullscreen: false
 })
 

@@ -27,7 +27,7 @@
       :class="ui.resizeHandle({ class: ui?.resizeHandle })"
     >
       <Icon
-        name="i-lucide-grip-horizontal"
+        name="solar:sort-linear"
         :class="ui.resizeIcon({ class: ui?.resizeIcon })"
       />
     </div>

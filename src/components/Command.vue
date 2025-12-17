@@ -68,7 +68,10 @@ const handleSelect = (item: CommandItem) => {
     :class="ui.root({ class: props.ui?.root })"
   >
     <ComboboxAnchor :class="ui.anchor({ class: props.ui?.anchor })">
-      <Icon name="🔍" :class="ui.searchIcon({ class: props.ui?.searchIcon })" />
+      <Icon
+        name="solar:minimalistic-magnifer-linear"
+        :class="ui.searchIcon({ class: props.ui?.searchIcon })"
+      />
       <ComboboxInput
         :class="ui.input({ class: props.ui?.input })"
         :placeholder="placeholder"

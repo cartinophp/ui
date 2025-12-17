@@ -140,7 +140,7 @@ const formattedChange = computed(() => {
 
 const changeIcon = computed(() => {
   if (props.change === undefined) return null
-  return props.change > 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'
+  return props.change > 0 ? 'solar:graph-up-linear' : 'solar:graph-down-linear'
 })
 
 const changeType = computed(() => {

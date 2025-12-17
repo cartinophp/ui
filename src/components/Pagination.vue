@@ -60,11 +60,11 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   activeColor: 'primary',
   activeVariant: 'primary',
   size: 'md',
-  firstIcon: 'i-heroicons-chevron-double-left',
-  prevIcon: 'i-heroicons-chevron-left',
-  nextIcon: 'i-heroicons-chevron-right',
-  lastIcon: 'i-heroicons-chevron-double-right',
-  ellipsisIcon: 'i-heroicons-ellipsis-horizontal'
+  firstIcon: 'solar:double-alt-arrow-left-linear',
+  prevIcon: 'solar:alt-arrow-left-linear',
+  nextIcon: 'solar:alt-arrow-right-linear',
+  lastIcon: 'solar:double-alt-arrow-right-linear',
+  ellipsisIcon: 'solar:menu-dots-linear'
 })
 
 const emit = defineEmits(['update:page'])

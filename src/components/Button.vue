@@ -83,11 +83,7 @@ const hasTrailing = computed(
       :class="buttonTheme.trailingIcon({ class: props.ui?.trailingIcon })"
     >
       <slot name="trailing">
-        <Icon
-          v-if="loading"
-          name="i-heroicons-arrow-path"
-          class="animate-spin"
-        />
+        <Icon v-if="loading" name="solar:refresh-bold" class="animate-spin" />
         <Icon v-else-if="trailingIcon" :name="trailingIcon" />
       </slot>
     </span>

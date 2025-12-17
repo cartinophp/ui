@@ -103,7 +103,7 @@ const props = withDefaults(defineProps<ToastProps>(), {
   type: 'default',
   duration: 5000,
   closable: true,
-  closeIcon: 'i-lucide-x',
+  closeIcon: 'solar:close-square-linear',
   position: 'top-right'
 })
 
@@ -118,10 +118,10 @@ const timeoutId = ref<ReturnType<typeof setTimeout>>()
 const typeIcon = computed(() => {
   const icons = {
     default: undefined,
-    success: 'i-lucide-check-circle',
-    warning: 'i-lucide-alert-triangle',
-    error: 'i-lucide-x-circle',
-    info: 'i-lucide-info'
+    success: 'solar:check-circle-bold',
+    warning: 'solar:danger-triangle-bold',
+    error: 'solar:close-circle-bold',
+    info: 'solar:info-circle-bold'
   }
   return icons[props.type]
 })

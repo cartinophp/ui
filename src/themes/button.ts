@@ -183,6 +183,14 @@ export default tv({
       }
     },
     // ===== ICON ONLY (SQUARE) ADJUSTMENTS =====
+    // Remove negative margins and center icon perfectly
+    {
+      square: true,
+      class: {
+        leadingIcon: 'my-0',
+        trailingIcon: 'my-0'
+      }
+    },
     {
       square: true,
       size: 'xs',

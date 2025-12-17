@@ -146,7 +146,7 @@ const onClose = () => {
         <slot name="close" :ui="ui">
           <Button
             v-if="props.close"
-            :icon="props.closeIcon || 'i-heroicons-x-mark'"
+            :leading-icon="props.closeIcon || 'solar:close-circle-linear'"
             size="md"
             variant="plain"
             aria-label="Close banner"

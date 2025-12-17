@@ -152,7 +152,7 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
                     item.label
                   }}</span>
                   <Icon
-                    name="i-heroicons-chevron-right"
+                    name="solar:alt-arrow-right-linear"
                     :class="ui.itemShortcut({ class: props.ui?.itemShortcut })"
                   />
                 </DropdownMenuSubTrigger>

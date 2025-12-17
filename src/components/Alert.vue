@@ -1,24 +1,37 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Button from './Button.vue'
+import Icon from './Icon.vue'
+import Avatar from './Avatar.vue'
 import theme from '@/themes/alert'
 
 export interface AlertProps {
   title?: string
   description?: string
   icon?: string
-  variant?: 'default' | 'destructive' | 'success' | 'warning' | 'info'
+  avatar?: {
+    src?: string
+    alt?: string
+    fallback?: string
+  }
+  color?: 'primary' | 'success' | 'warning' | 'error' | 'neutral'
+  variant?: 'solid' | 'outline' | 'soft' | 'subtle'
+  orientation?: 'horizontal' | 'vertical'
   closable?: boolean
   actions?: Array<{
     label: string
     variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
+    tone?: 'default' | 'success' | 'critical'
     onClick?: () => void
   }>
+  class?: string
   ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
-  variant: 'default',
+  color: 'primary',
+  variant: 'solid',
+  orientation: 'vertical',
   closable: false
 })
 
@@ -28,21 +41,25 @@ const emit = defineEmits<{
 
 const alertTheme = computed(() =>
   theme({
-    variant: props.variant
+    color: props.color,
+    variant: props.variant,
+    orientation: props.orientation
   })
 )
 
 const displayIcon = computed(() => {
   if (props.icon) return props.icon
+  if (props.avatar) return undefined
 
   const defaultIcons = {
-    default: '💡',
-    success: '✅',
-    warning: '⚠️',
-    destructive: '❌'
+    primary: 'solar:info-circle-bold',
+    success: 'solar:check-circle-bold',
+    warning: 'solar:danger-triangle-bold',
+    error: 'solar:close-circle-bold',
+    neutral: 'solar:lightbulb-bold'
   }
 
-  return defaultIcons[props.variant]
+  return defaultIcons[props.color]
 })
 
 const handleClose = () => {
@@ -51,19 +68,27 @@ const handleClose = () => {
 </script>
 
 <template>
-  <div :class="alertTheme.root({ class: ui?.root })">
-    <!-- Icon -->
-    <div
-      v-if="displayIcon || $slots.icon"
-      :class="alertTheme.icon({ class: ui?.icon })"
-    >
-      <slot name="icon">
-        {{ displayIcon }}
-      </slot>
-    </div>
+  <div
+    :data-orientation="orientation"
+    :class="alertTheme.root({ class: [ui?.root, props.class] })"
+  >
+    <!-- Leading (Icon or Avatar) -->
+    <slot name="leading">
+      <Avatar
+        v-if="avatar"
+        size="2xl"
+        v-bind="avatar"
+        :class="alertTheme.avatar({ class: ui?.avatar })"
+      />
+      <Icon
+        v-else-if="displayIcon"
+        :name="displayIcon"
+        :class="alertTheme.icon({ class: ui?.icon })"
+      />
+    </slot>
 
-    <!-- Content -->
-    <div>
+    <!-- Content Wrapper -->
+    <div :class="alertTheme.wrapper({ class: ui?.wrapper })">
       <div
         v-if="title || $slots.title"
         :class="alertTheme.title({ class: ui?.title })"
@@ -82,14 +107,17 @@ const handleClose = () => {
         </slot>
       </div>
 
-      <!-- Actions -->
-      <div v-if="actions?.length || $slots.actions" class="mt-3 flex gap-2">
+      <!-- Actions (Vertical orientation) -->
+      <div
+        v-if="orientation === 'vertical' && (actions?.length || $slots.actions)"
+        :class="alertTheme.actions({ class: ui?.actions })"
+      >
         <slot name="actions">
           <Button
             v-for="(action, index) in actions"
             :key="index"
-            size="sm"
-            :variant="action.variant || 'secondary'"
+            size="xs"
+            v-bind="action"
             @click="action.onClick"
           >
             {{ action.label }}
@@ -98,27 +126,41 @@ const handleClose = () => {
       </div>
     </div>
 
-    <!-- Close Button -->
-    <button
-      v-if="closable"
-      :class="alertTheme.closeButton({ class: ui?.closeButton })"
-      @click="handleClose"
-      aria-label="Close alert"
+    <!-- Actions (Horizontal orientation) or Close Button -->
+    <div
+      v-if="
+        (orientation === 'horizontal' && (actions?.length || $slots.actions)) ||
+        closable
+      "
+      :class="alertTheme.actions({ class: ui?.actions })"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+      <template
+        v-if="
+          orientation === 'horizontal' && (actions?.length || $slots.actions)
+        "
       >
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
-      </svg>
-    </button>
+        <slot name="actions">
+          <Button
+            v-for="(action, index) in actions"
+            :key="index"
+            size="xs"
+            v-bind="action"
+            @click="action.onClick"
+          >
+            {{ action.label }}
+          </Button>
+        </slot>
+      </template>
+
+      <Button
+        v-if="closable"
+        variant="monochromePlain"
+        size="md"
+        trailing-icon="solar:close-circle-linear"
+        :class="alertTheme.closeButton({ class: ui?.closeButton })"
+        aria-label="Close alert"
+        @click="handleClose"
+      />
+    </div>
   </div>
 </template>

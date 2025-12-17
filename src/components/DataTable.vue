@@ -369,7 +369,7 @@ defineExpose({
           <Input
             v-model="globalFilterModel"
             :placeholder="searchPlaceholder"
-            leading-icon="🔍"
+            leading-icon="solar:minimalistic-magnifer-linear"
             aria-label="Search table"
           />
         </div>
@@ -428,8 +428,8 @@ defineExpose({
                       header.column.getIsSorted() === 'asc'
                         ? 'ascending'
                         : header.column.getIsSorted() === 'desc'
-                          ? 'descending'
-                          : 'none'
+                        ? 'descending'
+                        : 'none'
                     "
                     @click="header.column.getToggleSortingHandler()?.($event)"
                   >
@@ -439,12 +439,12 @@ defineExpose({
                     />
                     <Icon
                       v-if="header.column.getIsSorted() === 'asc'"
-                      name="i-heroicons-arrow-up"
+                      name="solar:arrow-up-linear"
                       :class="ui.sortIcon({ class: props.ui?.sortIcon })"
                     />
                     <Icon
                       v-else-if="header.column.getIsSorted() === 'desc'"
-                      name="i-heroicons-arrow-down"
+                      name="solar:arrow-down-linear"
                       :class="ui.sortIcon({ class: props.ui?.sortIcon })"
                     />
                   </button>
@@ -524,7 +524,7 @@ defineExpose({
       >
         <slot name="loading">
           <Icon
-            name="i-heroicons-arrow-path"
+            name="solar:refresh-bold"
             :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })"
           />
           <span class="sr-only">Loading...</span>
@@ -540,7 +540,7 @@ defineExpose({
       >
         <slot name="empty">
           <Icon
-            name="i-heroicons-inbox"
+            name="solar:inbox-line-linear"
             :class="ui.emptyIcon({ class: props.ui?.emptyIcon })"
           />
           <div :class="ui.emptyTitle({ class: props.ui?.emptyTitle })">

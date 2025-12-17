@@ -10,29 +10,29 @@ export default tv({
     root: 'relative inline-block w-full',
     input:
       'w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10 text-foreground placeholder:text-muted-foreground',
-    icon: 'absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-muted-foreground'
+    icon: 'absolute inset-y-0 right-0 flex items-center pointer-events-none text-muted-foreground'
   },
   variants: {
     size: {
       xs: {
         input: 'px-2 py-1 text-xs',
-        icon: 'pr-2'
+        icon: 'pr-2 [&_svg]:w-3 [&_svg]:h-3'
       },
       sm: {
         input: 'px-3 py-1.5 text-sm',
-        icon: 'pr-2.5'
+        icon: 'pr-2.5 [&_svg]:w-4 [&_svg]:h-4'
       },
       md: {
         input: 'px-4 py-2 text-base',
-        icon: 'pr-3'
+        icon: 'pr-3 [&_svg]:w-5 [&_svg]:h-5'
       },
       lg: {
         input: 'px-6 py-3 text-lg',
-        icon: 'pr-4'
+        icon: 'pr-4 [&_svg]:w-6 [&_svg]:h-6'
       },
       xl: {
         input: 'px-8 py-4 text-xl',
-        icon: 'pr-5'
+        icon: 'pr-5 [&_svg]:w-7 [&_svg]:h-7'
       }
     },
     variant: {

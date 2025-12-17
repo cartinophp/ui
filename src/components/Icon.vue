@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { Icon as IconifyIcon } from '@iconify/vue'
 import { computed } from 'vue'
 import iconTheme from '@/themes/icon'
 
 export interface IconProps {
+  /** Icon name from Iconify (e.g., 'solar:user-bold', 'solar:home-linear') */
   name: string
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   class?: string | string[] | Record<string, boolean>
@@ -31,6 +33,6 @@ const isEmoji = computed(() => {
     {{ name }}
   </span>
 
-  <!-- Icon rendering (iconify/unocss pattern: i-heroicons-home, etc.) -->
-  <i v-else :class="[name, iconClasses]" aria-hidden="true" />
+  <!-- Iconify icon rendering -->
+  <IconifyIcon v-else :icon="name" :class="iconClasses" />
 </template>

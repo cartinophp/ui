@@ -30,7 +30,7 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
   as: 'nav',
-  separatorIcon: 'i-heroicons-chevron-right',
+  separatorIcon: 'solar:alt-arrow-right-linear',
   labelKey: 'label',
   items: () => []
 })

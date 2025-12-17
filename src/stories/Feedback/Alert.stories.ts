@@ -8,13 +8,18 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['primary', 'success', 'warning', 'error', 'info', 'neutral'],
+      options: ['primary', 'success', 'warning', 'error', 'neutral'],
       description: 'Color variant of the alert'
     },
     variant: {
       control: 'select',
-      options: ['solid', 'soft', 'outline'],
+      options: ['solid', 'soft', 'outline', 'subtle'],
       description: 'Visual variant style'
+    },
+    orientation: {
+      control: 'select',
+      options: ['horizontal', 'vertical'],
+      description: 'Layout orientation'
     },
     closable: {
       control: 'boolean',
@@ -28,8 +33,8 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    title: 'Information',
-    description: 'This is a primary alert with some important information.'
+    title: 'Heads up!',
+    description: 'You can change the primary color in your app config.'
   }
 }
 
@@ -57,9 +62,9 @@ export const Error: Story = {
   }
 }
 
-export const Info: Story = {
+export const Neutral: Story = {
   args: {
-    color: 'info',
+    color: 'neutral',
     title: 'Did you know?',
     description:
       'You can customize the appearance of this alert using the variant prop.'
@@ -71,16 +76,35 @@ export const SolidVariant: Story = {
     variant: 'solid',
     color: 'primary',
     title: 'Solid Variant',
-    description: 'This alert uses the solid variant with white text.'
+    description: 'This alert uses the solid variant with colored background.'
+  }
+}
+
+export const SoftVariant: Story = {
+  args: {
+    variant: 'soft',
+    color: 'success',
+    title: 'Soft Variant',
+    description: 'This alert uses the soft variant with light background.'
   }
 }
 
 export const OutlineVariant: Story = {
   args: {
     variant: 'outline',
-    color: 'success',
+    color: 'warning',
     title: 'Outline Variant',
     description: 'This alert uses the outline variant with a border.'
+  }
+}
+
+export const SubtleVariant: Story = {
+  args: {
+    variant: 'subtle',
+    color: 'error',
+    title: 'Subtle Variant',
+    description:
+      'This alert uses the subtle variant with border and light background.'
   }
 }
 

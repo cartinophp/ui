@@ -21,9 +21,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const Basic: Story = {
   args: {
-    name: 'i-heroicons-home'
+    name: 'solar:home-2-bold'
   }
 }
 
@@ -32,11 +32,11 @@ export const Sizes: Story = {
     components: { Icon },
     template: `
       <div class="flex items-center gap-4">
-        <Icon name="i-heroicons-home" size="xs" />
-        <Icon name="i-heroicons-home" size="sm" />
-        <Icon name="i-heroicons-home" size="md" />
-        <Icon name="i-heroicons-home" size="lg" />
-        <Icon name="i-heroicons-home" size="xl" />
+        <Icon name="solar:home-2-bold" size="xs" />
+        <Icon name="solar:home-2-bold" size="sm" />
+        <Icon name="solar:home-2-bold" size="md" />
+        <Icon name="solar:home-2-bold" size="lg" />
+        <Icon name="solar:home-2-bold" size="xl" />
       </div>
     `
   })
@@ -48,51 +48,51 @@ export const CommonIcons: Story = {
     template: `
       <div class="grid grid-cols-6 gap-4">
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-home" />
+          <Icon name="solar:home-2-bold" />
           <span class="text-xs">Home</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-user" />
+          <Icon name="solar:user-bold" />
           <span class="text-xs">User</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-cog" />
+          <Icon name="solar:settings-bold" />
           <span class="text-xs">Settings</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-bell" />
+          <Icon name="solar:bell-bold" />
           <span class="text-xs">Bell</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-envelope" />
+          <Icon name="solar:letter-bold" />
           <span class="text-xs">Mail</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-heart" />
+          <Icon name="solar:heart-bold" />
           <span class="text-xs">Heart</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-search" />
+          <Icon name="solar:minimalistic-magnifer-bold" />
           <span class="text-xs">Search</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-plus" />
+          <Icon name="solar:add-circle-bold" />
           <span class="text-xs">Plus</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-trash" />
+          <Icon name="solar:trash-bin-trash-bold" />
           <span class="text-xs">Trash</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-pencil" />
+          <Icon name="solar:pen-bold" />
           <span class="text-xs">Edit</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-check" />
+          <Icon name="solar:check-circle-bold" />
           <span class="text-xs">Check</span>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Icon name="i-heroicons-x-mark" />
+          <Icon name="solar:close-circle-bold" />
           <span class="text-xs">Close</span>
         </div>
       </div>
@@ -105,11 +105,11 @@ export const Colored: Story = {
     components: { Icon },
     template: `
       <div class="flex items-center gap-4">
-        <Icon name="i-heroicons-home" class="text-blue-500" />
-        <Icon name="i-heroicons-heart" class="text-red-500" />
-        <Icon name="i-heroicons-check" class="text-green-500" />
-        <Icon name="i-heroicons-x-mark" class="text-red-500" />
-        <Icon name="i-heroicons-bell" class="text-yellow-500" />
+        <Icon name="solar:home-2-bold" class="text-blue-500" />
+        <Icon name="solar:heart-bold" class="text-red-500" />
+        <Icon name="solar:check-circle-bold" class="text-green-500" />
+        <Icon name="solar:close-circle-bold" class="text-red-500" />
+        <Icon name="solar:bell-bold" class="text-yellow-500" />
       </div>
     `
   })
