@@ -18,8 +18,8 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg'],
-      description: 'Button size (xs=extra small, sm=small, md=medium, lg=large)'
+      options: ['sm', 'md', 'lg'],
+      description: 'Button size (sm=small, md=medium, lg=large)'
     },
     disabled: {
       control: 'boolean',
@@ -46,7 +46,7 @@ const meta = {
   args: {
     variant: 'primary',
     tone: 'default',
-    size: 'xs',
+    size: 'md',
     disabled: false,
     loading: false,
     square: false,
@@ -158,7 +158,7 @@ export const Block: Story = {
 
 export const WithIcons: Story = {
   args: {
-    leadingIcon: 'solar:add-circle-bold',
+    leadingIcon: 'solar:add-circle-linear',
     trailingIcon: 'solar:arrow-right-linear',
     label: 'With Icons'
   }
@@ -166,7 +166,7 @@ export const WithIcons: Story = {
 
 export const IconOnly: Story = {
   args: {
-    leadingIcon: 'solar:heart-bold',
+    leadingIcon: 'solar:heart-linear',
     square: true,
     label: undefined
   }

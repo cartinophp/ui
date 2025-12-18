@@ -1,52 +1,116 @@
 <template>
   <DialogRoot :open="open" @update:open="emit('update:open', $event)">
     <DialogPortal>
-      <DialogOverlay :class="modalTheme.overlay({ class: ui?.overlay })" />
-
-      <DialogContent :class="modalTheme.content({ class: ui?.content })">
-        <!-- Close button -->
-        <DialogClose
-          v-if="closable"
-          :class="modalTheme.closeButton({ class: ui?.closeButton })"
-        >
-          <Icon :name="closeIcon" class="size-4" />
-          <span class="sr-only">Close</span>
-        </DialogClose>
-
-        <!-- Header -->
-        <div
-          v-if="title || description || $slots.header"
-          :class="modalTheme.header({ class: ui?.header })"
-        >
-          <slot name="header">
-            <DialogTitle
-              v-if="title"
-              :class="modalTheme.title({ class: ui?.title })"
+      <!-- Scrollable overlay mode: content is rendered inside the overlay so it scrolls within -->
+      <template v-if="props.scrollable">
+        <DialogOverlay :class="modalTheme.overlay({ class: ui?.overlay })">
+          <DialogContent :class="modalTheme.content({ class: ui?.content })">
+            <!-- Header -->
+            <div
+              v-if="title || description || $slots.header || closable"
+              :class="modalTheme.header({ class: ui?.header })"
             >
-              {{ title }}
-            </DialogTitle>
-            <DialogDescription
-              v-if="description"
-              :class="modalTheme.description({ class: ui?.description })"
+              <slot name="header">
+                <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
+                  <DialogTitle
+                    v-if="title"
+                    :class="modalTheme.title({ class: ui?.title })"
+                  >
+                    {{ title }}
+                  </DialogTitle>
+                  <DialogDescription
+                    v-if="description"
+                    :class="modalTheme.description({ class: ui?.description })"
+                  >
+                    {{ description }}
+                  </DialogDescription>
+                </div>
+
+                <!-- Close button as Button component with icon -->
+                <DialogClose v-if="closable" as-child>
+                  <Button
+                    :leading-icon="closeIcon"
+                    size="sm"
+                    variant="plain"
+                    aria-label="Close modal"
+                    :class="modalTheme.closeButton({ class: ui?.closeButton })"
+                  />
+                </DialogClose>
+              </slot>
+            </div>
+
+            <!-- Body -->
+            <div :class="modalTheme.body({ class: ui?.body })">
+              <slot />
+            </div>
+
+            <!-- Footer -->
+            <div
+              v-if="$slots.footer"
+              :class="modalTheme.footer({ class: ui?.footer })"
             >
-              {{ description }}
-            </DialogDescription>
-          </slot>
-        </div>
+              <slot name="footer" />
+            </div>
+          </DialogContent>
+        </DialogOverlay>
+      </template>
 
-        <!-- Body -->
-        <div :class="modalTheme.body({ class: ui?.body })">
-          <slot />
-        </div>
+      <!-- Default mode: overlay and content are separate -->
+      <template v-else>
+        <DialogOverlay
+          v-if="props.overlay"
+          :class="modalTheme.overlay({ class: ui?.overlay })"
+        />
 
-        <!-- Footer -->
-        <div
-          v-if="$slots.footer"
-          :class="modalTheme.footer({ class: ui?.footer })"
-        >
-          <slot name="footer" />
-        </div>
-      </DialogContent>
+        <DialogContent :class="modalTheme.content({ class: ui?.content })">
+          <!-- Header -->
+          <div
+            v-if="title || description || $slots.header || closable"
+            :class="modalTheme.header({ class: ui?.header })"
+          >
+            <slot name="header">
+              <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
+                <DialogTitle
+                  v-if="title"
+                  :class="modalTheme.title({ class: ui?.title })"
+                >
+                  {{ title }}
+                </DialogTitle>
+                <DialogDescription
+                  v-if="description"
+                  :class="modalTheme.description({ class: ui?.description })"
+                >
+                  {{ description }}
+                </DialogDescription>
+              </div>
+
+              <!-- Close button as Button component with icon -->
+              <DialogClose v-if="closable" as-child>
+                <Button
+                  :leading-icon="closeIcon"
+                  size="sm"
+                  variant="plain"
+                  aria-label="Close modal"
+                  :class="modalTheme.closeButton({ class: ui?.closeButton })"
+                />
+              </DialogClose>
+            </slot>
+          </div>
+
+          <!-- Body -->
+          <div :class="modalTheme.body({ class: ui?.body })">
+            <slot />
+          </div>
+
+          <!-- Footer -->
+          <div
+            v-if="$slots.footer"
+            :class="modalTheme.footer({ class: ui?.footer })"
+          >
+            <slot name="footer" />
+          </div>
+        </DialogContent>
+      </template>
     </DialogPortal>
   </DialogRoot>
 </template>
@@ -63,7 +127,7 @@ import {
   DialogClose
 } from 'reka-ui'
 import theme from '@/themes/modal'
-import Icon from './Icon.vue'
+import Button from './Button.vue'
 
 export interface ModalProps {
   open?: boolean
@@ -73,6 +137,11 @@ export interface ModalProps {
   closable?: boolean
   closeIcon?: string
   fullscreen?: boolean
+  overlay?: boolean
+  scrollable?: boolean
+  transition?: boolean
+  portal?: boolean | string | HTMLElement
+  dismissible?: boolean
   ui?: Record<string, any>
 }
 
@@ -81,7 +150,12 @@ const props = withDefaults(defineProps<ModalProps>(), {
   size: 'md',
   closable: true,
   closeIcon: 'solar:close-circle-linear',
-  fullscreen: false
+  fullscreen: false,
+  overlay: true,
+  scrollable: false,
+  transition: true,
+  portal: true,
+  dismissible: true
 })
 
 const emit = defineEmits<{

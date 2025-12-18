@@ -1,189 +1,210 @@
-<template>
-  <Teleport to="body">
-    <Transition
-      enter-active-class="transition-all duration-300"
-      enter-from-class="opacity-0 translate-y-2"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition-all duration-200"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 translate-y-2"
-    >
-      <div
-        v-if="visible"
-        :class="ui.root({ class: ui?.root })"
-        role="alert"
-        @click="onClick"
-      >
-        <!-- Icon -->
-        <div
-          v-if="icon || typeIcon"
-          :class="ui.iconContainer({ class: ui?.iconContainer })"
-        >
-          <Icon
-            :name="icon || typeIcon"
-            :class="ui.icon({ class: ui?.icon })"
-          />
-        </div>
-
-        <!-- Content -->
-        <div :class="ui.content({ class: ui?.content })">
-          <h4 v-if="title" :class="ui.title({ class: ui?.title })">
-            {{ title }}
-          </h4>
-          <p
-            v-if="description"
-            :class="ui.description({ class: ui?.description })"
-          >
-            {{ description }}
-          </p>
-          <slot />
-        </div>
-
-        <!-- Actions -->
-        <div
-          v-if="actions?.length || closable"
-          :class="ui.actions({ class: ui?.actions })"
-        >
-          <button
-            v-for="action in actions"
-            :key="action.label"
-            type="button"
-            :class="getActionClasses(action)"
-            @click="action.onClick"
-          >
-            {{ action.label }}
-          </button>
-
-          <button
-            v-if="closable"
-            type="button"
-            :class="ui.closeButton({ class: ui?.closeButton })"
-            @click="close"
-            aria-label="Close toast"
-          >
-            <Icon :name="closeIcon" class="size-4" />
-          </button>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue'
-import theme from '@/themes/toast'
+import { computed, ref, onMounted, nextTick, useTemplateRef } from 'vue'
+import {
+  ToastRoot,
+  ToastTitle,
+  ToastDescription,
+  ToastAction,
+  ToastClose,
+  useForwardPropsEmits,
+  type ToastRootProps,
+  type ToastRootEmits
+} from 'reka-ui'
+import { reactivePick } from '@vueuse/core'
+import toastTheme from '@/themes/toast'
+import Icon from './Icon.vue'
+import Avatar from './Avatar.vue'
+import Button from './Button.vue'
 
-export interface ToastAction {
+export interface ToastActionButton {
   label: string
-  onClick: () => void
-  variant?: 'default' | 'primary' | 'ghost'
+  onClick?: () => void
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
+  tone?: 'default' | 'success' | 'critical'
 }
 
-export interface ToastProps {
-  id?: string
+export interface ToastProps
+  extends Pick<
+    ToastRootProps,
+    'defaultOpen' | 'open' | 'type' | 'duration' | 'as'
+  > {
+  id?: string | number
   title?: string
   description?: string
-  type?: 'default' | 'success' | 'warning' | 'error' | 'info'
   icon?: string
-  duration?: number
-  closable?: boolean
+  avatar?: {
+    src?: string
+    alt?: string
+    fallback?: string
+  }
+  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  orientation?: 'horizontal' | 'vertical'
+  close?: boolean
   closeIcon?: string
-  position?:
-    | 'top-right'
-    | 'top-left'
-    | 'bottom-right'
-    | 'bottom-left'
-    | 'top-center'
-    | 'bottom-center'
-  actions?: ToastAction[]
+  actions?: ToastActionButton[]
+  onClick?: (toast: any) => void
+  class?: string
   ui?: Record<string, any>
 }
 
+export interface ToastEmits extends ToastRootEmits {}
+
 const props = withDefaults(defineProps<ToastProps>(), {
-  type: 'default',
-  duration: 5000,
-  closable: true,
-  closeIcon: 'solar:close-square-linear',
-  position: 'top-right'
+  orientation: 'vertical',
+  close: true,
+  closeIcon: 'solar:close-circle-linear',
+  color: 'primary'
 })
 
-const emit = defineEmits<{
-  close: []
-  click: []
-}>()
+const emits = defineEmits<ToastEmits>()
 
-const visible = ref(true)
-const timeoutId = ref<ReturnType<typeof setTimeout>>()
+const rootProps = useForwardPropsEmits(
+  reactivePick(props, 'as', 'defaultOpen', 'open', 'duration', 'type'),
+  emits
+)
 
 const typeIcon = computed(() => {
+  if (props.icon) return props.icon
+  if (props.avatar) return undefined
+
   const icons = {
-    default: undefined,
-    success: 'solar:check-circle-bold',
-    warning: 'solar:danger-triangle-bold',
-    error: 'solar:close-circle-bold',
-    info: 'solar:info-circle-bold'
+    primary: 'solar:info-circle-linear',
+    success: 'solar:check-circle-linear',
+    warning: 'solar:danger-triangle-linear',
+    error: 'solar:close-circle-linear',
+    info: 'solar:info-circle-linear',
+    neutral: 'solar:lightbulb-linear'
   }
-  return icons[props.type]
+  return icons[props.color as keyof typeof icons]
 })
 
 const ui = computed(() =>
-  theme({
-    type: props.type,
-    position: props.position,
-    size: 'md', // Default size
+  toastTheme({
+    color: props.color,
+    orientation: props.orientation,
     hasTitle: !!props.title
   })
 )
 
-const getActionClasses = (action: ToastAction) => {
-  const variantClasses = {
-    default:
-      'px-3 py-1.5 text-sm font-medium rounded-md border border-border hover:bg-muted',
-    primary:
-      'px-3 py-1.5 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90',
-    ghost: 'px-3 py-1.5 text-sm font-medium rounded-md hover:bg-muted'
-  }
-
-  return [
-    ui.value.action({ class: props.ui?.action }),
-    variantClasses[action.variant || 'default']
-  ].join(' ')
-}
-
-const close = () => {
-  visible.value = false
-  setTimeout(() => {
-    emit('close')
-  }, 200) // Wait for transition
-}
-
-const onClick = () => {
-  emit('click')
-}
-
-const startTimer = () => {
-  if (props.duration > 0) {
-    timeoutId.value = setTimeout(() => {
-      close()
-    }, props.duration)
-  }
-}
-
-const stopTimer = () => {
-  if (timeoutId.value) {
-    clearTimeout(timeoutId.value)
-  }
-}
+const rootRef = useTemplateRef('rootRef')
+const height = ref(0)
 
 onMounted(() => {
-  startTimer()
-})
+  if (!rootRef.value) {
+    return
+  }
 
-onUnmounted(() => {
-  stopTimer()
+  nextTick(() => {
+    height.value = rootRef.value?.$el?.getBoundingClientRect()?.height || 0
+  })
 })
 
 defineExpose({
-  close
+  height
 })
 </script>
+
+<template>
+  <ToastRoot
+    ref="rootRef"
+    v-bind="rootProps"
+    :data-orientation="orientation"
+    data-slot="root"
+    :class="ui.root({ class: [props.ui?.root, props.class] })"
+    :style="{ '--height': height + 'px' }"
+  >
+    <slot name="leading">
+      <Avatar
+        v-if="avatar"
+        size="lg"
+        v-bind="avatar"
+        data-slot="avatar"
+        :class="ui.avatar({ class: props.ui?.avatar })"
+      />
+      <Icon
+        v-else-if="typeIcon"
+        :name="typeIcon"
+        data-slot="icon"
+        :class="ui.icon({ class: props.ui?.icon })"
+      />
+    </slot>
+
+    <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
+      <ToastTitle
+        v-if="title"
+        data-slot="title"
+        :class="ui.title({ class: props.ui?.title })"
+      >
+        {{ title }}
+      </ToastTitle>
+      <ToastDescription
+        v-if="description"
+        data-slot="description"
+        :class="ui.description({ class: props.ui?.description })"
+      >
+        {{ description }}
+      </ToastDescription>
+
+      <div
+        v-if="orientation === 'vertical' && actions?.length"
+        data-slot="actions"
+        :class="ui.actions({ class: props.ui?.actions })"
+      >
+        <ToastAction
+          v-for="(action, index) in actions"
+          :key="index"
+          :alt-text="action.label || 'Action'"
+          as-child
+          @click.stop
+        >
+          <Button
+            size="sm"
+            :color="color"
+            v-bind="action"
+            @click="action.onClick"
+          >
+            {{ action.label }}
+          </Button>
+        </ToastAction>
+      </div>
+    </div>
+
+    <div
+      v-if="(orientation === 'horizontal' && actions?.length) || close"
+      data-slot="actions"
+      :class="ui.actions({ class: props.ui?.actions })"
+    >
+      <template v-if="orientation === 'horizontal' && actions?.length">
+        <ToastAction
+          v-for="(action, index) in actions"
+          :key="index"
+          :alt-text="action.label || 'Action'"
+          as-child
+          @click.stop
+        >
+          <Button
+            size="sm"
+            :color="color"
+            v-bind="action"
+            @click="action.onClick"
+          >
+            {{ action.label }}
+          </Button>
+        </ToastAction>
+      </template>
+
+      <ToastClose v-if="close" as-child>
+        <Button
+          :leading-icon="closeIcon"
+          variant="plain"
+          size="sm"
+          square
+          aria-label="Close toast"
+          data-slot="close"
+          :class="ui.close({ class: props.ui?.close })"
+          @click.stop
+        />
+      </ToastClose>
+    </div>
+  </ToastRoot>
+</template>

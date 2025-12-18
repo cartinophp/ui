@@ -369,7 +369,7 @@ defineExpose({
           <Input
             v-model="globalFilterModel"
             :placeholder="searchPlaceholder"
-            leading-icon="solar:minimalistic-magnifer-linear"
+            :leading-icon="'solar:minimalistic-magnifer-linear'"
             aria-label="Search table"
           />
         </div>
@@ -524,7 +524,7 @@ defineExpose({
       >
         <slot name="loading">
           <Icon
-            name="solar:refresh-bold"
+            name="solar:refresh-linear"
             :class="ui.loadingSpinner({ class: props.ui?.loadingSpinner })"
           />
           <span class="sr-only">Loading...</span>

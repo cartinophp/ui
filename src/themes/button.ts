@@ -7,10 +7,12 @@ import { tv } from 'tailwind-variants'
  */
 export default tv({
   slots: {
-    base: 'relative box-border inline-flex items-center justify-center gap-[2px] select-none cursor-pointer touch-manipulation transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1',
+    base: 'relative box-border inline-flex items-center justify-center gap-1.5 select-none cursor-pointer touch-manipulation transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-1',
     label: 'transition-transform',
-    leadingIcon: 'shrink-0 -my-[2px] transition-transform',
-    trailingIcon: 'shrink-0 -my-[2px] transition-transform'
+    leadingIcon:
+      'shrink-0 -my-[2px] transition-transform grid place-items-center',
+    trailingIcon:
+      'shrink-0 -my-[2px] transition-transform grid place-items-center'
   },
   variants: {
     variant: {
@@ -40,29 +42,23 @@ export default tv({
       success: ''
     },
     size: {
-      // Extra Small - very small buttons
-      xs: {
-        base: 'min-h-[28px] min-w-[28px] px-2 py-1 text-[12px] rounded-lg md:min-h-[24px] md:min-w-[24px]',
-        leadingIcon: 'size-3.5',
-        trailingIcon: 'size-3.5'
-      },
       // Small - Polaris "slim"
       sm: {
-        base: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-[13px] font-medium rounded-lg md:min-h-[28px] md:min-w-[28px]',
+        base: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-xs font-medium rounded-lg md:min-h-[28px] md:min-w-[28px]',
         leadingIcon: 'size-4',
         trailingIcon: 'size-4'
       },
       // Medium - Polaris default
       md: {
-        base: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-[14px] font-medium rounded-lg md:min-h-[28px] md:min-w-[28px]',
-        leadingIcon: 'size-[18px]',
-        trailingIcon: 'size-[18px]'
+        base: 'min-h-[36px] min-w-[36px] px-4 py-2 text-sm font-medium rounded-lg md:min-h-[32px] md:min-w-[32px]',
+        leadingIcon: 'size-4',
+        trailingIcon: 'size-4'
       },
       // Large - bigger buttons
       lg: {
-        base: 'min-h-[36px] min-w-[36px] px-4 py-2 text-[15px] font-medium rounded-lg md:min-h-[32px] md:min-w-[32px]',
-        leadingIcon: 'size-5',
-        trailingIcon: 'size-5'
+        base: 'min-h-[40px] min-w-[40px] px-5 py-2.5 text-base font-medium rounded-lg md:min-h-[36px] md:min-w-[36px]',
+        leadingIcon: 'size-4',
+        trailingIcon: 'size-4'
       }
     },
     loading: {
@@ -189,13 +185,6 @@ export default tv({
       class: {
         leadingIcon: 'my-0',
         trailingIcon: 'my-0'
-      }
-    },
-    {
-      square: true,
-      size: 'xs',
-      class: {
-        base: 'px-[2px] py-[2px] min-w-[24px] aspect-square'
       }
     },
     {

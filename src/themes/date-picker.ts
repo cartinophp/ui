@@ -2,58 +2,69 @@ import { tv } from 'tailwind-variants'
 
 /**
  * DatePicker Component Theme
- * Native date input with calendar icon
+ * Based on Nuxt UI InputDate - uses Reka UI DateField with individual segments
  * Supports sizes, variants, colors, and states
  */
 export default tv({
   slots: {
-    root: 'relative inline-block w-full',
-    input:
-      'w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-10 text-foreground placeholder:text-muted-foreground',
-    icon: 'absolute inset-y-0 right-0 flex items-center pointer-events-none text-muted-foreground'
+    base: 'group relative inline-flex items-center rounded-md select-none transition-colors text-foreground',
+    segment:
+      'rounded text-center outline-none text-foreground data-[placeholder]:text-muted-foreground data-[segment=literal]:text-muted-foreground data-invalid:text-destructive data-disabled:cursor-not-allowed data-disabled:opacity-75 transition-colors',
+    leading: 'shrink-0 flex items-center text-muted-foreground',
+    leadingIcon: 'shrink-0 text-muted-foreground',
+    trailing: 'ms-auto inline-flex items-center shrink-0 text-muted-foreground',
+    trailingIcon: 'shrink-0 text-muted-foreground',
+    separatorIcon: 'shrink-0 text-muted-foreground mx-1'
   },
   variants: {
     size: {
-      xs: {
-        input: 'px-2 py-1 text-xs',
-        icon: 'pr-2 [&_svg]:w-3 [&_svg]:h-3'
-      },
       sm: {
-        input: 'px-3 py-1.5 text-sm',
-        icon: 'pr-2.5 [&_svg]:w-4 [&_svg]:h-4'
+        base: 'h-9 px-3 py-2 text-sm gap-0.5',
+        segment:
+          'data-[segment=day]:w-6 data-[segment=month]:w-6 data-[segment=year]:w-9',
+        leadingIcon: 'size-4',
+        trailingIcon: 'size-4'
       },
       md: {
-        input: 'px-4 py-2 text-base',
-        icon: 'pr-3 [&_svg]:w-5 [&_svg]:h-5'
+        base: 'h-10 px-3.5 py-2 text-sm gap-0.5',
+        segment:
+          'data-[segment=day]:w-7 data-[segment=month]:w-7 data-[segment=year]:w-11',
+        leadingIcon: 'size-5',
+        trailingIcon: 'size-5'
       },
       lg: {
-        input: 'px-6 py-3 text-lg',
-        icon: 'pr-4 [&_svg]:w-6 [&_svg]:h-6'
-      },
-      xl: {
-        input: 'px-8 py-4 text-xl',
-        icon: 'pr-5 [&_svg]:w-7 [&_svg]:h-7'
+        base: 'h-11 px-4 py-2.5 text-base gap-0.75',
+        segment:
+          'data-[segment=day]:w-7 data-[segment=month]:w-7 data-[segment=year]:w-11',
+        leadingIcon: 'size-5',
+        trailingIcon: 'size-5'
       }
     },
     variant: {
       outline: {
-        input: 'bg-background border-input'
+        base: 'bg-background border border-border shadow-xs hover:bg-muted/50 focus-within:ring-2 focus-within:ring-ring dark:bg-background dark:border-border dark:hover:bg-muted/50',
+        segment: 'focus:bg-muted dark:focus:bg-muted'
       },
       filled: {
-        input: 'bg-muted border-transparent'
+        base: 'bg-muted border-0 hover:bg-muted/80 focus-within:ring-2 focus-within:ring-ring dark:bg-muted dark:hover:bg-muted/80',
+        segment: 'focus:bg-background dark:focus:bg-background'
       },
-      flushed: {
-        input:
-          'bg-transparent border-x-0 border-t-0 border-b-2 rounded-none px-0 focus:ring-0 focus:ring-offset-0'
+      ghost: {
+        base: 'bg-transparent border-0 hover:bg-muted/50 focus-within:ring-2 focus-within:ring-ring dark:hover:bg-muted/50',
+        segment: 'focus:bg-muted dark:focus:bg-muted'
       },
-      unstyled: {
-        input:
-          'bg-transparent border-none shadow-none focus:ring-0 focus:ring-offset-0'
+      soft: {
+        base: 'border-0 focus-within:ring-2',
+        segment:
+          'focus:bg-background/50 group-hover:focus:bg-background dark:focus:bg-background/50 dark:group-hover:focus:bg-background'
+      },
+      none: {
+        base: 'bg-transparent border-0 p-0 focus-within:ring-0',
+        segment: 'focus:bg-muted dark:focus:bg-muted'
       }
     },
     color: {
       primary: '',
-      secondary: '',
       success: '',
       warning: '',
       error: '',
@@ -61,96 +72,92 @@ export default tv({
     },
     disabled: {
       true: {
-        input: 'opacity-50 cursor-not-allowed bg-muted'
+        base: 'opacity-50 cursor-not-allowed'
       }
     },
-    error: {
-      true: ''
+    leading: {
+      true: {
+        base: 'ps-2.5'
+      }
+    },
+    trailing: {
+      true: {
+        base: 'pe-2.5'
+      }
     }
   },
   compoundVariants: [
-    // ===== OUTLINE VARIANT COLORS =====
+    // Color variants for outline
     {
       variant: 'outline',
       color: 'primary',
       class: {
-        input: 'border-input focus:border-primary focus:ring-primary'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'secondary',
-      class: {
-        input: 'border-input focus:border-border focus:ring-ring'
+        base: 'focus-within:border-primary focus-within:ring-primary'
       }
     },
     {
       variant: 'outline',
       color: 'success',
       class: {
-        input: 'border-input focus:border-success focus:ring-success'
+        base: 'focus-within:border-green-500 focus-within:ring-green-500'
       }
     },
     {
       variant: 'outline',
       color: 'warning',
       class: {
-        input: 'border-input focus:border-warning focus:ring-warning'
+        base: 'focus-within:border-yellow-500 focus-within:ring-yellow-500'
       }
     },
     {
       variant: 'outline',
       color: 'error',
       class: {
-        input: 'border-input focus:border-error focus:ring-error'
+        base: 'border-destructive/50 focus-within:border-destructive focus-within:ring-destructive'
       }
     },
     {
       variant: 'outline',
       color: 'info',
       class: {
-        input: 'border-input focus:border-info focus:ring-info'
+        base: 'focus-within:border-blue-500 focus-within:ring-blue-500'
       }
     },
 
-    // ===== ERROR STATE =====
+    // Color variants for soft
     {
-      error: true,
-      variant: 'outline',
-      class: {
-        input: 'border-error focus:border-error focus:ring-error'
-      }
-    },
-    {
-      error: true,
-      variant: 'filled',
-      class: {
-        input: 'bg-error/10 border-error/20'
-      }
-    },
-    {
-      error: true,
-      variant: 'flushed',
-      class: {
-        input: 'border-error focus:border-error'
-      }
-    },
-
-    // ===== FILLED VARIANT COLORS =====
-    {
-      variant: 'filled',
+      variant: 'soft',
       color: 'primary',
       class: {
-        input: 'focus:bg-primary/5 focus:border-primary/20'
+        base: 'bg-primary/10 text-primary hover:bg-primary/20 focus-within:ring-primary/50 dark:bg-primary/20 dark:text-primary dark:hover:bg-primary/30'
       }
     },
-
-    // ===== FLUSHED VARIANT COLORS =====
     {
-      variant: 'flushed',
-      color: 'primary',
+      variant: 'soft',
+      color: 'success',
       class: {
-        input: 'border-border focus:border-primary'
+        base: 'bg-green-500/10 text-green-600 hover:bg-green-500/20 focus-within:ring-green-500/50 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500/30'
+      }
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      class: {
+        base: 'bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20 focus-within:ring-yellow-500/50 dark:bg-yellow-500/20 dark:text-yellow-400 dark:hover:bg-yellow-500/30'
+      }
+    },
+    {
+      variant: 'soft',
+      color: 'error',
+      class: {
+        base: 'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-within:ring-destructive/50 dark:bg-destructive/20 dark:text-destructive dark:hover:bg-destructive/30'
+      }
+    },
+    {
+      variant: 'soft',
+      color: 'info',
+      class: {
+        base: 'bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 focus-within:ring-blue-500/50 dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500/30'
       }
     }
   ],
@@ -159,9 +166,7 @@ export default tv({
     variant: 'outline',
     color: 'primary',
     disabled: false,
-    error: false
+    leading: false,
+    trailing: false
   }
 })
-
-// Export type for TypeScript support
-export type DatePickerThemeVariants = Parameters<typeof tv>[0]

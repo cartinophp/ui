@@ -13,7 +13,7 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size of the empty state'
     }
   }

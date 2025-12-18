@@ -9,8 +9,8 @@ export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
   /** Polaris tone: default, success, critical */
   tone?: 'default' | 'success' | 'critical'
-  /** Button sizes: xs (extra small), sm (small), md (medium), lg (large) */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  /** Button sizes: sm (small), md (medium), lg (large) */
+  size?: 'sm' | 'md' | 'lg'
   square?: boolean
   block?: boolean
   loading?: boolean
@@ -67,7 +67,7 @@ const hasTrailing = computed(
       :class="buttonTheme.leadingIcon({ class: props.ui?.leadingIcon })"
     >
       <slot name="leading">
-        <Icon v-if="leadingIcon" :name="leadingIcon" />
+        <Icon v-if="leadingIcon" :name="leadingIcon" class="size-[inherit]!" />
       </slot>
     </span>
 
@@ -83,8 +83,16 @@ const hasTrailing = computed(
       :class="buttonTheme.trailingIcon({ class: props.ui?.trailingIcon })"
     >
       <slot name="trailing">
-        <Icon v-if="loading" name="solar:refresh-bold" class="animate-spin" />
-        <Icon v-else-if="trailingIcon" :name="trailingIcon" />
+        <Icon
+          v-if="loading"
+          name="solar:refresh-linear"
+          class="animate-spin size-[inherit]!"
+        />
+        <Icon
+          v-else-if="trailingIcon"
+          :name="trailingIcon"
+          class="size-[inherit]!"
+        />
       </slot>
     </span>
   </button>

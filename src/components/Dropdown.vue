@@ -32,9 +32,11 @@ export interface DropdownItem {
 export interface DropdownProps {
   items?: DropdownItem[]
   disabled?: boolean
+  modal?: boolean
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'right' | 'bottom' | 'left'
   sideOffset?: number
+  collisionPadding?: number
   size?: 'sm' | 'md' | 'lg'
   variant?: 'default' | 'minimal' | 'glass'
   rounded?: 'sm' | 'md' | 'lg'
@@ -43,9 +45,11 @@ export interface DropdownProps {
 
 const props = withDefaults(defineProps<DropdownProps>(), {
   disabled: false,
+  modal: true,
   align: 'start',
   side: 'bottom',
-  sideOffset: 4,
+  sideOffset: 8,
+  collisionPadding: 8,
   size: 'md',
   variant: 'default',
   rounded: 'md'
@@ -80,7 +84,7 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
 </script>
 
 <template>
-  <DropdownMenuRoot>
+  <DropdownMenuRoot :modal="modal">
     <DropdownMenuTrigger as-child :disabled="disabled">
       <slot name="trigger" />
     </DropdownMenuTrigger>
@@ -92,6 +96,7 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
         :align="align"
         :side="side"
         :side-offset="sideOffset"
+        :collision-padding="collisionPadding"
       >
         <div :class="ui.viewport({ class: props.ui?.viewport })">
           <slot>
@@ -219,11 +224,39 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
 </template>
 
 <style>
+.dropdown-content {
+  /* Hardware acceleration */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
 .dropdown-content[data-state='open'] {
-  animation: fade-in 0.15s ease-out;
+  animation: dropdown-fade-in 0.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dropdown-content[data-state='closed'] {
-  animation: fade-out 0.15s ease-out;
+  animation: dropdown-fade-out 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dropdown-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
 }
 </style>

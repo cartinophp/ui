@@ -44,10 +44,10 @@ export const WithSearch: Story = {
           />
         </template>
         <template #right>
-          <Button variant="secondary" size="sm" leading-icon="solar:filter-bold">
+          <Button variant="secondary" size="sm" leading-icon="solar:filter-linear">
             Filter
           </Button>
-          <Button variant="primary" size="sm" leading-icon="solar:add-circle-bold">
+          <Button variant="primary" size="sm" leading-icon="solar:add-circle-linear">
             New Item
           </Button>
         </template>
@@ -90,7 +90,7 @@ export const WithTabs: Story = {
           </div>
         </template>
         <template #right>
-          <Button variant="secondary" size="sm" trailing-icon="solar:settings-bold" square />
+          <Button variant="secondary" size="sm" trailing-icon="solar:settings-linear" square />
         </template>
       </DashboardToolbar>
     `
@@ -116,7 +116,7 @@ export const MinimalRight: Story = {
     template: `
       <DashboardToolbar>
         <template #right>
-          <Button variant="primary" size="sm" leading-icon="solar:add-circle-bold">
+          <Button variant="primary" size="sm" leading-icon="solar:add-circle-linear">
             Create
           </Button>
         </template>
@@ -139,9 +139,9 @@ export const FullWidth: Story = {
           />
         </template>
         <template #right>
-          <Button variant="secondary" size="sm" trailing-icon="solar:user-bold" square />
-          <Button variant="secondary" size="sm" trailing-icon="solar:bell-bold" square />
-          <Button variant="secondary" size="sm" trailing-icon="solar:settings-bold" square />
+          <Button variant="secondary" size="sm" trailing-icon="solar:user-linear" square />
+          <Button variant="secondary" size="sm" trailing-icon="solar:bell-linear" square />
+          <Button variant="secondary" size="sm" trailing-icon="solar:settings-linear" square />
         </template>
       </DashboardToolbar>
     `

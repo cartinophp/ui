@@ -53,10 +53,12 @@ import '@cartino/ui/style.css'
     Content here
   </Dialog>
 
-  <Accordion :items="[
-    { label: 'Question 1', content: 'Answer 1' },
-    { label: 'Question 2', content: 'Answer 2' }
-  ]" />
+  <Accordion
+    :items="[
+      { label: 'Question 1', content: 'Answer 1' },
+      { label: 'Question 2', content: 'Answer 2' }
+    ]"
+  />
 </template>
 ```
 
@@ -67,6 +69,7 @@ import '@cartino/ui/style.css'
 Un componente accordion/fisarmonica costruito su Reka UI con supporto per singolo o multiplo aperto.
 
 **Props:**
+
 - `items`: `AccordionItem[]` (required) - Array di elementi accordion
 - `type`: `'single' | 'multiple'` (default: `'single'`)
 - `collapsible`: `boolean` (default: `true`)
@@ -74,6 +77,7 @@ Un componente accordion/fisarmonica costruito su Reka UI con supporto per singol
 - `disabled`: `boolean` (default: `false`)
 
 **Tipo AccordionItem:**
+
 ```ts
 {
   label?: string
@@ -85,6 +89,7 @@ Un componente accordion/fisarmonica costruito su Reka UI con supporto per singol
 ```
 
 **Esempio:**
+
 ```vue
 <Accordion
   variant="separated"
@@ -100,6 +105,7 @@ Un componente accordion/fisarmonica costruito su Reka UI con supporto per singol
 Un componente alert/notifica per mostrare messaggi importanti agli utenti.
 
 **Props:**
+
 - `title`: `string` (optional) - Titolo dell'alert
 - `description`: `string` (optional) - Descrizione dell'alert
 - `icon`: `string` (optional) - Icona custom (emoji o carattere)
@@ -109,9 +115,11 @@ Un componente alert/notifica per mostrare messaggi importanti agli utenti.
 - `actions`: `Array<{ label: string, variant?: string, onClick?: () => void }>` (optional)
 
 **Eventi:**
+
 - `close` - Emesso quando l'utente chiude l'alert
 
 **Esempio:**
+
 ```vue
 <Alert
   color="warning"
@@ -132,12 +140,14 @@ Un componente alert/notifica per mostrare messaggi importanti agli utenti.
 Un componente bottone versatile con diverse varianti e dimensioni.
 
 **Props:**
+
 - `variant`: `'primary' | 'secondary' | 'outline' | 'ghost'` (default: `'primary'`)
 - `size`: `'sm' | 'md' | 'lg'` (default: `'md'`)
 - `disabled`: `boolean` (default: `false`)
 - `type`: `'button' | 'submit' | 'reset'` (default: `'button'`)
 
 **Esempio:**
+
 ```vue
 <Button variant="primary" size="lg">Click me</Button>
 ```
@@ -147,16 +157,19 @@ Un componente bottone versatile con diverse varianti e dimensioni.
 Un componente dialog/modal costruito su Reka UI.
 
 **Props:**
+
 - `open`: `boolean` (v-model supportato)
 - `defaultOpen`: `boolean`
 
 **Slots:**
+
 - `trigger`: Il contenuto che attiva il dialog
 - `title`: Il titolo del dialog
 - `description`: La descrizione del dialog
 - default: Il contenuto principale
 
 **Esempio:**
+
 ```vue
 <Dialog v-model:open="isOpen">
   <template #trigger>
@@ -166,6 +179,161 @@ Un componente dialog/modal costruito su Reka UI.
   <template #description>Dialog description</template>
   Dialog content
 </Dialog>
+```
+
+### Toast & Toaster
+
+Sistema di notifiche toast con supporto per stacking, animazioni e posizionamento flessibile.
+
+**Setup (richiesto):**
+
+Aggiungi il componente `Toaster` una sola volta nel tuo layout principale (App.vue o layout root):
+
+```vue
+<template>
+  <div>
+    <!-- Your app content -->
+    <RouterView />
+
+    <!-- Add Toaster once at the root level -->
+    <Toaster position="bottom-right" />
+  </div>
+</template>
+
+<script setup>
+import { Toaster } from '@cartino/ui'
+</script>
+```
+
+**Toaster Props:**
+
+- `position`: `'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'` (default: `'bottom-right'`)
+- `expand`: `boolean` (default: `true`) - Espande i toast al passaggio del mouse
+- `max`: `number` (default: `5`) - Numero massimo di toast visibili
+- `duration`: `number` (default: `5000`) - Durata di default in millisecondi
+
+**Uso nei componenti:**
+
+```vue
+<template>
+  <Button @click="showToast">Show Toast</Button>
+</template>
+
+<script setup>
+import { useToast } from '@cartino/ui'
+
+const toast = useToast()
+
+const showToast = () => {
+  toast.success('Success!', 'Your changes have been saved.')
+}
+
+// Async example with loading state
+const handleSave = async () => {
+  const loadingToast = toast.toast({
+    title: 'Saving...',
+    description: 'Please wait...',
+    close: false,
+    duration: 0
+  })
+
+  try {
+    await saveData()
+    toast.remove(loadingToast.id)
+    toast.success('Saved!', 'Changes saved successfully.')
+  } catch (error) {
+    toast.remove(loadingToast.id)
+    toast.error('Error', 'Failed to save changes.')
+  }
+}
+</script>
+```
+
+**Metodi disponibili:**
+
+```ts
+const toast = useToast()
+
+// Shorthand methods
+toast.success(title, description, options?)
+toast.error(title, description, options?)
+toast.warning(title, description, options?)
+toast.info(title, description, options?)
+
+// Full control
+toast.toast({
+  title: string
+  description?: string
+  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  icon?: string
+  duration?: number  // 0 = infinite
+  close?: boolean    // Show close button
+  actions?: Array<{
+    label: string
+    onClick: () => void
+    variant?: string
+    tone?: string
+  }>
+  onClick?: () => void
+})
+
+// Management methods
+toast.remove(id)       // Remove specific toast
+toast.update(id, data) // Update toast content
+toast.clear()          // Remove all toasts
+```
+
+**Toast con azioni:**
+
+```vue
+<script setup>
+const handleDelete = () => {
+  toast.toast({
+    title: 'Are you sure?',
+    description: 'This action cannot be undone.',
+    color: 'warning',
+    duration: 0,
+    actions: [
+      {
+        label: 'Cancel',
+        onClick: () => console.log('Cancelled'),
+        variant: 'tertiary'
+      },
+      {
+        label: 'Delete',
+        onClick: () => {
+          // Perform delete
+          toast.success('Deleted', 'Item removed successfully')
+        },
+        variant: 'primary',
+        tone: 'critical'
+      }
+    ]
+  })
+}
+</script>
+```
+
+**Exports disponibili:**
+
+```ts
+// Components
+import { Toast, Toaster } from '@cartino/ui'
+
+// Composable
+import { useToast } from '@cartino/ui'
+
+// Types
+import type {
+  ToastProps,
+  ToasterProps,
+  ToastItem,
+  ToastOptions,
+  UseToastReturn
+} from '@cartino/ui'
+
+// Advanced: injection key for provide/inject
+import { toastMaxInjectionKey } from '@cartino/ui'
 ```
 
 ## Sviluppo

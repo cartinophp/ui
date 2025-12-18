@@ -8,13 +8,8 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['primary', 'success', 'warning', 'error', 'neutral'],
-      description: 'Color variant of the alert'
-    },
-    variant: {
-      control: 'select',
-      options: ['solid', 'soft', 'outline', 'subtle'],
-      description: 'Visual variant style'
+      options: ['info', 'success', 'warning', 'critical', 'neutral'],
+      description: 'Color tone of the alert (Polaris-inspired)'
     },
     orientation: {
       control: 'select',
@@ -31,8 +26,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Info: Story = {
   args: {
+    color: 'info',
     title: 'Heads up!',
     description: 'You can change the primary color in your app config.'
   }
@@ -54,9 +50,9 @@ export const Warning: Story = {
   }
 }
 
-export const Error: Story = {
+export const Critical: Story = {
   args: {
-    color: 'error',
+    color: 'critical',
     title: 'Error',
     description: 'An error occurred while processing your request.'
   }
@@ -67,44 +63,7 @@ export const Neutral: Story = {
     color: 'neutral',
     title: 'Did you know?',
     description:
-      'You can customize the appearance of this alert using the variant prop.'
-  }
-}
-
-export const SolidVariant: Story = {
-  args: {
-    variant: 'solid',
-    color: 'primary',
-    title: 'Solid Variant',
-    description: 'This alert uses the solid variant with colored background.'
-  }
-}
-
-export const SoftVariant: Story = {
-  args: {
-    variant: 'soft',
-    color: 'success',
-    title: 'Soft Variant',
-    description: 'This alert uses the soft variant with light background.'
-  }
-}
-
-export const OutlineVariant: Story = {
-  args: {
-    variant: 'outline',
-    color: 'warning',
-    title: 'Outline Variant',
-    description: 'This alert uses the outline variant with a border.'
-  }
-}
-
-export const SubtleVariant: Story = {
-  args: {
-    variant: 'subtle',
-    color: 'error',
-    title: 'Subtle Variant',
-    description:
-      'This alert uses the subtle variant with border and light background.'
+      'You can customize the appearance of this alert using the color prop.'
   }
 }
 
@@ -114,6 +73,24 @@ export const Closable: Story = {
     color: 'info',
     title: 'Closable Alert',
     description: 'Click the × button to close this alert.'
+  }
+}
+
+export const HorizontalOrientation: Story = {
+  args: {
+    color: 'success',
+    orientation: 'horizontal',
+    title: 'Horizontal Layout',
+    description: 'This alert uses horizontal orientation.'
+  }
+}
+
+export const VerticalOrientation: Story = {
+  args: {
+    color: 'warning',
+    orientation: 'vertical',
+    title: 'Vertical Layout',
+    description: 'This alert uses vertical orientation with actions below.'
   }
 }
 
@@ -165,25 +142,11 @@ export const AllColors: Story = {
     components: { Alert },
     template: `
       <div class="space-y-4">
-        <Alert color="primary" title="Primary" description="This is a primary alert" />
-        <Alert color="success" title="Success" description="This is a success alert" />
-        <Alert color="warning" title="Warning" description="This is a warning alert" />
-        <Alert color="error" title="Error" description="This is an error alert" />
-        <Alert color="info" title="Info" description="This is an info alert" />
-        <Alert color="neutral" title="Neutral" description="This is a neutral alert" />
-      </div>
-    `
-  })
-}
-
-export const AllVariants: Story = {
-  render: () => ({
-    components: { Alert },
-    template: `
-      <div class="space-y-4">
-        <Alert variant="soft" color="primary" title="Soft Variant" description="Default soft style with subtle background" />
-        <Alert variant="solid" color="primary" title="Solid Variant" description="Bold solid style with white text" />
-        <Alert variant="outline" color="primary" title="Outline Variant" description="Minimalist outline style" />
+        <Alert color="info" title="Info" description="Informational alert with blue background (Polaris style)" />
+        <Alert color="success" title="Success" description="Success alert with green background (Polaris style)" />
+        <Alert color="warning" title="Warning" description="Warning alert with yellow background (Polaris style)" />
+        <Alert color="critical" title="Critical" description="Critical alert with red background (Polaris style)" />
+        <Alert color="neutral" title="Neutral" description="Neutral alert with gray background (Polaris style)" />
       </div>
     `
   })
@@ -195,25 +158,33 @@ export const ComplexExample: Story = {
     template: `
       <div class="space-y-4">
         <Alert
-          color="error"
-          variant="soft"
+          color="critical"
           closable
           title="Payment Failed"
           description="Your payment could not be processed. Please check your payment method and try again."
           :actions="[
             { label: 'Update Payment', variant: 'primary', onClick: () => alert('Update payment') },
-            { label: 'Contact Support', variant: 'outline', onClick: () => alert('Contact support') }
+            { label: 'Contact Support', variant: 'secondary', onClick: () => alert('Contact support') }
           ]"
         />
 
         <Alert
           color="success"
-          variant="solid"
-          icon="🚀"
+          icon="solar:check-circle-linear"
           title="Deployment Successful"
           description="Your application has been deployed to production."
           :actions="[
-            { label: 'View Details', variant: 'ghost', onClick: () => alert('View details') }
+            { label: 'View Details', variant: 'secondary', onClick: () => alert('View details') }
+          ]"
+        />
+        
+        <Alert
+          color="info"
+          orientation="horizontal"
+          title="New Feature Available"
+          description="Check out our latest updates."
+          :actions="[
+            { label: 'Learn More', variant: 'primary', onClick: () => alert('Learn more') }
           ]"
         />
       </div>

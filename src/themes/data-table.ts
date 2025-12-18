@@ -5,66 +5,73 @@ export default tv({
     root: 'w-full space-y-4',
     // Toolbar
     toolbar:
-      'flex items-center justify-between gap-4 p-4 border-b border-border',
+      'flex items-center justify-between gap-4 p-4 border-b border-border/50 dark:border-border/20',
     search: 'flex-1 max-w-sm',
     filters: 'flex items-center gap-2',
     actions: 'flex items-center gap-2',
-    // Table
-    wrapper: 'relative w-full overflow-auto border border-border rounded-lg',
-    table: 'w-full caption-bottom text-sm',
-    caption: 'mt-4 text-sm text-muted-foreground',
-    thead: 'bg-muted border-b border-border',
-    tbody: 'divide-y divide-border bg-background',
-    tfoot: 'border-t border-border bg-muted font-medium',
-    tr: 'transition-colors hover:bg-muted/50',
-    th: 'h-12 px-4 text-left align-middle font-semibold text-foreground [&:has([role=checkbox])]:pr-0',
+    // Table - Polaris inspired
+    wrapper:
+      'relative w-full overflow-x-auto bg-card dark:bg-card rounded-lg sm:rounded-xl overflow-hidden',
+    table: 'w-full caption-bottom text-sm border-spacing-0',
+    caption: 'mt-4 text-sm text-muted-foreground dark:text-muted-foreground',
+    thead:
+      'bg-background dark:bg-background border-b border-border/50 dark:border-border/20',
+    tbody: 'bg-card dark:bg-card',
+    tfoot:
+      'border-t border-border/50 dark:border-border/20 bg-muted/30 dark:bg-muted/20 font-medium',
+    tr: 'transition-colors border-t border-border/50 dark:border-border/20 first:border-t-0',
+    th: 'px-6 py-3 text-left align-middle font-normal text-foreground dark:text-foreground whitespace-nowrap first:pl-6 last:pr-6 [&:has([role=checkbox])]:pr-0',
     thContent: 'flex items-center gap-2',
     sortButton:
-      'inline-flex items-center justify-center gap-1 hover:text-foreground',
-    sortIcon: 'size-4',
-    td: 'px-4 py-3 align-middle text-foreground [&:has([role=checkbox])]:pr-0',
+      'inline-flex items-center justify-center gap-1 text-foreground dark:text-foreground hover:text-foreground dark:hover:text-foreground transition-colors',
+    sortIcon: 'size-4 text-muted-foreground dark:text-muted-foreground',
+    td: 'px-6 py-2 align-middle text-foreground dark:text-foreground whitespace-nowrap first:pl-6 last:pr-6 [&:has([role=checkbox])]:pr-0',
     // Pagination
     footer:
-      'flex items-center justify-between gap-4 p-4 border-t border-border',
-    footerText: 'text-sm text-muted-foreground',
+      'flex items-center justify-between gap-4 p-4 border-t border-border/50 dark:border-border/20',
+    footerText: 'text-sm text-muted-foreground dark:text-muted-foreground',
     footerActions: 'flex items-center gap-2',
     // Empty state
-    empty: 'text-center py-12 text-muted-foreground',
-    emptyIcon: 'mx-auto size-12 text-muted-foreground mb-4',
-    emptyTitle: 'text-lg font-medium text-foreground mb-2',
-    emptyDescription: 'text-sm text-muted-foreground',
+    empty: 'text-center py-12 text-muted-foreground dark:text-muted-foreground',
+    emptyIcon:
+      'mx-auto size-12 text-muted-foreground dark:text-muted-foreground mb-4',
+    emptyTitle: 'text-lg font-medium text-foreground dark:text-foreground mb-2',
+    emptyDescription:
+      'text-sm text-muted-foreground dark:text-muted-foreground',
     // Loading state
     loading:
-      'absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm',
-    loadingSpinner: 'size-8 animate-spin text-primary'
+      'absolute inset-0 flex items-center justify-center bg-card/80 dark:bg-card/80 backdrop-blur-sm',
+    loadingSpinner: 'size-8 animate-spin text-primary dark:text-primary'
   },
   variants: {
     striped: {
       true: {
-        tbody: '[&>tr:nth-child(even)]:bg-muted/30'
+        tbody:
+          '[&>tr:nth-child(even)]:bg-muted/20 dark:[&>tr:nth-child(even)]:bg-muted/10'
       }
     },
     bordered: {
       true: {
-        th: 'border-r border-border last:border-r-0',
-        td: 'border-r border-border last:border-r-0'
+        wrapper: 'border border-border/50 dark:border-border/20',
+        th: 'border-r border-border/50 dark:border-border/20 last:border-r-0',
+        td: 'border-r border-border/50 dark:border-border/20 last:border-r-0'
       }
     },
     compact: {
       true: {
-        th: 'h-10 px-3 text-xs',
-        td: 'px-3 py-2 text-sm'
+        th: 'px-4 py-2 text-xs',
+        td: 'px-4 py-1.5 text-sm'
       }
     },
     hoverable: {
       true: {
-        tr: 'cursor-pointer hover:bg-accent'
+        tr: 'cursor-pointer hover:bg-accent/50 dark:hover:bg-accent/30 transition-colors duration-200'
       }
     },
     sticky: {
       true: {
-        thead: 'sticky top-0 z-10 bg-muted',
-        tfoot: 'sticky bottom-0 z-10 bg-muted'
+        thead: 'sticky top-0 z-10 bg-background dark:bg-background shadow-sm',
+        tfoot: 'sticky bottom-0 z-10 bg-muted/30 dark:bg-muted/20 shadow-sm'
       }
     },
     loading: {

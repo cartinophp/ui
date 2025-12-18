@@ -22,7 +22,7 @@ export interface PaginationProps {
     | 'tertiary'
     | 'plain'
     | 'monochromePlain'
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg'
   to?: (page: number) => string | object
   firstIcon?: string
   prevIcon?: string

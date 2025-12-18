@@ -1,8 +1,13 @@
 import { tv } from 'tailwind-variants'
 
+/**
+ * Card Component Theme
+ * Based on Shopify Polaris Card - clean, minimal design with subtle shadows and bevel effect
+ * Uses shadow-100 equivalent (subtle shadow) and border-radius-300 (8px/0.5rem)
+ */
 export default tv({
   slots: {
-    root: 'rounded-lg border bg-card text-card-foreground shadow-sm',
+    root: 'relative rounded-lg overflow-clip bg-card text-card-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_1px_2px_0_rgba(0,0,0,0.05)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.2)] before:content-[""] before:absolute before:inset-0 before:rounded-lg before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] before:pointer-events-none dark:before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]',
     header: 'flex flex-col space-y-1.5 p-6',
     title: 'text-2xl font-semibold leading-none tracking-tight',
     description: 'text-sm text-muted-foreground',
@@ -12,16 +17,16 @@ export default tv({
   variants: {
     variant: {
       default: {
-        root: 'bg-card border-border shadow-sm'
+        root: 'bg-card border border-border/50 dark:border-border/20'
       },
       outline: {
-        root: 'border-2 border-border bg-transparent shadow-none'
+        root: 'border border-border bg-transparent shadow-none before:shadow-none'
       },
       elevated: {
-        root: 'border-0 shadow-lg bg-card'
+        root: 'border-0 shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_2px_4px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_2px_4px_0_rgba(0,0,0,0.3)]'
       },
       ghost: {
-        root: 'border-0 shadow-none bg-transparent'
+        root: 'border-0 shadow-none bg-transparent before:shadow-none'
       }
     },
     size: {
@@ -49,23 +54,37 @@ export default tv({
     },
     hover: {
       true: {
-        root: 'transition-all duration-200 hover:shadow-md hover:-translate-y-0.5'
+        root: 'transition-shadow duration-150 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_4px_8px_0_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_4px_8px_0_rgba(0,0,0,0.3)]'
       }
     }
   },
   compoundVariants: [
     {
+      variant: 'default',
+      hover: true,
+      class: {
+        root: 'hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_4px_8px_0_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_4px_8px_0_rgba(0,0,0,0.3)]'
+      }
+    },
+    {
       variant: 'elevated',
       hover: true,
       class: {
-        root: 'hover:shadow-xl'
+        root: 'hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_8px_16px_0_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_8px_16px_0_rgba(0,0,0,0.4)]'
+      }
+    },
+    {
+      variant: 'outline',
+      hover: true,
+      class: {
+        root: 'hover:bg-accent/5 dark:hover:bg-accent/10'
       }
     },
     {
       variant: 'ghost',
       hover: true,
       class: {
-        root: 'hover:bg-accent/50'
+        root: 'hover:bg-accent/5 dark:hover:bg-accent/10'
       }
     }
   ],

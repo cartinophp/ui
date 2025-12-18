@@ -7,8 +7,10 @@ export default tv({
     wrapper: 'relative flex items-center transition-all',
     input:
       'flex-1 outline-none bg-transparent text-foreground placeholder:text-muted-foreground',
-    leadingIcon: 'shrink-0 text-muted-foreground absolute left-3',
-    trailingIcon: 'shrink-0 text-muted-foreground absolute right-3',
+    leadingIcon:
+      'shrink-0 text-muted-foreground absolute left-3 grid place-items-center',
+    trailingIcon:
+      'shrink-0 text-muted-foreground absolute right-3 grid place-items-center',
     hint: 'mt-1.5'
   },
   variants: {
@@ -25,8 +27,8 @@ export default tv({
         label: 'text-sm',
         wrapper: 'text-base',
         input: 'px-4 py-2',
-        leadingIcon: 'w-5 h-5',
-        trailingIcon: 'w-5 h-5',
+        leadingIcon: 'w-[22px] h-[22px]',
+        trailingIcon: 'w-[22px] h-[22px]',
         hint: 'text-sm'
       },
       lg: {

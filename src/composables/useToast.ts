@@ -1,92 +1,127 @@
-import { ref, h, render, type VNode } from 'vue'
-import ToastComponent, { type ToastProps } from '@/components/Toast.vue'
+import { ref, inject, type InjectionKey, type Ref } from 'vue'
+import type { ToastProps } from '@/components/Toast.vue'
 
-export interface ToastOptions extends Omit<ToastProps, 'id'> {
-  id?: string
+export interface ToastOptions extends Partial<Omit<ToastProps, 'id'>> {}
+
+export interface Toast extends ToastOptions {
+  id: string | number
 }
 
-interface ToastInstance {
-  id: string
-  vnode: VNode
-  close: () => void
-}
-
-const toasts = ref<ToastInstance[]>([])
+const toasts = ref<Toast[]>([])
 let idCounter = 0
+const recentToasts = new Map<string, number>()
+const DEBOUNCE_TIME = 300 // milliseconds
+
+export const toastMaxInjectionKey: InjectionKey<Ref<number>> =
+  Symbol('toast-max')
 
 const getNextId = () => `toast-${++idCounter}`
 
-const removeToast = (id: string) => {
-  const index = toasts.value.findIndex((t) => t.id === id)
-  if (index > -1) {
-    const toast = toasts.value[index]
-    if (toast.vnode.el) {
-      render(null, toast.vnode.el.parentElement!)
-    }
-    toasts.value.splice(index, 1)
-  }
-}
-
-const createToast = (options: ToastOptions) => {
-  const id = options.id || getNextId()
-
-  // Remove existing toast with same id
-  if (options.id) {
-    removeToast(options.id)
-  }
-
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  const vnode = h(ToastComponent, {
-    ...options,
-    id,
-    onClose: () => {
-      removeToast(id)
-      container.remove()
-    }
+const isDuplicate = (options: ToastOptions): boolean => {
+  const key = JSON.stringify({
+    title: options.title,
+    description: options.description
   })
+  const lastTime = recentToasts.get(key)
+  const now = Date.now()
 
-  render(vnode, container)
+  if (lastTime && now - lastTime < DEBOUNCE_TIME) {
+    return true
+  }
 
-  const instance: ToastInstance = {
-    id,
-    vnode,
-    close: () => {
-      const component = vnode.component
-      if (component?.exposed?.close) {
-        component.exposed.close()
-      }
+  recentToasts.set(key, now)
+
+  // Clean up old entries
+  setTimeout(() => {
+    recentToasts.delete(key)
+  }, DEBOUNCE_TIME)
+
+  return false
+}
+
+export interface UseToastReturn {
+  toasts: Ref<Toast[]>
+  add: (options: ToastOptions) => Toast
+  remove: (id: string | number) => void
+  update: (id: string | number, options: Partial<ToastOptions>) => void
+  clear: () => void
+  toast: (options: ToastOptions) => Toast
+  success: (
+    title: string,
+    description?: string,
+    options?: ToastOptions
+  ) => Toast
+  error: (title: string, description?: string, options?: ToastOptions) => Toast
+  warning: (
+    title: string,
+    description?: string,
+    options?: ToastOptions
+  ) => Toast
+  info: (title: string, description?: string, options?: ToastOptions) => Toast
+}
+
+export const useToast = (): UseToastReturn => {
+  const max = inject(toastMaxInjectionKey, ref(5))
+
+  const add = (options: ToastOptions) => {
+    // Prevent duplicate toasts from rapid clicks
+    if (isDuplicate(options)) {
+      // Return the last toast with same content
+      return toasts.value[toasts.value.length - 1]
+    }
+
+    const id = getNextId()
+    const toast: Toast = {
+      id,
+      duration: 5000,
+      close: true,
+      ...options
+    }
+
+    // Remove oldest toast if we hit the max
+    if (toasts.value.length >= max.value) {
+      toasts.value.shift()
+    }
+
+    toasts.value.push(toast)
+    return toast
+  }
+
+  const remove = (id: string | number) => {
+    const index = toasts.value.findIndex((t) => t.id === id)
+    if (index > -1) {
+      toasts.value.splice(index, 1)
     }
   }
 
-  toasts.value.push(instance)
+  const update = (id: string | number, options: Partial<ToastOptions>) => {
+    const toast = toasts.value.find((t) => t.id === id)
+    if (toast) {
+      Object.assign(toast, options)
+    }
+  }
 
-  return instance
-}
+  const clear = () => {
+    toasts.value = []
+  }
 
-export const useToast = () => {
-  const toast = (options: ToastOptions) => createToast(options)
+  const toast = (options: ToastOptions) => add(options)
 
   const success = (
     title: string,
     description?: string,
-    options?: Partial<ToastOptions>
+    options?: ToastOptions
   ) =>
-    createToast({
-      type: 'success',
+    add({
+      color: 'success',
       title,
       description,
       ...options
     })
 
-  const error = (
-    title: string,
-    description?: string,
-    options?: Partial<ToastOptions>
-  ) =>
-    createToast({
-      type: 'error',
+  const error = (title: string, description?: string, options?: ToastOptions) =>
+    add({
+      color: 'error',
       title,
       description,
       ...options
@@ -95,44 +130,33 @@ export const useToast = () => {
   const warning = (
     title: string,
     description?: string,
-    options?: Partial<ToastOptions>
+    options?: ToastOptions
   ) =>
-    createToast({
-      type: 'warning',
+    add({
+      color: 'warning',
       title,
       description,
       ...options
     })
 
-  const info = (
-    title: string,
-    description?: string,
-    options?: Partial<ToastOptions>
-  ) =>
-    createToast({
-      type: 'info',
+  const info = (title: string, description?: string, options?: ToastOptions) =>
+    add({
+      color: 'info',
       title,
       description,
       ...options
     })
-
-  const dismiss = (id: string) => {
-    removeToast(id)
-  }
-
-  const dismissAll = () => {
-    toasts.value.forEach((toast) => toast.close())
-    toasts.value = []
-  }
 
   return {
+    toasts,
+    add,
+    remove,
+    update,
+    clear,
     toast,
     success,
     error,
     warning,
-    info,
-    dismiss,
-    dismissAll,
-    toasts
+    info
   }
 }

@@ -14,8 +14,7 @@ export interface AlertProps {
     alt?: string
     fallback?: string
   }
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'neutral'
-  variant?: 'solid' | 'outline' | 'soft' | 'subtle'
+  color?: 'info' | 'success' | 'warning' | 'critical' | 'neutral'
   orientation?: 'horizontal' | 'vertical'
   closable?: boolean
   actions?: Array<{
@@ -29,8 +28,7 @@ export interface AlertProps {
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
-  color: 'primary',
-  variant: 'solid',
+  color: 'info',
   orientation: 'vertical',
   closable: false
 })
@@ -42,7 +40,6 @@ const emit = defineEmits<{
 const alertTheme = computed(() =>
   theme({
     color: props.color,
-    variant: props.variant,
     orientation: props.orientation
   })
 )
@@ -52,11 +49,11 @@ const displayIcon = computed(() => {
   if (props.avatar) return undefined
 
   const defaultIcons = {
-    primary: 'solar:info-circle-bold',
-    success: 'solar:check-circle-bold',
-    warning: 'solar:danger-triangle-bold',
-    error: 'solar:close-circle-bold',
-    neutral: 'solar:lightbulb-bold'
+    info: 'solar:info-circle-linear',
+    success: 'solar:check-circle-linear',
+    warning: 'solar:danger-triangle-linear',
+    critical: 'solar:close-circle-linear',
+    neutral: 'solar:lightbulb-linear'
   }
 
   return defaultIcons[props.color]
@@ -76,7 +73,7 @@ const handleClose = () => {
     <slot name="leading">
       <Avatar
         v-if="avatar"
-        size="2xl"
+        size="lg"
         v-bind="avatar"
         :class="alertTheme.avatar({ class: ui?.avatar })"
       />
@@ -116,7 +113,7 @@ const handleClose = () => {
           <Button
             v-for="(action, index) in actions"
             :key="index"
-            size="xs"
+            size="sm"
             v-bind="action"
             @click="action.onClick"
           >
@@ -143,7 +140,7 @@ const handleClose = () => {
           <Button
             v-for="(action, index) in actions"
             :key="index"
-            size="xs"
+            size="sm"
             v-bind="action"
             @click="action.onClick"
           >

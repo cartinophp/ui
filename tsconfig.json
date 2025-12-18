@@ -35,13 +35,20 @@
     "declarationDir": "./dist",
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/themes/index.ts", "src/types/global.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/themes/index.ts",
+    "src/types/global.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "src/**/*.stories.ts",
     "src/**/*.stories.tsx",
-    "src/stories/**/*"
+    "src/stories/**/*",
+    ".storybook"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

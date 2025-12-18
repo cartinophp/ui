@@ -1,109 +1,258 @@
-<template>
-  <div :class="datePickerTheme.root({ class: ui?.root })" v-bind="$attrs">
-    <input
-      ref="input"
-      type="date"
-      :id="inputId"
-      :name="name"
-      :value="formattedValue"
-      :disabled="disabled"
-      :required="required"
-      :min="min"
-      :max="max"
-      :class="datePickerTheme.input({ class: ui?.input })"
-      @input="onInput"
-      @change="$emit('change', $event)"
-      @blur="$emit('blur', $event)"
-      @focus="$emit('focus', $event)"
-    />
+<script lang="ts">
+import type { ComponentPublicInstance } from 'vue'
+import type {
+  DateFieldRootProps,
+  DateFieldRootEmits,
+  DateRangeFieldRootProps,
+  DateRangeFieldRootEmits,
+  DateValue,
+  SegmentPart
+} from 'reka-ui'
 
-    <!-- Calendar Icon -->
-    <div :class="datePickerTheme.icon({ class: ui?.icon })">
-      <Icon :name="icon" />
-    </div>
-  </div>
-</template>
+type _DateFieldRootProps = Omit<
+  DateFieldRootProps,
+  'as' | 'asChild' | 'modelValue' | 'defaultValue'
+>
+type _RangeDateFieldRootProps = Omit<
+  DateRangeFieldRootProps,
+  'as' | 'asChild' | 'modelValue' | 'defaultValue'
+>
 
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-import theme from '@/themes/date-picker'
-import Icon from './Icon.vue'
+type DatePickerDefaultValue<R extends boolean = false> = R extends true
+  ? DateRangeFieldRootProps['defaultValue']
+  : DateFieldRootProps['defaultValue']
+type DatePickerModelValue<R extends boolean = false> =
+  | (R extends true
+      ? DateRangeFieldRootProps['modelValue']
+      : DateFieldRootProps['modelValue'])
+  | undefined
 
-export interface DatePickerProps {
-  modelValue?: Date | string | null
-  placeholder?: string
-  disabled?: boolean
-  required?: boolean
-  name?: string
-  id?: string
-  min?: string
-  max?: string
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'outline' | 'filled' | 'flushed' | 'unstyled'
+export interface DatePickerProps<R extends boolean = false>
+  extends _DateFieldRootProps,
+    _RangeDateFieldRootProps {
+  modelValue?: DatePickerModelValue<R>
+  defaultValue?: DatePickerDefaultValue<R>
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'outline' | 'filled' | 'ghost' | 'soft' | 'none'
   color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
-  icon?: string
-  format?: string
-  error?: boolean
+  leadingIcon?: string
+  trailingIcon?: string
+  separatorIcon?: string
+  leading?: boolean
+  trailing?: boolean
+  loading?: boolean
+  autofocus?: boolean
+  autofocusDelay?: number
+  range?: R & boolean
+  class?: any
   ui?: Record<string, any>
 }
 
-const props = withDefaults(defineProps<DatePickerProps>(), {
-  size: 'md',
-  variant: 'outline',
-  color: 'primary',
-  icon: 'solar:calendar-bold',
-  error: false,
-  format: 'YYYY-MM-DD'
-})
-
-const emit = defineEmits<{
-  'update:modelValue': [value: Date | string | null]
-  input: [event: Event]
+export interface DatePickerEmits<R extends boolean>
+  extends Omit<
+    DateFieldRootEmits & DateRangeFieldRootEmits,
+    'update:modelValue'
+  > {
+  'update:modelValue': [date: DatePickerModelValue<R>]
   change: [event: Event]
   blur: [event: FocusEvent]
   focus: [event: FocusEvent]
-}>()
-
-const input = ref<HTMLInputElement>()
-
-const inputId = computed(
-  () => props.id || `date-picker-${Math.random().toString(36).substr(2, 9)}`
-)
-
-const formattedValue = computed(() => {
-  if (!props.modelValue) return ''
-
-  if (props.modelValue instanceof Date) {
-    return props.modelValue.toISOString().split('T')[0]
-  }
-
-  if (typeof props.modelValue === 'string') {
-    // Assume the string is already in the correct format
-    return props.modelValue
-  }
-
-  return ''
-})
-
-const datePickerTheme = theme({
-  size: props.size,
-  variant: props.variant,
-  color: props.color,
-  error: props.error,
-  disabled: props.disabled
-})
-
-const onInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const dateValue = target.value ? new Date(target.value) : null
-
-  emit('update:modelValue', dateValue)
-  emit('input', event)
 }
 
+export interface DatePickerSlots {
+  leading?(): any
+  default?(): any
+  trailing?(): any
+  separator?(): any
+}
+</script>
+
+<script setup lang="ts" generic="R extends boolean">
+import { computed, onMounted, ref, useSlots } from 'vue'
+import {
+  DateFieldRoot,
+  DateFieldInput,
+  DateRangeFieldRoot,
+  DateRangeFieldInput
+} from 'reka-ui'
+import { reactiveOmit, createReusableTemplate } from '@vueuse/core'
+import theme from '@/themes/date-picker'
+import Icon from './Icon.vue'
+
+const [DefineSegmentsTemplate, ReuseSegmentsTemplate] = createReusableTemplate<{
+  segments?: { part: SegmentPart; value: string }[]
+  type?: 'start' | 'end'
+}>()
+
+const props = withDefaults(defineProps<DatePickerProps<R>>(), {
+  size: 'md',
+  variant: 'outline',
+  color: 'primary',
+  trailingIcon: 'solar:calendar-linear',
+  separatorIcon: 'solar:minus-linear',
+  autofocusDelay: 0
+})
+
+const emits = defineEmits<DatePickerEmits<R>>()
+const slots = useSlots()
+
+const rootProps = computed(() =>
+  reactiveOmit(
+    props,
+    'range',
+    'modelValue',
+    'defaultValue',
+    'size',
+    'variant',
+    'color',
+    'leadingIcon',
+    'trailingIcon',
+    'separatorIcon',
+    'leading',
+    'trailing',
+    'loading',
+    'autofocus',
+    'autofocusDelay',
+    'class',
+    'ui'
+  )
+)
+
+const datePickerTheme = computed(() =>
+  theme({
+    size: props.size,
+    variant: props.variant,
+    color: props.color,
+    disabled: props.disabled,
+    leading: props.leading || !!props.leadingIcon,
+    trailing: props.trailing || !!props.trailingIcon || props.loading
+  })
+)
+
+const inputsRef = ref<ComponentPublicInstance[]>([])
+
+function onUpdate(value: any) {
+  emits('update:modelValue', value)
+  // @ts-ignore
+  const event = new Event('change', { target: { value } })
+  emits('change', event)
+}
+
+function onBlur(event: FocusEvent) {
+  emits('blur', event)
+}
+
+function onFocus(event: FocusEvent) {
+  emits('focus', event)
+}
+
+function autoFocus() {
+  if (props.autofocus && inputsRef.value.length > 0) {
+    const firstInput = inputsRef.value[0]?.$el
+    if (firstInput && firstInput.focus) {
+      firstInput.focus()
+    }
+  }
+}
+
+onMounted(() => {
+  if (props.autofocus) {
+    setTimeout(() => {
+      autoFocus()
+    }, props.autofocusDelay)
+  }
+})
+
+const DateFieldComponent = computed(() =>
+  props.range ? DateRangeFieldRoot : DateFieldRoot
+)
+const DateFieldInputComponent = computed(() =>
+  props.range ? DateRangeFieldInput : DateFieldInput
+)
+
 defineExpose({
-  input,
-  focus: () => input.value?.focus(),
-  blur: () => input.value?.blur()
+  inputsRef
 })
 </script>
+
+<template>
+  <DefineSegmentsTemplate v-slot="{ segments, type }">
+    <component
+      :is="DateFieldInputComponent"
+      v-for="(segment, index) in segments"
+      :key="`${segment.part}-${index}`"
+      :ref="(el) => (inputsRef[index] = el as ComponentPublicInstance)"
+      :type="type"
+      :part="segment.part"
+      :class="datePickerTheme.segment({ class: ui?.segment })"
+      :data-segment="segment.part"
+    >
+      {{ segment.value.trim() }}
+    </component>
+  </DefineSegmentsTemplate>
+
+  <component
+    :is="DateFieldComponent"
+    v-bind="rootProps"
+    v-slot="{ segments }"
+    :model-value="(modelValue as DateValue)"
+    :default-value="(defaultValue as DateValue)"
+    :disabled="disabled"
+    :class="datePickerTheme.base({ class: [ui?.base, props.class] })"
+    @update:model-value="onUpdate"
+    @blur="onBlur"
+    @focus="onFocus"
+  >
+    <template v-if="Array.isArray(segments)">
+      <ReuseSegmentsTemplate :segments="segments" />
+    </template>
+    <template v-else>
+      <ReuseSegmentsTemplate :segments="segments.start" type="start" />
+      <slot name="separator">
+        <Icon
+          :name="separatorIcon"
+          :class="datePickerTheme.separatorIcon({ class: ui?.separatorIcon })"
+        />
+      </slot>
+      <ReuseSegmentsTemplate :segments="segments.end" type="end" />
+    </template>
+
+    <slot />
+
+    <span
+      v-if="props.leading || props.leadingIcon || slots.leading"
+      :class="datePickerTheme.leading({ class: ui?.leading })"
+    >
+      <slot name="leading">
+        <Icon
+          v-if="leadingIcon"
+          :name="leadingIcon"
+          :class="datePickerTheme.leadingIcon({ class: ui?.leadingIcon })"
+        />
+      </slot>
+    </span>
+
+    <span
+      v-if="
+        props.trailing || props.trailingIcon || props.loading || slots.trailing
+      "
+      :class="datePickerTheme.trailing({ class: ui?.trailing })"
+    >
+      <slot name="trailing">
+        <Icon
+          v-if="props.loading"
+          name="solar:loading-linear"
+          :class="[
+            datePickerTheme.trailingIcon({ class: ui?.trailingIcon }),
+            'animate-spin'
+          ]"
+        />
+        <Icon
+          v-else-if="trailingIcon"
+          :name="trailingIcon"
+          :class="datePickerTheme.trailingIcon({ class: ui?.trailingIcon })"
+        />
+      </slot>
+    </span>
+  </component>
+</template>

@@ -1,6 +1,8 @@
 import type { Preview } from '@storybook/vue3-vite'
 import { withThemeByDataAttribute } from '@storybook/addon-themes'
+import { h } from 'vue'
 import '../src/style.css'
+import Toaster from '../src/components/Toaster.vue'
 
 const preview: Preview = {
   parameters: {
@@ -39,7 +41,12 @@ const preview: Preview = {
       context.globals.backgrounds.value = theme
       console.log({ context })
       return story()
-    }
+    },
+    // Global Toaster for all stories
+    (story) => ({
+      components: { story, Toaster },
+      template: '<div><story /><Toaster /></div>'
+    })
   ]
 }
 

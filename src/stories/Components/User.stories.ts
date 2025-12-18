@@ -14,7 +14,7 @@ const meta: Meta<typeof User> = {
     },
     size: {
       control: 'select',
-      options: ['3xs', '2xs', 'xs', 'sm', 'md', 'lg']
+      options: ['sm', 'md', 'lg']
     },
     orientation: {
       control: 'select',

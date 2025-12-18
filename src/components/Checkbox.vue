@@ -68,7 +68,7 @@ const handleUpdate = (value: boolean) => {
       @update:checked="handleUpdate"
     >
       <CheckboxIndicator :class="indicatorClasses">
-        <Icon name="solar:check-read-bold" :class="iconClasses" />
+        <Icon name="solar:check-read-linear" :class="iconClasses" />
       </CheckboxIndicator>
     </CheckboxRoot>
 

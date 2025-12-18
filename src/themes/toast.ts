@@ -2,121 +2,61 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'z-50 max-w-sm border rounded-lg shadow-lg backdrop-blur-sm flex items-start gap-3 cursor-pointer transition-all',
-    iconContainer: 'shrink-0',
-    icon: '',
-    content: 'flex-1 min-w-0',
-    title: 'font-semibold text-foreground',
-    description: 'text-muted',
-    actions: 'flex items-center gap-2',
-    action: 'transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
-    closeButton: 'shrink-0 p-1 rounded-md text-muted hover:text-foreground hover:bg-elevated focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors'
+    root: 'relative group overflow-hidden bg-card shadow-lg rounded-lg border border-border p-4 flex gap-3 focus:outline-none',
+    wrapper: 'w-0 flex-1 flex flex-col gap-1',
+    title: 'text-sm font-medium text-foreground',
+    description: 'text-sm text-muted-foreground',
+    icon: 'shrink-0 size-5',
+    avatar: 'shrink-0',
+    actions: 'flex gap-2 shrink-0',
+    close: 'p-0'
   },
   variants: {
-    type: {
-      default: {
-        root: 'bg-default border-default',
-        icon: 'text-muted'
+    color: {
+      primary: {
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
+        icon: 'text-primary'
       },
       success: {
-        root: 'bg-success/10 border-success/20',
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-success',
         icon: 'text-success'
       },
       warning: {
-        root: 'bg-warning/10 border-warning/20',
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-warning',
         icon: 'text-warning'
       },
       error: {
-        root: 'bg-error/10 border-error/20',
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-error',
         icon: 'text-error'
       },
       info: {
-        root: 'bg-info/10 border-info/20',
-        icon: 'text-info'
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
+        icon: 'text-primary'
+      },
+      neutral: {
+        root: 'focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border',
+        icon: 'text-foreground'
       }
     },
-    position: {
-      'top-right': {
-        root: 'fixed top-4 right-4'
+    orientation: {
+      horizontal: {
+        root: 'items-center',
+        actions: 'items-center'
       },
-      'top-left': {
-        root: 'fixed top-4 left-4'
-      },
-      'bottom-right': {
-        root: 'fixed bottom-4 right-4'
-      },
-      'bottom-left': {
-        root: 'fixed bottom-4 left-4'
-      },
-      'top-center': {
-        root: 'fixed top-4 left-1/2 -translate-x-1/2'
-      },
-      'bottom-center': {
-        root: 'fixed bottom-4 left-1/2 -translate-x-1/2'
-      }
-    },
-    size: {
-      sm: {
-        root: 'p-3',
-        icon: 'size-4',
-        title: 'text-xs',
-        description: 'text-xs'
-      },
-      md: {
-        root: 'p-4',
-        icon: 'size-5',
-        title: 'text-sm',
-        description: 'text-sm'
-      },
-      lg: {
-        root: 'p-5',
-        icon: 'size-6',
-        title: 'text-base',
-        description: 'text-sm'
+      vertical: {
+        root: 'items-start',
+        actions: 'items-start mt-2'
       }
     },
     hasTitle: {
       true: {
-        description: 'mt-1'
+        description: 'mt-0.5'
       }
     }
   },
-  compoundVariants: [
-    {
-      type: 'default',
-      class: {
-        iconContainer: 'bg-muted p-2 rounded-lg'
-      }
-    },
-    {
-      type: 'success', 
-      class: {
-        iconContainer: 'bg-success/10 p-2 rounded-lg'
-      }
-    },
-    {
-      type: 'warning',
-      class: {
-        iconContainer: 'bg-warning/10 p-2 rounded-lg'
-      }
-    },
-    {
-      type: 'error',
-      class: {
-        iconContainer: 'bg-error/10 p-2 rounded-lg'
-      }
-    },
-    {
-      type: 'info',
-      class: {
-        iconContainer: 'bg-info/10 p-2 rounded-lg'
-      }
-    }
-  ],
   defaultVariants: {
-    type: 'default',
-    position: 'top-right',
-    size: 'md',
+    color: 'primary',
+    orientation: 'vertical',
     hasTitle: false
   }
 })

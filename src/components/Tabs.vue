@@ -1,11 +1,12 @@
 <template>
-  <div class="w-full" v-bind="$attrs">
+  <div :class="ui.root()" v-bind="$attrs">
     <!-- Tab list -->
     <div :class="tabListClasses" role="tablist" :aria-orientation="orientation">
       <button
         v-for="(tab, index) in tabs"
         :key="tab.value || index"
         :class="getTabClasses(tab, index)"
+        :data-active="isActive(tab, index)"
         :aria-selected="isActive(tab, index)"
         :aria-controls="`panel-${tab.value || index}`"
         :disabled="tab.disabled"
@@ -18,18 +19,10 @@
           {{ tab.badge }}
         </span>
       </button>
-
-      <!-- Active indicator -->
-      <div
-        v-if="indicator"
-        ref="indicatorRef"
-        :class="indicatorClasses"
-        :style="indicatorStyle"
-      />
     </div>
 
     <!-- Tab panels -->
-    <div v-if="!content" class="mt-4">
+    <div v-if="!content" :class="ui.content()">
       <div
         v-for="(tab, index) in tabs"
         :key="`panel-${tab.value || index}`"
@@ -50,8 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onMounted, watch } from 'vue'
+import { computed } from 'vue'
 import tabsTheme from '@/themes/tabs'
+import Icon from './Icon.vue'
 
 export interface TabItem {
   label?: string
@@ -96,9 +90,6 @@ const emit = defineEmits<{
   change: [tab: TabItem, index: number]
 }>()
 
-const indicatorRef = ref<HTMLElement>()
-const indicatorStyle = ref({})
-
 const tabs = computed(() => props.items || [])
 
 const activeValue = computed({
@@ -117,9 +108,8 @@ const ui = computed(() =>
   })
 )
 
-const getTabClasses = (tab: TabItem, index: number) => {
-  const active = isActive(tab, index)
-  return ui.value.trigger({ active })
+const getTabClasses = (_tab: TabItem, _index: number) => {
+  return ui.value.trigger()
 }
 
 const badgeClasses = computed(() =>
@@ -128,15 +118,6 @@ const badgeClasses = computed(() =>
     'bg-primary text-primary-foreground'
   ].join(' ')
 )
-
-const indicatorClasses = computed(() => {
-  if (props.variant !== 'line') return ''
-
-  return [
-    'absolute bg-primary transition-all duration-200 ease-out',
-    props.orientation === 'horizontal' ? 'bottom-0 h-0.5' : 'right-0 w-0.5'
-  ].join(' ')
-})
 
 const isActive = (tab: TabItem, index: number): boolean => {
   const value = tab.value ?? index
@@ -149,52 +130,5 @@ const selectTab = (tab: TabItem, index: number) => {
   const value = tab.value ?? index
   activeValue.value = value
   emit('change', tab, index)
-
-  nextTick(() => {
-    updateIndicator()
-  })
 }
-
-const updateIndicator = () => {
-  if (!props.indicator || props.variant !== 'line' || !indicatorRef.value)
-    return
-
-  const activeTab = document.querySelector(
-    '[aria-selected="true"]'
-  ) as HTMLElement
-  if (!activeTab) return
-
-  const tabList = activeTab.parentElement
-  if (!tabList) return
-
-  if (props.orientation === 'horizontal') {
-    const left = activeTab.offsetLeft
-    const width = activeTab.offsetWidth
-    indicatorStyle.value = {
-      left: `${left}px`,
-      width: `${width}px`
-    }
-  } else {
-    const top = activeTab.offsetTop
-    const height = activeTab.offsetHeight
-    indicatorStyle.value = {
-      top: `${top}px`,
-      height: `${height}px`
-    }
-  }
-}
-
-onMounted(() => {
-  updateIndicator()
-})
-
-watch(activeValue, () => {
-  nextTick(() => {
-    updateIndicator()
-  })
-})
-
-defineExpose({
-  updateIndicator
-})
 </script>

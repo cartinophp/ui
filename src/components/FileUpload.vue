@@ -13,7 +13,7 @@ export interface FileUploadProps {
   label?: string
   description?: string
   variant?: 'area' | 'button'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg'
   layout?: 'list' | 'grid'
   position?: 'inside' | 'outside'
   highlight?: boolean
@@ -44,8 +44,8 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   preview: true,
   variant: 'area',
   size: 'md',
-  icon: 'solar:upload-bold',
-  fileIcon: 'solar:file-bold',
+  icon: 'solar:upload-linear',
+  fileIcon: 'solar:file-linear',
   fileDeleteIcon: 'solar:close-circle-linear'
 })
 
@@ -294,13 +294,7 @@ watch(modelValue, (newValue) => {
                     <Button
                       v-if="fileDelete"
                       variant="monochromePlain"
-                      :size="
-                        computedLayout === 'grid'
-                          ? 'xs'
-                          : size === 'xl'
-                          ? 'lg'
-                          : size
-                      "
+                      :size="computedLayout === 'grid' ? 'sm' : size"
                       :trailing-icon="fileDeleteIcon"
                       :class="
                         ui.fileTrailingButton({
@@ -437,13 +431,7 @@ watch(modelValue, (newValue) => {
                   <Button
                     v-if="fileDelete"
                     variant="monochromePlain"
-                    :size="
-                      computedLayout === 'grid'
-                        ? 'xs'
-                        : size === 'xl'
-                        ? 'lg'
-                        : size
-                    "
+                    :size="computedLayout === 'grid' ? 'sm' : size"
                     :trailing-icon="fileDeleteIcon"
                     :class="
                       ui.fileTrailingButton({

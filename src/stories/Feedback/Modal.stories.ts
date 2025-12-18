@@ -24,6 +24,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: { title: 'Modal Title' },
   render: (args) => ({
     components: { Modal, Button },
     setup() {
@@ -33,10 +34,7 @@ export const Default: Story = {
     template: `
       <div>
         <Button @click="open = true">Open Modal</Button>
-        
         <Modal v-model:open="open" v-bind="args">
-          <template #title>Modal Title</template>
-          
           <div class="space-y-4">
             <p>This is a modal component. It can be used for various purposes like:</p>
             <ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
@@ -53,18 +51,17 @@ export const Default: Story = {
 }
 
 export const Small: Story = {
-  render: () => ({
+  args: { title: 'Small Modal', size: 'sm' },
+  render: (args) => ({
     components: { Modal, Button },
     setup() {
       const open = ref(false)
-      return { open }
+      return { args, open }
     },
     template: `
       <div>
         <Button @click="open = true">Small Modal</Button>
-        
-        <Modal v-model:open="open" size="sm">
-          <template #title>Small Modal</template>
+        <Modal v-model:open="open" v-bind="args">
           <p class="text-sm">This is a small modal with limited width.</p>
         </Modal>
       </div>
@@ -73,18 +70,17 @@ export const Small: Story = {
 }
 
 export const Large: Story = {
-  render: () => ({
+  args: { title: 'Large Modal', size: 'lg' },
+  render: (args) => ({
     components: { Modal, Button },
     setup() {
       const open = ref(false)
-      return { open }
+      return { args, open }
     },
     template: `
       <div>
         <Button @click="open = true">Large Modal</Button>
-        
-        <Modal v-model:open="open" size="lg">
-          <template #title>Large Modal</template>
+        <Modal v-model:open="open" v-bind="args">
           <div class="space-y-4">
             <p>This is a large modal with more width for displaying detailed content.</p>
             <p class="text-sm text-gray-600">
@@ -99,27 +95,47 @@ export const Large: Story = {
 }
 
 export const WithFooter: Story = {
-  render: () => ({
+  args: { title: 'Confirmation Required' },
+  render: (args) => ({
     components: { Modal, Button },
     setup() {
       const open = ref(false)
-      return { open }
+      return { args, open }
     },
     template: `
       <div>
         <Button @click="open = true">Modal with Footer</Button>
-        
-        <Modal v-model:open="open">
-          <template #title>Confirmation Required</template>
-          
+        <Modal v-model:open="open" v-bind="args">
           <p class="text-sm text-gray-600">
             Are you sure you want to proceed with this action? This change cannot be undone.
           </p>
-          
           <template #footer>
             <div class="flex justify-end gap-3">
               <Button variant="plain" @click="open = false">Cancel</Button>
               <Button variant="primary" @click="open = false">Confirm</Button>
+            </div>
+          </template>
+        </Modal>
+      </div>
+    `
+  })
+}
+
+export const Fullscreen: Story = {
+  args: { title: 'Modal fullscreen', fullscreen: true },
+  render: (args) => ({
+    components: { Modal, Button },
+    setup() {
+      const open = ref(false)
+      return { args, open }
+    },
+    template: `
+      <div>
+        <Button @click="open = true">Open Fullscreen Modal</Button>
+        <Modal v-model:open="open" v-bind="args">
+          <template #default>
+            <div class="h-full flex items-center justify-center">
+              <h2 class="text-2xl">This modal is fullscreen</h2>
             </div>
           </template>
         </Modal>

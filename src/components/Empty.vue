@@ -21,7 +21,7 @@ export interface EmptyProps {
     onClick?: () => void
   }>
   variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'naked'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg'
   class?: string
   ui?: Record<string, any>
 }
@@ -97,7 +97,7 @@ const ui = computed(() =>
             <Button
               v-for="(action, index) in actions"
               :key="index"
-              :size="size === 'xl' ? 'lg' : size"
+              :size="size"
               v-bind="action"
               @click="action.onClick"
             >

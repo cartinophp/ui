@@ -2,78 +2,73 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'inline-flex h-9 items-center justify-center rounded-md bg-muted p-1 text-foreground',
-    list: 'flex items-center gap-1',
+    root: 'w-full',
+    list: 'relative flex items-center',
     trigger:
-      'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium text-foreground/60 ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
-    content:
-      'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+      'inline-flex items-center justify-center whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    content: 'mt-4'
   },
   variants: {
     variant: {
-      default: {
-        root: 'bg-muted text-foreground',
+      line: {
+        list: 'border-b border-border gap-4',
         trigger:
-          'text-foreground/60 hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground'
+          'relative pb-3 px-1 font-medium text-muted-foreground hover:text-foreground data-[active=true]:text-foreground data-[active=true]:border-b-2 data-[active=true]:border-primary data-[active=true]:-mb-px'
       },
-      outline: {
-        root: 'bg-transparent border border-border',
+      pill: {
+        list: 'bg-muted p-1 rounded-lg gap-1',
         trigger:
-          'data-[state=active]:bg-accent data-[state=active]:text-accent-foreground'
+          'rounded-md px-3 py-1.5 font-medium text-muted-foreground hover:text-foreground data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:shadow-sm'
       },
-      pills: {
-        root: 'bg-transparent gap-2 p-0',
+      card: {
+        list: 'gap-2',
         trigger:
-          'rounded-full border border-border data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary'
+          'rounded-t-lg border border-b-0 border-border px-4 py-2 font-medium bg-muted text-muted-foreground hover:bg-background hover:text-foreground data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:border-b data-[active=true]:border-b-background'
       }
     },
     size: {
-      sm: {
-        root: 'h-8 p-1',
-        trigger: 'px-2.5 py-1 text-xs',
-        content: 'mt-1'
-      },
-      md: {
-        root: 'h-9 p-1',
-        trigger: 'px-3 py-1.5 text-sm',
+      xs: {
+        trigger: 'text-xs h-8',
         content: 'mt-2'
       },
-      lg: {
-        root: 'h-10 p-1',
-        trigger: 'px-4 py-2 text-base',
+      sm: {
+        trigger: 'text-sm h-9',
         content: 'mt-3'
+      },
+      md: {
+        trigger: 'text-sm h-10',
+        content: 'mt-4'
+      },
+      lg: {
+        trigger: 'text-base h-11',
+        content: 'mt-5'
       }
     },
     orientation: {
       horizontal: {
-        root: 'flex-row',
-        list: 'flex-row'
+        list: 'flex-row',
+        trigger: 'flex-row'
       },
       vertical: {
-        root: 'flex-col h-auto w-fit',
-        list: 'flex-col',
+        root: 'flex flex-row gap-4',
+        list: 'flex-col items-start',
         trigger: 'w-full justify-start'
       }
     }
   },
   compoundVariants: [
     {
-      variant: 'pills',
-      size: 'sm',
+      variant: 'line',
+      orientation: 'vertical',
       class: {
-        trigger: 'px-3 py-1'
-      }
-    },
-    {
-      variant: 'pills',
-      size: 'lg',
-      class: {
-        trigger: 'px-5 py-2'
+        list: 'border-b-0 border-r gap-0',
+        trigger:
+          'pb-0 pr-3 pl-1 border-b-0 data-[active=true]:border-r-2 data-[active=true]:border-b-0 data-[active=true]:-mr-px'
       }
     }
   ],
   defaultVariants: {
-    variant: 'default',
+    variant: 'line',
     size: 'md',
     orientation: 'horizontal'
   }

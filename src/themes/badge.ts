@@ -9,16 +9,16 @@ export default tv({
   variants: {
     size: {
       sm: {
-        root: 'text-xs px-2 py-0.5',
-        closeButton: 'size-3'
+        root: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-xs font-medium rounded-lg md:min-h-[28px] md:min-w-[28px] leading-[14px]',
+        closeButton: 'w-[22px] h-[22px]'
       },
       md: {
-        root: 'text-sm px-2.5 py-1',
-        closeButton: 'size-3.5'
+        root: 'min-h-[36px] min-w-[36px] px-4 py-2 text-sm font-medium rounded-lg md:min-h-[32px] md:min-w-[32px] leading-[18px]',
+        closeButton: 'w-[22px] h-[22px]'
       },
       lg: {
-        root: 'text-base px-3 py-1.5',
-        closeButton: 'size-4'
+        root: 'min-h-[40px] min-w-[40px] px-5 py-2.5 text-base font-medium rounded-lg md:min-h-[36px] md:min-w-[36px] leading-[22px]',
+        closeButton: 'w-[22px] h-[22px]'
       }
     },
     variant: {

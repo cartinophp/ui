@@ -8,7 +8,7 @@ const meta: Meta<typeof Avatar> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
+      options: ['sm', 'md', 'lg']
     },
     src: {
       control: 'text'
@@ -60,15 +60,9 @@ export const Sizes: Story = {
     components: { Avatar },
     template: `
       <div class="flex items-center gap-4">
-        <Avatar size="3xs" text="XS" />
-        <Avatar size="2xs" text="XS" />
-        <Avatar size="xs" text="XS" />
         <Avatar size="sm" text="SM" />
         <Avatar size="md" text="MD" />
         <Avatar size="lg" text="LG" />
-        <Avatar size="xl" text="XL" />
-        <Avatar size="2xl" text="2XL" />
-        <Avatar size="3xl" text="3XL" />
       </div>
     `
   })

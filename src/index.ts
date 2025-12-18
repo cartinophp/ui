@@ -16,10 +16,10 @@ import Checkbox from './components/Checkbox.vue'
 import CheckboxGroup from './components/CheckboxGroup.vue'
 import Chip from './components/Chip.vue'
 import Command from './components/Command.vue'
-import ContextMenu from './components/ContextMenu.vue'
 import DashboardSidebar from './components/DashboardSidebar.vue'
 import DashboardSidebarLinks from './components/DashboardSidebarLinks.vue'
 import DashboardToolbar from './components/DashboardToolbar.vue'
+import Calendar from './components/Calendar.vue'
 import DataTable from './components/DataTable.vue'
 import DatePicker from './components/DatePicker.vue'
 import Dropdown from './components/Dropdown.vue'
@@ -47,6 +47,7 @@ import Table from './components/Table.vue'
 import Tabs from './components/Tabs.vue'
 import Textarea from './components/Textarea.vue'
 import Toast from './components/Toast.vue'
+import Toaster from './components/Toaster.vue'
 import Tooltip from './components/Tooltip.vue'
 import User from './components/User.vue'
 
@@ -64,10 +65,10 @@ export const install = (app: App) => {
   app.component('CartinoCheckboxGroup', CheckboxGroup)
   app.component('CartinoChip', Chip)
   app.component('CartinoCommand', Command)
-  app.component('CartinoContextMenu', ContextMenu)
   app.component('CartinoDashboardSidebar', DashboardSidebar)
   app.component('CartinoDashboardSidebarLinks', DashboardSidebarLinks)
   app.component('CartinoDashboardToolbar', DashboardToolbar)
+  app.component('CartinoCalendar', Calendar)
   app.component('CartinoDataTable', DataTable)
   app.component('CartinoDatePicker', DatePicker)
   app.component('CartinoDropdown', Dropdown)
@@ -95,6 +96,7 @@ export const install = (app: App) => {
   app.component('CartinoTabs', Tabs)
   app.component('CartinoTextarea', Textarea)
   app.component('CartinoToast', Toast)
+  app.component('CartinoToaster', Toaster)
   app.component('CartinoTooltip', Tooltip)
   app.component('CartinoUser', User)
 }
@@ -108,12 +110,12 @@ export {
   Banner,
   Breadcrumb,
   Button,
+  Calendar,
   Card,
   Checkbox,
   CheckboxGroup,
   Chip,
   Command,
-  ContextMenu,
   DashboardSidebar,
   DashboardSidebarLinks,
   DashboardToolbar,
@@ -144,6 +146,7 @@ export {
   Tabs,
   Textarea,
   Toast,
+  Toaster,
   Tooltip,
   User
 }
@@ -156,12 +159,16 @@ export type { BadgeProps } from './components/Badge.vue'
 export type { BannerProps } from './components/Banner.vue'
 export type { BreadcrumbProps } from './components/Breadcrumb.vue'
 export type { ButtonProps } from './components/Button.vue'
+export type { CalendarProps } from './components/Calendar.vue'
 export type { CardProps } from './components/Card.vue'
 export type { CheckboxProps } from './components/Checkbox.vue'
 export type { CheckboxGroupProps } from './components/CheckboxGroup.vue'
 export type { ChipProps } from './components/Chip.vue'
-export type { CommandProps, CommandItem, CommandGroup } from './components/Command.vue'
-export type { ContextMenuProps, ContextMenuItem } from './components/ContextMenu.vue'
+export type {
+  CommandProps,
+  CommandItem,
+  CommandGroup
+} from './components/Command.vue'
 export type { DashboardSidebarProps } from './components/DashboardSidebar.vue'
 export type { DashboardSidebarLinksProps } from './components/DashboardSidebarLinks.vue'
 export type { DashboardToolbarProps } from './components/DashboardToolbar.vue'
@@ -192,8 +199,18 @@ export type { TableProps } from './components/Table.vue'
 export type { TabsProps } from './components/Tabs.vue'
 export type { TextareaProps } from './components/Textarea.vue'
 export type { ToastProps } from './components/Toast.vue'
+export type { ToasterProps } from './components/Toaster.vue'
 export type { TooltipProps } from './components/Tooltip.vue'
 export type { UserProps } from './components/User.vue'
+
+// Export composables
+export {
+  useToast,
+  toastMaxInjectionKey,
+  type Toast as ToastItem,
+  type ToastOptions,
+  type UseToastReturn
+} from './composables/useToast'
 
 // NOTE: avoid re-exporting the entire primitive library to keep bundle small.
 // If you need specific Reka primitives, import them explicitly where used.

@@ -10,7 +10,7 @@ export interface AvatarProps {
   alt?: string
   icon?: string
   text?: string
-  size?: string
+  size?: 'sm' | 'md' | 'lg'
   chip?:
     | boolean
     | { position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' }

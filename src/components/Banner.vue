@@ -14,7 +14,14 @@ export interface BannerProps {
   actions?: any[]
   to?: string | object
   target?: string
-  color?: string
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'error'
+    | 'neutral'
   close?: boolean | object
   closeIcon?: string
   class?: string | object | any[]
@@ -135,7 +142,7 @@ const onClose = () => {
               v-for="(action, index) in props.actions"
               :key="index"
               color="neutral"
-              size="xs"
+              size="sm"
               v-bind="action"
             />
           </slot>
@@ -144,15 +151,13 @@ const onClose = () => {
 
       <div data-slot="right" :class="ui.right({ class: props.ui?.right })">
         <slot name="close" :ui="ui">
-          <Button
+          <Icon
             v-if="props.close"
-            :leading-icon="props.closeIcon || 'solar:close-circle-linear'"
-            size="md"
-            variant="plain"
+            :name="props.closeIcon || 'solar:close-circle-linear'"
             aria-label="Close banner"
-            v-bind="typeof props.close === 'object' ? props.close : {}"
             data-slot="close"
             :class="ui.close({ class: props.ui?.close })"
+            class="cursor-pointer"
             @click="onClose"
           />
         </slot>

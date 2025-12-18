@@ -2,27 +2,21 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'relative overflow-hidden w-full rounded-lg p-4 flex gap-2.5',
+    root: 'relative overflow-hidden w-full rounded-lg p-4 flex gap-3',
     wrapper: 'min-w-0 flex-1 flex flex-col',
     title: 'text-sm font-medium',
-    description: 'text-sm opacity-90 mt-1',
+    description: 'text-sm mt-1',
     icon: 'shrink-0 size-5',
     avatar: 'shrink-0',
-    actions: 'flex flex-wrap gap-1.5 shrink-0',
+    actions: 'flex flex-wrap gap-2 shrink-0',
     closeButton: 'p-0 shrink-0'
   },
   variants: {
-    variant: {
-      solid: '',
-      outline: '',
-      soft: '',
-      subtle: ''
-    },
     color: {
-      primary: '',
+      info: '',
       success: '',
       warning: '',
-      error: '',
+      critical: '',
       neutral: ''
     },
     orientation: {
@@ -32,159 +26,59 @@ export default tv({
       },
       vertical: {
         root: 'items-start',
-        actions: 'items-start mt-2.5'
+        actions: 'items-start mt-3'
       }
     }
   },
   compoundVariants: [
-    // Solid variants
+    // Polaris Badge colors - info (primary/blue)
     {
-      variant: 'solid',
-      color: 'primary',
+      color: 'info',
       class: {
-        root: 'bg-primary text-primary-foreground'
+        root: 'bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300',
+        icon: 'text-blue-600 dark:text-blue-400',
+        description: 'text-blue-600 dark:text-blue-400'
       }
     },
+    // Polaris Badge colors - success (green)
     {
-      variant: 'solid',
       color: 'success',
       class: {
-        root: 'bg-success text-success-foreground'
+        root: 'bg-green-50 dark:bg-green-950/30 text-green-800 dark:text-green-300',
+        icon: 'text-green-600 dark:text-green-400',
+        description: 'text-green-700 dark:text-green-400'
       }
     },
+    // Polaris Badge colors - warning (yellow/caution)
     {
-      variant: 'solid',
       color: 'warning',
       class: {
-        root: 'bg-warning text-warning-foreground'
+        root: 'bg-yellow-50 dark:bg-yellow-950/30 text-yellow-900 dark:text-yellow-300',
+        icon: 'text-yellow-600 dark:text-yellow-400',
+        description: 'text-yellow-800 dark:text-yellow-400'
       }
     },
+    // Polaris Badge colors - critical (red/error)
     {
-      variant: 'solid',
-      color: 'error',
+      color: 'critical',
       class: {
-        root: 'bg-error text-error-foreground'
+        root: 'bg-red-50 dark:bg-red-950/30 text-red-800 dark:text-red-300',
+        icon: 'text-red-600 dark:text-red-400',
+        description: 'text-red-700 dark:text-red-400'
       }
     },
+    // Polaris Badge colors - neutral (gray)
     {
-      variant: 'solid',
       color: 'neutral',
       class: {
-        root: 'bg-foreground text-background'
-      }
-    },
-    // Outline variants
-    {
-      variant: 'outline',
-      color: 'primary',
-      class: {
-        root: 'text-primary ring-1 ring-inset ring-primary/25'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'success',
-      class: {
-        root: 'text-success ring-1 ring-inset ring-success/25'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'warning',
-      class: {
-        root: 'text-warning ring-1 ring-inset ring-warning/25'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'error',
-      class: {
-        root: 'text-error ring-1 ring-inset ring-error/25'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'neutral',
-      class: {
-        root: 'text-foreground bg-background ring-1 ring-inset ring-border'
-      }
-    },
-    // Soft variants
-    {
-      variant: 'soft',
-      color: 'primary',
-      class: {
-        root: 'bg-primary/10 text-primary'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'success',
-      class: {
-        root: 'bg-success/10 text-success'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'warning',
-      class: {
-        root: 'bg-warning/10 text-warning'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'error',
-      class: {
-        root: 'bg-error/10 text-error'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'neutral',
-      class: {
-        root: 'bg-muted text-foreground'
-      }
-    },
-    // Subtle variants
-    {
-      variant: 'subtle',
-      color: 'primary',
-      class: {
-        root: 'bg-primary/10 text-primary ring-1 ring-inset ring-primary/25'
-      }
-    },
-    {
-      variant: 'subtle',
-      color: 'success',
-      class: {
-        root: 'bg-success/10 text-success ring-1 ring-inset ring-success/25'
-      }
-    },
-    {
-      variant: 'subtle',
-      color: 'warning',
-      class: {
-        root: 'bg-warning/10 text-warning ring-1 ring-inset ring-warning/25'
-      }
-    },
-    {
-      variant: 'subtle',
-      color: 'error',
-      class: {
-        root: 'bg-error/10 text-error ring-1 ring-inset ring-error/25'
-      }
-    },
-    {
-      variant: 'subtle',
-      color: 'neutral',
-      class: {
-        root: 'bg-muted text-foreground ring-1 ring-inset ring-border'
+        root: 'bg-gray-50 dark:bg-gray-900/50 text-gray-800 dark:text-gray-200',
+        icon: 'text-gray-600 dark:text-gray-400',
+        description: 'text-gray-700 dark:text-gray-400'
       }
     }
   ],
   defaultVariants: {
-    variant: 'solid',
-    color: 'primary',
+    color: 'info',
     orientation: 'vertical'
   }
 })

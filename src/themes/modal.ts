@@ -5,14 +5,14 @@ export default tv({
     overlay:
       'fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-[fade-in_200ms_ease-out] data-[state=closed]:animate-[fade-out_200ms_ease-in]',
     content:
-      'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-background border border-default rounded-lg shadow-xl max-h-[90vh] overflow-y-auto focus:outline-none data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
-    header: 'space-y-2 p-6 pb-4',
+      'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-background divide-y divide-border flex flex-col rounded-lg shadow-xl ring-1 ring-border max-h-[90vh] focus:outline-none data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
+    header: 'flex items-center gap-1.5 p-4 sm:p-6 min-h-16',
+    wrapper: 'flex-1',
     title: 'text-xl font-semibold text-foreground',
-    description: 'text-muted-foreground text-sm',
-    body: 'px-6 py-4 text-foreground',
-    footer: 'flex justify-end gap-2 p-6 pt-4 border-t border-default',
-    closeButton:
-      'absolute top-4 right-4 p-1 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
+    description: 'mt-1 text-muted-foreground text-sm',
+    body: 'flex-1 p-4 sm:p-6 overflow-y-auto text-foreground',
+    footer: 'flex items-center justify-end gap-2 p-4 sm:p-6',
+    closeButton: ''
   },
   variants: {
     size: {
@@ -44,7 +44,7 @@ export default tv({
     fullscreen: {
       true: {
         content:
-          'w-screen h-screen max-w-none max-h-none rounded-none left-0 top-0 translate-x-0 translate-y-0'
+          'inset-0 w-screen h-screen max-w-none max-h-none rounded-none left-0 top-0 translate-x-0 translate-y-0'
       }
     }
   },
