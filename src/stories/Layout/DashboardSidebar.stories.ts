@@ -36,7 +36,11 @@ const sampleLinks: DashboardSidebarLinkItem[] = [
     label: 'Dashboard',
     to: '/dashboard',
     icon: 'solar:home-2-bold',
-    active: true
+    active: true,
+    onClick: (e) => {
+      e.preventDefault()
+      console.log('Navigated to Dashboard')
+    }
   },
   {
     label: 'Analytics',
@@ -46,18 +50,30 @@ const sampleLinks: DashboardSidebarLinkItem[] = [
       {
         label: 'Overview',
         to: '/analytics/overview',
-        icon: 'solar:pie-chart-2-bold'
+        icon: 'solar:pie-chart-2-bold',
+        onClick: (e) => {
+          e.preventDefault()
+          console.log('Navigated to Analytics Overview')
+        }
       },
       {
         label: 'Reports',
         to: '/analytics/reports',
         icon: 'solar:document-text-bold',
-        badge: { label: '3', color: 'primary' }
+        badge: { label: '3', color: 'primary' },
+        onClick: (e) => {
+          e.preventDefault()
+          console.log('Navigated to Analytics Reports')
+        }
       },
       {
         label: 'Real-time',
         to: '/analytics/realtime',
-        icon: 'solar:graph-bold'
+        icon: 'solar:graph-bold',
+        onClick: (e) => {
+          e.preventDefault()
+          console.log('Navigated to Real-time Analytics')
+        }
       }
     ]
   },
@@ -70,12 +86,20 @@ const sampleLinks: DashboardSidebarLinkItem[] = [
         label: 'Active',
         to: '/projects/active',
         icon: 'solar:file-check-bold',
-        badge: { label: '8', color: 'success' }
+        badge: { label: '8', color: 'success' },
+        onClick: (e) => {
+          e.preventDefault()
+          console.log('Navigated to Active Projects')
+        }
       },
       {
         label: 'Archived',
         to: '/projects/archived',
-        icon: 'solar:archive-bold'
+        icon: 'solar:archive-bold',
+        onClick: (e) => {
+          e.preventDefault()
+          console.log('Navigated to Archived Projects')
+        }
       }
     ]
   },
@@ -83,12 +107,20 @@ const sampleLinks: DashboardSidebarLinkItem[] = [
     label: 'Team',
     to: '/team',
     icon: 'solar:users-group-rounded-bold',
-    badge: { label: '24', color: 'info' }
+    badge: { label: '24', color: 'info' },
+    onClick: (e) => {
+      e.preventDefault()
+      console.log('Navigated to Team')
+    }
   },
   {
     label: 'Settings',
     to: '/settings',
-    icon: 'solar:settings-bold'
+    icon: 'solar:settings-bold',
+    onClick: (e) => {
+      e.preventDefault()
+      console.log('Navigated to Settings')
+    }
   }
 ]
 
@@ -125,6 +157,14 @@ export const WithLinksArray: Story = {
             Simply pass a <code>links</code> array prop to the DashboardSidebar component.
             No need to manually render navigation - it's handled automatically!
           </p>
+          <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 class="text-sm font-semibold text-blue-900 mb-2">📝 Storybook Note</h3>
+            <p class="text-sm text-blue-800">
+              In this demo, links use <code>onClick</code> handlers since Vue Router is not available. 
+              Check the browser console to see navigation events. In a real app with Vue Router, 
+              the <code>to</code> prop would handle navigation automatically.
+            </p>
+          </div>
         </div>
       </div>
     `
@@ -181,6 +221,15 @@ export const CollapsibleWithLinksArray: Story = {
           <p class="mt-2 text-muted-foreground">
             Current state: <strong>{{ collapsed ? 'Collapsed' : 'Expanded' }}</strong>
           </p>
+          <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
+            <h3 class="text-sm font-semibold text-green-900 mb-2">✨ Interactive Features</h3>
+            <ul class="text-sm text-green-800 space-y-1">
+              <li>• Click links to see console logs (Storybook demo)</li>
+              <li>• Expand/collapse nested menus</li>
+              <li>• Hover over icons when collapsed for tooltips</li>
+              <li>• Smooth animations and transitions</li>
+            </ul>
+          </div>
         </div>
       </div>
     `

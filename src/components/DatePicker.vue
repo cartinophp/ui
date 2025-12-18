@@ -70,11 +70,9 @@ export interface DatePickerSlots {
 <script setup lang="ts" generic="R extends boolean">
 import { computed, onMounted, ref, useSlots } from 'vue'
 import {
-  DateFieldRoot,
-  DateFieldInput,
-  DateRangeFieldRoot,
-  DateRangeFieldInput
-} from 'reka-ui'
+  DateField as SingleDateField,
+  DateRangeField as RangeDateField
+} from 'reka-ui/namespaced'
 import { reactiveOmit, createReusableTemplate } from '@vueuse/core'
 import theme from '@/themes/date-picker'
 import Icon from './Icon.vue'
@@ -132,10 +130,9 @@ const datePickerTheme = computed(() =>
 const inputsRef = ref<ComponentPublicInstance[]>([])
 
 function onUpdate(value: any) {
-  emits('update:modelValue', value)
-  // @ts-ignore
-  const event = new Event('change', { target: { value } })
+  const event = new Event('change', { target: { value } } as any)
   emits('change', event)
+  emits('update:modelValue', value)
 }
 
 function onBlur(event: FocusEvent) {
@@ -147,28 +144,16 @@ function onFocus(event: FocusEvent) {
 }
 
 function autoFocus() {
-  if (props.autofocus && inputsRef.value.length > 0) {
-    const firstInput = inputsRef.value[0]?.$el
-    if (firstInput && firstInput.focus) {
-      firstInput.focus()
-    }
+  if (props.autofocus) {
+    inputsRef.value[0]?.$el?.focus()
   }
 }
 
 onMounted(() => {
-  if (props.autofocus) {
-    setTimeout(() => {
-      autoFocus()
-    }, props.autofocusDelay)
-  }
+  setTimeout(() => {
+    autoFocus()
+  }, props.autofocusDelay)
 })
-
-const DateFieldComponent = computed(() =>
-  props.range ? DateRangeFieldRoot : DateFieldRoot
-)
-const DateFieldInputComponent = computed(() =>
-  props.range ? DateRangeFieldInput : DateFieldInput
-)
 
 defineExpose({
   inputsRef
@@ -177,22 +162,34 @@ defineExpose({
 
 <template>
   <DefineSegmentsTemplate v-slot="{ segments, type }">
-    <component
-      :is="DateFieldInputComponent"
+    <SingleDateField.Input
+      v-if="!range"
       v-for="(segment, index) in segments"
-      :key="`${segment.part}-${index}`"
-      :ref="(el) => (inputsRef[index] = el as ComponentPublicInstance)"
+      :key="`single-${segment.part}-${index}`"
+      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
       :type="type"
       :part="segment.part"
       :class="datePickerTheme.segment({ class: ui?.segment })"
       :data-segment="segment.part"
     >
-      {{ segment.value.trim() }}
-    </component>
+      {{ segment.value ? segment.value.trim() : '' }}
+    </SingleDateField.Input>
+    <RangeDateField.Input
+      v-else
+      v-for="(segment, index) in segments"
+      :key="`range-${segment.part}-${index}`"
+      :ref="el => (inputsRef[index] = el as ComponentPublicInstance)"
+      :type="type"
+      :part="segment.part"
+      :class="datePickerTheme.segment({ class: ui?.segment })"
+      :data-segment="segment.part"
+    >
+      {{ segment.value ? segment.value.trim() : '' }}
+    </RangeDateField.Input>
   </DefineSegmentsTemplate>
 
-  <component
-    :is="DateFieldComponent"
+  <SingleDateField.Root
+    v-if="!range"
     v-bind="rootProps"
     v-slot="{ segments }"
     :model-value="(modelValue as DateValue)"
@@ -203,22 +200,6 @@ defineExpose({
     @blur="onBlur"
     @focus="onFocus"
   >
-    <template v-if="Array.isArray(segments)">
-      <ReuseSegmentsTemplate :segments="segments" />
-    </template>
-    <template v-else>
-      <ReuseSegmentsTemplate :segments="segments.start" type="start" />
-      <slot name="separator">
-        <Icon
-          :name="separatorIcon"
-          :class="datePickerTheme.separatorIcon({ class: ui?.separatorIcon })"
-        />
-      </slot>
-      <ReuseSegmentsTemplate :segments="segments.end" type="end" />
-    </template>
-
-    <slot />
-
     <span
       v-if="props.leading || props.leadingIcon || slots.leading"
       :class="datePickerTheme.leading({ class: ui?.leading })"
@@ -232,6 +213,10 @@ defineExpose({
       </slot>
     </span>
 
+    <ReuseSegmentsTemplate :segments="segments" />
+
+    <slot />
+
     <span
       v-if="
         props.trailing || props.trailingIcon || props.loading || slots.trailing
@@ -241,7 +226,7 @@ defineExpose({
       <slot name="trailing">
         <Icon
           v-if="props.loading"
-          name="solar:loading-linear"
+          name="solar:loader-2-linear"
           :class="[
             datePickerTheme.trailingIcon({ class: ui?.trailingIcon }),
             'animate-spin'
@@ -254,5 +239,65 @@ defineExpose({
         />
       </slot>
     </span>
-  </component>
+  </SingleDateField.Root>
+
+  <RangeDateField.Root
+    v-else
+    v-bind="rootProps"
+    v-slot="{ segments }"
+    :model-value="modelValue as any"
+    :default-value="defaultValue as any"
+    :disabled="disabled"
+    :class="datePickerTheme.base({ class: [ui?.base, props.class] })"
+    @update:model-value="onUpdate"
+    @blur="onBlur"
+    @focus="onFocus"
+  >
+    <span
+      v-if="props.leading || props.leadingIcon || slots.leading"
+      :class="datePickerTheme.leading({ class: ui?.leading })"
+    >
+      <slot name="leading">
+        <Icon
+          v-if="leadingIcon"
+          :name="leadingIcon"
+          :class="datePickerTheme.leadingIcon({ class: ui?.leadingIcon })"
+        />
+      </slot>
+    </span>
+
+    <ReuseSegmentsTemplate :segments="segments.start" type="start" />
+    <slot name="separator">
+      <Icon
+        :name="separatorIcon"
+        :class="datePickerTheme.separatorIcon({ class: ui?.separatorIcon })"
+      />
+    </slot>
+    <ReuseSegmentsTemplate :segments="segments.end" type="end" />
+
+    <slot />
+
+    <span
+      v-if="
+        props.trailing || props.trailingIcon || props.loading || slots.trailing
+      "
+      :class="datePickerTheme.trailing({ class: ui?.trailing })"
+    >
+      <slot name="trailing">
+        <Icon
+          v-if="props.loading"
+          name="solar:loader-2-linear"
+          :class="[
+            datePickerTheme.trailingIcon({ class: ui?.trailingIcon }),
+            'animate-spin'
+          ]"
+        />
+        <Icon
+          v-else-if="trailingIcon"
+          :name="trailingIcon"
+          :class="datePickerTheme.trailingIcon({ class: ui?.trailingIcon })"
+        />
+      </slot>
+    </span>
+  </RangeDateField.Root>
 </template>

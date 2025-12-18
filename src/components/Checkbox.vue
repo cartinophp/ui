@@ -68,7 +68,24 @@ const handleUpdate = (value: boolean) => {
       @update:checked="handleUpdate"
     >
       <CheckboxIndicator :class="indicatorClasses">
-        <Icon name="solar:check-read-linear" :class="iconClasses" />
+        <!-- Use an inline SVG checkmark that inherits currentColor so it contrasts correctly in dark/light themes -->
+        <svg
+          class=""
+          :class="iconClasses"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M5 12.5L9.5 17L19 7"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </CheckboxIndicator>
     </CheckboxRoot>
 

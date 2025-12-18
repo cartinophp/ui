@@ -15,5 +15,3 @@ const meta: Meta<typeof Checkbox> = {
 
 export default meta
 export type Story = StoryObj<typeof Checkbox>
-
-export const Basic: Story = {}

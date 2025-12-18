@@ -3,9 +3,9 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     wrapper: 'inline-flex items-center gap-3',
-    root: 'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+    root: 'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
     thumb:
-      'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
+      'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=unchecked]:translate-x-0',
     content: 'flex flex-col gap-1',
     label:
       'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
@@ -13,14 +13,6 @@ export default tv({
     description: 'text-sm text-muted-foreground'
   },
   variants: {
-    checked: {
-      true: {
-        thumb: 'translate-x-5'
-      },
-      false: {
-        thumb: 'translate-x-0'
-      }
-    },
     size: {
       sm: {
         root: 'h-4 w-7',
@@ -36,10 +28,18 @@ export default tv({
       }
     },
     color: {
-      primary: {},
-      success: {},
-      warning: {},
-      error: {}
+      primary: {
+        root: 'data-[state=checked]:bg-primary'
+      },
+      success: {
+        root: 'data-[state=checked]:bg-success'
+      },
+      warning: {
+        root: 'data-[state=checked]:bg-warning'
+      },
+      error: {
+        root: 'data-[state=checked]:bg-error'
+      }
     },
     disabled: {
       true: {
@@ -48,46 +48,7 @@ export default tv({
       }
     }
   },
-  compoundVariants: [
-    // Checked states with colors
-    {
-      checked: true,
-      color: 'primary',
-      class: {
-        root: 'bg-primary'
-      }
-    },
-    {
-      checked: true,
-      color: 'success',
-      class: {
-        root: 'bg-success'
-      }
-    },
-    {
-      checked: true,
-      color: 'warning',
-      class: {
-        root: 'bg-warning'
-      }
-    },
-    {
-      checked: true,
-      color: 'error',
-      class: {
-        root: 'bg-error'
-      }
-    },
-    // Unchecked state - gray for all colors
-    {
-      checked: false,
-      class: {
-        root: 'bg-muted'
-      }
-    }
-  ],
   defaultVariants: {
-    checked: false,
     size: 'md',
     color: 'primary',
     disabled: false

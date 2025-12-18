@@ -65,15 +65,19 @@ const isItemOpen = (index: number) => openItems.value.has(index)
 const getLinkComponent = (link: DashboardSidebarLinkItem) => {
   // If link has children, it's a button (collapsible trigger)
   if (link.children) return 'button'
-  if (link.to) return 'router-link'
-  if (link.href) return 'a'
+  // Use 'a' tag for better compatibility with Storybook and other contexts
+  // In production apps with Vue Router, you can customize this to use 'router-link'
+  if (link.to || link.href) return 'a'
   return 'button'
 }
 
 const getLinkProps = (link: DashboardSidebarLinkItem) => {
   // If link has children, no href/to props (it's just a trigger)
   if (link.children) return { type: 'button' }
-  if (link.to) return { to: link.to }
+  if (link.to) {
+    // Use href instead of 'to' for better Storybook compatibility
+    return { href: link.to }
+  }
   if (link.href)
     return {
       href: link.href,

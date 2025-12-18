@@ -33,7 +33,7 @@ const switchTheme = computed(() =>
   theme({
     size: props.size,
     color: props.color,
-    checked: props.modelValue
+    disabled: props.disabled
   })
 )
 

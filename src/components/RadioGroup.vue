@@ -75,12 +75,15 @@ const handleUpdate = (value) => {
     >
       <slot>
         <URadio
-          v-for="(option, index) in options"
-          :key="index"
-          :options="[option]"
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value"
+          :label="option.label"
+          :description="option.description"
+          :disabled="option.disabled || disabled"
           :size="size"
           :color="color"
-          :disabled="disabled"
+          :ui="props.ui"
         />
       </slot>
     </RadioGroupRoot>

@@ -11,9 +11,7 @@ import {
 import theme from '@/themes/popover'
 
 export interface PopoverProps {
-  open?: boolean
   defaultOpen?: boolean
-  modal?: boolean
   side?: 'top' | 'right' | 'bottom' | 'left'
   align?: 'start' | 'center' | 'end'
   sideOffset?: number
@@ -23,31 +21,21 @@ export interface PopoverProps {
 }
 
 const props = withDefaults(defineProps<PopoverProps>(), {
-  modal: false,
   side: 'bottom',
   align: 'center',
   sideOffset: 8,
   collisionPadding: 8,
-  arrow: false
+  arrow: false,
+  defaultOpen: false
 })
-
-const emit = defineEmits<{
-  'update:open': [value: boolean]
-}>()
 
 const popoverTheme = computed(() => theme())
 </script>
 
 <template>
-  <PopoverRoot
-    v-slot="{ open: isOpen }"
-    :open="open"
-    :default-open="defaultOpen"
-    :modal="modal"
-    @update:open="emit('update:open', $event)"
-  >
-    <PopoverTrigger v-if="$slots.default" as-child>
-      <slot :open="isOpen" />
+  <PopoverRoot :default-open="defaultOpen">
+    <PopoverTrigger as-child>
+      <slot />
     </PopoverTrigger>
 
     <PopoverPortal>
@@ -67,6 +55,7 @@ const popoverTheme = computed(() => theme())
 
         <PopoverClose
           v-if="$slots.close"
+          :as-child="true"
           class="absolute right-2 top-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
         >
           <slot name="close" />

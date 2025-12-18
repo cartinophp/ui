@@ -2,162 +2,135 @@ import { tv } from 'tailwind-variants'
 
 /**
  * DatePicker Component Theme
- * Based on Nuxt UI InputDate - uses Reka UI DateField with individual segments
+ * Date field with segments and icons
  * Supports sizes, variants, colors, and states
  */
 export default tv({
   slots: {
-    base: 'group relative inline-flex items-center rounded-md select-none transition-colors text-foreground',
+    base: 'relative inline-flex items-center gap-1 rounded-lg border transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50 text-foreground',
     segment:
-      'rounded text-center outline-none text-foreground data-[placeholder]:text-muted-foreground data-[segment=literal]:text-muted-foreground data-invalid:text-destructive data-disabled:cursor-not-allowed data-disabled:opacity-75 transition-colors',
-    leading: 'shrink-0 flex items-center text-muted-foreground',
+      'inline-block rounded px-0.5 py-0 tabular-nums text-foreground outline-none focus:bg-accent focus:text-accent-foreground data-[placeholder]:text-muted-foreground',
+    leading: 'flex items-center justify-center shrink-0',
     leadingIcon: 'shrink-0 text-muted-foreground',
-    trailing: 'ms-auto inline-flex items-center shrink-0 text-muted-foreground',
+    trailing: 'flex items-center justify-center shrink-0',
     trailingIcon: 'shrink-0 text-muted-foreground',
-    separatorIcon: 'shrink-0 text-muted-foreground mx-1'
+    loadingIcon: 'shrink-0 text-muted-foreground animate-spin',
+    separatorIcon: 'shrink-0 text-muted-foreground'
   },
   variants: {
     size: {
       sm: {
-        base: 'h-9 px-3 py-2 text-sm gap-0.5',
-        segment:
-          'data-[segment=day]:w-6 data-[segment=month]:w-6 data-[segment=year]:w-9',
-        leadingIcon: 'size-4',
-        trailingIcon: 'size-4'
+        base: 'h-8 px-2 text-sm gap-1',
+        segment: 'text-sm',
+        leadingIcon: 'w-3.5 h-3.5',
+        trailingIcon: 'w-3.5 h-3.5',
+        loadingIcon: 'w-3.5 h-3.5',
+        separatorIcon: 'w-3 h-3'
       },
       md: {
-        base: 'h-10 px-3.5 py-2 text-sm gap-0.5',
-        segment:
-          'data-[segment=day]:w-7 data-[segment=month]:w-7 data-[segment=year]:w-11',
-        leadingIcon: 'size-5',
-        trailingIcon: 'size-5'
+        base: 'h-10 px-3 text-base gap-1.5',
+        segment: 'text-base',
+        leadingIcon: 'w-4 h-4',
+        trailingIcon: 'w-4 h-4',
+        loadingIcon: 'w-4 h-4',
+        separatorIcon: 'w-4 h-4'
       },
       lg: {
-        base: 'h-11 px-4 py-2.5 text-base gap-0.75',
-        segment:
-          'data-[segment=day]:w-7 data-[segment=month]:w-7 data-[segment=year]:w-11',
-        leadingIcon: 'size-5',
-        trailingIcon: 'size-5'
+        base: 'h-12 px-4 text-lg gap-2',
+        segment: 'text-lg',
+        leadingIcon: 'w-5 h-5',
+        trailingIcon: 'w-5 h-5',
+        loadingIcon: 'w-5 h-5',
+        separatorIcon: 'w-5 h-5'
       }
     },
     variant: {
       outline: {
-        base: 'bg-background border border-border shadow-xs hover:bg-muted/50 focus-within:ring-2 focus-within:ring-ring dark:bg-background dark:border-border dark:hover:bg-muted/50',
-        segment: 'focus:bg-muted dark:focus:bg-muted'
+        base: 'bg-background border-input'
       },
       filled: {
-        base: 'bg-muted border-0 hover:bg-muted/80 focus-within:ring-2 focus-within:ring-ring dark:bg-muted dark:hover:bg-muted/80',
-        segment: 'focus:bg-background dark:focus:bg-background'
+        base: 'bg-muted border-transparent'
       },
       ghost: {
-        base: 'bg-transparent border-0 hover:bg-muted/50 focus-within:ring-2 focus-within:ring-ring dark:hover:bg-muted/50',
-        segment: 'focus:bg-muted dark:focus:bg-muted'
+        base: 'bg-transparent border-transparent hover:bg-accent'
       },
       soft: {
-        base: 'border-0 focus-within:ring-2',
-        segment:
-          'focus:bg-background/50 group-hover:focus:bg-background dark:focus:bg-background/50 dark:group-hover:focus:bg-background'
+        base: 'bg-accent/50 border-transparent'
       },
       none: {
-        base: 'bg-transparent border-0 p-0 focus-within:ring-0',
-        segment: 'focus:bg-muted dark:focus:bg-muted'
+        base: 'bg-transparent border-transparent shadow-none'
       }
     },
     color: {
-      primary: '',
-      success: '',
-      warning: '',
-      error: '',
-      info: ''
+      primary: {},
+      error: {},
+      success: {},
+      warning: {},
+      info: {}
     },
     disabled: {
       true: {
-        base: 'opacity-50 cursor-not-allowed'
+        base: 'opacity-50 cursor-not-allowed pointer-events-none'
       }
     },
     leading: {
       true: {
-        base: 'ps-2.5'
+        leading: ''
       }
     },
     trailing: {
       true: {
-        base: 'pe-2.5'
+        trailing: ''
       }
+    },
+    loading: {
+      true: {}
     }
   },
   compoundVariants: [
-    // Color variants for outline
+    // ===== OUTLINE VARIANT COLORS =====
     {
       variant: 'outline',
       color: 'primary',
       class: {
-        base: 'focus-within:border-primary focus-within:ring-primary'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'success',
-      class: {
-        base: 'focus-within:border-green-500 focus-within:ring-green-500'
-      }
-    },
-    {
-      variant: 'outline',
-      color: 'warning',
-      class: {
-        base: 'focus-within:border-yellow-500 focus-within:ring-yellow-500'
+        base: 'border-input focus-within:border-primary'
       }
     },
     {
       variant: 'outline',
       color: 'error',
       class: {
-        base: 'border-destructive/50 focus-within:border-destructive focus-within:ring-destructive'
+        base: 'border-input focus-within:border-error'
+      }
+    },
+    {
+      variant: 'outline',
+      color: 'success',
+      class: {
+        base: 'border-input focus-within:border-success'
+      }
+    },
+    {
+      variant: 'outline',
+      color: 'warning',
+      class: {
+        base: 'border-input focus-within:border-warning'
       }
     },
     {
       variant: 'outline',
       color: 'info',
       class: {
-        base: 'focus-within:border-blue-500 focus-within:ring-blue-500'
+        base: 'border-input focus-within:border-info'
       }
     },
 
-    // Color variants for soft
+    // ===== FILLED VARIANT COLORS =====
     {
-      variant: 'soft',
+      variant: 'filled',
       color: 'primary',
       class: {
-        base: 'bg-primary/10 text-primary hover:bg-primary/20 focus-within:ring-primary/50 dark:bg-primary/20 dark:text-primary dark:hover:bg-primary/30'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'success',
-      class: {
-        base: 'bg-green-500/10 text-green-600 hover:bg-green-500/20 focus-within:ring-green-500/50 dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500/30'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'warning',
-      class: {
-        base: 'bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20 focus-within:ring-yellow-500/50 dark:bg-yellow-500/20 dark:text-yellow-400 dark:hover:bg-yellow-500/30'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'error',
-      class: {
-        base: 'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-within:ring-destructive/50 dark:bg-destructive/20 dark:text-destructive dark:hover:bg-destructive/30'
-      }
-    },
-    {
-      variant: 'soft',
-      color: 'info',
-      class: {
-        base: 'bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 focus-within:ring-blue-500/50 dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500/30'
+        base: 'focus-within:bg-primary/5 focus-within:border-primary/20'
       }
     }
   ],
@@ -167,6 +140,7 @@ export default tv({
     color: 'primary',
     disabled: false,
     leading: false,
-    trailing: false
+    trailing: false,
+    loading: false
   }
 })

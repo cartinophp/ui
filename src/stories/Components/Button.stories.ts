@@ -190,7 +190,6 @@ export const AllVariants: Story = {
           <Button variant="primary" tone="critical">Critical</Button>
         </div>
         <div class="flex flex-wrap items-center gap-4">
-          <Button size="xs">XS</Button>
           <Button size="sm">Small</Button>
           <Button size="md">Medium</Button>
           <Button size="lg">Large</Button>
