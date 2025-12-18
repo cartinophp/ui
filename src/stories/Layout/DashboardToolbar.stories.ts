@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import DashboardToolbar from '@/components/DashboardToolbar.vue'
 import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
-import { h } from 'vue'
 
 const meta = {
   title: 'Layout/DashboardToolbar',

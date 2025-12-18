@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/vue3-vite'
 import { withThemeByDataAttribute } from '@storybook/addon-themes'
-import { h } from 'vue'
+
 import '../src/style.css'
 import Toaster from '../src/components/Toaster.vue'
 
