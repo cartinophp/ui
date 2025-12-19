@@ -3,28 +3,27 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'inline-flex items-center gap-1.5 font-medium transition-colors',
-    closeButton:
-      'p-0.5 rounded-sm hover:bg-black/10 focus:outline-none focus:ring-1 focus:ring-current transition-colors'
+    icon: 'flex items-center justify-center shrink-0',
+    text: 'inline-block'
   },
   variants: {
     size: {
       sm: {
-        root: 'min-h-[32px] min-w-[32px] px-3 py-1.5 text-xs font-medium rounded-lg md:min-h-[28px] md:min-w-[28px] leading-[14px]',
-        closeButton: 'w-[22px] h-[22px]'
+        root: 'px-2 py-1 text-xs rounded-md',
+        icon: 'w-3 h-3'
       },
       md: {
-        root: 'min-h-[36px] min-w-[36px] px-4 py-2 text-sm font-medium rounded-lg md:min-h-[32px] md:min-w-[32px] leading-[18px]',
-        closeButton: 'w-[22px] h-[22px]'
+        root: 'px-2.5 py-2 text-sm rounded-md',
+        icon: 'w-4 h-4'
       },
       lg: {
-        root: 'min-h-[40px] min-w-[40px] px-5 py-2.5 text-base font-medium rounded-lg md:min-h-[36px] md:min-w-[36px] leading-[22px]',
-        closeButton: 'w-[22px] h-[22px]'
+        root: 'px-3 py-2 text-base rounded-md',
+        icon: 'w-5 h-5'
       }
     },
     variant: {
-      solid: {},
       soft: {},
-      outline: {}
+      strong: {}
     },
     color: {
       primary: {},
@@ -33,151 +32,99 @@ export default tv({
       error: {},
       info: {},
       neutral: {}
-    },
-    rounded: {
-      true: {
-        root: 'rounded-full'
-      },
-      false: {
-        root: 'rounded-md'
-      }
     }
   },
   compoundVariants: [
-    // Solid variants
-    {
-      variant: 'solid',
-      color: 'primary',
-      class: {
-        root: 'bg-primary text-primary-foreground'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'success',
-      class: {
-        root: 'bg-success text-success-foreground'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'warning',
-      class: {
-        root: 'bg-warning text-warning-foreground'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'error',
-      class: {
-        root: 'bg-error text-error-foreground'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'info',
-      class: {
-        root: 'bg-info text-info-foreground'
-      }
-    },
-    {
-      variant: 'solid',
-      color: 'neutral',
-      class: {
-        root: 'bg-muted text-muted-foreground'
-      }
-    },
-    // Soft variants - lighter backgrounds with same foreground pattern
+    // Soft variants - light background with colored text
     {
       variant: 'soft',
       color: 'primary',
       class: {
-        root: 'bg-primary/80 text-primary-foreground border border-primary'
+        root: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
       }
     },
     {
       variant: 'soft',
       color: 'success',
       class: {
-        root: 'bg-success/80 text-success-foreground border border-success'
+        root: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
       }
     },
     {
       variant: 'soft',
       color: 'warning',
       class: {
-        root: 'bg-warning/80 text-warning-foreground border border-warning'
+        root: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
       }
     },
     {
       variant: 'soft',
       color: 'error',
       class: {
-        root: 'bg-error/80 text-error-foreground border border-error'
+        root: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
       }
     },
     {
       variant: 'soft',
       color: 'info',
       class: {
-        root: 'bg-info/80 text-info-foreground border border-info'
+        root: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200'
       }
     },
     {
       variant: 'soft',
       color: 'neutral',
       class: {
-        root: 'bg-muted/80 text-muted-foreground border border-muted'
+        root: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
       }
     },
-    // Outline variants
+    // Strong variants - colored background with white text
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'primary',
       class: {
-        root: 'text-primary border border-primary'
+        root: 'bg-blue-600 text-white dark:bg-blue-700'
       }
     },
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'success',
       class: {
-        root: 'text-success border border-success'
+        root: 'bg-green-600 text-white dark:bg-green-700'
       }
     },
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'warning',
       class: {
-        root: 'text-warning border border-warning'
+        root: 'bg-amber-600 text-white dark:bg-amber-700'
       }
     },
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'error',
       class: {
-        root: 'text-error border border-error'
+        root: 'bg-red-600 text-white dark:bg-red-700'
       }
     },
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'info',
       class: {
-        root: 'text-info border border-info'
+        root: 'bg-cyan-600 text-white dark:bg-cyan-700'
       }
     },
     {
-      variant: 'outline',
+      variant: 'strong',
       color: 'neutral',
       class: {
-        root: 'text-muted border border-muted'
+        root: 'bg-gray-600 text-white dark:bg-gray-700'
       }
     }
   ],
   defaultVariants: {
     size: 'md',
-    variant: 'solid',
-    color: 'primary',
-    rounded: false
+    variant: 'soft',
+    color: 'primary'
   }
 })

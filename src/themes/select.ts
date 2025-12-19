@@ -38,7 +38,7 @@ export default tv({
         itemTrailingIcon: 'size-4'
       },
       md: {
-        base: 'h-10 px-3 py-2 text-sm gap-2',
+        base: 'h-9 px-3 py-2 text-sm gap-2',
         leadingIcon: 'size-5',
         trailingIcon: 'size-5',
         label: 'p-1.5 text-xs gap-1.5',

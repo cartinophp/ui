@@ -37,7 +37,7 @@ export const WithSearch: Story = {
         <template #left>
           <Input 
             placeholder="Search..." 
-            leading-icon="solar:minimalistic-magnifer-linear"
+            :leading-icon="'solar:minimalistic-magnifer-linear'"
             size="sm"
             class="w-64"
           />
@@ -132,7 +132,7 @@ export const FullWidth: Story = {
         <template #left>
           <Input 
             placeholder="Search across all items..." 
-            leading-icon="solar:minimalistic-magnifer-linear"
+            :leading-icon="'solar:minimalistic-magnifer-linear'"
             size="sm"
             class="flex-1 min-w-[400px]"
           />

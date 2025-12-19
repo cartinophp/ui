@@ -15,7 +15,10 @@ export interface AvatarProps {
     | boolean
     | { position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' }
   loading?: 'eager' | 'lazy'
-  class?: string | object | any[]
+  class?:
+    | string
+    | Record<string, boolean>
+    | (string | Record<string, boolean>)[]
   ui?: {
     root?: string
     image?: string

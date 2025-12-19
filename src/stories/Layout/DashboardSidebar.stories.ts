@@ -191,7 +191,7 @@ export const CollapsibleWithLinksArray: Story = {
               variant="plain" 
               size="sm" 
               @click="toggle"
-              leading-icon="solar:hamburger-menu-bold"
+              :leading-icon="'solar:hamburger-menu-bold'"
               :class="collapsed ? 'mx-auto' : 'ml-auto'"
             />
           </template>

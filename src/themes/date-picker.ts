@@ -28,7 +28,7 @@ export default tv({
         separatorIcon: 'w-3 h-3'
       },
       md: {
-        base: 'h-10 px-3 text-base gap-1.5',
+        base: 'h-9 px-3 text-base gap-1.5',
         segment: 'text-base',
         leadingIcon: 'w-4 h-4',
         trailingIcon: 'w-4 h-4',

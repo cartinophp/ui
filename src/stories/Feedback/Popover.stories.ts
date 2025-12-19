@@ -183,7 +183,7 @@ export const UserProfile: Story = {
             <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold">
               JV
             </div>
-            <span class="text-sm font-medium text-foreground">John Voe</span>
+            <span class="text-sm font-medium text-foreground">John Doe</span>
           </button>
           
           <template #content>
@@ -193,7 +193,7 @@ export const UserProfile: Story = {
                   JV
                 </div>
                 <div>
-                  <p class="font-semibold text-foreground">John Voe</p>
+                  <p class="font-semibold text-foreground">John Doe</p>
                   <p class="text-sm text-muted-foreground">john@example.com</p>
                 </div>
               </div>

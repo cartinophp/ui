@@ -28,7 +28,7 @@ export default tv({
     },
     size: {
       sm: {
-        root: 'w-[300px] sm:w-[350px] p-4',
+        root: 'p-4',
         header: 'space-y-1',
         title: 'text-base font-medium',
         description: 'text-xs',
@@ -36,7 +36,7 @@ export default tv({
         footer: 'space-y-2 sm:space-y-0 sm:space-x-2'
       },
       md: {
-        root: 'w-[400px] sm:w-[450px] p-6',
+        root: 'p-6',
         header: 'space-y-2',
         title: 'text-lg font-semibold',
         description: 'text-sm',
@@ -44,7 +44,7 @@ export default tv({
         footer: 'space-y-2 sm:space-y-0 sm:space-x-2'
       },
       lg: {
-        root: 'w-[500px] sm:w-[600px] p-8',
+        root: 'p-8',
         header: 'space-y-3',
         title: 'text-xl font-semibold',
         description: 'text-base',
@@ -54,25 +54,48 @@ export default tv({
     }
   },
   compoundVariants: [
+    // Top/Bottom sheets - full width with max height
     {
       side: ['top', 'bottom'],
       size: 'sm',
       class: {
-        root: 'max-h-[300px]'
+        root: 'w-full max-h-[300px]'
       }
     },
     {
       side: ['top', 'bottom'],
       size: 'md',
       class: {
-        root: 'max-h-[400px]'
+        root: 'w-full max-h-[400px]'
       }
     },
     {
       side: ['top', 'bottom'],
       size: 'lg',
       class: {
-        root: 'max-h-[600px]'
+        root: 'w-full max-h-[600px]'
+      }
+    },
+    // Left/Right sheets - fixed width
+    {
+      side: ['left', 'right'],
+      size: 'sm',
+      class: {
+        root: 'w-[300px] sm:w-[350px]'
+      }
+    },
+    {
+      side: ['left', 'right'],
+      size: 'md',
+      class: {
+        root: 'w-[400px] sm:w-[450px]'
+      }
+    },
+    {
+      side: ['left', 'right'],
+      size: 'lg',
+      class: {
+        root: 'w-[500px] sm:w-[600px]'
       }
     }
   ],

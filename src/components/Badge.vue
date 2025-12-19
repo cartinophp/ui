@@ -2,72 +2,77 @@
 import { computed } from 'vue'
 import theme from '@/themes/badge'
 
+export type BadgeColor =
+  | 'primary'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'info'
+  | 'neutral'
+export type BadgeVariant = 'soft' | 'strong'
+export type BadgeSize = 'sm' | 'md' | 'lg'
+export type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete'
+
 export interface BadgeProps {
   label?: string
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-  variant?: 'solid' | 'soft' | 'outline'
-  size?: 'sm' | 'md' | 'lg'
-  rounded?: boolean
-  closable?: boolean
+  color?: BadgeColor
+  variant?: BadgeVariant
+  size?: BadgeSize
+  progress?: BadgeProgress
+  icon?: string
   ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<BadgeProps>(), {
   color: 'primary',
   variant: 'soft',
-  size: 'md',
-  rounded: false,
-  closable: false
+  size: 'md'
 })
-
-const emit = defineEmits<{
-  close: []
-}>()
 
 const badgeTheme = computed(() =>
   theme({
     variant: props.variant,
     color: props.color,
-    size: props.size,
-    rounded: props.rounded
+    size: props.size
   })
 )
 
-const handleClose = () => {
-  emit('close')
+const progressIcons = {
+  incomplete: {
+    viewBox: '0 0 20 20',
+    d: 'M8.547 12.69c.183.05.443.06 1.453.06s1.27-.01 1.453-.06a1.75 1.75 0 0 0 1.237-1.237c.05-.182.06-.443.06-1.453s-.01-1.27-.06-1.453a1.75 1.75 0 0 0-1.237-1.237c-.182-.05-.443-.06-1.453-.06s-1.27.01-1.453.06A1.75 1.75 0 0 0 7.31 8.547c-.05.183-.06.443-.06 1.453s.01 1.27.06 1.453a1.75 1.75 0 0 0 1.237 1.237ZM6.102 8.224C6 8.605 6 9.07 6 10s0 1.395.102 1.777a3 3 0 0 0 2.122 2.12C8.605 14 9.07 14 10 14s1.395 0 1.777-.102a3 3 0 0 0 2.12-2.121C14 11.395 14 10.93 14 10c0-.93 0-1.395-.102-1.776a3 3 0 0 0-2.121-2.122C11.395 6 10.93 6 10 6c-.93 0-1.395 0-1.776.102a3 3 0 0 0-2.122 2.122Z'
+  },
+  partiallyComplete: {
+    viewBox: '0 0 20 20',
+    d: 'm8.888 6.014-.017-.018-.02.02c-.253.013-.45.038-.628.086a3 3 0 0 0-2.12 2.122C6 8.605 6 9.07 6 10s0 1.395.102 1.777a3 3 0 0 0 2.121 2.12C8.605 14 9.07 14 10 14c.93 0 1.395 0 1.776-.102a3 3 0 0 0 2.122-2.121C14 11.395 14 10.93 14 10c0-.93 0-1.395-.102-1.776a3 3 0 0 0-2.122-2.122C11.395 6 10.93 6 10 6c-.475 0-.829 0-1.112.014ZM8.446 7.34a1.75 1.75 0 0 0-1.041.94l4.314 4.315c.443-.2.786-.576.941-1.042L8.446 7.34Zm4.304 2.536L10.124 7.25c.908.001 1.154.013 1.329.06a1.75 1.75 0 0 1 1.237 1.237c.047.175.059.42.06 1.329ZM8.547 12.69c.182.05.442.06 1.453.06h.106L7.25 9.894V10c0 1.01.01 1.27.06 1.453a1.75 1.75 0 0 0 1.237 1.237Z'
+  },
+  complete: {
+    viewBox: '0 0 20 20',
+    d: 'M6 10c0-.93 0-1.395.102-1.776a3 3 0 0 1 2.121-2.122C8.605 6 9.07 6 10 6c.93 0 1.395 0 1.776.102a3 3 0 0 1 2.122 2.122C14 8.605 14 9.07 14 10s0 1.395-.102 1.777a3 3 0 0 1-2.122 2.12C11.395 14 10.93 14 10 14s-1.395 0-1.777-.102a3 3 0 0 1-2.12-2.121C6 11.395 6 10.93 6 10Z'
+  }
 }
 </script>
 
 <template>
   <span :class="badgeTheme.root({ class: ui?.root })">
-    <slot name="leading" />
-
-    <span v-if="label || $slots.default">
-      <slot>{{ label }}</slot>
+    <span v-if="progress" :class="badgeTheme.icon({ class: ui?.icon })">
+      <svg
+        :viewBox="progressIcons[progress].viewBox"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path :d="progressIcons[progress].d" fill="currentColor" />
+      </svg>
     </span>
 
-    <slot name="trailing" />
+    <span v-else-if="icon" :class="badgeTheme.icon({ class: ui?.icon })">
+      <slot name="icon" />
+    </span>
 
-    <button
-      v-if="closable"
-      :class="badgeTheme.closeButton({ class: ui?.closeButton })"
-      @click="handleClose"
-      aria-label="Close badge"
+    <span
+      v-if="label || $slots.default"
+      :class="badgeTheme.text({ class: ui?.text })"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        :width="size === 'sm' ? 12 : size === 'md' ? 14 : 16"
-        :height="size === 'sm' ? 12 : size === 'md' ? 14 : 16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
-      </svg>
-    </button>
+      <slot>{{ label }}</slot>
+    </span>
   </span>
 </template>

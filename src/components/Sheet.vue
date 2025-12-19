@@ -59,7 +59,10 @@ const handleOpenChange = (value: boolean) => {
 
       <DialogContent :class="ui.root({ class: props.ui?.root })">
         <!-- Close Button -->
-        <DialogClose :class="ui.close({ class: props.ui?.close })">
+        <DialogClose
+          :class="ui.close({ class: props.ui?.close })"
+          tabindex="-1"
+        >
           <Icon name="solar:close-circle-linear" class="size-4" />
           <span class="sr-only">Close</span>
         </DialogClose>

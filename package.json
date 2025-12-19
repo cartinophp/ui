@@ -27,9 +27,7 @@
     "dev:storybook": "storybook dev -p 6006",
     "dev:watch": "CARTINO_DEV=true vite build --watch",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "build-storybook": "storybook build",
-    "generate:types": "tsx scripts/generate-type-exports.ts",
-    "generate:types:write": "tsx scripts/generate-type-exports.ts --write"
+    "build-storybook": "storybook build"
   },
   "peerDependencies": {
     "vue": "^3.4.0"

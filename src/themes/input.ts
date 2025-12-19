@@ -26,7 +26,7 @@ export default tv({
       md: {
         label: 'text-sm',
         wrapper: 'text-base',
-        input: 'px-4 py-2',
+        input: 'px-4 py-1.5',
         leadingIcon: 'w-[22px] h-[22px]',
         trailingIcon: 'w-[22px] h-[22px]',
         hint: 'text-sm'

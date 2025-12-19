@@ -15,7 +15,7 @@ export interface DashboardSidebarLinkItem {
     | {
         label?: string
         color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-        variant?: 'solid' | 'soft' | 'outline'
+        variant?: 'soft' | 'strong'
       }
   active?: boolean
   disabled?: boolean

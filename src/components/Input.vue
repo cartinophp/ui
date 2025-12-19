@@ -80,6 +80,15 @@ const handleChange = (event) => {
   emit('change', event)
 }
 
+const mapSizeToIcon = (size: string) => {
+  const sizeMap: Record<string, any> = {
+    sm: 'sm',
+    md: 'md',
+    lg: 'lg'
+  }
+  return sizeMap[size] || 'md'
+}
+
 defineExpose({
   focus: () => inputRef.value?.focus(),
   blur: () => inputRef.value?.blur()
@@ -99,7 +108,11 @@ defineExpose({
         :class="ui.leadingIcon({ class: props.ui?.leadingIcon })"
       >
         <slot name="leading">
-          <Icon v-if="leadingIcon" :name="leadingIcon" />
+          <Icon
+            v-if="leadingIcon"
+            :name="leadingIcon"
+            :size="mapSizeToIcon(size)"
+          />
         </slot>
       </div>
 
@@ -123,7 +136,11 @@ defineExpose({
         :class="ui.trailingIcon({ class: props.ui?.trailingIcon })"
       >
         <slot name="trailing">
-          <Icon v-if="trailingIcon" :name="trailingIcon" />
+          <Icon
+            v-if="trailingIcon"
+            :name="trailingIcon"
+            :size="mapSizeToIcon(size)"
+          />
         </slot>
       </div>
     </div>
