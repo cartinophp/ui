@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { ref } from 'vue'
 import Progress from '@/components/Progress.vue'
 
 const meta: Meta<typeof Progress> = {
@@ -12,17 +13,17 @@ const meta: Meta<typeof Progress> = {
     },
     color: {
       control: 'select',
-      options: ['primary', 'success', 'warning', 'error', 'info']
+      options: ['primary', 'success', 'warning', 'error', 'info', 'neutral']
     },
-    variant: {
+    orientation: {
       control: 'select',
-      options: ['default', 'striped']
+      options: ['horizontal', 'vertical']
     },
-    valueFormat: {
+    animation: {
       control: 'select',
-      options: ['percentage', 'fraction']
+      options: ['none', 'carousel', 'carousel-inverse', 'swing', 'elastic']
     },
-    value: {
+    modelValue: {
       control: { type: 'number', min: 0, max: 100, step: 1 }
     }
   }
@@ -31,41 +32,117 @@ const meta: Meta<typeof Progress> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// Default - shows animation controls working (indeterminate state)
 export const Default: Story = {
   args: {
-    value: 45,
-    label: 'Progress'
+    modelValue: null,
+    animation: 'none'
   }
 }
 
-export const WithValue: Story = {
+// Usage example
+export const Usage: Story = {
   args: {
-    value: 65,
-    label: 'Loading...',
-    showValue: true
+    modelValue: 50
   }
 }
 
-export const Sizes: Story = {
+// Max with number
+export const Max: Story = {
+  args: {
+    modelValue: 3,
+    max: 4
+  }
+}
+
+// Max with array
+export const MaxArray: Story = {
+  args: {
+    modelValue: 3,
+    max: ['Waiting...', 'Cloning...', 'Migrating...', 'Deploying...', 'Done!']
+  }
+}
+
+// Status prop
+export const Status: Story = {
+  args: {
+    modelValue: 50,
+    status: true
+  }
+}
+
+// Indeterminate
+export const Indeterminate: Story = {
+  args: {
+    modelValue: null,
+    animation: 'carousel'
+  }
+}
+
+// All Animation Variants
+export const Animations: Story = {
   render: () => ({
     components: { Progress },
     template: `
-      <div class="space-y-4">
+      <div class="space-y-6">
         <div>
-          <h4 class="text-sm font-medium mb-2">Small</h4>
-          <Progress :value="30" size="sm" />
+          <h4 class="text-sm font-medium mb-2">Carousel (default)</h4>
+          <Progress :model-value="null" animation="carousel" />
         </div>
         <div>
-          <h4 class="text-sm font-medium mb-2">Medium (default)</h4>
-          <Progress :value="60" size="md" />
+          <h4 class="text-sm font-medium mb-2">Carousel Inverse</h4>
+          <Progress :model-value="null" animation="carousel-inverse" />
         </div>
         <div>
-          <h4 class="text-sm font-medium mb-2">Large</h4>
-          <Progress :value="80" size="lg" />
+          <h4 class="text-sm font-medium mb-2">Swing</h4>
+          <Progress :model-value="null" animation="swing" />
+        </div>
+        <div>
+          <h4 class="text-sm font-medium mb-2">Elastic</h4>
+          <Progress :model-value="null" animation="elastic" />
         </div>
       </div>
     `
   })
+}
+
+// Animation variants - Individual
+export const AnimationSwing: Story = {
+  args: {
+    modelValue: null,
+    animation: 'swing'
+  }
+}
+
+export const AnimationCarouselInverse: Story = {
+  args: {
+    modelValue: null,
+    animation: 'carousel-inverse'
+  }
+}
+
+export const AnimationElastic: Story = {
+  args: {
+    modelValue: null,
+    animation: 'elastic'
+  }
+}
+
+// Orientation
+export const Vertical: Story = {
+  args: {
+    modelValue: 50,
+    orientation: 'vertical',
+    class: 'h-48'
+  }
+}
+
+// Color
+export const ColorNeutral: Story = {
+  args: {
+    modelValue: 50,
+    color: 'neutral'
+  }
 }
 
 export const Colors: Story = {
@@ -73,109 +150,98 @@ export const Colors: Story = {
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <div>
-          <h4 class="text-sm font-medium mb-2">Primary</h4>
-          <Progress :value="50" color="primary" />
-        </div>
-        <div>
-          <h4 class="text-sm font-medium mb-2">Success</h4>
-          <Progress :value="75" color="success" />
-        </div>
-        <div>
-          <h4 class="text-sm font-medium mb-2">Warning</h4>
-          <Progress :value="40" color="warning" />
-        </div>
-        <div>
-          <h4 class="text-sm font-medium mb-2">Error</h4>
-          <Progress :value="25" color="error" />
-        </div>
-        <div>
-          <h4 class="text-sm font-medium mb-2">Info</h4>
-          <Progress :value="60" color="info" />
-        </div>
+        <Progress :model-value="50" color="primary" />
+        <Progress :model-value="50" color="success" />
+        <Progress :model-value="50" color="warning" />
+        <Progress :model-value="50" color="error" />
+        <Progress :model-value="50" color="info" />
+        <Progress :model-value="50" color="neutral" />
       </div>
     `
   })
 }
 
-export const WithSteps: Story = {
+// Size
+export const Sizes: Story = {
+  render: () => ({
+    components: { Progress },
+    template: `
+      <div class="space-y-6">
+        <Progress :model-value="50" size="sm" />
+        <Progress :model-value="50" size="md" />
+        <Progress :model-value="50" size="lg" />
+      </div>
+    `
+  })
+}
+
+// Inverted
+export const Inverted: Story = {
   args: {
-    value: 3,
-    max: 5,
-    label: 'Step 3 of 5',
-    showValue: true,
-    valueFormat: 'fraction',
-    steps: 5
+    modelValue: 25,
+    inverted: true
   }
 }
 
-export const Indeterminate: Story = {
-  args: {
-    indeterminate: true,
-    label: 'Loading...'
-  }
-}
-
+// Animated progress
 export const Animated: Story = {
   render: () => ({
     components: { Progress },
-    data() {
-      return {
-        progress: 0,
-        interval: null as number | null
-      }
-    },
-    mounted() {
-      this.startAnimation()
-    },
-    beforeUnmount() {
-      if (this.interval) {
-        clearInterval(this.interval)
-      }
-    },
-    methods: {
-      startAnimation() {
-        this.interval = setInterval(() => {
-          this.progress += 1
-          if (this.progress >= 100) {
-            this.progress = 0
+    setup() {
+      const progress = ref(0)
+
+      const startAnimation = () => {
+        const interval = setInterval(() => {
+          progress.value += 1
+          if (progress.value >= 100) {
+            clearInterval(interval)
           }
         }, 50)
       }
+
+      startAnimation()
+
+      return { progress }
     },
     template: `
       <Progress 
-        :value="progress" 
-        label="Animated Progress" 
-        :show-value="true"
-        :animated="true"
+        :model-value="progress" 
+        :status="true"
       />
     `
   })
 }
 
+// File Upload Example
 export const FileUpload: Story = {
   render: () => ({
     components: { Progress },
     template: `
       <div class="space-y-6">
         <div>
-          <h4 class="text-sm font-medium mb-2">File Upload Progress</h4>
+          <p class="text-sm font-medium mb-2">document.pdf</p>
           <Progress 
-            :value="85" 
-            label="document.pdf" 
-            :show-value="true"
+            :model-value="85" 
+            :status="true"
             color="success"
-            :animated="true"
           />
         </div>
         
         <div>
-          <h4 class="text-sm font-medium mb-2">Multiple File Upload</h4>
-          <div class="space-y-2">
-            <Progress :value="100" label="image1.jpg" :show-value="true" color="success" />
-            <Progress :value="67" label="image2.jpg" :show-value="true" color="primary" :animated="true" />
-            <Progress :value="23" label="image3.jpg" :show-value="true" color="primary" :animated="true" />
+          <p class="text-sm font-medium mb-4">Multiple Files</p>
+          <div class="space-y-3">
+            <div>
+              <p class="text-xs text-muted-foreground mb-1">image1.jpg</p>
+              <Progress :model-value="100" color="success" />
+            </div>
+            <div>
+              <p class="text-xs text-muted-foreground mb-1">image2.jpg</p>
+              <Progress :model-value="67" color="primary" />
+            </div>
+            <div>
+              <p class="text-xs text-muted-foreground mb-1">image3.jpg</p>
+              <Progress :model-value="23" color="primary" />
+            </div>
           </div>
         </div>
       </div>
@@ -183,47 +249,27 @@ export const FileUpload: Story = {
   })
 }
 
-export const TaskCompletion: Story = {
+// Steps Example
+export const Steps: Story = {
   render: () => ({
     components: { Progress },
+    setup() {
+      const steps = [
+        'Design',
+        'Development',
+        'Testing',
+        'Deployment',
+        'Complete'
+      ]
+      return { steps }
+    },
     template: `
-      <div class="space-y-4">
-        <div>
-          <h4 class="text-lg font-semibold mb-4">Project Tasks</h4>
-          
-          <div class="space-y-3">
-            <Progress 
-              :value="4"
-              :max="4" 
-              label="Design Phase"
-              :show-value="true"
-              value-format="fraction"
-              color="success"
-              :steps="4"
-            />
-            
-            <Progress 
-              :value="7"
-              :max="10" 
-              label="Development Phase"
-              :show-value="true"
-              value-format="fraction"
-              color="primary"
-              :steps="10"
-            />
-            
-            <Progress 
-              :value="0"
-              :max="3" 
-              label="Testing Phase"
-              :show-value="true"
-              value-format="fraction"
-              color="warning"
-              :steps="3"
-            />
-          </div>
-        </div>
-      </div>
+      <Progress 
+        :model-value="2"
+        :max="steps"
+        :status="true"
+        color="primary"
+      />
     `
   })
 }

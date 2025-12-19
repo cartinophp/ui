@@ -1,94 +1,170 @@
 <template>
-  <div :class="ui.root">
-    <!-- Label and Value -->
-    <div v-if="label || showValue" :class="ui.labelContainer">
-      <span v-if="label" :class="ui.label">{{ label }}</span>
-      <span v-if="showValue" :class="ui.value">{{ displayValue }}</span>
+  <div :class="ui.root({ class: props.class })" :data-orientation="orientation">
+    <!-- Status Display -->
+    <div
+      v-if="!isIndeterminate && status"
+      :class="ui.status({ class: props.ui?.status })"
+      :style="statusStyle"
+    >
+      <slot name="status" :percent="percent"> {{ percent }}% </slot>
     </div>
 
-    <!-- Progress Track -->
-    <div :class="ui.track">
-      <!-- Progress Fill -->
-      <div 
-        :class="ui.fill"
-        :style="{ width: `${percentage}%` }"
-        role="progressbar"
-        :aria-valuenow="value"
-        :aria-valuemin="min"
-        :aria-valuemax="max"
-        :aria-label="label || 'Progress'"
-      >
-        <!-- Animated Stripes (for indeterminate) -->
-        <div 
-          v-if="indeterminate" 
-          :class="ui.stripes"
-        />
-      </div>
-    </div>
+    <!-- Progress Root (using reka-ui) -->
+    <ProgressRoot
+      v-bind="rootProps"
+      :max="realMax"
+      :class="ui.base({ class: props.ui?.base })"
+      style="transform: translateZ(0)"
+    >
+      <ProgressIndicator
+        :class="ui.indicator({ class: props.ui?.indicator })"
+        :style="indicatorStyle"
+        :data-state="isIndeterminate ? 'indeterminate' : 'complete'"
+      />
+    </ProgressRoot>
 
     <!-- Steps indicators -->
-    <div v-if="steps && steps > 1" :class="ui.stepsContainer">
+    <div v-if="hasSteps" :class="ui.steps({ class: props.ui?.steps })">
       <div
-        v-for="step in steps"
-        :key="step"
-        :class="ui.step"
-        :data-active="step <= Math.ceil((percentage / 100) * steps)"
-      />
+        v-for="(step, index) in max"
+        :key="index"
+        :class="ui.step({ class: props.ui?.step, step: getStepVariant(index) })"
+      >
+        <slot :name="`step-${index}`" :step="step">
+          {{ step }}
+        </slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { ProgressRoot, ProgressIndicator } from 'reka-ui'
+import { reactivePick } from '@vueuse/core'
 import theme from '@/themes/progress'
 
 export interface ProgressProps {
-  value?: number
+  modelValue?: number | null
   min?: number
-  max?: number
+  max?: number | Array<any>
   size?: 'sm' | 'md' | 'lg'
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info'
-  variant?: 'default' | 'striped'
-  indeterminate?: boolean
+  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  orientation?: 'horizontal' | 'vertical'
+  animation?: 'none' | 'carousel' | 'carousel-inverse' | 'swing' | 'elastic'
   label?: string
-  showValue?: boolean
-  valueFormat?: 'percentage' | 'fraction'
-  steps?: number
-  animated?: boolean
+  status?: boolean
+  inverted?: boolean
+  getValueLabel?: (
+    value: number | null | undefined,
+    max: number
+  ) => string | undefined
+  getValueText?: (
+    value: number | null | undefined,
+    max: number
+  ) => string | undefined
+  class?: string
+  ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<ProgressProps>(), {
-  value: 0,
+  modelValue: 0,
   min: 0,
   max: 100,
   size: 'md',
   color: 'primary',
-  variant: 'default',
-  indeterminate: false,
-  showValue: false,
-  valueFormat: 'percentage',
-  animated: false
+  orientation: 'horizontal',
+  animation: 'none',
+  status: false,
+  inverted: false
 })
 
-const percentage = computed(() => {
-  if (props.indeterminate) return 100
-  const range = props.max - props.min
-  const progress = Math.min(Math.max(props.value - props.min, 0), range)
-  return (progress / range) * 100
-})
+const emit = defineEmits<{
+  'update:modelValue': [value: number]
+}>()
 
-const displayValue = computed(() => {
-  if (props.valueFormat === 'fraction') {
-    return `${props.value} / ${props.max}`
+const rootProps = computed(() =>
+  reactivePick(props, 'getValueLabel', 'getValueText', 'modelValue')
+)
+
+const isIndeterminate = computed(() => props.modelValue === null)
+const hasSteps = computed(() => Array.isArray(props.max))
+
+const realMax = computed(() => {
+  if (isIndeterminate.value || !props.max) {
+    return undefined
   }
-  return `${Math.round(percentage.value)}%`
+  if (Array.isArray(props.max)) {
+    return props.max.length - 1
+  }
+  return Number(props.max)
 })
 
-const ui = computed(() => theme({
-  size: props.size,
-  color: props.color,
-  variant: props.variant,
-  indeterminate: props.indeterminate,
-  animated: props.animated
-}))
+const percent = computed(() => {
+  if (isIndeterminate.value || props.modelValue === null) {
+    return undefined
+  }
+  const value = props.modelValue || 0
+  switch (true) {
+    case value < 0:
+      return 0
+    case value > (realMax.value ?? 100):
+      return 100
+    default:
+      return Math.round((value / (realMax.value ?? 100)) * 100)
+  }
+})
+
+const indicatorStyle = computed(() => {
+  if (percent.value === undefined) {
+    return
+  }
+
+  if (props.orientation === 'vertical') {
+    return {
+      transform: `translateY(${props.inverted ? '' : '-'}${
+        100 - percent.value
+      }%)`
+    }
+  } else {
+    return {
+      transform: `translateX(${props.inverted ? '' : '-'}${
+        100 - percent.value
+      }%)`
+    }
+  }
+})
+
+const statusStyle = computed(() => {
+  const value = `${Math.max(percent.value ?? 0, 0)}%`
+  return props.orientation === 'vertical' ? { height: value } : { width: value }
+})
+
+function getStepVariant(index: number) {
+  if (props.modelValue === null) {
+    return 'other'
+  }
+  const value = props.modelValue || 0
+
+  if (index === value && index !== 0 && index !== realMax.value) {
+    return 'active'
+  }
+  if (index === 0 && index === value) {
+    return 'first'
+  }
+  if (index === realMax.value && index === value) {
+    return 'last'
+  }
+  return 'other'
+}
+
+const ui = computed(() =>
+  theme({
+    size: props.size,
+    color: props.color,
+    orientation: props.orientation,
+    animation: props.animation,
+    inverted: props.inverted
+  })
+)
 </script>

@@ -2,105 +2,211 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'w-full',
-    label: 'text-sm font-medium text-secondary-950 dark:text-secondary-50',
-    value: 'text-sm text-secondary-600 dark:text-secondary-400',
-    labelContainer: 'flex justify-between items-center mb-2',
-    track:
-      'w-full bg-secondary-200 dark:bg-secondary-800 rounded-full overflow-hidden',
-    fill: 'h-full rounded-full relative transition-all duration-300 ease-out',
-    stripes:
-      'absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse',
-    stepsContainer: 'flex justify-between mt-2 px-1',
-    step: 'rounded-full transition-colors'
+    root: 'gap-2',
+    base: 'relative overflow-hidden rounded-full bg-muted',
+    indicator:
+      'rounded-full size-full transition-transform duration-200 ease-out',
+    status: 'flex text-muted-foreground transition-[width] duration-200',
+    steps: 'grid items-end',
+    step: 'truncate text-end row-start-1 col-start-1 transition-opacity'
   },
   variants: {
-    size: {
-      sm: {
-        track: 'h-1',
-        step: 'w-1 h-1'
-      },
-      md: {
-        track: 'h-2',
-        step: 'w-1.5 h-1.5'
-      },
-      lg: {
-        track: 'h-3',
-        step: 'w-2 h-2'
-      }
+    animation: {
+      none: '',
+      carousel: '',
+      'carousel-inverse': '',
+      swing: '',
+      elastic: ''
     },
     color: {
       primary: {
-        fill: 'bg-primary'
+        indicator: 'bg-primary',
+        steps: 'text-primary'
       },
       success: {
-        fill: 'bg-success'
+        indicator: 'bg-green-500',
+        steps: 'text-green-500'
       },
       warning: {
-        fill: 'bg-warning'
+        indicator: 'bg-yellow-500',
+        steps: 'text-yellow-500'
       },
       error: {
-        fill: 'bg-error'
+        indicator: 'bg-red-500',
+        steps: 'text-red-500'
       },
       info: {
-        fill: 'bg-info'
+        indicator: 'bg-cyan-500',
+        steps: 'text-cyan-500'
+      },
+      neutral: {
+        indicator: 'bg-foreground',
+        steps: 'text-foreground'
       }
     },
-    variant: {
-      default: {},
-      striped: {
-        fill: 'bg-gradient-to-r from-current via-current/80 to-current'
+    size: {
+      sm: {
+        status: 'text-sm',
+        steps: 'text-sm'
+      },
+      md: {
+        status: 'text-sm',
+        steps: 'text-sm'
+      },
+      lg: {
+        status: 'text-base',
+        steps: 'text-base'
       }
     },
-    indeterminate: {
+    step: {
+      active: {
+        step: 'opacity-100'
+      },
+      first: {
+        step: 'opacity-100 text-muted-foreground'
+      },
+      other: {
+        step: 'opacity-0'
+      },
+      last: {
+        step: ''
+      }
+    },
+    orientation: {
+      horizontal: {
+        root: 'w-full flex flex-col',
+        base: 'w-full',
+        status: 'flex-row items-center justify-end min-w-fit'
+      },
+      vertical: {
+        root: 'h-full flex flex-row-reverse',
+        base: 'h-full',
+        status: 'flex-col justify-end min-h-fit'
+      }
+    },
+    inverted: {
       true: {
-        fill: 'animate-pulse'
-      }
-    },
-    animated: {
-      true: {
-        fill: 'transition-all duration-300 ease-out'
+        status: 'self-end'
       }
     }
   },
   compoundVariants: [
-    // Step colors based on progress color
     {
-      color: 'primary',
+      inverted: true,
+      orientation: 'horizontal',
       class: {
-        step: 'data-[active=true]:bg-primary data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
+        step: 'text-start',
+        status: 'flex-row-reverse'
       }
     },
     {
-      color: 'success',
+      inverted: true,
+      orientation: 'vertical',
       class: {
-        step: 'data-[active=true]:bg-success data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
+        steps: 'items-start',
+        status: 'flex-col-reverse'
       }
     },
     {
-      color: 'warning',
+      orientation: 'horizontal',
+      size: 'sm',
+      class: 'h-1'
+    },
+    {
+      orientation: 'horizontal',
+      size: 'md',
+      class: 'h-2'
+    },
+    {
+      orientation: 'horizontal',
+      size: 'lg',
+      class: 'h-3'
+    },
+    {
+      orientation: 'vertical',
+      size: 'sm',
+      class: 'w-1'
+    },
+    {
+      orientation: 'vertical',
+      size: 'md',
+      class: 'w-2'
+    },
+    {
+      orientation: 'vertical',
+      size: 'lg',
+      class: 'w-3'
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'carousel',
       class: {
-        step: 'data-[active=true]:bg-warning data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
+        indicator:
+          'data-[state=indeterminate]:animate-[carousel_2s_ease-in-out_infinite]'
       }
     },
     {
-      color: 'error',
+      orientation: 'vertical',
+      animation: 'carousel',
       class: {
-        step: 'data-[active=true]:bg-error data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
+        indicator:
+          'data-[state=indeterminate]:animate-[carousel-vertical_2s_ease-in-out_infinite]'
       }
     },
     {
-      color: 'info',
+      orientation: 'horizontal',
+      animation: 'carousel-inverse',
       class: {
-        step: 'data-[active=true]:bg-info data-[active=false]:bg-secondary-300 dark:data-[active=false]:bg-secondary-700'
+        indicator:
+          'data-[state=indeterminate]:animate-[carousel-inverse_2s_ease-in-out_infinite]'
+      }
+    },
+    {
+      orientation: 'vertical',
+      animation: 'carousel-inverse',
+      class: {
+        indicator:
+          'data-[state=indeterminate]:animate-[carousel-inverse-vertical_2s_ease-in-out_infinite]'
+      }
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'swing',
+      class: {
+        indicator:
+          'data-[state=indeterminate]:animate-[swing_2s_ease-in-out_infinite]'
+      }
+    },
+    {
+      orientation: 'vertical',
+      animation: 'swing',
+      class: {
+        indicator:
+          'data-[state=indeterminate]:animate-[swing-vertical_2s_ease-in-out_infinite]'
+      }
+    },
+    {
+      orientation: 'horizontal',
+      animation: 'elastic',
+      class: {
+        indicator:
+          'data-[state=indeterminate]:animate-[elastic_2s_ease-in-out_infinite]'
+      }
+    },
+    {
+      orientation: 'vertical',
+      animation: 'elastic',
+      class: {
+        indicator:
+          'data-[state=indeterminate]:animate-[elastic-vertical_2s_ease-in-out_infinite]'
       }
     }
   ],
   defaultVariants: {
-    size: 'md',
+    animation: 'none',
     color: 'primary',
-    variant: 'default',
-    indeterminate: false,
-    animated: false
+    size: 'md',
+    orientation: 'horizontal',
+    inverted: false
   }
 })

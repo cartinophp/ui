@@ -115,7 +115,7 @@ export const WithNavigation: Story = {
           <DashboardSidebarLinks :links="links" />
           
           <template #footer>
-            <Button variant="tertiary" size="sm" class="w-full" leading-icon="solar:logout-bold">
+            <Button variant="tertiary" size="sm" class="w-full" :leading-icon="'solar:logout-bold'">
               Sign Out
             </Button>
           </template>
@@ -149,7 +149,7 @@ export const CollapsibleWithLinks: Story = {
               size="sm" 
               @click="toggle"
               class="ml-auto"
-              leading-icon="solar:hamburger-menu-bold"
+              :leading-icon="'solar:hamburger-menu-bold'"
             />
           </template>
           
@@ -160,14 +160,9 @@ export const CollapsibleWithLinks: Story = {
               variant="tertiary" 
               size="sm" 
               class="w-full" 
-              :leading-icon="collapsed ? 'solar:logout-bold' : undefined"
+              :leading-icon="'solar:logout-bold'"
             >
               <span v-if="!collapsed">Sign Out</span>
-              <template v-else #leadingIcon>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </template>
             </Button>
           </template>
         </DashboardSidebar>
@@ -266,7 +261,7 @@ export const WithActiveSubmenu: Story = {
           </div>
           
           <template #footer>
-            <Button variant="tertiary" size="sm" class="w-full" leading-icon="solar:logout-bold">
+            <Button variant="tertiary" size="sm" class="w-full" :leading-icon="'solar:logout-bold'">
               Sign Out
             </Button>
           </template>
