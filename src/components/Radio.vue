@@ -21,13 +21,16 @@ export interface RadioProps {
   orientation?: 'horizontal' | 'vertical'
 }
 
-const { modelValue, options, name, disabled, required, size, color, orientation } = withDefaults(defineProps<RadioProps>(), {
-  disabled: false,
-  required: false,
-  size: 'md',
-  color: 'primary',
-  orientation: 'vertical'
-})
+const {
+  modelValue,
+  options,
+  name,
+  disabled = false,
+  required = false,
+  size = 'md',
+  color = 'primary',
+  orientation = 'vertical'
+} = defineProps<RadioProps>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
