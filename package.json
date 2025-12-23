@@ -47,8 +47,8 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
-    "vue": "^3.5.25",
-    "vue-tsc": "^3.1.8"
+    "vue": "^3.5.26",
+    "vue-tsc": "^3.2.1"
   },
   "keywords": [
     "vue",
@@ -65,7 +65,7 @@
     "@internationalized/date": "^3.10.1",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.1.0",
-    "reka-ui": "^2.6.1",
+    "reka-ui": "^2.7.0",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2"
   },
