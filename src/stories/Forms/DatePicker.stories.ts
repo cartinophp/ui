@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import { CalendarDate, type DateValue } from '@internationalized/date'
-import DatePicker from '@/components/DatePicker.vue'
+import DatePicker from '../../components/DatePicker.vue'
 
 const meta = {
   title: 'Forms/DatePicker',
-  component: DatePicker,
   tags: ['autodocs'],
   argTypes: {
     size: {

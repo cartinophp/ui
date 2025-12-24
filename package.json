@@ -23,7 +23,7 @@
     "*.vue"
   ],
   "scripts": {
-    "dev": "CARTINO_DEV=true vite",
+    "dev": "cross-env CARTINO_DEV=true vite",
     "dev:storybook": "storybook dev -p 6006",
     "dev:watch": "CARTINO_DEV=true vite build --watch",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
