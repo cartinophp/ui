@@ -64,14 +64,14 @@
             <!-- Footer -->
             <div :class="modalTheme.footer({ class: ui?.footer })">
               <slot name="actions">
-                <div class="flex justify-end space-x-2">
+                <ButtonGroup align="end">
                   <Button variant="secondary" @click="emit('update:open', false)">
                     Cancel
                   </Button>
                   <Button variant="primary" @click="handleConfirm">
                     Confirm
                   </Button>
-                </div>
+                </ButtonGroup>
               </slot>
             </div>
           </DialogContent>
@@ -136,14 +136,14 @@
           <!-- Footer -->
           <div :class="modalTheme.footer({ class: ui?.footer })">
             <slot name="actions">
-              <div class="flex justify-end space-x-2">
+              <ButtonGroup align="end">
                 <Button variant="secondary" @click="emit('update:open', false)">
                   Cancel
                 </Button>
                 <Button variant="primary" @click="handleConfirm">
                   Confirm
                 </Button>
-              </div>
+              </ButtonGroup>
             </slot>
           </div>
         </DialogContent>
@@ -165,6 +165,7 @@ import {
 } from 'reka-ui'
 import theme from '@/themes/modal'
 import Button from './Button.vue'
+import ButtonGroup from './ButtonGroup.vue'
 import Icon from './Icon.vue' // Ensure you have an Icon component
 
 export interface ModalProps {
