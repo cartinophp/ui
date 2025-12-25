@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Tabs from '@/components/Tabs.vue'
+import Tabs from '../../components/Tabs.vue'
 
 const meta: Meta<typeof Tabs> = {
   title: 'Navigation/Tabs',
@@ -42,6 +42,8 @@ export type Story = StoryObj<typeof Tabs>
 
 // Basic tabs with content
 export const Default: Story = {
+  args: {},
+
   render: (args) => ({
     components: { Tabs },
     setup() {

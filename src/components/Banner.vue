@@ -151,15 +151,19 @@ const onClose = () => {
 
       <div data-slot="right" :class="ui.right({ class: props.ui?.right })">
         <slot name="close" :ui="ui">
-          <Icon
+          <button
             v-if="props.close"
-            :name="props.closeIcon || 'solar:close-circle-linear'"
             aria-label="Close banner"
             data-slot="close"
             :class="ui.close({ class: props.ui?.close })"
             class="cursor-pointer"
             @click="onClose"
-          />
+          >
+            <Icon
+              :name="props.closeIcon || 'solar:close-circle-linear'"
+              class="w-4 h-4"
+            />
+          </button>
         </slot>
       </div>
     </div>

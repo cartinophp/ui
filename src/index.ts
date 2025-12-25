@@ -29,6 +29,7 @@ import Icon from './components/Icon.vue'
 import Input from './components/Input.vue'
 import Link from './components/Link.vue'
 import Modal from './components/Modal.vue'
+import NavigationMenu from './components/NavigationMenu.vue'
 import PageHeader from './components/PageHeader.vue'
 import Pagination from './components/Pagination.vue'
 import PinInput from './components/PinInput.vue'
@@ -78,6 +79,7 @@ export const install = (app: App) => {
   app.component('CartinoInput', Input)
   app.component('CartinoLink', Link)
   app.component('CartinoModal', Modal)
+  app.component('CartinoNavigationMenu', NavigationMenu)
   app.component('CartinoPageHeader', PageHeader)
   app.component('CartinoPagination', Pagination)
   app.component('CartinoPinInput', PinInput)
@@ -128,6 +130,7 @@ export {
   Input,
   Link,
   Modal,
+  NavigationMenu,
   PageHeader,
   Pagination,
   PinInput,
@@ -181,6 +184,7 @@ export type { IconProps } from './components/Icon.vue'
 export type { InputProps } from './components/Input.vue'
 export type { LinkProps } from './components/Link.vue'
 export type { ModalProps } from './components/Modal.vue'
+export type { NavigationMenuProps, MenuItem } from './components/NavigationMenu.vue'
 export type { PageHeaderProps } from './components/PageHeader.vue'
 export type { PaginationProps } from './components/Pagination.vue'
 export type { PinInputProps } from './components/PinInput.vue'
