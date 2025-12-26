@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, watch, ref } from 'vue'
 import { Primitive } from 'reka-ui'
 import bannerTheme from '@/themes/banner'
 import Link from './Link.vue'
@@ -61,17 +61,17 @@ const ui = computed(() =>
 )
 
 const id = computed(() => `banner-${props.id || '1'}`)
+const isVisible = ref(true)
+
 
 watch(
   id,
   (newId) => {
-    if (typeof document === 'undefined' || typeof localStorage === 'undefined')
+    if (typeof localStorage === 'undefined')
       return
 
     const isClosed = localStorage.getItem(newId) === 'true'
-    const htmlElement = document.querySelector('html')
-
-    htmlElement?.classList.toggle('hide-banner', isClosed)
+    isVisible.value = !isClosed
   },
   { immediate: true }
 )
@@ -80,20 +80,20 @@ const onClose = () => {
   if (typeof localStorage !== 'undefined') {
     localStorage.setItem(id.value, 'true')
   }
-  if (typeof document !== 'undefined') {
-    document.querySelector('html')?.classList.add('hide-banner')
-  }
+  isVisible.value = false
   emits('close')
 }
 </script>
 
 <template>
-  <Primitive
-    :as="props.as"
-    class="banner"
-    data-slot="root"
-    :class="ui.root({ class: [props.ui?.root, props.class] })"
-  >
+<Primitive
+  v-if="isVisible"
+  :as="props.as"
+  class="banner"
+  data-slot="root"
+  :class="ui.root({ class: [props.ui?.root, props.class] })"
+>
+
     <Link
       v-if="props.to"
       :aria-label="props.title"
@@ -102,11 +102,11 @@ const onClose = () => {
       tabindex="-1"
       raw
     >
-      <span class="absolute inset-0" aria-hidden="true" />
+      <span class="absolute inset-0 z-0" aria-hidden="true" />
     </Link>
 
     <div
-      class="container"
+      class="container relative z-10"
       data-slot="container"
       :class="ui.container({ class: props.ui?.container })"
     >
@@ -169,9 +169,3 @@ const onClose = () => {
     </div>
   </Primitive>
 </template>
-
-<style scoped>
-.hide-banner .banner {
-  display: none;
-}
-</style>

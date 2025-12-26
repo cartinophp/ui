@@ -220,7 +220,7 @@
     <!-- Horizontal Header -->
     <nav
       v-else
-      class="border-b px-4 py-2 flex items-center justify-between w-full min-h-[3.5rem]"
+      class="border-b px-4 py-2 flex items-center justify-between w-full min-h-14"
     >
       <ul class="hidden md:flex gap-2" :class="ui.list">
         <NavigationMenuItem
