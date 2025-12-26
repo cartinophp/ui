@@ -31,25 +31,25 @@ export default tv({
     },
     size: {
       sm: {
-        header: 'p-4 space-y-1',
+        header: 'p-3 space-y-1',
         title: 'text-lg font-medium',
         description: 'text-xs',
+        content: 'p-3 pt-0',
+        footer: 'p-3 pt-0'
+      },
+      md: {
+        header: 'p-4 space-y-1.5',
+        title: 'text-2xl font-semibold',
+        description: 'text-sm',
         content: 'p-4 pt-0',
         footer: 'p-4 pt-0'
       },
-      md: {
-        header: 'p-6 space-y-1.5',
-        title: 'text-2xl font-semibold',
-        description: 'text-sm',
-        content: 'p-6 pt-0',
-        footer: 'p-6 pt-0'
-      },
       lg: {
-        header: 'p-8 space-y-2',
+        header: 'p-6 space-y-2',
         title: 'text-3xl font-semibold',
         description: 'text-base',
-        content: 'p-8 pt-0',
-        footer: 'p-8 pt-0'
+        content: 'p-6 pt-0',
+        footer: 'p-6 pt-0'
       }
     },
     hover: {

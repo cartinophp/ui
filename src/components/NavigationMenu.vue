@@ -83,8 +83,8 @@
   const ui = computed(() => theme({ orientation: props.mode }))
   
   const sidebarWidth = computed(() => {
-    if (isMobile.value) return '16rem'
-    if (isTablet.value) return collapsed.value ? '4rem' : '12rem'
+    if (isMobile.value) return '100vw'
+    if (isTablet.value) return collapsed.value ? '5rem' : '12rem'
     return collapsed.value ? '4rem' : '16rem'
   })
   
@@ -159,7 +159,7 @@
           enter-active-class="transition-all duration-200"
           leave-active-class="transition-all duration-200"
         >
-          <ul v-if="expanded" :class="ui.list">
+          <ul v-if="expanded" :class="[ui.list, 'flex flex-col']">
             <NavigationMenuItem
               v-for="child in item.children"
               :key="child.label"
@@ -184,8 +184,8 @@
     <aside
       v-if="mode === 'vertical'"
       :class="[
-        'bg-surface border-r h-screen transition-transform duration-300',
-        isMobile ? 'fixed inset-y-0 left-0 z-50' : 'relative',
+        'bg-surface border-r h-screen transition-all duration-300',
+        isMobile ? 'fixed inset-y-0 left-0 z-50 w-screen max-w-full' : 'relative',
         isMobile && !mobileDrawerOpen ? '-translate-x-full' : 'translate-x-0'
       ]"
       :style="{ width: sidebarWidth }"
@@ -201,7 +201,7 @@
       </header>
   
       <nav class="p-2">
-        <ul :class="ui.list">
+        <ul :class="[ui.list, 'flex flex-col']">
           <NavigationMenuItem
             v-for="item in menuItems"
             :key="item.label"
@@ -218,7 +218,10 @@
     </aside>
   
     <!-- Horizontal Header -->
-    <nav v-else class="border-b p-2 flex items-center justify-between">
+    <nav
+      v-else
+      class="border-b px-4 py-2 flex items-center justify-between w-full min-h-[3.5rem]"
+    >
       <ul class="hidden md:flex gap-2" :class="ui.list">
         <NavigationMenuItem
           v-for="item in menuItems"
@@ -246,7 +249,7 @@
     <!-- Mobile Drawer (Horizontal) -->
     <aside
       v-if="mode === 'horizontal' && isMobile && mobileDrawerOpen"
-      class="fixed inset-y-0 left-0 w-64 bg-surface z-50"
+      class="fixed inset-y-0 left-0 w-full bg-surface z-50"
     >
       <header class="p-4 flex justify-between border-b">
         <span class="font-semibold">Menu</span>
@@ -256,7 +259,7 @@
       </header>
   
       <nav class="p-2">
-        <ul :class="ui.list">
+        <ul :class="[ui.list, 'flex flex-col']">
           <NavigationMenuItem
             v-for="item in menuItems"
             :key="item.label"
@@ -270,5 +273,4 @@
         </ul>
       </nav>
     </aside>
-  </template>
-  
+  </template>  

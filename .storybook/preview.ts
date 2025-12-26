@@ -27,11 +27,11 @@ const preview: Preview = {
       values: [
         {
           name: 'light',
-          value: '#ffffff' // Your light theme background color
+          value: '#ffffff'
         },
         {
           name: 'dark',
-          value: '#1a1a1a' // Your dark theme background color
+          value: '#1a1a1a'
         }
       ]
     }

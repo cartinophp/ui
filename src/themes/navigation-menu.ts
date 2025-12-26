@@ -4,7 +4,7 @@ export default tv({
   slots: {
 
     root: 'relative flex',
-    list: 'flex gap-1 p-1',
+    list: 'flex flex-col gap-1 p-1',
     item: 'relative w-full',
     trigger:
       'group inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ' +
@@ -49,7 +49,7 @@ export default tv({
     orientation: {
       horizontal: {
         root: 'items-center',
-        list: 'flex-row items-center',
+        list: 'flex-col items-stretch lg:flex-row lg:items-center',
         content: 'top-full left-0 mt-2'
       },
 
