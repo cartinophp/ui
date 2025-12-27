@@ -13,42 +13,27 @@ export default tv({
       line: {
         list: 'border-b border-border gap-4',
         trigger:
-          'relative pb-3 px-1 font-medium text-muted-foreground hover:text-foreground data-[active=true]:text-foreground data-[active=true]:border-b-2 data-[active=true]:border-primary data-[active=true]:-mb-px'
+          'relative pb-3 px-1 font-medium text-muted-foreground hover:text-foreground data-[active=true]:text-primary data-[active=true]:border-b-2 data-[active=true]:border-primary data-[active=true]:-mb-px'
       },
       pill: {
         list: 'bg-muted p-1 rounded-lg gap-1',
         trigger:
-          'rounded-md px-3 py-1.5 font-medium text-muted-foreground hover:text-foreground data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:shadow-sm'
+          'group rounded-md px-3 py-1.5 font-medium text-white hover:text-foreground data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-sm'
       },
       card: {
         list: 'gap-2',
         trigger:
-          'rounded-t-lg border border-b-0 border-border px-4 py-2 font-medium bg-muted text-muted-foreground hover:bg-background hover:text-foreground data-[active=true]:bg-background data-[active=true]:text-foreground data-[active=true]:border-b data-[active=true]:border-b-background'
+          'rounded-t-lg border border-b-0 border-border px-4 py-2 font-medium bg-muted text-white hover:bg-background hover:text-foreground data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:border-b data-[active=true]:border-b-primary'
       }
     },
     size: {
-      xs: {
-        trigger: 'text-xs h-8',
-        content: 'mt-2'
-      },
-      sm: {
-        trigger: 'text-sm h-9',
-        content: 'mt-3'
-      },
-      md: {
-        trigger: 'text-sm h-10',
-        content: 'mt-4'
-      },
-      lg: {
-        trigger: 'text-base h-11',
-        content: 'mt-5'
-      }
+      xs: { trigger: 'text-xs h-8', content: 'mt-2' },
+      sm: { trigger: 'text-sm h-9', content: 'mt-3' },
+      md: { trigger: 'text-sm h-10', content: 'mt-4' },
+      lg: { trigger: 'text-base h-11', content: 'mt-5' }
     },
     orientation: {
-      horizontal: {
-        list: 'flex-row',
-        trigger: 'flex-row'
-      },
+      horizontal: { list: 'flex-row', trigger: 'flex-row' },
       vertical: {
         root: 'flex flex-row gap-4',
         list: 'flex-col items-start',
