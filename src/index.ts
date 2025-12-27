@@ -19,6 +19,7 @@ import Command from './components/Command.vue'
 import DashboardSidebar from './components/DashboardSidebar.vue'
 import DashboardSidebarLinks from './components/DashboardSidebarLinks.vue'
 import DashboardToolbar from './components/DashboardToolbar.vue'
+import Drawer from './components/Drawer.vue'
 import Calendar from './components/Calendar.vue'
 import DataTable from './components/DataTable.vue'
 import DatePicker from './components/DatePicker.vue'
@@ -69,6 +70,7 @@ export const install = (app: App) => {
   app.component('CartinoDashboardSidebar', DashboardSidebar)
   app.component('CartinoDashboardSidebarLinks', DashboardSidebarLinks)
   app.component('CartinoDashboardToolbar', DashboardToolbar)
+  app.component('CartinoDrawer', Drawer)
   app.component('CartinoCalendar', Calendar)
   app.component('CartinoDataTable', DataTable)
   app.component('CartinoDatePicker', DatePicker)
@@ -175,6 +177,7 @@ export type {
 export type { DashboardSidebarProps } from './components/DashboardSidebar.vue'
 export type { DashboardSidebarLinksProps } from './components/DashboardSidebarLinks.vue'
 export type { DashboardToolbarProps } from './components/DashboardToolbar.vue'
+export type { DrawerProps } from './components/Drawer.vue'
 export type { DataTableProps } from './components/DataTable.vue'
 export type { DatePickerProps } from './components/DatePicker.vue'
 export type { DropdownProps, DropdownItem } from './components/Dropdown.vue'
@@ -185,7 +188,7 @@ export type { InputProps } from './components/Input.vue'
 export type { LinkProps } from './components/Link.vue'
 export type { ModalProps } from './components/Modal.vue'
 export type { NavigationMenuProps } from './components/NavigationMenu.vue'
-export type { MenuItem } from './components/NavigationMenuItem.vue'
+export type { NavigationItem } from '@/config/navigation'
 export type { PageHeaderProps } from './components/PageHeader.vue'
 export type { PaginationProps } from './components/Pagination.vue'
 export type { PinInputProps } from './components/PinInput.vue'
