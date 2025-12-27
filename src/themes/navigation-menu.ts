@@ -2,34 +2,67 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'relative z-10 flex items-center justify-center',
-    list: 'flex gap-1 p-1',
-    item: 'relative',
-    trigger: 'group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed',
+
+    root: 'relative flex',
+    list: 'flex flex-col gap-1 p-1',
+    item: 'relative w-full',
+    trigger:
+      'group inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ' +
+      'hover:bg-accent hover:text-accent-foreground ' +
+      'focus:outline-none focus:ring-2 focus:ring-primary ' +
+      'disabled:pointer-events-none disabled:opacity-50',
+
     triggerIcon: 'size-4 shrink-0',
-    triggerCaret: 'size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180',
-    content: 'absolute top-full left-0 mt-2 w-auto min-w-[400px] rounded-xl border border-border bg-popover p-4 shadow-xl animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+
+    triggerCaret:
+      'ml-auto size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180',
+
+    content:
+      'absolute z-50 min-w-[200px] rounded-xl border border-border bg-popover p-2 shadow-xl ' +
+      'animate-in fade-in-0 zoom-in-95 ' +
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+
     grid: 'grid gap-2 grid-cols-1',
-    gridItem: 'flex items-start gap-4 rounded-lg p-3 transition-all hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer',
-    gridItemIcon: 'size-6 shrink-0 mt-0.5',
+
+    gridItem:
+      'flex items-start gap-3 rounded-lg p-3 transition-colors ' +
+      'hover:bg-accent hover:text-accent-foreground ' +
+      'focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer',
+
+    gridItemIcon: 'size-5 shrink-0 mt-0.5',
+
     gridItemContent: 'flex-1 space-y-1',
+
     gridItemLabel: 'text-sm font-medium leading-none',
-    gridItemDescription: 'text-sm text-muted-foreground leading-snug',
-    link: 'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed',
+
+    gridItemDescription: 'text-xs text-muted-foreground leading-snug',
+    link:
+      'inline-flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ' +
+      'hover:bg-accent hover:text-accent-foreground ' +
+      'focus:outline-none focus:ring-2 focus:ring-primary ' +
+      'disabled:pointer-events-none disabled:opacity-50',
+
     linkIcon: 'size-4 shrink-0'
   },
+
   variants: {
     orientation: {
       horizontal: {
-        list: 'flex-row'
+        root: 'items-center',
+        list: 'flex-col items-stretch lg:flex-row lg:items-center',
+        content: 'top-full left-0 mt-2'
       },
+
       vertical: {
-        list: 'flex-col items-start',
-        content: 'left-full top-0 ml-2 mt-0'
+        root: 'flex-col',
+        list: 'flex-col items-stretch',
+        content: 'relative static mt-1 ml-4 border-none shadow-none bg-transparent p-0'
       }
     }
   },
+
+
   defaultVariants: {
-    orientation: 'horizontal'
+    orientation: 'vertical'
   }
 })

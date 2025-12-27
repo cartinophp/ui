@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import DashboardSidebar from '@/components/DashboardSidebar.vue'
-import type { DashboardSidebarLinkItem } from '@/components/DashboardSidebar.vue'
-import Button from '@/components/Button.vue'
-import Avatar from '@/components/Avatar.vue'
-import Separator from '@/components/Separator.vue'
+import DashboardSidebar from '../../components/DashboardSidebar.vue'
+import type { DashboardSidebarLinkItem } from '../../components/DashboardSidebar.vue'
+import Button from '../../components/Button.vue'
+import Avatar from '../../components/Avatar.vue'
+import Separator from '../../components/Separator.vue'
 import { ref } from 'vue'
 
 const meta = {

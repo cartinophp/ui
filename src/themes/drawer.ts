@@ -5,13 +5,13 @@ export default tv({
     overlay: 'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm',
     drawer:
       'fixed z-50 bg-default border-default shadow-xl max-h-full overflow-y-auto',
-    header: 'space-y-2 p-6 pb-4 border-b border-default',
+    header: 'space-y-2 p-6 pb-4 border-b border-default bg-default',
     title: 'text-xl font-semibold text-foreground',
     description: 'text-muted',
     body: 'flex-1 p-6 text-foreground',
-    footer: 'flex justify-end gap-2 p-6 pt-4 border-t border-default',
+    footer: 'flex justify-end gap-2 p-6 pt-4 border-t border-default bg-default',
     closeButton:
-      'absolute top-4 right-4 p-1 rounded-md text-muted hover:text-foreground hover:bg-elevated focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors'
+      'absolute top-4 right-4 p-1 rounded-md text-muted hover:text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors bg-gray-100 dark:bg-gray-900 shadow-sm'
   },
   variants: {
     side: {

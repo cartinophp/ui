@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Modal from '@/components/Modal.vue'
-import Button from '@/components/Button.vue'
+import Modal from '../../components/Modal.vue'
+import Button from '../../components/Button.vue'
+import Icon from '../../components/Icon.vue'
 
 const meta = {
   title: 'Feedback/Modal',
@@ -23,10 +24,11 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// Default Modal
 export const Default: Story = {
   args: { title: 'Modal Title' },
   render: (args) => ({
-    components: { Modal, Button },
+    components: { Modal, Button, Icon },
     setup() {
       const open = ref(false)
       return { args, open }
@@ -50,10 +52,11 @@ export const Default: Story = {
   })
 }
 
+// Small Modal
 export const Small: Story = {
   args: { title: 'Small Modal', size: 'sm' },
   render: (args) => ({
-    components: { Modal, Button },
+    components: { Modal, Button, Icon },
     setup() {
       const open = ref(false)
       return { args, open }
@@ -69,10 +72,11 @@ export const Small: Story = {
   })
 }
 
+// Large Modal
 export const Large: Story = {
   args: { title: 'Large Modal', size: 'lg' },
   render: (args) => ({
-    components: { Modal, Button },
+    components: { Modal, Button, Icon },
     setup() {
       const open = ref(false)
       return { args, open }
@@ -94,10 +98,11 @@ export const Large: Story = {
   })
 }
 
+// Modal with Footer
 export const WithFooter: Story = {
   args: { title: 'Confirmation Required' },
   render: (args) => ({
-    components: { Modal, Button },
+    components: { Modal, Button, Icon },
     setup() {
       const open = ref(false)
       return { args, open }
@@ -121,10 +126,11 @@ export const WithFooter: Story = {
   })
 }
 
+// Fullscreen Modal
 export const Fullscreen: Story = {
   args: { title: 'Modal fullscreen', fullscreen: true },
   render: (args) => ({
-    components: { Modal, Button },
+    components: { Modal, Button, Icon },
     setup() {
       const open = ref(false)
       return { args, open }

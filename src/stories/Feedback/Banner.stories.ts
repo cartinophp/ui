@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Banner from '@/components/Banner.vue'
-import Button from '@/components/Button.vue'
+import Banner from '../../components/Banner.vue'
+import Button from '../../components/Button.vue'
 
 const meta = {
   title: 'Feedback/Banner',
@@ -32,9 +32,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    id: 'default',
     title: 'This is a banner with an important message.',
     icon: 'solar:info-circle-linear',
-    color: 'primary'
+    color: 'primary',
+    close: true
   }
 }
 
@@ -50,6 +52,7 @@ export const WithClose: Story = {
 
 export const Success: Story = {
   args: {
+    id: 'success-banner',
     title: 'Operation completed successfully!',
     icon: 'solar:check-circle-linear',
     color: 'success',
@@ -59,6 +62,7 @@ export const Success: Story = {
 
 export const Warning: Story = {
   args: {
+    id: 'warning-banner',
     title: 'Action required: Please update your payment method.',
     icon: 'solar:danger-triangle-linear',
     color: 'warning',
@@ -68,6 +72,7 @@ export const Warning: Story = {
 
 export const Error: Story = {
   args: {
+    id: 'error-banner',
     title: 'Connection error. Please check your internet connection.',
     icon: 'solar:close-circle-linear',
     color: 'error',
@@ -77,6 +82,7 @@ export const Error: Story = {
 
 export const Neutral: Story = {
   args: {
+    id: 'neutral-banner',
     title: 'This is a neutral banner.',
     icon: 'solar:info-circle-linear',
     color: 'neutral',
@@ -86,9 +92,11 @@ export const Neutral: Story = {
 
 export const WithActions: Story = {
   args: {
+    id: 'banner-with-actions',
     title: 'This is a banner with actions.',
     icon: 'solar:info-circle-linear',
     color: 'primary',
+    close: true,
     actions: [
       {
         label: 'Action 1',
@@ -104,10 +112,12 @@ export const WithActions: Story = {
 
 export const WithLink: Story = {
   args: {
+    id: 'banner-with-link',
     title: 'NuxtLabs is joining Vercel!',
     icon: 'solar:info-circle-linear',
     color: 'primary',
     to: 'https://nuxtlabs.com/',
-    target: '_blank'
+    target: '_blank',
+    close:true
   }
 }

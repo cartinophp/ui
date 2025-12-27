@@ -10,7 +10,7 @@ export default tv({
     linkBadge: 'ml-auto shrink-0',
     linkChevron: 'w-4 h-4 shrink-0 transition-transform duration-200 ml-auto',
     submenu:
-      'flex flex-col gap-1 mt-1 ml-4 pl-4 border-l border-border overflow-hidden',
+      'flex flex-col gap-1 mt-1 ml-4 pl-4 border-l border-border overflow-hidden max-h-screen',
     submenuLink:
       'flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
     submenuLinkIcon: 'w-4 h-4 shrink-0',

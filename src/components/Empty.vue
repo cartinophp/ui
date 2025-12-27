@@ -15,7 +15,7 @@ export interface EmptyProps {
   description?: string
   actions?: Array<{
     label: string
-    icon?: string
+    leadingIcon?: string
     variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
     tone?: 'default' | 'success' | 'critical'
     onClick?: () => void
@@ -98,11 +98,12 @@ const ui = computed(() =>
               v-for="(action, index) in actions"
               :key="index"
               :size="size"
-              v-bind="action"
+              :label="action.label"
+              :leadingIcon="action.leadingIcon"
+              :variant="action.variant"
+              :tone="action.tone"
               @click="action.onClick"
-            >
-              {{ action.label }}
-            </Button>
+            />
           </slot>
         </div>
       </slot>
