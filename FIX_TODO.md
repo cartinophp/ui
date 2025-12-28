@@ -269,18 +269,8 @@ const handleEvent = (event: Event) => {
 <div v-else-if="tab.content" class="p-4" v-html="tab.content" />
 ```
 
-**Risk**: XSS vulnerability if content is user-generated
+**Risk**: XSS vulnerability if content is user-generated, A TAB can have everything, not only HTML
 
-**Fix**: Either:
-1. Remove v-html completely (use slots only)
-2. Add DOMPurify sanitization:
-```typescript
-import DOMPurify from 'dompurify'
-
-const sanitizedContent = computed(() => 
-  tab.content ? DOMPurify.sanitize(tab.content) : ''
-)
-```
 3. Add warning in docs about trusted content only
 
 ---
