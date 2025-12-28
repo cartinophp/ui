@@ -15,7 +15,7 @@
           <DialogContent :class="modalTheme.content({ class: ui?.content })">
             <!-- Header -->
             <div
-              v-if="title || description || $slots.header || closable || icon"
+              v-if="title || description || $slots.header || closable || iconName"
               :class="modalTheme.header({ class: ui?.header })"
             >
               <slot name="header">
@@ -23,8 +23,8 @@
                   <!-- Icon slot -->
                   <slot name="icon">
                     <Icon
-                      v-if="icon"
-                      :name="icon"
+                      v-if="iconName"
+                      :name="iconName"
                       :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
                     />
                   </slot>
@@ -61,6 +61,10 @@
               <slot />
             </div>
 
+<!-- 
+            // NOTE: Modal now always shows default Cancel/Confirm footer buttons if no 'actions' slot is provided.
+            // Providing an 'actions' slot will replace the default buttons. Breaking change from previous behavior. -->
+
             <!-- Footer -->
             <div :class="modalTheme.footer({ class: ui?.footer })">
               <slot name="actions">
@@ -87,7 +91,7 @@
         <DialogContent :class="modalTheme.content({ class: ui?.content })">
           <!-- Header -->
           <div
-            v-if="title || description || $slots.header || closable || icon"
+            v-if="title || description || $slots.header || closable || iconName"
             :class="modalTheme.header({ class: ui?.header })"
           >
             <slot name="header">
@@ -95,8 +99,8 @@
                 <!-- Icon slot -->
                 <slot name="icon">
                   <Icon
-                    v-if="icon"
-                    :name="icon"
+                    v-if="iconName"
+                    :name="iconName"
                     :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
                   />
                 </slot>
@@ -166,7 +170,7 @@ import {
 import theme from '@/themes/modal'
 import Button from './Button.vue'
 import ButtonGroup from './ButtonGroup.vue'
-import Icon from './Icon.vue' // Ensure you have an Icon component
+import Icon from './Icon.vue'
 
 export interface ModalProps {
   open?: boolean
@@ -221,4 +225,16 @@ const modalTheme = computed(() =>
     fullscreen: props.fullscreen
   })
 )
+
+// ---------- Icon Fallback ----------
+const validIcons = ['solar:info-linear', 'solar:success-linear', 'solar:warning-linear', 'solar:error-linear']
+
+const iconName = computed(() => {
+  if (!props.icon) return undefined
+  if (!validIcons.includes(props.icon)) {
+    console.warn(`[Modal] Invalid icon "${props.icon}" passed, falling back to default.`)
+    return 'solar:info-linear'
+  }
+  return props.icon
+})
 </script>

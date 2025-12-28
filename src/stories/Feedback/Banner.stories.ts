@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import Banner from '../../components/Banner.vue'
-import Button from '../../components/Button.vue'
 
 const meta = {
   title: 'Feedback/Banner',

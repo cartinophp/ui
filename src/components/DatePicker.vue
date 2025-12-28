@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ComponentPublicInstance } from 'vue'
+  
   
   export interface DatePickerProps {
     modelValue?: Date | string | { start: Date | string; end: Date | string } | null
@@ -39,7 +39,7 @@
     watch,
     onMounted,
     onUnmounted,
-    useSlots
+  //  useSlots
   } from 'vue'
   import theme from '@/themes/date-picker'
   import Icon from './Icon.vue'
@@ -59,7 +59,7 @@
   })
   
   const emits = defineEmits<DatePickerEmits>()
-  const slots = useSlots()
+  // const slots = useSlots()
   
   /* -------------------- Theme -------------------- */
   
@@ -105,14 +105,14 @@
       : ''
   }
   
-  function formatForInput(value: any): string {
-    const d = toDate(value)
-    if (!d) return ''
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
-      2,
-      '0'
-    )}-${String(d.getDate()).padStart(2, '0')}`
-  }
+  // function formatForInput(value: any): string {
+  //   const d = toDate(value)
+  //   if (!d) return ''
+  //   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+  //     2,
+  //     '0'
+  //   )}-${String(d.getDate()).padStart(2, '0')}`
+  // }
   
   /* -------------------- Display -------------------- */
   
@@ -238,44 +238,76 @@
   watch(() => props.range, updateDisplay)
   </script>
   
+ 
   <template>
     <div ref="containerRef" :class="datePickerTheme.base()">
+  
       <!-- SINGLE -->
-      <input
+      <button
         v-if="!props.range"
-        type="text"
-        readonly
-        :value="displayValue"
-        :placeholder="props.placeholder"
-        :disabled="props.disabled"
+        type="button"
         :class="datePickerTheme.segment()"
-        @click="() => triggerDatePicker('single')"
-      />
+        :disabled="props.disabled"
+        aria-haspopup="dialog"
+        aria-controls="datepicker-single"
+        @click="triggerDatePicker('single')"
+      >
+        <span v-if="displayValue">{{ displayValue }}</span>
+        <span v-else class="placeholder">{{ props.placeholder }}</span>
+      </button>
   
       <!-- RANGE -->
       <div v-else class="range-wrapper">
-        <input
-          readonly
-          :value="displayStartValue"
-          placeholder="Start date"
+        <button
+          type="button"
           :class="datePickerTheme.segment()"
-          @click="() => triggerDatePicker('start')"
-        />
+          :disabled="props.disabled"
+          aria-haspopup="dialog"
+          aria-controls="datepicker-start"
+          @click="triggerDatePicker('start')"
+        >
+          <span v-if="displayStartValue">{{ displayStartValue }}</span>
+          <span v-else class="placeholder">Start date</span>
+        </button>
   
         <Icon :name="separatorIcon" />
   
-        <input
-          readonly
-          :value="displayEndValue"
-          placeholder="End date"
+        <button
+          type="button"
           :class="datePickerTheme.segment()"
-          @click="() => triggerDatePicker('end')"
-        />
+          :disabled="props.disabled"
+          aria-haspopup="dialog"
+          aria-controls="datepicker-end"
+          @click="triggerDatePicker('end')"
+        >
+          <span v-if="displayEndValue">{{ displayEndValue }}</span>
+          <span v-else class="placeholder">End date</span>
+        </button>
       </div>
   
-      <!-- Hidden Inputs -->
-      <input ref="singleDateInputRef" type="date" hidden />
-      <input ref="startDateInputRef" type="date" hidden />
-      <input ref="endDateInputRef" type="date" hidden />
+      <!-- Accessible native inputs -->
+      <input
+        id="datepicker-single"
+        ref="singleDateInputRef"
+        type="date"
+        class="sr-only"
+        aria-label="Select date"
+      />
+  
+      <input
+        id="datepicker-start"
+        ref="startDateInputRef"
+        type="date"
+        class="sr-only"
+        aria-label="Select start date"
+      />
+  
+      <input
+        id="datepicker-end"
+        ref="endDateInputRef"
+        type="date"
+        class="sr-only"
+        aria-label="Select end date"
+      />
     </div>
   </template>  

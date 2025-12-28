@@ -15,11 +15,11 @@
   })
   
   const iconClasses = computed(() =>
-    iconTheme({
-      size: props.size,
-      class: props.customClass
-    })
-  )
+  iconTheme({
+    size: props.size,
+    customClass: props.customClass
+  })
+)
   
   // Simple emoji detection
   const isEmoji = computed(() => {
@@ -29,10 +29,10 @@
   
   <template>
     <!-- Emoji rendering -->
-    <span v-if="isEmoji" :class="iconClasses.value" role="img" aria-label="icon">
+    <span v-if="isEmoji" :class="iconClasses" role="img" aria-label="icon">
       {{ props.name }}
     </span>
   
     <!-- Iconify icon rendering -->
-    <IconifyIcon v-else :icon="props.name" :class="iconClasses.value" />
+    <IconifyIcon v-else :icon="props.name" :class="iconClasses" />
   </template>  

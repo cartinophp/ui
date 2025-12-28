@@ -14,6 +14,7 @@ export interface PopoverProps {
   defaultOpen?: boolean
   side?: 'top' | 'right' | 'bottom' | 'left'
   align?: 'start' | 'center' | 'end'
+  modal?: boolean
   sideOffset?: number
   collisionPadding?: number
   arrow?: boolean

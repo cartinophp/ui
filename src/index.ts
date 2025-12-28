@@ -123,6 +123,7 @@ export {
   DashboardSidebar,
   DashboardSidebarLinks,
   DashboardToolbar,
+  Drawer,
   DataTable,
   DatePicker,
   Dropdown,
