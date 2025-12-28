@@ -1,17 +1,34 @@
 <template>
-  <DialogRoot :open="open" @update:open="emit('update:open', $event)">
+  <DialogRoot
+    :open="open"
+    @update:open="emit('update:open', $event)"
+    trap-focus
+    @escape-key-down="handleEscape"
+  >
     <DialogPortal>
-      <!-- Scrollable overlay mode: content is rendered inside the overlay so it scrolls within -->
+      <!-- Scrollable overlay mode -->
       <template v-if="props.scrollable">
-        <DialogOverlay :class="modalTheme.overlay({ class: ui?.overlay })">
+        <DialogOverlay
+          v-if="props.overlay"
+          :class="modalTheme.overlay({ class: ui?.overlay }) + ' fixed inset-0 z-50 bg-black/50'"
+        >
           <DialogContent :class="modalTheme.content({ class: ui?.content })">
             <!-- Header -->
             <div
-              v-if="title || description || $slots.header || closable"
+              v-if="title || description || $slots.header || closable || iconName"
               :class="modalTheme.header({ class: ui?.header })"
             >
               <slot name="header">
                 <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
+                  <!-- Icon slot -->
+                  <slot name="icon">
+                    <Icon
+                      v-if="iconName"
+                      :name="iconName"
+                      :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
+                    />
+                  </slot>
+
                   <DialogTitle
                     v-if="title"
                     :class="modalTheme.title({ class: ui?.title })"
@@ -26,7 +43,7 @@
                   </DialogDescription>
                 </div>
 
-                <!-- Close button as Button component with icon -->
+                <!-- Close button -->
                 <DialogClose v-if="closable" as-child>
                   <Button
                     :leading-icon="closeIcon"
@@ -44,32 +61,50 @@
               <slot />
             </div>
 
+<!-- 
+            // NOTE: Modal now always shows default Cancel/Confirm footer buttons if no 'actions' slot is provided.
+            // Providing an 'actions' slot will replace the default buttons. Breaking change from previous behavior. -->
+
             <!-- Footer -->
-            <div
-              v-if="$slots.footer"
-              :class="modalTheme.footer({ class: ui?.footer })"
-            >
-              <slot name="footer" />
+            <div :class="modalTheme.footer({ class: ui?.footer })">
+              <slot name="actions">
+                <ButtonGroup align="end">
+                  <Button variant="secondary" @click="emit('update:open', false)">
+                    Cancel
+                  </Button>
+                  <Button variant="primary" @click="handleConfirm">
+                    Confirm
+                  </Button>
+                </ButtonGroup>
+              </slot>
             </div>
           </DialogContent>
         </DialogOverlay>
       </template>
 
-      <!-- Default mode: overlay and content are separate -->
+      <!-- Default mode -->
       <template v-else>
         <DialogOverlay
           v-if="props.overlay"
-          :class="modalTheme.overlay({ class: ui?.overlay })"
+          :class="modalTheme.overlay({ class: ui?.overlay }) + ' fixed inset-0 z-50 bg-black/50'"
         />
-
         <DialogContent :class="modalTheme.content({ class: ui?.content })">
           <!-- Header -->
           <div
-            v-if="title || description || $slots.header || closable"
+            v-if="title || description || $slots.header || closable || iconName"
             :class="modalTheme.header({ class: ui?.header })"
           >
             <slot name="header">
               <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
+                <!-- Icon slot -->
+                <slot name="icon">
+                  <Icon
+                    v-if="iconName"
+                    :name="iconName"
+                    :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
+                  />
+                </slot>
+
                 <DialogTitle
                   v-if="title"
                   :class="modalTheme.title({ class: ui?.title })"
@@ -84,7 +119,7 @@
                 </DialogDescription>
               </div>
 
-              <!-- Close button as Button component with icon -->
+              <!-- Close button -->
               <DialogClose v-if="closable" as-child>
                 <Button
                   :leading-icon="closeIcon"
@@ -103,11 +138,17 @@
           </div>
 
           <!-- Footer -->
-          <div
-            v-if="$slots.footer"
-            :class="modalTheme.footer({ class: ui?.footer })"
-          >
-            <slot name="footer" />
+          <div :class="modalTheme.footer({ class: ui?.footer })">
+            <slot name="actions">
+              <ButtonGroup align="end">
+                <Button variant="secondary" @click="emit('update:open', false)">
+                  Cancel
+                </Button>
+                <Button variant="primary" @click="handleConfirm">
+                  Confirm
+                </Button>
+              </ButtonGroup>
+            </slot>
           </div>
         </DialogContent>
       </template>
@@ -128,11 +169,15 @@ import {
 } from 'reka-ui'
 import theme from '@/themes/modal'
 import Button from './Button.vue'
+import ButtonGroup from './ButtonGroup.vue'
+import Icon from './Icon.vue'
 
 export interface ModalProps {
   open?: boolean
   title?: string
   description?: string
+  icon?: string
+  tone?: 'success' | 'warning' | 'error' | 'info'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
   closable?: boolean
   closeIcon?: string
@@ -155,12 +200,24 @@ const props = withDefaults(defineProps<ModalProps>(), {
   scrollable: false,
   transition: true,
   portal: true,
-  dismissible: true
+  dismissible: true,
+  tone: 'info',
+  icon: undefined
 })
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
+  confirm: []
 }>()
+
+const handleConfirm = () => {
+  emit('confirm')
+  emit('update:open', false)
+}
+
+const handleEscape = () => {
+  emit('update:open', false)
+}
 
 const modalTheme = computed(() =>
   theme({
@@ -168,4 +225,16 @@ const modalTheme = computed(() =>
     fullscreen: props.fullscreen
   })
 )
+
+// ---------- Icon Fallback ----------
+const validIcons = ['solar:info-linear', 'solar:success-linear', 'solar:warning-linear', 'solar:error-linear']
+
+const iconName = computed(() => {
+  if (!props.icon) return undefined
+  if (!validIcons.includes(props.icon)) {
+    console.warn(`[Modal] Invalid icon "${props.icon}" passed, falling back to default.`)
+    return 'solar:info-linear'
+  }
+  return props.icon
+})
 </script>

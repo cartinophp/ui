@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import Tabs from '@/components/Tabs.vue'
+import Tabs from '../../components/Tabs.vue'
+import { Icon as Iconify } from '@iconify/vue'
+
 
 const meta: Meta<typeof Tabs> = {
   title: 'Navigation/Tabs',
@@ -42,6 +44,8 @@ export type Story = StoryObj<typeof Tabs>
 
 // Basic tabs with content
 export const Default: Story = {
+  args: {},
+
   render: (args) => ({
     components: { Tabs },
     setup() {
@@ -58,7 +62,7 @@ export const Default: Story = {
       return { args, selected, items }
     },
     template: `
-      <Tabs v-bind="args" v-model="selected" :items="items" :content="false">
+       <Tabs v-bind="args" v-model="selected" :items="items" :content="false">
         <template #account>
           <div class="space-y-4">
             <h3 class="text-lg font-semibold">Account Settings</h3>
@@ -152,56 +156,57 @@ export const WithIcons: Story = {
       ]
       return { args, selected, items }
     },
-    template: `
-      <Tabs v-bind="args" v-model="selected" :items="items" :content="false">
-        <template #overview>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Overview Dashboard</h3>
-            <p class="text-sm text-muted-foreground">
-              View your dashboard metrics and key performance indicators here.
-            </p>
-            <div class="grid grid-cols-3 gap-4 mt-4">
-              <div class="p-3 bg-muted rounded-lg">
-                <div class="text-2xl font-bold">1,234</div>
-                <div class="text-xs text-muted-foreground">Total Users</div>
-              </div>
-              <div class="p-3 bg-muted rounded-lg">
-                <div class="text-2xl font-bold">$12,345</div>
-                <div class="text-xs text-muted-foreground">Revenue</div>
-              </div>
-              <div class="p-3 bg-muted rounded-lg">
-                <div class="text-2xl font-bold">89%</div>
-                <div class="text-xs text-muted-foreground">Satisfaction</div>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template #analytics>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Analytics</h3>
-            <p class="text-sm text-muted-foreground">
-              Detailed analytics and insights about your application performance.
-            </p>
-          </div>
-        </template>
-        <template #reports>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Reports</h3>
-            <p class="text-sm text-muted-foreground">
-              Generate and view reports for your business metrics.
-            </p>
-          </div>
-        </template>
-        <template #settings>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Settings</h3>
-            <p class="text-sm text-muted-foreground">
-              Configure your application settings and preferences.
-            </p>
-          </div>
-        </template>
-      </Tabs>
-    `
+    template: `<Tabs v-bind="args" v-model="selected" :items="items" :content="false">
+  <template #overview>
+    <div class="p-4 border rounded-lg">
+      <h3 class="text-lg text-black font-semibold mb-2">Overview Dashboard</h3>
+      <p class="text-sm text-black">
+        View your dashboard metrics and key performance indicators here.
+      </p>
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+          <div class="text-black font-bold">1,234</div>
+          <div class="text-xs text-black">Total Users</div>
+        </div>
+        <div class="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+          <div class="text-black font-bold">$12,345</div>
+          <div class="text-xs text-black">Revenue</div>
+        </div>
+        <div class="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+          <div class="text-black font-bold">89%</div>
+          <div class="text-xs text-black">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template #analytics>
+    <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+      <h3 class="text-lg text-black font-semibold mb-2">Analytics</h3>
+      <p class="text-sm text-black">
+        Detailed analytics and insights about your application performance.
+      </p>
+    </div>
+  </template>
+
+  <template #reports>
+    <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+      <h3 class="text-lg text-black font-semibold mb-2">Reports</h3>
+      <p class="text-sm text-black">
+        Generate and view reports for your business metrics.
+      </p>
+    </div>
+  </template>
+
+  <template #settings>
+    <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+      <h3 class="text-lg text-black font-semibold mb-2">Settings</h3>
+      <p class="text-sm text-black">
+        Configure your application settings and preferences.
+      </p>
+    </div>
+  </template>
+</Tabs>`
   })
 }
 
@@ -268,39 +273,41 @@ export const PillVariant: Story = {
     },
     template: `
       <Tabs v-bind="args" v-model="selected" :items="items" variant="pill" :content="false">
-        <template #profile>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Profile Information</h3>
-            <p class="text-sm text-muted-foreground">
-              Update your profile details and manage your account information.
-            </p>
-          </div>
-        </template>
-        <template #activity>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Recent Activity</h3>
-            <p class="text-sm text-muted-foreground">
-              View your recent actions and activity timeline.
-            </p>
-          </div>
-        </template>
-        <template #settings>
-          <div class="p-4 border rounded-lg">
-            <h3 class="text-lg font-semibold mb-2">Account Settings</h3>
-            <p class="text-sm text-muted-foreground">
-              Manage your account preferences and privacy settings.
-            </p>
-          </div>
-        </template>
-      </Tabs>
-    `
+  <template #profile>
+    <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+      <h3 class="text-lg font-semibold mb-2">Profile Information</h3>
+      <p class="text-sm text-muted-foreground">
+        Update your profile details and manage your account information.
+      </p>
+    </div>
+  </template>
+  <template #activity>
+    <div class="p-4 border rounded-lg hover:bg-muted-foreground transition-colors">
+      <h3 class="text-lg font-semibold mb-2">Recent Activity</h3>
+      <p class="text-sm text-muted-foreground">
+        View your recent actions and activity timeline.
+      </p>
+    </div>
+  </template>
+  <template #settings>
+    <div class="p-4 border rounded-lg hover:bg-muted-foreground transition-colors">
+      <h3 class="text-lg font-semibold mb-2">Account Settings</h3>
+      <p class="text-sm text-muted">
+        Manage your account preferences and privacy settings.
+      </p>
+    </div>
+  </template>
+</Tabs>`
   })
 }
 
 // Card variant
 export const CardVariant: Story = {
   render: (args: any) => ({
-    components: { Tabs },
+    components: {
+      Tabs,
+      Iconify
+    },
     setup() {
       const selected = ref('preview')
       const items = [
@@ -311,36 +318,57 @@ export const CardVariant: Story = {
       return { args, selected, items }
     },
     template: `
-      <Tabs v-bind="args" v-model="selected" :items="items" variant="card" :content="false">
+      <Tabs
+        v-bind="args"
+        v-model="selected"
+        :items="items"
+        variant="card"
+        :content="false"
+      >
+        <!-- Preview -->
         <template #preview>
           <div class="p-6 bg-muted/50 rounded-lg">
             <div class="flex items-center justify-center h-32">
               <div class="text-center">
-                <div class="text-4xl mb-2">🎨</div>
-                <p class="text-sm text-muted-foreground">Component Preview</p>
+                <!-- Iconify icon (THIS WORKS) -->
+                <Iconify
+                  icon="solar:palette-linear"
+                  class="w-10 h-10 mb-2 text-primary mx-auto"
+                />
+                <p class="text-sm text-muted-foreground">
+                  Component Preview
+                </p>
               </div>
             </div>
           </div>
         </template>
+
+        <!-- Code -->
         <template #code>
-          <div class="p-4 bg-muted/50 rounded-lg font-mono text-sm">
+          <div class="p-4 rounded-lg font-mono text-sm">
             <div class="text-muted-foreground">// Component code</div>
             <div class="mt-2">
-              <span class="text-blue-500">const</span> Example = () => {<br/>
-              &nbsp;&nbsp;<span class="text-blue-500">return</span> <span class="text-green-500">&lt;div&gt;</span>Hello World<span class="text-green-500">&lt;/div&gt;</span><br/>
-              }
+              <span class="text-blue-500">const</span> Example = () => {'{'}<br />
+              &nbsp;&nbsp;<span class="text-blue-500">return</span>{' '}
+              <span class="text-green-500">&lt;div&gt;</span>
+              Hello World
+              <span class="text-green-500">&lt;/div&gt;</span>
+              <br />
+              {'}'}
             </div>
           </div>
         </template>
+
+        <!-- Settings -->
         <template #settings>
           <div class="p-4 bg-muted/50 rounded-lg">
             <h3 class="font-semibold mb-3">Component Settings</h3>
             <div class="space-y-2">
-              <label class="flex items-center gap-2 text-sm">
+              <label class="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="checkbox" checked />
                 Show grid
               </label>
-              <label class="flex items-center gap-2 text-sm">
+              <label class="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="checkbox" />
                 Dark mode
               </label>
@@ -485,9 +513,9 @@ export const Sizes: Story = {
       const selected3 = ref('tab1')
       const selected4 = ref('tab1')
       const items = [
-        { label: 'Tab 1', value: 'tab1', slot: 'content' },
-        { label: 'Tab 2', value: 'tab2', slot: 'content' },
-        { label: 'Tab 3', value: 'tab3', slot: 'content' }
+        { label: 'Tab 1', value: 'tab1', slot: 'tab1' },
+        { label: 'Tab 2', value: 'tab2', slot: 'tab2' },
+        { label: 'Tab 3', value: 'tab3', slot: 'tab3' }
       ]
       return { args, selected1, selected2, selected3, selected4, items }
     },
@@ -495,33 +523,84 @@ export const Sizes: Story = {
       <div class="space-y-8">
         <div>
           <p class="text-sm font-medium mb-2">Extra Small</p>
-          <Tabs v-model="selected1" :items="items" size="xs" :content="false">
-            <template #content>
-              <div class="p-3 border rounded-lg text-sm">Content for selected tab</div>
+          <Tabs v-model="selected1" :items="items" size="xs">
+            <template #tab1>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 1
+              </div>
+            </template>
+            <template #tab2>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 2
+              </div>
+            </template>
+            <template #tab3>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 3
+              </div>
             </template>
           </Tabs>
         </div>
+
         <div>
           <p class="text-sm font-medium mb-2">Small</p>
-          <Tabs v-model="selected2" :items="items" size="sm" :content="false">
-            <template #content>
-              <div class="p-3 border rounded-lg text-sm">Content for selected tab</div>
+          <Tabs v-model="selected2" :items="items" size="sm">
+            <template #tab1>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 1
+              </div>
+            </template>
+            <template #tab2>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 2
+              </div>
+            </template>
+            <template #tab3>
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
+                Content for Tab 3
+              </div>
             </template>
           </Tabs>
         </div>
+
         <div>
           <p class="text-sm font-medium mb-2">Medium (Default)</p>
-          <Tabs v-model="selected3" :items="items" size="md" :content="false">
-            <template #content>
-              <div class="p-4 border rounded-lg">Content for selected tab</div>
+          <Tabs v-model="selected3" :items="items" size="md">
+            <template #tab1>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 1
+              </div>
+            </template>
+            <template #tab2>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 2
+              </div>
+            </template>
+            <template #tab3>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 3
+              </div>
             </template>
           </Tabs>
         </div>
+
         <div>
           <p class="text-sm font-medium mb-2">Large</p>
-          <Tabs v-model="selected4" :items="items" size="lg" :content="false">
-            <template #content>
-              <div class="p-4 border rounded-lg">Content for selected tab</div>
+          <Tabs v-model="selected4" :items="items" size="lg">
+            <template #tab1>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 1
+              </div>
+            </template>
+            <template #tab2>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 2
+              </div>
+            </template>
+            <template #tab3>
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                Content for Tab 3
+              </div>
             </template>
           </Tabs>
         </div>
@@ -549,19 +628,19 @@ export const WithDisabled: Story = {
       return { args, selected, items }
     },
     template: `
-      <Tabs v-bind="args" v-model="selected" :items="items" :content="false">
+      <Tabs v-bind="args" v-model="selected" :items="items">
         <template #available>
-          <div class="p-4 border rounded-lg">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">This tab is available and can be selected.</p>
           </div>
         </template>
         <template #disabled>
-          <div class="p-4 border rounded-lg">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">This content should not be visible as the tab is disabled.</p>
           </div>
         </template>
         <template #active>
-          <div class="p-4 border rounded-lg">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">Another available tab with content.</p>
           </div>
         </template>

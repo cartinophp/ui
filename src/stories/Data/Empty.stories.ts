@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Empty from '@/components/Empty.vue'
+import Empty from '../../components/Empty.vue'
 
 const meta = {
   title: 'Data/Empty',
@@ -39,16 +39,16 @@ export const WithActions: Story = {
       "It looks like you haven't added any projects. Create one to get started.",
     actions: [
       {
-        icon: 'solar:add-circle-bold',
+        leadingIcon: 'solar:add-circle-bold',
         label: 'Create new',
-        variant: 'primary'
+        variant: 'primary',
       },
       {
-        icon: 'solar:refresh-bold',
+        leadingIcon: 'solar:refresh-bold',
         label: 'Refresh',
         variant: 'secondary'
       }
-    ]
+    ] as any
   }
 }
 
@@ -125,7 +125,7 @@ export const LargeSize: Story = {
         label: 'Choose files',
         variant: 'primary'
       }
-    ]
+    ] as any
   }
 }
 
@@ -147,10 +147,10 @@ export const NoConnection: Story = {
     actions: [
       {
         label: 'Retry',
-        icon: 'solar:refresh-bold',
+        leadingIcon: 'solar:refresh-bold',
         variant: 'primary'
       }
-    ]
+    ] as any
   }
 }
 
@@ -168,6 +168,6 @@ export const Error: Story = {
         label: 'Report issue',
         variant: 'tertiary'
       }
-    ]
+    ] as any
   }
 }
