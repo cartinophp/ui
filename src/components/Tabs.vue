@@ -1,6 +1,5 @@
 <template>
   <div :class="ui.root()" v-bind="$attrs">
-    <!-- Tabs list -->
     <div
       :class="ui.list()"
       role="tablist"
