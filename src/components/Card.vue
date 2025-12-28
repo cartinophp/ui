@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import theme from '@/themes/card'
 
 export interface CardProps {
@@ -23,11 +23,12 @@ const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
 
+const { variant, size, hover } = toRefs(props)
 const cardTheme = computed(() =>
   theme({
-    variant: props.variant,
-    size: props.size,
-    hover: props.hover
+    variant: variant.value,
+    size: size.value,
+    hover: hover.value
   })
 )
 

@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, watch } from 'vue'
+import { computed, toRefs, ref, nextTick, watch } from 'vue'
 import theme from '@/themes/pin-input'
 
 export interface PinInputProps {
@@ -59,11 +59,15 @@ const setInputRef = (el: HTMLInputElement, index: number) => {
   }
 }
 
+const { variant, size, error } = toRefs(props)
+
+const hasError = computed(() => !!error.value)
+
 const pinInputTheme = computed(() =>
   theme({
-    variant: props.variant,
-    size: props.size,
-    hasError: props.error
+    variant: variant.value,
+    size: size.value,
+    hasError: hasError.value
   })
 )
 

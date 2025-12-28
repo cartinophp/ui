@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import Button from './Button.vue'
 import Icon from './Icon.vue'
 import Avatar from './Avatar.vue'
@@ -37,10 +37,12 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { color, orientation } = toRefs(props)
+
 const alertTheme = computed(() =>
   theme({
-    color: props.color,
-    orientation: props.orientation
+    color: color.value,
+    orientation: orientation.value
   })
 )
 

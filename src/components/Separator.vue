@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { Separator as SeparatorPrimitive } from 'reka-ui'
 import theme from '@/themes/separator'
 
@@ -17,11 +17,15 @@ const props = withDefaults(defineProps<SeparatorProps>(), {
   size: 'md'
 })
 
+const { orientation, size, label } = toRefs(props)
+
+const hasLabel = computed(() => !!label.value)
+
 const separatorTheme = computed(() =>
   theme({
-    orientation: props.orientation,
-    size: props.size,
-    hasLabel: !!props.label
+    orientation: orientation.value,
+    size: size.value,
+    hasLabel: hasLabel.value
   })
 )
 

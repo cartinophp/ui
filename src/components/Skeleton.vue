@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import theme from '@/themes/skeleton'
 
 export interface SkeletonProps {
@@ -15,16 +15,17 @@ const props = withDefaults(defineProps<SkeletonProps>(), {
   animation: 'pulse'
 })
 
+const { variant, animation, width, height } = toRefs(props) 
 const ui = computed(() =>
   theme({
-    variant: props.variant,
-    animation: props.animation
+    variant: variant.value,
+    animation: animation.value
   })
 )
 
 const style = computed(() => ({
-  width: props.width,
-  height: props.height
+  width: width.value,
+  height: height.value
 }))
 </script>
 

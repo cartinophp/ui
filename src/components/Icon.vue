@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Icon as IconifyIcon } from '@iconify/vue'
-  import { computed } from 'vue'
+  import { computed, toRefs } from 'vue'
   import iconTheme from '@/themes/icon'
   
   export interface IconProps {
@@ -14,10 +14,11 @@
     size: 'md'
   })
   
+  const { size, customClass } = toRefs(props)
   const iconClasses = computed(() =>
   iconTheme({
-    size: props.size,
-    customClass: props.customClass
+    size: size.value,
+    customClass: customClass.value
   })
 )
   

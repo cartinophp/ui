@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import {
   DialogRoot,
   DialogPortal,
@@ -38,10 +38,11 @@ const slots = defineSlots<{
   footer?: () => any
 }>()
 
+const { side, size } = toRefs(props)
 const ui = computed(() =>
   theme({
-    side: props.side,
-    size: props.size
+    side: side.value,
+    size: size.value
   })
 )
 

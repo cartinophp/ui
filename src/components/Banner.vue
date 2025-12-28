@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, toRefs } from 'vue'
 import { Primitive } from 'reka-ui'
 import bannerTheme from '@/themes/banner'
 import Link from './Link.vue'
@@ -53,10 +53,13 @@ const slots = defineSlots()
 
 const emits = defineEmits(['close'])
 
+
+const { color, to } = toRefs(props)
+
 const ui = computed(() =>
   bannerTheme({
-    color: props.color,
-    to: !!props.to
+    color: color.value,
+    to: !!to.value
   })
 )
 
@@ -67,22 +70,13 @@ const isVisible = ref(true)
 watch(
   id,
   (newId) => {
-    if (typeof localStorage === 'undefined')
-      return
+    if (typeof localStorage === 'undefined') return
 
     const isClosed = localStorage.getItem(newId) === 'true'
     isVisible.value = !isClosed
   },
   { immediate: true }
 )
-
-const onClose = () => {
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem(id.value, 'true')
-  }
-  isVisible.value = false
-  emits('close')
-}
 </script>
 
 <template>

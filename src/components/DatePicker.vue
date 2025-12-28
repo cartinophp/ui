@@ -1,9 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
+  import { computed, ref, watch, onMounted, onUnmounted, toRefs } from 'vue'
+  import theme from '@/themes/date-picker'
+  import Icon from './Icon.vue'
   
-  
-  export interface DatePickerProps {
-    modelValue?: Date | string | { start: Date | string; end: Date | string } | null
-    defaultValue?: Date | string | { start: Date | string; end: Date | string } | null
+  const props = withDefaults(defineProps<{
+    modelValue?: Date | string | { start: Date | string | null; end: Date | string | null } | null
+    defaultValue?: Date | string | { start: Date | string | null; end: Date | string | null } | null
     size?: 'sm' | 'md' | 'lg'
     variant?: 'outline' | 'filled' | 'ghost' | 'soft' | 'none'
     color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
@@ -22,29 +24,7 @@
     placeholder?: string
     class?: any
     ui?: Record<string, any>
-  }
-  
-  export interface DatePickerEmits {
-    'update:modelValue': [date: DatePickerProps['modelValue']]
-    change: [event: Event]
-    blur: [event: FocusEvent]
-    focus: [event: FocusEvent]
-  }
-  </script>
-  
-  <script setup lang="ts">
-  import {
-    computed,
-    ref,
-    watch,
-    onMounted,
-    onUnmounted,
-  //  useSlots
-  } from 'vue'
-  import theme from '@/themes/date-picker'
-  import Icon from './Icon.vue'
-  
-  const props = withDefaults(defineProps<DatePickerProps>(), {
+  }>(), {
     size: 'md',
     variant: 'outline',
     color: 'primary',
@@ -58,25 +38,43 @@
     disabled: false
   })
   
-  const emits = defineEmits<DatePickerEmits>()
-  // const slots = useSlots()
+  // Destructure props reactively
+  const {
+    modelValue,
+    size,
+    variant,
+    color,
+    trailingIcon,
+    leadingIcon,
+    separatorIcon,
+    leading,
+    trailing,
+    loading,
+    range,
+    disabled
+  } = toRefs(props)
+  
+  const emits = defineEmits<{
+    'update:modelValue': [value: typeof modelValue.value]
+    change: [event: Event]
+    blur: [event: FocusEvent]
+    focus: [event: FocusEvent]
+  }>()
   
   /* -------------------- Theme -------------------- */
-  
   const datePickerTheme = computed(() =>
     theme({
-      size: props.size,
-      variant: props.variant,
-      color: props.color,
-      disabled: props.disabled,
-      leading: props.leading || !!props.leadingIcon,
-      trailing: props.trailing || !!props.trailingIcon || props.loading,
-      range: props.range
+      size: size.value,
+      variant: variant.value,
+      color: color.value,
+      disabled: disabled.value,
+      leading: leading.value || !!leadingIcon.value,
+      trailing: trailing.value || !!trailingIcon.value || loading.value,
+      range: range.value
     })
   )
   
   /* -------------------- State -------------------- */
-  
   const isMobile = ref(false)
   const displayValue = ref('')
   const displayStartValue = ref('')
@@ -88,58 +86,44 @@
   const endDateInputRef = ref<HTMLInputElement | null>(null)
   
   /* -------------------- Utils -------------------- */
-  
-  function toDate(value: any): Date | null {
+  function toDate(value: Date | string | null | undefined): Date | null {
+    if (!value) return null
     const d = new Date(value)
     return isNaN(d.getTime()) ? null : d
   }
   
-  function formatDate(value: any): string {
+  function formatDate(value: Date | string | null | undefined): string {
     const d = toDate(value)
     return d
-      ? d.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        })
+      ? d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
       : ''
   }
   
-  // function formatForInput(value: any): string {
-  //   const d = toDate(value)
-  //   if (!d) return ''
-  //   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
-  //     2,
-  //     '0'
-  //   )}-${String(d.getDate()).padStart(2, '0')}`
-  // }
-  
   /* -------------------- Display -------------------- */
-  
   function updateDisplay() {
-    if (props.range) {
-      const v = props.modelValue as any
+    if (range.value) {
+      const v = modelValue.value as { start?: Date | string; end?: Date | string } | null
       displayStartValue.value = formatDate(v?.start)
       displayEndValue.value = formatDate(v?.end)
     } else {
-      displayValue.value = formatDate(props.modelValue)
+      displayValue.value = formatDate(modelValue.value as Date | string | null)
     }
   }
   
   /* -------------------- Emitters -------------------- */
-  
-  function emitUpdate(value: any) {
+  function emitUpdate(value: typeof modelValue.value) {
     emits('update:modelValue', value)
     emits('change', new Event('change'))
     updateDisplay()
   }
   
   function onSingleChange(e: Event) {
-    emitUpdate((e.target as HTMLInputElement).valueAsDate)
+    const val = (e.target as HTMLInputElement).valueAsDate
+    emitUpdate(val)
   }
   
   function onStartChange(e: Event) {
-    const v = props.modelValue as any
+    const v = modelValue.value as { start?: Date | string; end?: Date | string } | null
     emitUpdate({
       start: (e.target as HTMLInputElement).valueAsDate,
       end: v?.end ?? null
@@ -147,7 +131,7 @@
   }
   
   function onEndChange(e: Event) {
-    const v = props.modelValue as any
+    const v = modelValue.value as { start?: Date | string; end?: Date | string } | null
     emitUpdate({
       start: v?.start ?? null,
       end: (e.target as HTMLInputElement).valueAsDate
@@ -155,16 +139,14 @@
   }
   
   /* -------------------- Picker Logic -------------------- */
-  
   function cleanup(el: HTMLInputElement) {
     document.body.contains(el) && document.body.removeChild(el)
   }
   
   function triggerDatePicker(type: 'single' | 'start' | 'end' = 'single') {
-    if (props.disabled || !containerRef.value) return
+    if (disabled.value || !containerRef.value) return
   
     const rect = containerRef.value.getBoundingClientRect()
-  
     const input = document.createElement('input')
     input.type = 'date'
   
@@ -213,13 +195,12 @@
   
     setTimeout(() => {
       input.focus()
-      if (input.showPicker) input.showPicker()
+      if (typeof (input as any).showPicker === 'function') (input as any).showPicker()
       else input.click()
     }, 50)
   }
   
   /* -------------------- Lifecycle -------------------- */
-  
   function handleResize() {
     isMobile.value = window.innerWidth < 640
   }
@@ -234,9 +215,9 @@
     window.removeEventListener('resize', handleResize)
   })
   
-  watch(() => props.modelValue, updateDisplay, { deep: true })
-  watch(() => props.range, updateDisplay)
-  </script>
+  watch(() => modelValue.value, updateDisplay, { deep: true })
+  watch(() => range.value, updateDisplay)
+  </script>  
   
  
   <template>

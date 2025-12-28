@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import tableTheme from '@/themes/table'
 
 export interface TableProps {
@@ -52,13 +52,14 @@ const emit = defineEmits(['update:modelValue', 'select', 'hover'])
 
 const slots = defineSlots()
 
+const { striped, hoverable, bordered, compact, sticky } = toRefs(props)
 const ui = computed(() =>
   tableTheme({
-    striped: props.striped,
-    hoverable: props.hoverable,
-    bordered: props.bordered,
-    compact: props.compact,
-    sticky: props.sticky
+    striped: striped.value,
+    hoverable: hoverable.value,
+    bordered: bordered.value,
+    compact: compact.value,
+    sticky: sticky.value
   })
 )
 

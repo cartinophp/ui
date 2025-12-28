@@ -8,7 +8,7 @@ import Accordion from './components/Accordion.vue'
 import Alert from './components/Alert.vue'
 import Avatar from './components/Avatar.vue'
 import Badge from './components/Badge.vue'
-import Banner from './components/Banner.vue'
+import ButtonGroup from './components/ButtonGroup.vue'
 import Breadcrumb from './components/Breadcrumb.vue'
 import Button from './components/Button.vue'
 import Card from './components/Card.vue'
@@ -59,7 +59,7 @@ export const install = (app: App) => {
   app.component('CartinoAlert', Alert)
   app.component('CartinoAvatar', Avatar)
   app.component('CartinoBadge', Badge)
-  app.component('CartinoBanner', Banner)
+  app.component('CartinoButtonGroup', ButtonGroup)
   app.component('CartinoBreadcrumb', Breadcrumb)
   app.component('CartinoButton', Button)
   app.component('CartinoCard', Card)
@@ -111,7 +111,7 @@ export {
   Alert,
   Avatar,
   Badge,
-  Banner,
+  ButtonGroup,
   Breadcrumb,
   Button,
   Calendar,
@@ -123,7 +123,6 @@ export {
   DashboardSidebar,
   DashboardSidebarLinks,
   DashboardToolbar,
-  Drawer,
   DataTable,
   DatePicker,
   Dropdown,
@@ -162,7 +161,6 @@ export type { AccordionProps, AccordionItem } from './components/Accordion.vue'
 export type { AlertProps } from './components/Alert.vue'
 export type { AvatarProps } from './components/Avatar.vue'
 export type { BadgeProps } from './components/Badge.vue'
-export type { BannerProps } from './components/Banner.vue'
 export type { BreadcrumbProps } from './components/Breadcrumb.vue'
 export type { ButtonProps } from './components/Button.vue'
 export type { CalendarProps } from './components/Calendar.vue'
@@ -178,7 +176,6 @@ export type {
 export type { DashboardSidebarProps } from './components/DashboardSidebar.vue'
 export type { DashboardSidebarLinksProps } from './components/DashboardSidebarLinks.vue'
 export type { DashboardToolbarProps } from './components/DashboardToolbar.vue'
-export type { DrawerProps } from './components/Drawer.vue'
 export type { DataTableProps } from './components/DataTable.vue'
 export type { DatePickerProps } from './components/DatePicker.vue'
 export type { DropdownProps, DropdownItem } from './components/Dropdown.vue'
@@ -188,7 +185,6 @@ export type { IconProps } from './components/Icon.vue'
 export type { InputProps } from './components/Input.vue'
 export type { LinkProps } from './components/Link.vue'
 export type { ModalProps } from './components/Modal.vue'
-export type { NavigationMenuProps } from './components/NavigationMenu.vue'
 export type { NavigationItem } from '@/config/navigation'
 export type { PageHeaderProps } from './components/PageHeader.vue'
 export type { PaginationProps } from './components/Pagination.vue'

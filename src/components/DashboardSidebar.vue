@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, toRefs } from 'vue'
   import theme from '@/themes/dashboard-sidebar'
   import DashboardSidebarLinks from './DashboardSidebarLinks.vue'
   import type { DashboardSidebarLinkItem } from './DashboardSidebarLinks.vue'
@@ -30,20 +30,22 @@
     'update:collapsed': [value: boolean]
   }>()
   
+  const { collapsed, side, width, collapsedWidth } = toRefs(props)
+
   const isCollapsed = computed({
-    get: () => props.collapsed,
+    get: () => collapsed.value,
     set: (value: boolean) => emit('update:collapsed', value)
   })
   
   const ui = computed(() =>
     theme({
-      side: props.side,
+      side: side.value,
       collapsed: isCollapsed.value
     })
   )
   
   const sidebarWidth = computed(() =>
-    isCollapsed.value ? props.collapsedWidth : props.width
+    isCollapsed.value ? collapsedWidth.value : width.value
   )
   
   const toggleCollapsed = () => {

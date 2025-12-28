@@ -7,21 +7,23 @@
     ui?: Record<string, any>
   }
   
+  // Props
   const props = defineProps<DashboardToolbarProps>()
   
+  // Computed theme
   const ui = computed(() => theme())
   </script>
   
   <template>
     <div :class="ui.root({ class: [props.ui?.root, props.class] })">
-      <slot>
-        <div :class="ui.left({ class: [props.ui?.left] })">
-          <slot name="left" />
-        </div>
+      <div :class="ui.left({ class: [props.ui?.left] })">
+        <slot name="left" />
+      </div>
   
-        <div :class="ui.right({ class: [props.ui?.right] })">
-          <slot name="right" />
-        </div>
-      </slot>
+      <div :class="ui.right({ class: [props.ui?.right] })">
+        <slot name="right" />
+      </div>
+  
+      <slot />
     </div>
-  </template>
+  </template>  

@@ -1,100 +1,115 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { DateValue } from '@internationalized/date'
-import type { CalendarRootProps, CalendarRootEmits } from 'reka-ui'
-import { Calendar } from 'reka-ui/namespaced'
-import { reactiveOmit } from '@vueuse/core'
-import theme from '@/themes/calendar'
-import Button from './Button.vue'
-
-export interface CalendarProps
-  extends Omit<
-    CalendarRootProps,
-    'as' | 'asChild' | 'modelValue' | 'defaultValue'
-  > {
-  modelValue?: CalendarRootProps['modelValue']
-  defaultValue?: CalendarRootProps['defaultValue']
-  color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-  variant?: 'solid' | 'outline' | 'soft' | 'subtle'
-  size?: 'sm' | 'md' | 'lg'
-  monthControls?: boolean
-  yearControls?: boolean
-  nextYearIcon?: string
-  nextMonthIcon?: string
-  prevYearIcon?: string
-  prevMonthIcon?: string
-  class?: any
-  ui?: Record<string, any>
-}
-
-export interface CalendarEmits
-  extends Omit<CalendarRootEmits, 'update:modelValue'> {
-  'update:modelValue': [date: CalendarRootProps['modelValue']]
-}
-
-const props = withDefaults(defineProps<CalendarProps>(), {
-  color: 'primary',
-  variant: 'solid',
-  size: 'md',
-  fixedWeeks: true,
-  monthControls: true,
-  yearControls: true,
-  nextYearIcon: 'solar:double-alt-arrow-right-linear',
-  nextMonthIcon: 'solar:alt-arrow-right-linear',
-  prevYearIcon: 'solar:double-alt-arrow-left-linear',
-  prevMonthIcon: 'solar:alt-arrow-left-linear'
-})
-
-const emit = defineEmits<CalendarEmits>()
-
-const rootProps = computed(() =>
-  reactiveOmit(
-    props,
-    'modelValue',
-    'defaultValue',
-    'color',
-    'variant',
-    'size',
-    'monthControls',
-    'yearControls',
-    'nextYearIcon',
-    'nextMonthIcon',
-    'prevYearIcon',
-    'prevMonthIcon',
-    'class',
-    'ui'
-  )
-)
-
-const calendarTheme = computed(() =>
-  theme({
-    color: props.color,
-    variant: props.variant,
-    size: props.size
+  import { computed, toRefs } from 'vue'
+  import type { DateValue } from '@internationalized/date'
+  import type { CalendarRootProps, CalendarRootEmits } from 'reka-ui'
+  import { Calendar } from 'reka-ui/namespaced'
+  import { reactiveOmit } from '@vueuse/core'
+  import theme from '@/themes/calendar'
+  import Button from './Button.vue'
+  
+  export interface CalendarProps
+    extends Omit<
+      CalendarRootProps,
+      'as' | 'asChild' | 'modelValue' | 'defaultValue'
+    > {
+    modelValue?: CalendarRootProps['modelValue']
+    defaultValue?: CalendarRootProps['defaultValue']
+    color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+    variant?: 'solid' | 'outline' | 'soft' | 'subtle'
+    size?: 'sm' | 'md' | 'lg'
+    monthControls?: boolean
+    yearControls?: boolean
+    nextYearIcon?: string
+    nextMonthIcon?: string
+    prevYearIcon?: string
+    prevMonthIcon?: string
+    class?: any
+    ui?: Record<string, any>
+  }
+  
+  export interface CalendarEmits
+    extends Omit<CalendarRootEmits, 'update:modelValue'> {
+    'update:modelValue': [date: CalendarRootProps['modelValue']]
+  }
+  
+  // Default props
+  const props = withDefaults(defineProps<CalendarProps>(), {
+    color: 'primary',
+    variant: 'solid',
+    size: 'md',
+    fixedWeeks: true,
+    monthControls: true,
+    yearControls: true,
+    nextYearIcon: 'solar:double-alt-arrow-right-linear',
+    nextMonthIcon: 'solar:alt-arrow-right-linear',
+    prevYearIcon: 'solar:double-alt-arrow-left-linear',
+    prevMonthIcon: 'solar:alt-arrow-left-linear'
   })
-)
-
-// Map calendar size to button size
-const buttonSize = computed(() => {
-  const sizeMap = {
-    sm: 'sm',
-    md: 'sm',
-    lg: 'md'
+  
+  const emit = defineEmits<CalendarEmits>()
+  
+  // Destructure props for reactivity
+  const {
+    color,
+    variant,
+    size,
+    monthControls,
+    yearControls,
+    nextYearIcon,
+    nextMonthIcon,
+    prevYearIcon,
+    prevMonthIcon
+  } = toRefs(props)
+  
+  // Omit internal props for root element
+  const rootProps = computed(() =>
+    reactiveOmit(
+      props,
+      'modelValue',
+      'defaultValue',
+      'color',
+      'variant',
+      'size',
+      'monthControls',
+      'yearControls',
+      'nextYearIcon',
+      'nextMonthIcon',
+      'prevYearIcon',
+      'prevMonthIcon',
+      'class',
+      'ui'
+    )
+  )
+  
+  // Theme computation
+  const calendarTheme = computed(() =>
+    theme({
+      color: color.value,
+      variant: variant.value,
+      size: size.value
+    })
+  )
+  
+  // Map calendar size to button size
+  const buttonSize = computed(() => {
+    const sizeMap = {
+      sm: 'sm',
+      md: 'sm',
+      lg: 'md'
+    }
+    return sizeMap[size.value] as 'sm' | 'md' | 'lg'
+  })
+  
+  // Year pagination
+  function paginateYear(date: DateValue, sign: -1 | 1) {
+    return sign === -1 ? date.subtract({ years: 1 }) : date.add({ years: 1 })
   }
-  return sizeMap[props.size] as 'sm' | 'md' | 'lg'
-})
-
-function paginateYear(date: DateValue, sign: -1 | 1) {
-  if (sign === -1) {
-    return date.subtract({ years: 1 })
+  
+  // Emit modelValue updates
+  function onUpdate(value: any) {
+    emit('update:modelValue', value)
   }
-  return date.add({ years: 1 })
-}
-
-function onUpdate(value: any) {
-  emit('update:modelValue', value)
-}
-</script>
+  </script>  
 
 <template>
   <Calendar.Root

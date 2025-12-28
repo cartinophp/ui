@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import {
   SelectRoot,
   SelectTrigger,
@@ -60,12 +60,13 @@ const emit = defineEmits<{
   change: [option: SelectOption]
 }>()
 
+const { size, variant, color, disabled} = toRefs(props)
 const selectTheme = computed(() =>
   theme({
-    size: props.size,
-    variant: props.variant,
-    color: props.color,
-    disabled: props.disabled
+    size: size.value,
+    variant: variant.value,
+    color: color.value,
+    disabled: disabled.value
   })
 )
 

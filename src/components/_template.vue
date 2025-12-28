@@ -11,6 +11,7 @@
 
 import { computed } from 'vue'
 import componentTheme from '@/themes/component' // Cambia con il tuo theme
+import { computed, toRefs } from 'vue'
 
 const props = defineProps({
   // Props base per variants
@@ -40,6 +41,7 @@ const props = defineProps({
   }
 })
 
+
 const emit = defineEmits([
   'click'
   // ... altri eventi
@@ -47,12 +49,15 @@ const emit = defineEmits([
 
 const slots = defineSlots()
 
+
+const { size, color, disabled} = toRefs(props)
+
 // Genera le classi CSS dal theme
 const ui = computed(() =>
   componentTheme({
-    size: props.size,
-    color: props.color,
-    disabled: props.disabled
+    size: size.value,
+    color: color.value,
+    disabled: disabled.value,
     // ... altre variants
   })
 )

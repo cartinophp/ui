@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import chipTheme from '@/themes/chip'
 
 export interface ChipProps {
@@ -32,13 +32,15 @@ const emit = defineEmits(['update:show'])
 
 const slots = defineSlots()
 
+const { color, size, position, inset, standalone, text } = toRefs(props)
+
 const ui = computed(() =>
   chipTheme({
-    color: props.color,
-    size: props.size,
-    position: props.position,
-    inset: props.inset,
-    standalone: props.standalone
+    color: color.value,
+    size: size.value,
+    position: position.value,
+    inset: inset.value,
+    standalone: standalone.value
   })
 )
 </script>

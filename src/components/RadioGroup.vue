@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { RadioGroupRoot } from 'reka-ui'
 import radioGroupTheme from '@/themes/radio-group'
 import URadio from './Radio.vue'
@@ -39,9 +39,10 @@ const emit = defineEmits(['update:modelValue'])
 
 const slots = defineSlots()
 
+const { orientation } = toRefs(props)
 const ui = computed(() =>
   radioGroupTheme({
-    orientation: props.orientation
+    orientation: orientation.value
   })
 )
 

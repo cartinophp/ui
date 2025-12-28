@@ -37,11 +37,10 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 
 const slots = defineSlots()
 
-const getItemLabel = (item) => {
-  if (typeof props.labelKey === 'string') {
-    return item[props.labelKey]
-  }
-  return item[props.labelKey] || item.label
+const getItemLabel = (item: Record<string, any>) => {
+  const key = props.labelKey
+  if (typeof key === 'string') return item[key]
+  return item[key as number] ?? item.label
 }
 
 const getItemUi = (item, index) => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, toRefs } from 'vue'
   import checkboxGroupTheme from '@/themes/checkbox-group'
   import UCheckbox from './Checkbox.vue'
   import Icon from './Icon.vue'
@@ -51,9 +51,11 @@
     (e: 'update:modelValue', value: any[]): void
   }>()
   
+  const { orientation } = toRefs(props)
+
   const ui = computed(() =>
     checkboxGroupTheme({
-      orientation: props.orientation
+      orientation: orientation.value
     })
   )
   

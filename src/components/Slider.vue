@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { SliderRoot, SliderTrack, SliderRange, SliderThumb } from 'reka-ui'
 import sliderTheme from '@/themes/slider'
 
@@ -41,12 +41,13 @@ const props = withDefaults(defineProps<SliderProps>(), {
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
+const { size, color, orientation, disabled } = toRefs(props)
 const ui = computed(() =>
   sliderTheme({
-    size: props.size,
-    color: props.color,
-    orientation: props.orientation,
-    disabled: props.disabled
+    size: size.value,
+    color: color.value,
+    orientation: orientation.value,
+    disabled: disabled.value
   })
 )
 

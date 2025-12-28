@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { SwitchRoot, SwitchThumb } from 'reka-ui'
 import theme from '@/themes/switch'
 
@@ -29,11 +29,12 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
+const { size, color, disabled } = toRefs(props)
 const switchTheme = computed(() =>
   theme({
-    size: props.size,
-    color: props.color,
-    disabled: props.disabled
+    size: size.value,
+    color: color.value,
+    disabled: disabled.value
   })
 )
 

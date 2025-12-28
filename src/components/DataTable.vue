@@ -1,353 +1,306 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import {
-  useVueTable,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getExpandedRowModel,
-  getGroupedRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  FlexRender
-} from '@tanstack/vue-table'
-import type {
-  SortingState,
-  ColumnFiltersState,
-  VisibilityState,
-  RowSelectionState,
-  ExpandedState,
-  PaginationState
-} from '@tanstack/vue-table'
-import dataTableTheme from '@/themes/data-table'
-import Input from './Input.vue'
-import Icon from './Icon.vue'
-import Pagination from './Pagination.vue'
-
-export interface DataTableProps {
-  // Data
-  columns: any[]
-  data?: any[]
-
-  // Features
-  enableSorting?: boolean
-  enableFiltering?: boolean
-  enablePagination?: boolean
-  enableRowSelection?: boolean
-  enableColumnVisibility?: boolean
-  enableExpanding?: boolean
-  enableGrouping?: boolean
-
-  // Models (v-model support)
-  sorting?: SortingState
-  columnFilters?: ColumnFiltersState
-  columnVisibility?: VisibilityState
-  rowSelection?: RowSelectionState
-  expanded?: ExpandedState
-  pagination?: PaginationState
-  globalFilter?: string
-
-  // Config
-  pageSize?: number
-  pageSizeOptions?: number[]
-  searchPlaceholder?: string
-  searchable?: boolean
-
-  // Styling
-  striped?: boolean
-  bordered?: boolean
-  compact?: boolean
-  hoverable?: boolean
-  sticky?: boolean
-
-  // States
-  loading?: boolean
-  empty?: string
-
-  // Customization
-  class?: string | string[] | Record<string, boolean>
-  ui?: Record<string, any>
-
-  // TanStack Table options (passthrough)
-  meta?: any
-  getRowId?: (row: any, index: number) => string
-  onHover?: (row: any) => void
-  onSelect?: (row: any) => void
-}
-
-const props = withDefaults(defineProps<DataTableProps>(), {
-  data: () => [],
-  enableSorting: true,
-  enableFiltering: true,
-  enablePagination: true,
-  enableRowSelection: false,
-  enableColumnVisibility: false,
-  enableExpanding: false,
-  enableGrouping: false,
-  pageSize: 10,
-  pageSizeOptions: () => [10, 20, 50, 100],
-  searchPlaceholder: 'Search...',
-  searchable: true,
-  striped: false,
-  bordered: false,
-  compact: false,
-  hoverable: true,
-  sticky: false,
-  loading: false,
-  empty: 'No data available'
-})
-
-const emit = defineEmits<{
-  'update:sorting': [value: SortingState]
-  'update:columnFilters': [value: ColumnFiltersState]
-  'update:columnVisibility': [value: VisibilityState]
-  'update:rowSelection': [value: RowSelectionState]
-  'update:expanded': [value: ExpandedState]
-  'update:pagination': [value: PaginationState]
-  'update:globalFilter': [value: string]
-  'row:click': [row: any]
-  'row:hover': [row: any]
-  'row:select': [row: any]
-}>()
-
-const slots = defineSlots()
-
-// Internal state (used when no v-model)
-const internalGlobalFilter = ref(props.globalFilter ?? '')
-const internalSorting = ref<SortingState>(props.sorting ?? [])
-const internalColumnFilters = ref<ColumnFiltersState>(props.columnFilters ?? [])
-const internalColumnVisibility = ref<VisibilityState>(
-  props.columnVisibility ?? {}
-)
-const internalRowSelection = ref<RowSelectionState>(props.rowSelection ?? {})
-const internalExpanded = ref<ExpandedState>(props.expanded ?? {})
-const internalPagination = ref<PaginationState>(
-  props.pagination ?? {
+  import { computed, ref } from 'vue'
+  import {
+    useVueTable,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    getExpandedRowModel,
+    getGroupedRowModel,
+    getFacetedRowModel,
+    getFacetedUniqueValues
+  } from '@tanstack/vue-table'
+  import type {
+    SortingState,
+    ColumnFiltersState,
+    VisibilityState,
+    RowSelectionState,
+    ExpandedState,
+    PaginationState
+  } from '@tanstack/vue-table'
+  import dataTableTheme from '@/themes/data-table'
+  import Input from './Input.vue'
+  import Icon from './Icon.vue'
+  import Pagination from './Pagination.vue'
+  
+  export interface DataTableProps {
+    columns: any[]
+    data?: any[]
+    enableSorting?: boolean
+    enableFiltering?: boolean
+    enablePagination?: boolean
+    enableRowSelection?: boolean
+    enableColumnVisibility?: boolean
+    enableExpanding?: boolean
+    enableGrouping?: boolean
+    sorting?: SortingState
+    columnFilters?: ColumnFiltersState
+    columnVisibility?: VisibilityState
+    rowSelection?: RowSelectionState
+    expanded?: ExpandedState
+    pagination?: PaginationState
+    globalFilter?: string
+    pageSize?: number
+    pageSizeOptions?: number[]
+    searchPlaceholder?: string
+    searchable?: boolean
+    striped?: boolean
+    bordered?: boolean
+    compact?: boolean
+    hoverable?: boolean
+    sticky?: boolean
+    loading?: boolean
+    empty?: string
+    class?: string | string[] | Record<string, boolean>
+    ui?: Record<string, any>
+    meta?: any
+    getRowId?: (row: any, index: number) => string
+    onHover?: (row: any) => void
+    onSelect?: (row: any) => void
+  }
+  
+  const props = withDefaults(defineProps<DataTableProps>(), {
+    data: () => [],
+    enableSorting: true,
+    enableFiltering: true,
+    enablePagination: true,
+    enableRowSelection: false,
+    enableColumnVisibility: false,
+    enableExpanding: false,
+    enableGrouping: false,
+    pageSize: 10,
+    pageSizeOptions: () => [10, 20, 50, 100],
+    searchPlaceholder: 'Search...',
+    searchable: true,
+    striped: false,
+    bordered: false,
+    compact: false,
+    hoverable: true,
+    sticky: false,
+    loading: false,
+    empty: 'No data available'
+  })
+  
+  const emit = defineEmits<{
+    'update:sorting': [value: SortingState]
+    'update:columnFilters': [value: ColumnFiltersState]
+    'update:columnVisibility': [value: VisibilityState]
+    'update:rowSelection': [value: RowSelectionState]
+    'update:expanded': [value: ExpandedState]
+    'update:pagination': [value: PaginationState]
+    'update:globalFilter': [value: string]
+    'row:click': [row: any]
+    'row:hover': [row: any]
+    'row:select': [row: any]
+  }>()
+  
+  const slots = defineSlots()
+  
+  // Internal state
+  const internalGlobalFilter = ref(props.globalFilter ?? '')
+  const internalSorting = ref<SortingState>(props.sorting ?? [])
+  const internalColumnFilters = ref<ColumnFiltersState>(props.columnFilters ?? [])
+  const internalColumnVisibility = ref<VisibilityState>(props.columnVisibility ?? {})
+  const internalRowSelection = ref<RowSelectionState>(props.rowSelection ?? {})
+  const internalExpanded = ref<ExpandedState>(props.expanded ?? {})
+  const internalPagination = ref<PaginationState>({
     pageIndex: 0,
     pageSize: props.pageSize
-  }
-)
-
-// Use v-model if provided, otherwise internal state
-const globalFilterModel = computed({
-  get: () =>
-    props.globalFilter !== undefined
-      ? props.globalFilter
-      : internalGlobalFilter.value,
-  set: (value) => {
-    internalGlobalFilter.value = value
-    emit('update:globalFilter', value)
-  }
-})
-
-const sortingModel = computed({
-  get: () =>
-    props.sorting !== undefined ? props.sorting : internalSorting.value,
-  set: (value) => {
-    internalSorting.value = value
-    emit('update:sorting', value)
-  }
-})
-
-const columnFiltersModel = computed({
-  get: () =>
-    props.columnFilters !== undefined
-      ? props.columnFilters
-      : internalColumnFilters.value,
-  set: (value) => {
-    internalColumnFilters.value = value
-    emit('update:columnFilters', value)
-  }
-})
-
-const columnVisibilityModel = computed({
-  get: () =>
-    props.columnVisibility !== undefined
-      ? props.columnVisibility
-      : internalColumnVisibility.value,
-  set: (value) => {
-    internalColumnVisibility.value = value
-    emit('update:columnVisibility', value)
-  }
-})
-
-const rowSelectionModel = computed({
-  get: () =>
-    props.rowSelection !== undefined
-      ? props.rowSelection
-      : internalRowSelection.value,
-  set: (value) => {
-    internalRowSelection.value = value
-    emit('update:rowSelection', value)
-  }
-})
-
-const expandedModel = computed({
-  get: () =>
-    props.expanded !== undefined ? props.expanded : internalExpanded.value,
-  set: (value) => {
-    internalExpanded.value = value
-    emit('update:expanded', value)
-  }
-})
-
-const paginationModel = computed({
-  get: () =>
-    props.pagination !== undefined
-      ? props.pagination
-      : internalPagination.value,
-  set: (value) => {
-    internalPagination.value = value
-    emit('update:pagination', value)
-  }
-})
-
-// TanStack Table instance
-const table = useVueTable({
-  get data() {
-    return props.data ?? []
-  },
-  get columns() {
-    return props.columns
-  },
-  state: {
-    get globalFilter() {
-      return globalFilterModel.value
-    },
-    get sorting() {
-      return sortingModel.value
-    },
-    get columnFilters() {
-      return columnFiltersModel.value
-    },
-    get columnVisibility() {
-      return columnVisibilityModel.value
-    },
-    get rowSelection() {
-      return rowSelectionModel.value
-    },
-    get expanded() {
-      return expandedModel.value
-    },
-    get pagination() {
-      return paginationModel.value
-    }
-  },
-  enableRowSelection: props.enableRowSelection,
-  enableExpanding: props.enableExpanding,
-  enableGrouping: props.enableGrouping,
-  onGlobalFilterChange: (updater) => {
-    globalFilterModel.value =
-      typeof updater === 'function' ? updater(globalFilterModel.value) : updater
-  },
-  onSortingChange: (updater) => {
-    sortingModel.value =
-      typeof updater === 'function' ? updater(sortingModel.value) : updater
-  },
-  onColumnFiltersChange: (updater) => {
-    columnFiltersModel.value =
-      typeof updater === 'function'
-        ? updater(columnFiltersModel.value)
-        : updater
-  },
-  onColumnVisibilityChange: (updater) => {
-    columnVisibilityModel.value =
-      typeof updater === 'function'
-        ? updater(columnVisibilityModel.value)
-        : updater
-  },
-  onRowSelectionChange: (updater) => {
-    rowSelectionModel.value =
-      typeof updater === 'function' ? updater(rowSelectionModel.value) : updater
-  },
-  onExpandedChange: (updater) => {
-    expandedModel.value =
-      typeof updater === 'function' ? updater(expandedModel.value) : updater
-  },
-  onPaginationChange: (updater) => {
-    paginationModel.value =
-      typeof updater === 'function' ? updater(paginationModel.value) : updater
-  },
-  getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: props.enableFiltering
-    ? getFilteredRowModel()
-    : undefined,
-  getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
-  getPaginationRowModel: props.enablePagination
-    ? getPaginationRowModel()
-    : undefined,
-  getExpandedRowModel: props.enableExpanding
-    ? getExpandedRowModel()
-    : undefined,
-  getGroupedRowModel: props.enableGrouping ? getGroupedRowModel() : undefined,
-  getFacetedRowModel: props.enableFiltering ? getFacetedRowModel() : undefined,
-  getFacetedUniqueValues: props.enableFiltering
-    ? getFacetedUniqueValues()
-    : undefined,
-  meta: props.meta,
-  getRowId: props.getRowId
-})
-
-const ui = computed(() =>
-  dataTableTheme({
-    striped: props.striped,
-    bordered: props.bordered,
-    compact: props.compact,
-    hoverable: props.hoverable,
-    sticky: props.sticky,
-    loading: props.loading
   })
-)
-
-const totalRows = computed(() => table.getFilteredRowModel().rows.length)
-const currentPage = computed(() => paginationModel.value.pageIndex + 1)
-
-const paginationText = computed(() => {
-  const start =
-    paginationModel.value.pageIndex * paginationModel.value.pageSize + 1
-  const end = Math.min(
-    (paginationModel.value.pageIndex + 1) * paginationModel.value.pageSize,
-    totalRows.value
+  
+  // Computed v-models
+  const globalFilterModel = computed({
+    get: () => props.globalFilter ?? internalGlobalFilter.value,
+    set: (v) => {
+      internalGlobalFilter.value = v
+      emit('update:globalFilter', v)
+    }
+  })
+  
+  const sortingModel = computed({
+    get: () => props.sorting ?? internalSorting.value,
+    set: (v) => {
+      internalSorting.value = v
+      emit('update:sorting', v)
+    }
+  })
+  
+  const columnFiltersModel = computed({
+    get: () => props.columnFilters ?? internalColumnFilters.value,
+    set: (v) => {
+      internalColumnFilters.value = v
+      emit('update:columnFilters', v)
+    }
+  })
+  
+  const columnVisibilityModel = computed({
+    get: () => props.columnVisibility ?? internalColumnVisibility.value,
+    set: (v) => {
+      internalColumnVisibility.value = v
+      emit('update:columnVisibility', v)
+    }
+  })
+  
+  const rowSelectionModel = computed({
+    get: () => props.rowSelection ?? internalRowSelection.value,
+    set: (v) => {
+      internalRowSelection.value = v
+      emit('update:rowSelection', v)
+    }
+  })
+  
+  const expandedModel = computed({
+    get: () => props.expanded ?? internalExpanded.value,
+    set: (v) => {
+      internalExpanded.value = v
+      emit('update:expanded', v)
+    }
+  })
+  
+  const paginationModel = computed({
+    get: () => props.pagination ?? internalPagination.value,
+    set: (v) => {
+      internalPagination.value = v
+      emit('update:pagination', v)
+    }
+  })
+  
+  // TanStack Table
+  const table = useVueTable({
+    get data() {
+      return props.data ?? []
+    },
+    get columns() {
+      return props.columns
+    },
+    state: {
+      get globalFilter() {
+        return globalFilterModel.value
+      },
+      get sorting() {
+        return sortingModel.value
+      },
+      get columnFilters() {
+        return columnFiltersModel.value
+      },
+      get columnVisibility() {
+        return columnVisibilityModel.value
+      },
+      get rowSelection() {
+        return rowSelectionModel.value
+      },
+      get expanded() {
+        return expandedModel.value
+      },
+      get pagination() {
+        return paginationModel.value
+      }
+    },
+    enableRowSelection: props.enableRowSelection,
+    enableExpanding: props.enableExpanding,
+    enableGrouping: props.enableGrouping,
+    onGlobalFilterChange: (updater) => {
+      globalFilterModel.value =
+        typeof updater === 'function' ? updater(globalFilterModel.value) : updater
+    },
+    onSortingChange: (updater) => {
+      sortingModel.value =
+        typeof updater === 'function' ? updater(sortingModel.value) : updater
+    },
+    onColumnFiltersChange: (updater) => {
+      columnFiltersModel.value =
+        typeof updater === 'function'
+          ? updater(columnFiltersModel.value)
+          : updater
+    },
+    onColumnVisibilityChange: (updater) => {
+      columnVisibilityModel.value =
+        typeof updater === 'function'
+          ? updater(columnVisibilityModel.value)
+          : updater
+    },
+    onRowSelectionChange: (updater) => {
+      rowSelectionModel.value =
+        typeof updater === 'function' ? updater(rowSelectionModel.value) : updater
+    },
+    onExpandedChange: (updater) => {
+      expandedModel.value =
+        typeof updater === 'function' ? updater(expandedModel.value) : updater
+    },
+    onPaginationChange: (updater) => {
+      paginationModel.value =
+        typeof updater === 'function' ? updater(paginationModel.value) : updater
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: props.enableFiltering ? getFilteredRowModel() : undefined,
+    getSortedRowModel: props.enableSorting ? getSortedRowModel() : undefined,
+    getPaginationRowModel: props.enablePagination ? getPaginationRowModel() : undefined,
+    getExpandedRowModel: props.enableExpanding ? getExpandedRowModel() : undefined,
+    getGroupedRowModel: props.enableGrouping ? getGroupedRowModel() : undefined,
+    getFacetedRowModel: props.enableFiltering ? getFacetedRowModel() : undefined,
+    getFacetedUniqueValues: props.enableFiltering ? getFacetedUniqueValues() : undefined,
+    meta: props.meta,
+    getRowId: props.getRowId
+  })
+  
+  // UI theme
+  const ui = computed(() =>
+    dataTableTheme({
+      striped: props.striped,
+      bordered: props.bordered,
+      compact: props.compact,
+      hoverable: props.hoverable,
+      sticky: props.sticky,
+      loading: props.loading
+    })
   )
-  return `Showing ${start} to ${end} of ${totalRows.value} entries`
-})
-
-const handleRowClick = (row: any) => {
-  const event = window.event as MouseEvent | KeyboardEvent
-  const target = event.target as HTMLElement
-
-  // Don't trigger if clicking on buttons or links
-  if (target.closest('button') || target.closest('a')) {
-    return
+  
+  // Helpers
+  const totalRows = computed(() => table.getFilteredRowModel().rows.length)
+  const currentPage = computed(() => paginationModel.value.pageIndex + 1)
+  
+  const paginationText = computed(() => {
+    const start = paginationModel.value.pageIndex * paginationModel.value.pageSize + 1
+    const end = Math.min(
+      (paginationModel.value.pageIndex + 1) * paginationModel.value.pageSize,
+      totalRows.value
+    )
+    return `Showing ${start} to ${end} of ${totalRows.value} entries`
+  })
+  
+  // Event handlers
+  const handleRowClick = (row: any) => {
+    const event = window.event as MouseEvent | KeyboardEvent
+    const target = event.target as HTMLElement
+    if (target.closest('button') || target.closest('a')) return
+  
+    emit('row:click', row.original)
+    if (typeof props.onSelect === 'function') props.onSelect(row.original)
+  
+    if (props.enableRowSelection) {
+      row.toggleSelected()
+      emit('row:select', row.original)
+    }
   }
-
-  emit('row:click', row.original)
-  props.onSelect?.(row.original)
-
-  if (props.enableRowSelection) {
-    row.toggleSelected()
-    emit('row:select', row.original)
+  
+  const handleRowHover = (row: any) => {
+    emit('row:hover', row.original)
+    if (typeof props.onHover === 'function') props.onHover(row.original)
   }
-}
-
-const handleRowHover = (row: any) => {
-  emit('row:hover', row.original)
-  props.onHover?.(row.original)
-}
-
-const handlePageChange = (page: number) => {
-  table.setPageIndex(page - 1)
-}
-
-// Expose TanStack Table API
-const tableRef = ref<HTMLTableElement>()
-defineExpose({
-  table,
-  tableRef,
-  tableApi: table
-})
-</script>
+  
+  const handlePageChange = (page: number) => {
+    table.setPageIndex(page - 1)
+  }
+  
+  // Expose API
+  const tableRef = ref<HTMLTableElement>()
+  defineExpose({
+    table,
+    tableRef,
+    tableApi: table
+  })
+  </script>  
 
 <template>
   <div

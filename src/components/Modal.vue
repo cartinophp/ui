@@ -157,7 +157,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import {
   DialogRoot,
   DialogPortal,
@@ -219,10 +219,11 @@ const handleEscape = () => {
   emit('update:open', false)
 }
 
+const { size, fullscreen } = toRefs(props)
 const modalTheme = computed(() =>
   theme({
-    size: props.size,
-    fullscreen: props.fullscreen
+    size: size.value,
+    fullscreen: fullscreen.value
   })
 )
 

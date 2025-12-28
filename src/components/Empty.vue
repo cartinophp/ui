@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import theme from '@/themes/empty'
 import Avatar from './Avatar.vue'
 import Button from './Button.vue'
@@ -31,10 +31,11 @@ const props = withDefaults(defineProps<EmptyProps>(), {
   size: 'md'
 })
 
+const { variant, size } = toRefs(props)
 const ui = computed(() =>
   theme({
-    variant: props.variant,
-    size: props.size
+    variant: variant.value,
+    size: size.value
   })
 )
 </script>

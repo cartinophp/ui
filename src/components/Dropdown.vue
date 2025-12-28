@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import {
   DropdownMenuRoot,
   DropdownMenuTrigger,
@@ -60,11 +60,13 @@ const emit = defineEmits<{
   'update:checked': [item: DropdownItem, checked: boolean]
 }>()
 
+const { size, variant, rounded } = toRefs(props)
+
 const ui = computed(() =>
   theme({
-    size: props.size,
-    variant: props.variant,
-    rounded: props.rounded
+    size: size.value,
+    variant: variant.value,
+    rounded: rounded.value
   })
 )
 

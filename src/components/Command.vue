@@ -1,66 +1,73 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import {
-  ComboboxRoot,
-  ComboboxAnchor,
-  ComboboxInput,
-  ComboboxPortal,
-  ComboboxContent,
-  ComboboxViewport,
-  ComboboxItem,
-  ComboboxGroup,
-  ComboboxLabel,
-  ComboboxSeparator,
-  ComboboxEmpty
-} from 'reka-ui'
-import theme from '@/themes/command'
-import Icon from '@/components/Icon.vue'
-
-export interface CommandItem {
-  label: string
-  value: string
-  icon?: string
-  shortcut?: string
-  disabled?: boolean
-  onSelect?: () => void
-}
-
-export interface CommandGroup {
-  heading?: string
-  items: CommandItem[]
-}
-
-export interface CommandProps {
-  groups?: CommandGroup[]
-  placeholder?: string
-  empty?: string
-  modelValue?: string
-  ui?: Record<string, any>
-}
-
-const props = withDefaults(defineProps<CommandProps>(), {
-  placeholder: 'Type a command or search...',
-  empty: 'No results found.',
-  modelValue: ''
-})
-
-const emit = defineEmits<{
-  'update:modelValue': [value: string]
-  select: [item: CommandItem]
-}>()
-
-const searchQuery = ref('')
-
-const ui = computed(() => theme())
-
-const handleSelect = (item: CommandItem) => {
-  if (!item.disabled) {
-    item.onSelect?.()
-    emit('select', item)
-    emit('update:modelValue', item.value)
+  import { computed, ref, toRefs } from 'vue'
+  import {
+    ComboboxRoot,
+    ComboboxAnchor,
+    ComboboxInput,
+    ComboboxPortal,
+    ComboboxContent,
+    ComboboxViewport,
+    ComboboxItem,
+    ComboboxGroup,
+    ComboboxLabel,
+    ComboboxSeparator,
+    ComboboxEmpty
+  } from 'reka-ui'
+  import theme from '@/themes/command'
+  import Icon from '@/components/Icon.vue'
+  
+  export interface CommandItem {
+    label: string
+    value: string
+    icon?: string
+    shortcut?: string
+    disabled?: boolean
+    onSelect?: () => void
   }
-}
-</script>
+  
+  export interface CommandGroup {
+    heading?: string
+    items: CommandItem[]
+  }
+  
+  export interface CommandProps {
+    groups?: CommandGroup[]
+    placeholder?: string
+    empty?: string
+    modelValue?: string
+    ui?: Record<string, any>
+  }
+  
+  // Default props
+  const props = withDefaults(defineProps<CommandProps>(), {
+    placeholder: 'Type a command or search...',
+    empty: 'No results found.',
+    modelValue: ''
+  })
+  
+  const emit = defineEmits<{
+    'update:modelValue': [value: string]
+    select: [item: CommandItem]
+  }>()
+  
+  // Destructure reactive props
+  const { placeholder, empty } = toRefs(props)
+  
+  // Local reactive search query
+  const searchQuery = ref('')
+  
+  // Theme computation (currently static, can be extended with props if needed)
+  const ui = computed(() => theme())
+  
+  // Handle selection of an item
+  const handleSelect = (item: CommandItem) => {
+    if (!item.disabled) {
+      item.onSelect?.()
+      emit('select', item)
+      emit('update:modelValue', item.value)
+    }
+  }
+  </script>  
 
 <template>
   <ComboboxRoot

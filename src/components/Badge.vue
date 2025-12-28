@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import theme from '@/themes/badge'
 
 export type BadgeColor =
@@ -29,11 +29,12 @@ const props = withDefaults(defineProps<BadgeProps>(), {
   size: 'md'
 })
 
+const { variant, color, size } = toRefs(props)
 const badgeTheme = computed(() =>
   theme({
-    variant: props.variant,
-    color: props.color,
-    size: props.size
+    variant: variant.value,
+    color: color.value,
+    size: size.value
   })
 )
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { computed, ref, toRefs } from 'vue'
   import { Icon } from '@iconify/vue'
   import theme from '@/themes/dashboard-sidebar-links'
   import Badge from './Badge.vue'
@@ -33,25 +33,31 @@
     ui?: Record<string, any>
   }
   
+  // Props with defaults
   const props = withDefaults(defineProps<DashboardSidebarLinksProps>(), {
     collapsed: false
   })
   
+  const { collapsed, links } = toRefs(props)
+  
+  // Track which items are open
   const openItems = ref<Set<number>>(new Set())
   
-  // Initialize open items based on defaultOpen
-  props.links.forEach((link, index) => {
+  // Initialize open items based on defaultOpen or active children
+  links.value.forEach((link, index) => {
     if (link.defaultOpen || link.children?.some((child) => child.active)) {
       openItems.value.add(index)
     }
   })
   
+  // Computed theme
   const ui = computed(() =>
     theme({
-      collapsed: props.collapsed
+      collapsed: collapsed.value
     })
   )
   
+  // Toggle open state
   const toggleItem = (index: number) => {
     if (openItems.value.has(index)) {
       openItems.value.delete(index)
@@ -62,22 +68,17 @@
   
   const isItemOpen = (index: number) => openItems.value.has(index)
   
+  // Determine link element type
   const getLinkComponent = (link: DashboardSidebarLinkItem) => {
-    // If link has children, it's a button (collapsible trigger)
     if (link.children) return 'button'
-    // Use 'a' tag for better compatibility with Storybook and other contexts
-    // In production apps with Vue Router, you can customize this to use 'router-link'
     if (link.to || link.href) return 'a'
     return 'button'
   }
   
+  // Determine link props
   const getLinkProps = (link: DashboardSidebarLinkItem) => {
-    // If link has children, no href/to props (it's just a trigger)
     if (link.children) return { type: 'button' }
-    if (link.to) {
-      // Use href instead of 'to' for better Storybook compatibility
-      return { href: link.to }
-    }
+    if (link.to) return { href: link.to }
     if (link.href)
       return {
         href: link.href,
@@ -86,11 +87,8 @@
     return { type: 'button' }
   }
   
-  const handleLinkClick = (
-    e: Event,
-    link: DashboardSidebarLinkItem,
-    index?: number
-  ) => {
+  // Handle link click
+  const handleLinkClick = (e: Event, link: DashboardSidebarLinkItem, index?: number) => {
     if (link.disabled) {
       e.preventDefault()
       return
@@ -101,11 +99,9 @@
       toggleItem(index)
     }
   
-    if (link.onClick) {
-      link.onClick(e)
-    }
+    link.onClick?.(e)
   }
-  </script>
+  </script>  
   
   <template>
     <nav :class="ui.root({ class: [props.ui?.root, props.class] })">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { RadioGroupItem, RadioGroupIndicator } from 'reka-ui'
 import theme from '@/themes/radio'
 
@@ -24,11 +24,12 @@ const props = withDefaults(defineProps<RadioProps>(), {
   color: 'primary'
 })
 
+const { size, color, disabled} = toRefs(props)
 const radioThemeObj = computed(() =>
   theme({
-    size: props.size,
-    color: props.color,
-    disabled: props.disabled
+    size: size.value,
+    color: color.value,
+    disabled: disabled.value
   })
 )
 

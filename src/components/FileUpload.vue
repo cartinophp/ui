@@ -1,216 +1,181 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useDropZone, useFileDialog } from '@vueuse/core'
-import theme from '@/themes/file-upload'
-import Icon from './Icon.vue'
-import Avatar from './Avatar.vue'
-import Button from './Button.vue'
-
-export interface FileUploadProps {
-  id?: string
-  name?: string
-  icon?: string
-  label?: string
-  description?: string
-  variant?: 'area' | 'button'
-  size?: 'sm' | 'md' | 'lg'
-  layout?: 'list' | 'grid'
-  position?: 'inside' | 'outside'
-  highlight?: boolean
-  accept?: string
-  multiple?: boolean
-  reset?: boolean
-  dropzone?: boolean
-  interactive?: boolean
-  required?: boolean
-  disabled?: boolean
-  fileIcon?: string
-  fileDelete?: boolean
-  fileDeleteIcon?: string
-  preview?: boolean
-  class?: string
-  ui?: Record<string, any>
-}
-
-const props = withDefaults(defineProps<FileUploadProps>(), {
-  accept: '*',
-  multiple: false,
-  reset: false,
-  dropzone: true,
-  interactive: true,
-  fileDelete: true,
-  layout: 'list',
-  position: 'outside',
-  preview: true,
-  variant: 'area',
-  size: 'md',
-  icon: 'solar:upload-linear',
-  fileIcon: 'solar:file-linear',
-  fileDeleteIcon: 'solar:close-circle-linear'
-})
-
-const emit = defineEmits<{
-  change: [event: Event]
-}>()
-
-const modelValue = defineModel<File | File[] | null>()
-
-const dropzoneRef = ref<HTMLDivElement>()
-const isDragging = ref(false)
-
-// File dialog
-const {
-  open,
-  reset: resetDialog,
-  onChange
-} = useFileDialog({
-  accept: props.accept,
-  multiple: props.multiple,
-  reset: props.reset
-})
-
-// Dropzone
-const { isOverDropZone } = useDropZone(dropzoneRef, {
-  onDrop: (files) => {
-    if (props.disabled || !props.dropzone) return
-    onFilesSelected(files || [])
-  },
-  onEnter: () => {
-    isDragging.value = true
-  },
-  onLeave: () => {
-    isDragging.value = false
+  import { computed, ref, watch } from 'vue'
+  import { useDropZone, useFileDialog } from '@vueuse/core'
+  import theme from '@/themes/file-upload'
+  import Icon from './Icon.vue'
+  import Avatar from './Avatar.vue'
+  import Button from './Button.vue'
+  
+  export interface FileUploadProps {
+    id?: string
+    name?: string
+    icon?: string
+    label?: string
+    description?: string
+    variant?: 'area' | 'button'
+    size?: 'sm' | 'md' | 'lg'
+    layout?: 'list' | 'grid'
+    position?: 'inside' | 'outside'
+    highlight?: boolean
+    accept?: string
+    multiple?: boolean
+    reset?: boolean
+    dropzone?: boolean
+    interactive?: boolean
+    required?: boolean
+    disabled?: boolean
+    fileIcon?: string
+    fileDelete?: boolean
+    fileDeleteIcon?: string
+    preview?: boolean
+    class?: string
+    ui?: Record<string, any>
   }
-})
-
-// Watch dialog files
-onChange((files) => {
-  if (files) {
-    onFilesSelected(Array.from(files))
-  }
-})
-
-const computedVariant = computed(() =>
-  props.multiple ? 'area' : props.variant
-)
-const computedLayout = computed(() =>
-  props.variant === 'button' && !props.multiple ? 'grid' : props.layout
-)
-const computedPosition = computed(() => {
-  if (computedLayout.value === 'grid' && props.multiple) {
-    return 'inside'
-  }
-  if (computedVariant.value === 'button') {
-    return 'outside'
-  }
-  return props.position
-})
-
-const ui = computed(() =>
-  theme({
-    dropzone: props.dropzone,
-    interactive: props.interactive,
-    size: props.size,
-    variant: computedVariant.value,
-    layout: computedLayout.value,
-    position: computedPosition.value,
+  
+  const props = withDefaults(defineProps<FileUploadProps>(), {
+    accept: '*',
+    multiple: false,
+    reset: false,
+    dropzone: true,
+    interactive: true,
+    fileDelete: true,
+    layout: 'list',
+    position: 'outside',
+    preview: true,
+    variant: 'area',
+    size: 'md',
+    icon: 'solar:upload-linear',
+    fileIcon: 'solar:file-linear',
+    fileDeleteIcon: 'solar:close-circle-linear'
+  })
+  
+  const emit = defineEmits<{
+    change: [event: Event]
+  }>()
+  
+  // Model value
+  const modelValue = ref<File | File[] | null>(null)
+  
+  // Dropzone
+  const dropzoneRef = ref<HTMLDivElement>()
+  const isDragging = ref(false)
+  
+  const { open, reset: resetDialog, onChange } = useFileDialog({
+    accept: props.accept,
     multiple: props.multiple,
-    highlight: props.highlight,
-    disabled: props.disabled
+    reset: props.reset
   })
-)
-
-function createObjectUrl(file: File): string {
-  return URL.createObjectURL(file)
-}
-
-function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0B'
-
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  const size = bytes / Math.pow(k, i)
-  const formattedSize = i === 0 ? size.toString() : size.toFixed(0)
-
-  return `${formattedSize}${sizes[i]}`
-}
-
-function onFilesSelected(files: File[]) {
-  if (props.multiple) {
-    const existingFiles = (modelValue.value as File[]) || []
-    modelValue.value = [...existingFiles, ...files]
-  } else {
-    modelValue.value = files[0] || null
+  
+  const { isOverDropZone } = useDropZone(dropzoneRef, {
+    onDrop: (files) => {
+      if (props.disabled || !props.dropzone) return
+      onFilesSelected(files || [])
+    },
+    onEnter: () => (isDragging.value = true),
+    onLeave: () => (isDragging.value = false)
+  })
+  
+  // Watch file dialog
+  onChange((files) => {
+    if (files) onFilesSelected(Array.from(files))
+  })
+  
+  const computedVariant = computed(() =>
+    props.multiple ? 'area' : props.variant
+  )
+  const computedLayout = computed(() =>
+    props.variant === 'button' && !props.multiple ? 'grid' : props.layout
+  )
+  const computedPosition = computed(() => {
+    if (computedLayout.value === 'grid' && props.multiple) return 'inside'
+    if (computedVariant.value === 'button') return 'outside'
+    return props.position
+  })
+  
+  const ui = computed(() =>
+    theme({
+      dropzone: props.dropzone,
+      interactive: props.interactive,
+      size: props.size,
+      variant: computedVariant.value,
+      layout: computedLayout.value,
+      position: computedPosition.value,
+      multiple: props.multiple,
+      highlight: props.highlight,
+      disabled: props.disabled
+    })
+  )
+  
+  function createObjectUrl(file: File): string {
+    return URL.createObjectURL(file)
   }
-
-  isDragging.value = false
-
-  const event = new Event('change', {
-    bubbles: true,
-    cancelable: true
-  })
-  Object.defineProperty(event, 'target', {
-    writable: false,
-    value: { value: modelValue.value }
-  })
-  emit('change', event)
-}
-
-function removeFile(index?: number) {
-  if (!modelValue.value) return
-
-  if (!props.multiple || index === undefined) {
-    modelValue.value = null
-    if (props.reset) {
-      resetDialog()
+  
+  function formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0B'
+    const k = 1024
+    const sizes = ['B', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    const size = bytes / Math.pow(k, i)
+    return i === 0 ? `${size}${sizes[i]}` : `${size.toFixed(0)}${sizes[i]}`
+  }
+  
+  function onFilesSelected(files: File[]) {
+    if (props.multiple) {
+      const existingFiles = (modelValue.value as File[]) || []
+      modelValue.value = [...existingFiles, ...files]
+    } else {
+      modelValue.value = files[0] || null
     }
-    return
+  
+    isDragging.value = false
+  
+    const event = new Event('change', { bubbles: true, cancelable: true })
+    Object.defineProperty(event, 'target', {
+      writable: false,
+      value: { value: modelValue.value }
+    })
+    emit('change', event)
   }
-
-  const files = [...(modelValue.value as File[])]
-  files.splice(index, 1)
-  modelValue.value = files.length > 0 ? files : null
-}
-
-function handleClick() {
-  if (props.interactive && !props.disabled) {
-    open()
+  
+  function removeFile(index?: number) {
+    if (!modelValue.value) return
+  
+    if (!props.multiple || index === undefined) {
+      modelValue.value = null
+      if (props.reset) resetDialog()
+      return
+    }
+  
+    const files = [...(modelValue.value as File[])]
+    files.splice(index, 1)
+    modelValue.value = files.length > 0 ? files : null
   }
-}
-
-function handleKeyUp(event: KeyboardEvent) {
-  if (
-    (event.key === 'Enter' || event.key === ' ') &&
-    props.interactive &&
-    !props.disabled
-  ) {
-    open()
+  
+  function handleClick() {
+    if (props.interactive && !props.disabled) open()
   }
-}
-
-const hasFiles = computed(() => {
-  if (!modelValue.value) return false
-  return Array.isArray(modelValue.value) ? modelValue.value.length > 0 : true
-})
-
-const filesArray = computed(() => {
-  if (!modelValue.value) return []
-  return Array.isArray(modelValue.value) ? modelValue.value : [modelValue.value]
-})
-
-// Clean up when model value changes
-watch(modelValue, (newValue) => {
-  const hasModelReset = props.multiple
-    ? !(newValue as File[])?.length
-    : !newValue
-
-  if (hasModelReset && props.reset) {
-    resetDialog()
+  
+  function handleKeyUp(event: KeyboardEvent) {
+    if ((event.key === 'Enter' || event.key === ' ') && props.interactive && !props.disabled) {
+      open()
+    }
   }
-})
-</script>
+  
+  const hasFiles = computed(() => {
+    if (!modelValue.value) return false
+    return Array.isArray(modelValue.value) ? modelValue.value.length > 0 : true
+  })
+  
+  const filesArray = computed(() => {
+    if (!modelValue.value) return []
+    return Array.isArray(modelValue.value) ? modelValue.value : [modelValue.value]
+  })
+  
+  watch(modelValue, (newValue) => {
+    const hasModelReset = props.multiple ? !(newValue as File[])?.length : !newValue
+    if (hasModelReset && props.reset) resetDialog()
+  })
+  </script>  
 
 <template>
   <div :class="ui.root({ class: [props.ui?.root, props.class] })">

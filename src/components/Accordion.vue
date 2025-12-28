@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import {
   AccordionRoot,
   AccordionItem,
@@ -35,12 +35,15 @@ const props = withDefaults(defineProps<AccordionProps>(), {
   size: 'md'
 })
 
+
+const { variant, size } = toRefs(props)
+
 const accordionTheme = computed(() =>
   theme({
-    variant: props.variant,
-    size: props.size
+    variant: variant.value,
+    size: size.value
   })
-)
+);
 </script>
 
 <template>

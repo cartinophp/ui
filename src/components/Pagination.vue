@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 import { Primitive } from 'reka-ui'
 import paginationTheme from '@/themes/pagination'
 import UButton from './Button.vue'
@@ -71,10 +71,11 @@ const emit = defineEmits(['update:page'])
 
 const slots = defineSlots()
 
+const { size, disabled } = toRefs(props)
 const ui = computed(() =>
   paginationTheme({
-    size: props.size,
-    disabled: props.disabled
+    size: size.value,
+    disabled: disabled.value
   })
 )
 

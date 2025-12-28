@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, toRefs, ref } from 'vue'
 import { Primitive } from 'reka-ui'
 import avatarTheme from '@/themes/avatar'
 import Icon from '@/components/Icon.vue'
@@ -36,20 +36,21 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 
 const slots = defineSlots()
 
-const imageError = ref(false)
+const { size, chip } = toRefs(props)
 
 const ui = computed(() =>
   avatarTheme({
-    size: props.size,
-    chipPosition:
-      typeof props.chip === 'object' ? props.chip.position : 'top-right'
+    size: size.value,
+    chipPosition: typeof chip.value === 'object' ? chip.value.position : 'top-right'
   })
 )
 
+const { text, alt } = toRefs(props)
+
 const fallbackText = computed(() => {
-  if (props.text) return props.text
-  if (props.alt) {
-    return props.alt
+  if (text.value) return text.value
+  if (alt.value) {
+    return alt.value
       .split(' ')
       .slice(0, 2)
       .map((word) => word.charAt(0).toUpperCase())
@@ -58,7 +59,11 @@ const fallbackText = computed(() => {
   return '?'
 })
 
-const showImage = computed(() => props.src && !imageError.value)
+const { src } = toRefs(props)
+
+const imageError = ref(false)
+
+const showImage = computed(() => src.value && !imageError.value)
 
 const handleImageError = () => {
   imageError.value = true

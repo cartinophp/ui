@@ -1,99 +1,99 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import inputTheme from '@/themes/input'
-import Icon from './Icon.vue'
-
-export interface InputProps {
-  modelValue?: string | number
-  type?: string
-  placeholder?: string
-  disabled?: boolean
-  readonly?: boolean
-  required?: boolean
-  size?: string
-  color?: string
-  variant?: string
-  label?: string
-  hint?: string
-  error?: string
-  leadingIcon?: string
-  trailingIcon?: string
-  ui?: {
-    root?: string
-    wrapper?: string
-    base?: string
-    input?: string
+  import { computed, ref } from 'vue'
+  import inputTheme from '@/themes/input'
+  import Icon from './Icon.vue'
+  
+  export interface InputProps {
+    modelValue?: string | number
+    type?: string
+    placeholder?: string
+    disabled?: boolean
+    readonly?: boolean
+    required?: boolean
+    size?: string
+    color?: string
+    variant?: string
     label?: string
     hint?: string
     error?: string
     leadingIcon?: string
     trailingIcon?: string
+    ui?: {
+      root?: string
+      wrapper?: string
+      base?: string
+      input?: string
+      label?: string
+      hint?: string
+      error?: string
+      leadingIcon?: string
+      trailingIcon?: string
+    }
   }
-}
-
-const props = withDefaults(defineProps<InputProps>(), {
-  type: 'text',
-  disabled: false,
-  readonly: false,
-  required: false,
-  size: 'md',
-  color: 'primary',
-  variant: 'outline'
-})
-
-const emit = defineEmits(['update:modelValue', 'blur', 'focus', 'change'])
-
-const slots = defineSlots()
-
-const inputRef = ref()
-const isFocused = ref(false)
-
-const ui = computed(() =>
-  inputTheme({
-    size: props.size,
-    variant: props.variant,
-    color: props.color,
-    focused: isFocused.value,
-    disabled: props.disabled,
-    hasLeading: !!(props.leadingIcon || slots.leading),
-    hasError: !!props.error
+  
+  const props = withDefaults(defineProps<InputProps>(), {
+    type: 'text',
+    disabled: false,
+    readonly: false,
+    required: false,
+    size: 'md',
+    color: 'primary',
+    variant: 'outline'
   })
-)
-
-const handleInput = (event) => {
-  const target = event.target
-  const value = props.type === 'number' ? Number(target.value) : target.value
-  emit('update:modelValue', value)
-}
-
-const handleFocus = (event) => {
-  isFocused.value = true
-  emit('focus', event)
-}
-
-const handleBlur = (event) => {
-  isFocused.value = false
-  emit('blur', event)
-}
-
-const handleChange = (event) => {
-  emit('change', event)
-}
-
-const mapSizeToIcon = (size: string) => {
-  const sizeMap: Record<string, any> = {
-    sm: 'sm',
-    md: 'md',
-    lg: 'lg'
+  
+  const emit = defineEmits(['update:modelValue', 'blur', 'focus', 'change'])
+  
+  const slots = defineSlots()
+  
+  const inputRef = ref()
+  const isFocused = ref(false)
+  
+  const ui = computed(() =>
+    inputTheme({
+      size: props.size,
+      variant: props.variant,
+      color: props.color,
+      focused: isFocused.value,
+      disabled: props.disabled,
+      hasLeading: !!(props.leadingIcon || slots.leading),
+      hasError: !!props.error
+    })
+  )
+  
+  const handleInput = (event) => {
+    const target = event.target
+    const value = props.type === 'number' ? Number(target.value) : target.value
+    emit('update:modelValue', value)
   }
-  return sizeMap[size] || 'md'
-}
-
-defineExpose({
-  focus: () => inputRef.value?.focus(),
-  blur: () => inputRef.value?.blur()
-})
-</script>
+  
+  const handleFocus = (event) => {
+    isFocused.value = true
+    emit('focus', event)
+  }
+  
+  const handleBlur = (event) => {
+    isFocused.value = false
+    emit('blur', event)
+  }
+  
+  const handleChange = (event) => {
+    emit('change', event)
+  }
+  
+  const mapSizeToIcon = (size: string) => {
+    const sizeMap: Record<string, any> = {
+      sm: 'sm',
+      md: 'md',
+      lg: 'lg'
+    }
+    return sizeMap[size] || 'md'
+  }
+  
+  defineExpose({
+    focus: () => inputRef.value?.focus(),
+    blur: () => inputRef.value?.blur()
+  })
+  </script>
 
 <template>
   <div :class="ui.root({ class: props.ui?.root })">
