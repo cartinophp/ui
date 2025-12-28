@@ -525,17 +525,17 @@ export const Sizes: Story = {
           <p class="text-sm font-medium mb-2">Extra Small</p>
           <Tabs v-model="selected1" :items="items" size="xs">
             <template #tab1>
-              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer"">
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
                 Content for Tab 1
               </div>
             </template>
             <template #tab2>
-              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer"">
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
                 Content for Tab 2
               </div>
             </template>
             <template #tab3>
-              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer"">
+              <div class="p-3 border rounded-lg text-sm hover:bg-muted/50 cursor-pointer">
                 Content for Tab 3
               </div>
             </template>
@@ -588,17 +588,17 @@ export const Sizes: Story = {
           <p class="text-sm font-medium mb-2">Large</p>
           <Tabs v-model="selected4" :items="items" size="lg">
             <template #tab1>
-              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
                 Content for Tab 1
               </div>
             </template>
             <template #tab2>
-              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
                 Content for Tab 2
               </div>
             </template>
             <template #tab3>
-              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+              <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
                 Content for Tab 3
               </div>
             </template>
@@ -630,17 +630,17 @@ export const WithDisabled: Story = {
     template: `
       <Tabs v-bind="args" v-model="selected" :items="items">
         <template #available>
-          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">This tab is available and can be selected.</p>
           </div>
         </template>
         <template #disabled>
-          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">This content should not be visible as the tab is disabled.</p>
           </div>
         </template>
         <template #active>
-          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"">
+          <div class="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer">
             <p class="text-sm">Another available tab with content.</p>
           </div>
         </template>

@@ -103,13 +103,13 @@
   /*                          Navigation Menu Item                               */
   /* -------------------------------------------------------------------------- */
   
-  const expandedItems = ref<Set<string>>(new Set())
+  // const expandedItems = ref<Set<string>>(new Set())
   
-  const toggleExpanded = (itemLabel: string) => {
-    expandedItems.value.has(itemLabel)
-      ? expandedItems.value.delete(itemLabel)
-      : expandedItems.value.add(itemLabel)
-  }
+  // const toggleExpanded = (itemLabel: string) => {
+  //   expandedItems.value.has(itemLabel)
+  //     ? expandedItems.value.delete(itemLabel)
+  //     : expandedItems.value.add(itemLabel)
+  // }
   
   const handleItemClick = (item: NavigationItem, e: Event) => {
     if (item.disabled) {

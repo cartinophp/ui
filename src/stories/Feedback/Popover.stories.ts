@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import Popover from '@/components/Popover.vue'
-import Button from '@/components/Button.vue'
+import Popover from '../../components/Popover.vue'
+import Button from '../../components/Button.vue'
 
 const meta = {
   title: 'Feedback/Popover',
@@ -19,7 +19,7 @@ const meta = {
     },
     modal: {
       control: 'boolean',
-      description: 'Modal behavior'
+      description: 'Show popover as fullscreen modal'
     }
   }
 } satisfies Meta<typeof Popover>
@@ -34,10 +34,9 @@ export const Default: Story = {
       return { args }
     },
     template: `
-      <div class="flex items-center justify-center min-h-[300px]">
+      <div class="flex items-center justify-center min-h-75">
         <Popover v-bind="args">
           <Button variant="outline">Open Popover</Button>
-          
           <template #content>
             <div class="w-80">
               <h3 class="font-semibold text-foreground mb-2">About Popover</h3>
@@ -62,7 +61,6 @@ export const WithCloseButton: Story = {
       <div class="flex items-center justify-center min-h-75">
         <Popover v-bind="args">
           <Button>Open with Close</Button>
-          
           <template #content>
             <div class="w-72 pr-6">
               <h3 class="font-semibold text-foreground mb-2">Notifications</h3>
@@ -80,7 +78,7 @@ export const WithCloseButton: Story = {
           </template>
 
           <template #close>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -89,6 +87,37 @@ export const WithCloseButton: Story = {
       </div>
     `
   })
+}
+
+export const ModalPopover: Story = {
+  render: (args) => ({
+    components: { Popover, Button },
+    setup() {
+      return { args }
+    },
+    template: `
+  <div>
+  <div v-if="args.modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative">
+      <h2 class="font-bold text-lg mb-4">Modal Popover</h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        This popover opens as a fullscreen modal overlay.
+      </p>
+      <Button variant="outline" @click="args.modal = false" class="absolute top-2 right-2">
+        Close
+      </Button>
+      <slot name="content" />
+    </div>
+  </div>
+      </template>
+    </Popover>
+  </div>
+</div>
+    `
+  }),
+  args: {
+    modal: true
+  }
 }
 
 export const SideTop: Story = {
@@ -101,7 +130,6 @@ export const SideTop: Story = {
       <div class="flex items-center justify-center pt-40">
         <Popover v-bind="args">
           <Button variant="outline">Top Popover</Button>
-          
           <template #content>
             <div class="w-64">
               <p class="text-sm text-muted-foreground">This popover opens on top of the trigger button.</p>
@@ -126,7 +154,6 @@ export const SideRight: Story = {
       <div class="flex items-center justify-center min-h-75">
         <Popover v-bind="args">
           <Button variant="outline">Right Popover</Button>
-          
           <template #content>
             <div class="w-64">
               <p class="text-sm text-muted-foreground">This popover opens to the right of the trigger.</p>
@@ -148,7 +175,6 @@ export const FormInPopover: Story = {
       <div class="flex items-center justify-center min-h-75">
         <Popover>
           <Button variant="primary">Add Comment</Button>
-          
           <template #content>
             <div class="w-80">
               <h3 class="font-semibold text-foreground mb-3">Add a comment</h3>
@@ -185,7 +211,6 @@ export const UserProfile: Story = {
             </div>
             <span class="text-sm font-medium text-foreground">John Doe</span>
           </button>
-          
           <template #content>
             <div class="w-64">
               <div class="flex items-center gap-3 pb-3 border-b border-border">
@@ -197,23 +222,13 @@ export const UserProfile: Story = {
                   <p class="text-sm text-muted-foreground">john@example.com</p>
                 </div>
               </div>
-
               <div class="py-2 space-y-1">
-                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">
-                  Profile
-                </button>
-                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">
-                  Settings
-                </button>
-                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">
-                  Billing
-                </button>
+                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">Profile</button>
+                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">Settings</button>
+                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-foreground">Billing</button>
               </div>
-
               <div class="pt-2 border-t border-border">
-                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-error">
-                  Sign out
-                </button>
+                <button class="w-full text-left px-3 py-2 text-sm rounded hover:bg-accent text-error">Sign out</button>
               </div>
             </div>
           </template>
