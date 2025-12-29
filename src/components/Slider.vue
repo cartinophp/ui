@@ -39,7 +39,10 @@ const props = withDefaults(defineProps<SliderProps>(), {
   inverted: false
 })
 
-const emit = defineEmits(['update:modelValue', 'change'])
+const emit = defineEmits<{
+  'update:modelValue': [value: number | number[]]
+  change: [event: Event]
+}>()
 
 const ui = computed(() =>
   sliderTheme({

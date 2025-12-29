@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { shallowRef, watchEffect } from 'vue'
 import {
   SelectRoot,
   SelectTrigger,
@@ -76,11 +77,17 @@ const hasGroups = computed(() => {
   )
 })
 
-const normalizedOptions = computed(() => {
-  if (!props.options) return []
+const normalizedOptions = shallowRef<any[]>([])
+
+watchEffect(() => {
+  if (!props.options) {
+    normalizedOptions.value = []
+    return
+  }
+
   if (hasGroups.value) {
     // Grouped options
-    return props.options.map((group: any) => {
+    normalizedOptions.value = props.options.map((group: any) => {
       if (typeof group === 'object' && 'options' in group) {
         return {
           label: group.label,
@@ -92,16 +99,16 @@ const normalizedOptions = computed(() => {
           )
         }
       }
-      // fallback for non-grouped
       return { label: undefined, options: [group] }
     })
+  } else {
+    // Flat options
+    normalizedOptions.value = props.options.map((option: any) =>
+      typeof option === 'string' || typeof option === 'number'
+        ? { label: String(option), value: option }
+        : option
+    )
   }
-  // Flat options
-  return props.options.map((option: any) =>
-    typeof option === 'string' || typeof option === 'number'
-      ? { label: String(option), value: option }
-      : option
-  )
 })
 
 const getOptionValue = (option: SelectOption) => {

@@ -41,7 +41,12 @@
     variant: 'outline'
   })
   
-  const emit = defineEmits(['update:modelValue', 'blur', 'focus', 'change'])
+  const emit = defineEmits<{
+    'update:modelValue': [value: string | number]
+    blur: [event: FocusEvent]
+    focus: [event: FocusEvent]
+    change: [event: Event]
+  }>()
   const slots = defineSlots()
   
   const inputRef = ref()
@@ -61,25 +66,30 @@
   
   // Unified event handler
   const handleEvent = (event: Event) => {
-    const target = event.target as HTMLInputElement
-    switch (event.type) {
-      case 'input':
-        const value = props.type === 'number' ? Number(target.value) : target.value
-        emit('update:modelValue', value)
-        break
-      case 'focus':
-        isFocused.value = true
-        emit('focus', event)
-        break
-      case 'blur':
-        isFocused.value = false
-        emit('blur', event)
-        break
-      case 'change':
-        emit('change', event)
-        break
+  const target = event.target as HTMLInputElement
+
+  switch (event.type) {
+    case 'input': {
+      const value = props.type === 'number' ? Number(target.value) : target.value
+      emit('update:modelValue', value)
+      break
+    }
+    case 'focus': {
+      isFocused.value = true
+      emit('focus', event as FocusEvent)
+      break
+    }
+    case 'blur': {
+      isFocused.value = false
+      emit('blur', event as FocusEvent)
+      break
+    }
+    case 'change': {
+      emit('change', event)
+      break
     }
   }
+}
   
   const mapSizeToIcon = (size: string) => {
     const sizeMap: Record<string, any> = {
