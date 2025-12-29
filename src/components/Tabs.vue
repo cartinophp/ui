@@ -52,6 +52,9 @@
           :index="index"
         />
 
+
+        <!-- WARNING: Only use trusted HTML content here to prevent XSS -->
+
         <!-- Inline content -->
         <div
           v-else-if="tab.content"
@@ -59,7 +62,7 @@
           v-html="tab.content"
         />
 
-        <!-- Safe fallback -->
+        <!-- Safe fallback  -->
         <div
           v-else
           class="p-4 text-sm text-muted-foreground"

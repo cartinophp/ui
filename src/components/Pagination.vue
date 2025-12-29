@@ -67,7 +67,9 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   ellipsisIcon: 'solar:menu-dots-linear'
 })
 
-const emit = defineEmits(['update:page'])
+const emit = defineEmits<{
+  'update:page': [page: number]
+}>()
 
 const slots = defineSlots()
 

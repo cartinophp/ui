@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { Icon as IconifyIcon } from '@iconify/vue'
-  import { computed } from 'vue'
+  import { computed, defineAsyncComponent } from 'vue'
   import iconTheme from '@/themes/icon'
   
   export interface IconProps {
@@ -15,16 +14,21 @@
   })
   
   const iconClasses = computed(() =>
-  iconTheme({
-    size: props.size,
-    customClass: props.customClass
-  })
-)
+    iconTheme({
+      size: props.size,
+      customClass: props.customClass
+    })
+  )
   
   // Simple emoji detection
   const isEmoji = computed(() => {
     return /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/u.test(props.name)
   })
+  
+  // Lazy load IconifyIcon component
+  const IconifyIcon = defineAsyncComponent(() =>
+    import('@iconify/vue').then(module => module.Icon)
+  )
   </script>
   
   <template>
@@ -33,6 +37,6 @@
       {{ props.name }}
     </span>
   
-    <!-- Iconify icon rendering -->
+    <!-- Iconify icon rendering (lazy-loaded) -->
     <IconifyIcon v-else :icon="props.name" :class="iconClasses" />
   </template>  

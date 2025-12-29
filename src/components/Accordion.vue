@@ -58,42 +58,33 @@ const accordionTheme = computed(() =>
       :disabled="item.disabled || disabled"
       :class="accordionTheme.item({ class: ui?.item })"
     >
-      <AccordionHeader as-child>
-        <AccordionTrigger
-          :class="accordionTheme.trigger({ class: ui?.trigger })"
-        >
-          <div class="flex items-center gap-2">
-            <slot name="leading" :item="item" :index="index">
-              <span v-if="item.icon" class="text-muted-foreground">
-                {{ item.icon }}
-              </span>
-            </slot>
+    <AccordionHeader as-child>
+  <AccordionTrigger
+    :class="accordionTheme.trigger({ class: ui?.trigger })"
+  >
+    <div class="flex items-center gap-2">
+      <slot name="leading" :item="item" :index="index">
+        <span v-if="item.icon" class="text-muted-foreground">
+          {{ item.icon }}
+        </span>
+      </slot>
 
-            <span>
-              <slot name="label" :item="item" :index="index">
-                {{ item.label }}
-              </slot>
-            </span>
-          </div>
+      <span>
+        <slot name="label" :item="item" :index="index">
+          {{ item.label }}
+        </slot>
+      </span>
+    </div>
 
-          <slot name="trailing" :item="item" :index="index">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              :class="accordionTheme.icon({ class: ui?.icon })"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </slot>
-        </AccordionTrigger>
-      </AccordionHeader>
+    <slot name="trailing" :item="item" :index="index">
+      <Icon
+        name="solar:alt-arrow-down-linear"
+        :class="accordionTheme.icon({ class: ui?.icon })"
+      />
+    </slot>
+  </AccordionTrigger>
+</AccordionHeader>
+
 
       <AccordionContent :class="accordionTheme.content({ class: ui?.content })">
         <div :class="accordionTheme.contentInner({ class: ui?.contentInner })">

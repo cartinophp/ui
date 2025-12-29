@@ -6,88 +6,14 @@
     @escape-key-down="handleEscape"
   >
     <DialogPortal>
-      <!-- Scrollable overlay mode -->
-      <template v-if="props.scrollable">
-        <DialogOverlay
-          v-if="props.overlay"
-          :class="modalTheme.overlay({ class: ui?.overlay }) + ' fixed inset-0 z-50 bg-black/50'"
-        >
-          <DialogContent :class="modalTheme.content({ class: ui?.content })">
-            <!-- Header -->
-            <div
-              v-if="title || description || $slots.header || closable || iconName"
-              :class="modalTheme.header({ class: ui?.header })"
-            >
-              <slot name="header">
-                <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
-                  <!-- Icon slot -->
-                  <slot name="icon">
-                    <Icon
-                      v-if="iconName"
-                      :name="iconName"
-                      :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
-                    />
-                  </slot>
-
-                  <DialogTitle
-                    v-if="title"
-                    :class="modalTheme.title({ class: ui?.title })"
-                  >
-                    {{ title }}
-                  </DialogTitle>
-                  <DialogDescription
-                    v-if="description"
-                    :class="modalTheme.description({ class: ui?.description })"
-                  >
-                    {{ description }}
-                  </DialogDescription>
-                </div>
-
-                <!-- Close button -->
-                <DialogClose v-if="closable" as-child>
-                  <Button
-                    :leading-icon="closeIcon"
-                    size="sm"
-                    variant="plain"
-                    aria-label="Close modal"
-                    :class="modalTheme.closeButton({ class: ui?.closeButton })"
-                  />
-                </DialogClose>
-              </slot>
-            </div>
-
-            <!-- Body -->
-            <div :class="modalTheme.body({ class: ui?.body })">
-              <slot />
-            </div>
-
-<!-- 
-            // NOTE: Modal now always shows default Cancel/Confirm footer buttons if no 'actions' slot is provided.
-            // Providing an 'actions' slot will replace the default buttons. Breaking change from previous behavior. -->
-
-            <!-- Footer -->
-            <div :class="modalTheme.footer({ class: ui?.footer })">
-              <slot name="actions">
-                <ButtonGroup align="end">
-                  <Button variant="secondary" @click="emit('update:open', false)">
-                    Cancel
-                  </Button>
-                  <Button variant="primary" @click="handleConfirm">
-                    Confirm
-                  </Button>
-                </ButtonGroup>
-              </slot>
-            </div>
-          </DialogContent>
-        </DialogOverlay>
-      </template>
-
-      <!-- Default mode -->
-      <template v-else>
-        <DialogOverlay
-          v-if="props.overlay"
-          :class="modalTheme.overlay({ class: ui?.overlay }) + ' fixed inset-0 z-50 bg-black/50'"
-        />
+      <DialogOverlay
+        v-if="props.overlay"
+        :class="[
+          modalTheme.overlay({ class: ui?.overlay }),
+          props.scrollable ? 'overflow-auto' : '',
+          'fixed inset-0 z-50 bg-black/50'
+        ]"
+      >
         <DialogContent :class="modalTheme.content({ class: ui?.content })">
           <!-- Header -->
           <div
@@ -151,7 +77,7 @@
             </slot>
           </div>
         </DialogContent>
-      </template>
+      </DialogOverlay>
     </DialogPortal>
   </DialogRoot>
 </template>
