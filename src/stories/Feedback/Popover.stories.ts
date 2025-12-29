@@ -1,7 +1,7 @@
-// src/stories/Popover.stories.ts
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import Popover from '../../components/Popover.vue';
 import Button from '../../components/Button.vue';
+import { ref } from 'vue'
 
 const meta = {
   title: 'Feedback/Popover',
@@ -132,22 +132,31 @@ export const ModalPopover: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args };
+      const open = ref(false)
+
+      return {
+        args,
+        open,
+      }
     },
     template: `
       <div class="flex items-center justify-center min-h-75">
-        <Popover v-bind="args">
+        <Popover
+          v-bind="args"
+          :open="open"
+          @update:open="open = $event"
+        >
           <template #trigger>
             <button
               type="button"
+              @click="open = true"
               class="inline-flex items-center justify-center gap-1.5
                      rounded-md border border-gray-300
                      bg-white text-sm text-gray-900
                      px-3 py-1.5
                      shadow-sm
                      hover:bg-gray-50
-                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                     disabled:cursor-not-allowed disabled:opacity-50"
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               Open Modal Popover
             </button>
@@ -160,7 +169,11 @@ export const ModalPopover: Story = {
                 This popover appears with a subtle overlay and traps focus like a modal.
               </p>
               <div class="flex justify-end">
-                <Button size="sm" variant="outline">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  @click="open = false"
+                >
                   Close
                 </Button>
               </div>
@@ -174,6 +187,7 @@ export const ModalPopover: Story = {
     modal: true,
   },
 }
+
 export const SideTop: Story = {
   render: (args) => ({
     components: { Popover, Button },
