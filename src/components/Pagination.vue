@@ -22,7 +22,7 @@ export interface PaginationProps {
     | 'tertiary'
     | 'plain'
     | 'monochromePlain'
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   to?: (page: number) => string | object
   firstIcon?: string
   prevIcon?: string
@@ -147,7 +147,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToFirst"
         >
           <UButton
-            :icon="firstIcon"
+            :leading-icon="firstIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -170,7 +171,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToPrev"
         >
           <UButton
-            :icon="prevIcon"
+            :leading-icon="prevIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -219,7 +221,8 @@ const goToLast = () => goToPage(pageCount.value)
             :class="ui.ellipsis({ class: props.ui?.ellipsis })"
           >
             <UButton
-              :icon="ellipsisIcon"
+              :leading-icon="ellipsisIcon"
+              square
               :color="color"
               :variant="variant"
               :size="size"
@@ -241,7 +244,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToNext"
         >
           <UButton
-            :icon="nextIcon"
+            :leading-icon="nextIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -264,7 +268,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToLast"
         >
           <UButton
-            :icon="lastIcon"
+            :leading-icon="lastIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"

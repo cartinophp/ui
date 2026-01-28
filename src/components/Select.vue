@@ -35,9 +35,10 @@ export interface SelectProps {
   options?: (SelectOption | string | number | SelectGroup)[]
   placeholder?: string
   disabled?: boolean
-  size?: 'sm' | 'md' | 'lg'
-  variant?: 'outline' | 'filled' | 'ghost' | 'soft' | 'none'
-  color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
+  loading?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'link' | 'none'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
   trailingIcon?: string
   selectedIcon?: string
   valueKey?: string
@@ -49,6 +50,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   size: 'md',
   variant: 'outline',
   color: 'primary',
+  loading: false,
   trailingIcon: 'solar:alt-arrow-down-linear',
   selectedIcon: 'solar:check-circle-linear',
   valueKey: 'value',
@@ -66,6 +68,7 @@ const selectTheme = computed(() =>
     size: props.size,
     variant: props.variant,
     color: props.color,
+    loading: props.loading,
     disabled: props.disabled
   })
 )

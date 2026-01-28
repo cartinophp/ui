@@ -7,9 +7,9 @@ export default tv({
     wrapper: 'flex flex-col items-center justify-center text-center',
     icon: 'shrink-0',
     avatar: 'shrink-0',
-    label: 'font-medium text-foreground mt-2',
-    description: 'text-muted-foreground mt-1',
-    actions: 'flex flex-wrap gap-1.5 shrink-0 mt-4',
+    label: 'font-medium text-foreground',
+    description: 'text-muted-foreground',
+    actions: 'flex flex-wrap gap-1.5 shrink-0',
     files: '',
     file: 'relative',
     fileLeadingAvatar: 'shrink-0',
@@ -21,44 +21,63 @@ export default tv({
   variants: {
     variant: {
       area: {
-        wrapper: 'px-4 py-3',
-        base: 'p-4'
+        wrapper: 'px-3 py-2 sm:px-4 sm:py-3',
+        base: 'p-3 sm:p-4'
       },
       button: {}
     },
     size: {
       xs: {
         base: 'text-xs',
-        icon: 'size-4',
+        icon: 'size-4 sm:size-3.5',
+        label: 'mt-1.5 text-xs',
+        description: 'mt-0.5 text-[10px]',
+        actions: 'mt-3 gap-1',
         file: 'text-xs px-2 py-1 gap-1',
-        fileWrapper: 'flex-row gap-1'
+        fileWrapper: 'flex-row gap-1',
+        fileSize: 'text-[10px]'
       },
       sm: {
-        base: 'text-xs',
-        icon: 'size-4',
+        base: 'text-xs sm:text-xs',
+        icon: 'size-5 sm:size-4',
+        label: 'mt-1.5 text-xs',
+        description: 'mt-0.5 text-xs',
+        actions: 'mt-3 gap-1',
         file: 'text-xs px-2.5 py-1.5 gap-1.5',
-        fileWrapper: 'flex-row gap-1'
+        fileWrapper: 'flex-row gap-1',
+        fileSize: 'text-[10px]'
       },
       md: {
         base: 'text-sm',
-        icon: 'size-5',
-        file: 'text-xs px-2.5 py-1.5 gap-1.5'
+        icon: 'size-6 sm:size-5',
+        label: 'mt-2 text-sm',
+        description: 'mt-1 text-xs sm:text-sm',
+        actions: 'mt-4 gap-1.5',
+        file: 'text-xs px-2.5 py-1.5 gap-1.5',
+        fileSize: 'text-xs'
       },
       lg: {
-        base: 'text-sm',
-        icon: 'size-5',
+        base: 'text-base sm:text-sm',
+        icon: 'size-8 sm:size-6',
+        label: 'mt-2.5 text-base sm:text-sm',
+        description: 'mt-1 text-sm',
+        actions: 'mt-5 gap-2',
         file: 'text-sm px-3 py-2 gap-2',
         fileSize: 'text-xs'
       },
       xl: {
-        base: 'text-base',
-        icon: 'size-6',
-        file: 'text-sm px-3 py-2 gap-2'
+        base: 'text-lg sm:text-base',
+        icon: 'size-10 sm:size-8',
+        label: 'mt-3 text-lg sm:text-base',
+        description: 'mt-1.5 text-base sm:text-sm',
+        actions: 'mt-6 gap-2',
+        file: 'text-base sm:text-sm px-4 py-2.5 gap-2.5',
+        fileSize: 'text-sm sm:text-xs'
       }
     },
     layout: {
       list: {
-        root: 'gap-2 items-start',
+        root: 'gap-2 sm:gap-3 items-start',
         files: 'flex flex-col w-full gap-2',
         file: 'min-w-0 flex items-center border border-border rounded-md w-full',
         fileTrailingButton: 'ms-auto'
@@ -80,7 +99,7 @@ export default tv({
       true: 'border-dashed data-[dragging=true]:bg-muted/50'
     },
     interactive: {
-      true: 'cursor-pointer hover:bg-muted/50'
+      true: 'cursor-pointer hover:bg-muted/50 active:bg-muted/70'
     },
     highlight: {
       true: 'border-primary ring-2 ring-primary/20'
@@ -89,79 +108,59 @@ export default tv({
       true: ''
     },
     disabled: {
-      true: 'cursor-not-allowed opacity-75'
+      true: 'cursor-not-allowed opacity-75 pointer-events-none'
     }
   },
   compoundVariants: [
     {
       size: 'xs',
       layout: 'list',
-      class: {
-        fileTrailingButton: '-me-1'
-      }
+      class: { fileTrailingButton: '-me-1' }
     },
     {
       size: 'sm',
       layout: 'list',
-      class: {
-        fileTrailingButton: '-me-1.5'
-      }
+      class: { fileTrailingButton: '-me-1.5' }
     },
     {
       size: 'md',
       layout: 'list',
-      class: {
-        fileTrailingButton: '-me-1.5'
-      }
+      class: { fileTrailingButton: '-me-1.5' }
     },
     {
       size: 'lg',
       layout: 'list',
-      class: {
-        fileTrailingButton: '-me-2'
-      }
+      class: { fileTrailingButton: '-me-2' }
     },
     {
       size: 'xl',
       layout: 'list',
-      class: {
-        fileTrailingButton: '-me-2'
-      }
+      class: { fileTrailingButton: '-me-2' }
     },
     {
       variant: 'button',
       size: 'xs',
-      class: {
-        base: 'p-1'
-      }
+      class: { base: 'p-0.5 sm:p-1' }
     },
     {
       variant: 'button',
       size: 'sm',
-      class: {
-        base: 'p-1.5'
-      }
+      class: { base: 'p-1 sm:p-1.5' }
     },
     {
       variant: 'button',
       size: 'md',
-      class: {
-        base: 'p-2'
-      }
+      class: { base: 'p-1.5 sm:p-2' }
     },
     {
       variant: 'button',
       size: 'lg',
-      class: {
-        base: 'p-3'
-      }
+      class: { base: 'p-2 sm:p-3' }
     },
     {
       variant: 'button',
       size: 'xl',
-      class: {
-        base: 'p-4'
-      }
+      class: { base: 'p-3 sm:p-4' }
     }
   ],
   defaultVariants: {

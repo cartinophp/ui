@@ -3,72 +3,115 @@ import { tv } from 'tailwind-variants'
 export default tv({
   slots: {
     root: 'w-full',
-    label: 'block mb-1.5 font-medium text-foreground',
+    label: 'block mb-1 sm:mb-1.5 font-medium text-foreground',
     wrapper: 'relative flex items-center transition-all',
     input:
-      'flex-1 outline-none bg-transparent text-foreground placeholder:text-muted-foreground',
+      'flex-1 w-full outline-none bg-transparent text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed',
     leadingIcon:
-      'shrink-0 text-muted-foreground absolute left-3 grid place-items-center',
+      'shrink-0 text-muted-foreground absolute grid place-items-center pointer-events-none',
     trailingIcon:
-      'shrink-0 text-muted-foreground absolute right-3 grid place-items-center',
-    hint: 'mt-1.5'
+      'shrink-0 text-muted-foreground absolute grid place-items-center',
+    hint: 'mt-1 sm:mt-1.5'
   },
   variants: {
     size: {
+      xs: {
+        label: 'text-xs',
+        wrapper: 'text-xs h-7 sm:h-6',
+        input: 'px-2 py-1',
+        leadingIcon: 'size-3.5 sm:size-3 left-2',
+        trailingIcon: 'size-3.5 sm:size-3 right-2',
+        hint: 'text-[10px]'
+      },
       sm: {
         label: 'text-xs',
-        wrapper: 'text-sm',
-        input: 'px-3 py-1.5',
-        leadingIcon: 'w-4 h-4',
-        trailingIcon: 'w-4 h-4',
+        wrapper: 'text-sm h-8 sm:h-7',
+        input: 'px-2.5 py-1.5',
+        leadingIcon: 'size-4 sm:size-3.5 left-2.5',
+        trailingIcon: 'size-4 sm:size-3.5 right-2.5',
         hint: 'text-xs'
       },
       md: {
         label: 'text-sm',
-        wrapper: 'text-base',
-        input: 'px-4 py-1.5',
-        leadingIcon: 'w-[22px] h-[22px]',
-        trailingIcon: 'w-[22px] h-[22px]',
-        hint: 'text-sm'
+        wrapper: 'text-base sm:text-sm h-10 sm:h-9',
+        input: 'px-3 sm:px-3 py-2 sm:py-1.5',
+        leadingIcon: 'size-5 sm:size-4 left-3',
+        trailingIcon: 'size-5 sm:size-4 right-3',
+        hint: 'text-xs sm:text-sm'
       },
       lg: {
-        label: 'text-base',
-        wrapper: 'text-lg',
-        input: 'px-5 py-3',
-        leadingIcon: 'w-6 h-6',
-        trailingIcon: 'w-6 h-6',
-        hint: 'text-base'
+        label: 'text-base sm:text-sm',
+        wrapper: 'text-lg sm:text-base h-12 sm:h-11',
+        input: 'px-4 py-2.5 sm:py-2',
+        leadingIcon: 'size-5 left-4',
+        trailingIcon: 'size-5 right-4',
+        hint: 'text-sm'
+      },
+      xl: {
+        label: 'text-lg sm:text-base',
+        wrapper: 'text-xl sm:text-lg h-14 sm:h-12',
+        input: 'px-5 py-3 sm:py-2.5',
+        leadingIcon: 'size-6 sm:size-5 left-5',
+        trailingIcon: 'size-6 sm:size-5 right-5',
+        hint: 'text-base sm:text-sm'
       }
     },
     variant: {
+      solid: {
+        wrapper: 'border border-primary bg-primary text-primary-foreground rounded-lg'
+      },
       outline: {
         wrapper: 'border rounded-lg bg-background'
       },
-      filled: {
-        wrapper: 'border-0 rounded-lg bg-muted'
+      soft: {
+        wrapper: 'border-0 rounded-lg bg-primary/10'
+      },
+      subtle: {
+        wrapper: 'border-0 rounded-lg bg-muted/50'
       },
       ghost: {
-        wrapper: 'border-0'
+        wrapper: 'border-0 bg-transparent hover:bg-muted/50 rounded-lg'
+      },
+      link: {
+        wrapper: 'border-0 bg-transparent border-b border-border rounded-none'
+      },
+      none: {
+        wrapper: 'border-0 bg-transparent'
       }
     },
     color: {
       primary: {},
+      secondary: {},
       success: {},
       warning: {},
-      error: {}
+      error: {},
+      info: {}
     },
     focused: {
       true: {}
     },
+    loading: {
+      true: {
+        wrapper: 'cursor-wait'
+      }
+    },
     disabled: {
       true: {
-        wrapper: 'opacity-50 cursor-not-allowed'
+        wrapper: 'opacity-50 cursor-not-allowed',
+        input: 'cursor-not-allowed'
+      }
+    },
+    readonly: {
+      true: {
+        wrapper: 'cursor-default',
+        input: 'cursor-default'
       }
     },
     hasLeading: {
-      true: {
-        input: 'pl-10'
-      }
+      true: {}
+    },
+    hasTrailing: {
+      true: {}
     },
     hasError: {
       true: {
@@ -80,119 +123,123 @@ export default tv({
     }
   },
   compoundVariants: [
+    // Leading icon padding adjustments
+    { hasLeading: true, size: 'xs', class: { input: 'pl-7 sm:pl-6' } },
+    { hasLeading: true, size: 'sm', class: { input: 'pl-8 sm:pl-7' } },
+    { hasLeading: true, size: 'md', class: { input: 'pl-10 sm:pl-9' } },
+    { hasLeading: true, size: 'lg', class: { input: 'pl-11 sm:pl-10' } },
+    { hasLeading: true, size: 'xl', class: { input: 'pl-13 sm:pl-12' } },
+    // Trailing icon padding adjustments
+    { hasTrailing: true, size: 'xs', class: { input: 'pr-7 sm:pr-6' } },
+    { hasTrailing: true, size: 'sm', class: { input: 'pr-8 sm:pr-7' } },
+    { hasTrailing: true, size: 'md', class: { input: 'pr-10 sm:pr-9' } },
+    { hasTrailing: true, size: 'lg', class: { input: 'pr-11 sm:pr-10' } },
+    { hasTrailing: true, size: 'xl', class: { input: 'pr-13 sm:pr-12' } },
     // Outline variant colors
     {
       variant: 'outline',
       color: 'primary',
       focused: false,
-      class: {
-        wrapper: 'border-border hover:border-border/80'
-      }
+      class: { wrapper: 'border-border hover:border-border/80' }
     },
     {
       variant: 'outline',
       color: 'primary',
       focused: true,
-      class: {
-        wrapper: 'border-primary ring-2 ring-ring'
-      }
+      class: { wrapper: 'border-primary ring-2 ring-primary/20' }
+    },
+    {
+      variant: 'outline',
+      color: 'secondary',
+      focused: true,
+      class: { wrapper: 'border-secondary ring-2 ring-secondary/20' }
     },
     {
       variant: 'outline',
       color: 'success',
-      class: {
-        wrapper: 'border-success ring-2 ring-success/20'
-      }
+      class: { wrapper: 'border-success ring-2 ring-success/20' }
     },
     {
       variant: 'outline',
       color: 'warning',
-      class: {
-        wrapper: 'border-warning ring-2 ring-warning/20'
-      }
+      class: { wrapper: 'border-warning ring-2 ring-warning/20' }
     },
     {
       variant: 'outline',
       color: 'error',
-      class: {
-        wrapper: 'border-error ring-2 ring-error/20'
-      }
+      class: { wrapper: 'border-error ring-2 ring-error/20' }
     },
-    // Filled variant colors
     {
-      variant: 'filled',
+      variant: 'outline',
+      color: 'info',
+      class: { wrapper: 'border-info ring-2 ring-info/20' }
+    },
+    // Soft variant colors
+    {
+      variant: 'soft',
       color: 'primary',
-      focused: false,
-      class: {
-        wrapper: 'bg-muted'
-      }
+      class: { wrapper: 'bg-primary/10 focus-within:bg-primary/15' }
     },
     {
-      variant: 'filled',
+      variant: 'soft',
+      color: 'secondary',
+      class: { wrapper: 'bg-secondary/10 focus-within:bg-secondary/15' }
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      class: { wrapper: 'bg-success/10 focus-within:bg-success/15' }
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      class: { wrapper: 'bg-warning/10 focus-within:bg-warning/15' }
+    },
+    {
+      variant: 'soft',
+      color: 'error',
+      class: { wrapper: 'bg-error/10 focus-within:bg-error/15' }
+    },
+    {
+      variant: 'soft',
+      color: 'info',
+      class: { wrapper: 'bg-info/10 focus-within:bg-info/15' }
+    },
+    // Subtle variant - neutral with color on focus
+    {
+      variant: 'subtle',
       color: 'primary',
       focused: true,
-      class: {
-        wrapper: 'bg-accent ring-2 ring-ring'
-      }
+      class: { wrapper: 'bg-primary/5 ring-2 ring-primary/10' }
     },
     {
-      variant: 'filled',
-      color: 'success',
-      class: {
-        wrapper: 'bg-success/10 ring-2 ring-success/20'
-      }
-    },
-    {
-      variant: 'filled',
-      color: 'warning',
-      class: {
-        wrapper: 'bg-warning/10 ring-2 ring-warning/20'
-      }
-    },
-    {
-      variant: 'filled',
+      variant: 'subtle',
       color: 'error',
-      class: {
-        wrapper: 'bg-error/10 ring-2 ring-error/20'
-      }
+      class: { wrapper: 'bg-error/5 ring-2 ring-error/10' }
     },
     // Ghost variant colors
     {
       variant: 'ghost',
       color: 'primary',
-      focused: false,
-      class: {
-        wrapper: 'bg-transparent'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'primary',
       focused: true,
-      class: {
-        wrapper: 'bg-muted'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'success',
-      class: {
-        wrapper: 'bg-success/10'
-      }
-    },
-    {
-      variant: 'ghost',
-      color: 'warning',
-      class: {
-        wrapper: 'bg-warning/10'
-      }
+      class: { wrapper: 'bg-muted' }
     },
     {
       variant: 'ghost',
       color: 'error',
-      class: {
-        wrapper: 'bg-error/10'
-      }
+      class: { wrapper: 'bg-error/10' }
+    },
+    // Link variant colors
+    {
+      variant: 'link',
+      color: 'primary',
+      focused: true,
+      class: { wrapper: 'border-primary' }
+    },
+    {
+      variant: 'link',
+      color: 'error',
+      class: { wrapper: 'border-error' }
     }
   ],
   defaultVariants: {
@@ -200,8 +247,11 @@ export default tv({
     variant: 'outline',
     color: 'primary',
     focused: false,
+    loading: false,
     disabled: false,
+    readonly: false,
     hasLeading: false,
+    hasTrailing: false,
     hasError: false
   }
 })

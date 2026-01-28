@@ -4,9 +4,9 @@ export default tv({
   slots: {
     base: 'relative inline-flex items-center gap-1 rounded-lg border transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50 text-foreground w-full',
     segment:
-      'inline-block rounded px-1 py-0.5 tabular-nums text-foreground outline-none ' +
+      'inline-block rounded px-0.5 sm:px-1 py-0.5 tabular-nums text-foreground outline-none ' +
       'focus:bg-accent focus:text-accent-foreground focus:ring-2 focus:ring-primary/20 ' +
-      'data-[placeholder]:text-muted-foreground min-w-[1.5rem] text-center cursor-text ' +
+      'data-[placeholder]:text-muted-foreground text-center cursor-text ' +
       'transition-all duration-150',
     leading: 'flex items-center justify-center shrink-0',
     leadingIcon: 'shrink-0 text-muted-foreground',
@@ -17,43 +17,62 @@ export default tv({
   },
   variants: {
     size: {
+      xs: {
+        base: 'h-7 sm:h-6 px-1.5 sm:px-2 text-xs gap-0.5 min-h-7 sm:min-h-6',
+        segment: 'text-xs py-0.5 min-w-[1.25rem]',
+        leadingIcon: 'size-3.5 sm:size-3',
+        trailingIcon: 'size-3.5 sm:size-3',
+        loadingIcon: 'size-3.5 sm:size-3',
+        separatorIcon: 'size-2.5 sm:size-2'
+      },
       sm: {
-        base: 'h-8 px-2 text-sm gap-1 min-h-8',
-        segment: 'text-sm py-0.5',
-        leadingIcon: 'w-3.5 h-3.5',
-        trailingIcon: 'w-3.5 h-3.5',
-        loadingIcon: 'w-3.5 h-3.5',
-        separatorIcon: 'w-3 h-3'
+        base: 'h-8 sm:h-7 px-2 text-sm gap-1 min-h-8 sm:min-h-7',
+        segment: 'text-sm sm:text-xs py-0.5 min-w-[1.5rem]',
+        leadingIcon: 'size-4 sm:size-3.5',
+        trailingIcon: 'size-4 sm:size-3.5',
+        loadingIcon: 'size-4 sm:size-3.5',
+        separatorIcon: 'size-3'
       },
       md: {
-        base: 'h-9 px-3 text-base gap-1.5 min-h-9',
-        segment: 'text-base py-0.5',
-        leadingIcon: 'w-4 h-4',
-        trailingIcon: 'w-4 h-4',
-        loadingIcon: 'w-4 h-4',
-        separatorIcon: 'w-4 h-4'
+        base: 'h-10 sm:h-9 px-3 text-base sm:text-sm gap-1.5 min-h-10 sm:min-h-9',
+        segment: 'text-base sm:text-sm py-0.5 min-w-[1.5rem]',
+        leadingIcon: 'size-5 sm:size-4',
+        trailingIcon: 'size-5 sm:size-4',
+        loadingIcon: 'size-5 sm:size-4',
+        separatorIcon: 'size-4 sm:size-3.5'
       },
       lg: {
-        base: 'h-12 px-4 text-lg gap-2 min-h-12',
-        segment: 'text-lg py-1 px-1.5 min-w-[2rem]', // ADD min-width
-        leadingIcon: 'w-5 h-5',
-        trailingIcon: 'w-5 h-5',
-        loadingIcon: 'w-5 h-5',
-        separatorIcon: 'w-5 h-5'
+        base: 'h-12 sm:h-11 px-4 text-lg sm:text-base gap-2 min-h-12 sm:min-h-11',
+        segment: 'text-lg sm:text-base py-1 px-1.5 min-w-[2rem]',
+        leadingIcon: 'size-5',
+        trailingIcon: 'size-5',
+        loadingIcon: 'size-5',
+        separatorIcon: 'size-5 sm:size-4'
+      },
+      xl: {
+        base: 'h-14 sm:h-12 px-5 text-xl sm:text-lg gap-2.5 min-h-14 sm:min-h-12',
+        segment: 'text-xl sm:text-lg py-1 px-2 min-w-[2.5rem]',
+        leadingIcon: 'size-6 sm:size-5',
+        trailingIcon: 'size-6 sm:size-5',
+        loadingIcon: 'size-6 sm:size-5',
+        separatorIcon: 'size-5'
       }
     },
     variant: {
+      solid: {
+        base: 'bg-primary/5 border-primary hover:bg-primary/10'
+      },
       outline: {
         base: 'bg-background border-input hover:border-primary/50'
       },
-      filled: {
-        base: 'bg-muted border-transparent hover:bg-muted/80'
+      soft: {
+        base: 'bg-primary/10 border-transparent hover:bg-primary/15'
+      },
+      subtle: {
+        base: 'bg-muted/50 border-transparent hover:bg-muted/70'
       },
       ghost: {
         base: 'bg-transparent border-transparent hover:bg-accent'
-      },
-      soft: {
-        base: 'bg-accent/50 border-transparent hover:bg-accent/70'
       },
       none: {
         base: 'bg-transparent border-transparent shadow-none'
@@ -63,14 +82,17 @@ export default tv({
       primary: {
         base: 'focus-within:ring-2 focus-within:ring-primary/20'
       },
-      error: {
-        base: 'focus-within:ring-2 focus-within:ring-error/20'
+      secondary: {
+        base: 'focus-within:ring-2 focus-within:ring-secondary/20'
       },
       success: {
         base: 'focus-within:ring-2 focus-within:ring-success/20'
       },
       warning: {
         base: 'focus-within:ring-2 focus-within:ring-warning/20'
+      },
+      error: {
+        base: 'focus-within:ring-2 focus-within:ring-error/20'
       },
       info: {
         base: 'focus-within:ring-2 focus-within:ring-info/20'
@@ -88,7 +110,9 @@ export default tv({
       true: {}
     },
     loading: {
-      true: {}
+      true: {
+        base: 'cursor-wait'
+      }
     },
     range: {
       true: {
@@ -100,93 +124,72 @@ export default tv({
     {
       variant: 'outline',
       color: 'primary',
-      class: {
-        base: 'border-input focus-within:border-primary focus-within:shadow-sm'
-      }
+      class: { base: 'border-input focus-within:border-primary focus-within:shadow-sm' }
     },
     {
       variant: 'outline',
       color: 'error',
-      class: {
-        base: 'border-input focus-within:border-error focus-within:shadow-sm'
-      }
+      class: { base: 'border-input focus-within:border-error focus-within:shadow-sm' }
     },
     {
       variant: 'outline',
       color: 'success',
-      class: {
-        base: 'border-input focus-within:border-success focus-within:shadow-sm'
-      }
+      class: { base: 'border-input focus-within:border-success focus-within:shadow-sm' }
     },
     {
       variant: 'outline',
       color: 'warning',
-      class: {
-        base: 'border-input focus-within:border-warning focus-within:shadow-sm'
-      }
+      class: { base: 'border-input focus-within:border-warning focus-within:shadow-sm' }
     },
     {
       variant: 'outline',
       color: 'info',
-      class: {
-        base: 'border-input focus-within:border-info focus-within:shadow-sm'
-      }
+      class: { base: 'border-input focus-within:border-info focus-within:shadow-sm' }
     },
     {
-      variant: 'filled',
-      color: 'primary',
-      class: {
-        base: 'focus-within:bg-primary/5 focus-within:border-primary/20'
-      }
+      variant: 'soft',
+      color: 'success',
+      class: { base: 'bg-success/10 hover:bg-success/15' }
     },
     {
-      variant: 'filled',
+      variant: 'soft',
+      color: 'warning',
+      class: { base: 'bg-warning/10 hover:bg-warning/15' }
+    },
+    {
+      variant: 'soft',
       color: 'error',
-      class: {
-        base: 'focus-within:bg-error/5 focus-within:border-error/20'
-      }
+      class: { base: 'bg-error/10 hover:bg-error/15' }
     },
     {
-      variant: 'filled',
-      color: 'success',
-      class: {
-        base: 'focus-within:bg-success/5 focus-within:border-success/20'
-      }
-    },
-    {
-      variant: 'filled',
-      color: 'warning',
-      class: {
-        base: 'focus-within:bg-warning/5 focus-within:border-warning/20'
-      }
-    },
-    {
-      variant: 'filled',
+      variant: 'soft',
       color: 'info',
-      class: {
-        base: 'focus-within:bg-info/5 focus-within:border-info/20'
-      }
+      class: { base: 'bg-info/10 hover:bg-info/15' }
+    },
+    {
+      size: 'xs',
+      range: true,
+      class: { base: 'px-1 py-0.5' }
     },
     {
       size: 'sm',
       range: true,
-      class: {
-        base: 'px-1.5 py-1'
-      }
+      class: { base: 'px-1.5 py-1' }
     },
     {
       size: 'md',
       range: true,
-      class: {
-        base: 'px-2 py-1.5'
-      }
+      class: { base: 'px-2 py-1.5' }
     },
     {
       size: 'lg',
       range: true,
-      class: {
-        base: 'px-3 py-2'
-      }
+      class: { base: 'px-3 py-2' }
+    },
+    {
+      size: 'xl',
+      range: true,
+      class: { base: 'px-4 py-2.5' }
     }
   ],
   defaultVariants: {

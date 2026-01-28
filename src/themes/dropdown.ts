@@ -5,36 +5,47 @@ export default tv({
     root: '',
     trigger: '',
     content:
-      'z-50 min-w-[200px] overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-xl',
+      'z-50 overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-xl max-h-[min(50vh,20rem)] sm:max-h-[min(70vh,24rem)] overflow-y-auto',
     viewport: 'p-1',
-    item: 'relative flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium outline-none transition-colors duration-75 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-    itemIcon: 'size-4 shrink-0 opacity-70',
+    item: 'relative flex cursor-pointer select-none items-center gap-2 sm:gap-3 rounded-lg outline-none transition-colors duration-75 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+    itemIcon: 'shrink-0 opacity-70',
     itemLabel: 'flex-1 truncate',
-    itemShortcut: 'ml-auto text-xs tracking-widest opacity-60',
-    separator: 'mx-2 my-1.5 h-px bg-border',
-    label:
-      'px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground',
+    itemShortcut: 'ml-auto text-xs tracking-widest opacity-60 hidden sm:block',
+    separator: 'mx-2 my-1 sm:my-1.5 h-px bg-border',
+    label: 'font-semibold uppercase tracking-wider text-muted-foreground',
     arrow: 'fill-popover'
   },
   variants: {
     size: {
+      xs: {
+        content: 'min-w-[120px] sm:min-w-[140px]',
+        item: 'px-2 py-1.5 text-xs gap-1.5',
+        itemIcon: 'size-3',
+        label: 'px-2 py-1 text-[10px]'
+      },
       sm: {
-        content: 'min-w-[160px]',
-        item: 'px-2 py-2 text-xs gap-2',
-        itemIcon: 'size-3.5',
+        content: 'min-w-[140px] sm:min-w-[160px]',
+        item: 'px-2 py-2 text-xs sm:text-xs gap-2',
+        itemIcon: 'size-3.5 sm:size-3.5',
         label: 'px-2 py-1.5 text-[10px]'
       },
       md: {
-        content: 'min-w-[200px]',
-        item: 'px-3 py-2.5 text-sm gap-3',
+        content: 'min-w-[180px] sm:min-w-[200px]',
+        item: 'px-3 py-2.5 text-sm gap-2 sm:gap-3',
         itemIcon: 'size-4',
         label: 'px-3 py-2 text-xs'
       },
       lg: {
-        content: 'min-w-[240px]',
-        item: 'px-4 py-3 text-base gap-3',
+        content: 'min-w-[200px] sm:min-w-[240px]',
+        item: 'px-3 sm:px-4 py-3 text-base sm:text-base gap-3',
         itemIcon: 'size-5',
-        label: 'px-4 py-2.5 text-sm'
+        label: 'px-3 sm:px-4 py-2.5 text-xs sm:text-sm'
+      },
+      xl: {
+        content: 'min-w-[240px] sm:min-w-[280px]',
+        item: 'px-4 py-3.5 text-lg gap-3',
+        itemIcon: 'size-6 sm:size-5',
+        label: 'px-4 py-3 text-sm'
       }
     },
     variant: {
@@ -46,7 +57,7 @@ export default tv({
           'border-transparent bg-background/95 backdrop-blur-sm shadow-lg'
       },
       glass: {
-        content: 'border-white/20 bg-white/80 backdrop-blur-xl shadow-2xl'
+        content: 'border-white/20 bg-white/80 backdrop-blur-xl shadow-2xl dark:bg-black/80 dark:border-white/10'
       }
     },
     rounded: {
@@ -68,7 +79,7 @@ export default tv({
     {
       variant: 'glass',
       class: {
-        item: 'hover:bg-white/60 focus:bg-white/60'
+        item: 'hover:bg-white/60 focus:bg-white/60 dark:hover:bg-white/10 dark:focus:bg-white/10'
       }
     }
   ],
