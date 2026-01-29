@@ -1,7 +1,7 @@
 <template>
-  <div :class="ui.root()" v-bind="$attrs">
+  <div :class="ui.root({ class: [props.ui?.root, props.class] })" v-bind="$attrs">
     <div
-      :class="ui.list()"
+      :class="ui.list({ class: props.ui?.list })"
       role="tablist"
       :aria-orientation="orientation"
     >
@@ -10,7 +10,7 @@
         :key="tab.value ?? index"
         :id="`tab-${tab.value ?? index}`"
         role="tab"
-        :class="ui.trigger({ active: isActive(tab, index) })"
+        :class="ui.trigger({ active: isActive(tab, index), class: props.ui?.trigger })"
         :aria-selected="isActive(tab, index)"
         :aria-controls="`panel-${tab.value ?? index}`"
         :disabled="tab.disabled"
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Panels -->
-    <div :class="ui.content()">
+    <div :class="ui.content({ class: props.ui?.content })">
       <div
         v-for="(tab, index) in tabs"
         :key="`panel-${tab.value ?? index}`"
@@ -99,6 +99,13 @@ export interface TabsProps {
   variant?: 'line' | 'pill' | 'card'
   size?: 'xs' | 'sm' | 'md' | 'lg'
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+  class?: string | object | any[]
+  ui?: {
+    root?: string
+    list?: string
+    trigger?: string
+    content?: string
+  }
 }
 
 /* ---------------------------------- Props --------------------------------- */

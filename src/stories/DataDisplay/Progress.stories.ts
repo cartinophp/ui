@@ -9,7 +9,7 @@ const meta: Meta<typeof Progress> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg']
+      options: ['xs', 'sm', 'md', 'lg', 'xl']
     },
     color: {
       control: 'select',
@@ -167,9 +167,26 @@ export const Sizes: Story = {
     components: { Progress },
     template: `
       <div class="space-y-6">
-        <Progress :model-value="50" size="sm" />
-        <Progress :model-value="50" size="md" />
-        <Progress :model-value="50" size="lg" />
+        <div>
+          <p class="text-xs text-muted-foreground mb-2">Extra Small</p>
+          <Progress :model-value="50" size="xs" />
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground mb-2">Small</p>
+          <Progress :model-value="50" size="sm" />
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground mb-2">Medium</p>
+          <Progress :model-value="50" size="md" />
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground mb-2">Large</p>
+          <Progress :model-value="50" size="lg" />
+        </div>
+        <div>
+          <p class="text-xs text-muted-foreground mb-2">Extra Large</p>
+          <Progress :model-value="50" size="xl" />
+        </div>
       </div>
     `
   })

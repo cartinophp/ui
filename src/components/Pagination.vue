@@ -14,14 +14,9 @@ export interface PaginationProps {
   showControls?: boolean
   disabled?: boolean
   color?: string
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
+  variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   activeColor?: string
-  activeVariant?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'plain'
-    | 'monochromePlain'
+  activeVariant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   to?: (page: number) => string | object
   firstIcon?: string
@@ -56,9 +51,9 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   showControls: true,
   disabled: false,
   color: 'neutral',
-  variant: 'plain',
+  variant: 'ghost',
   activeColor: 'primary',
-  activeVariant: 'primary',
+  activeVariant: 'solid',
   size: 'md',
   firstIcon: 'solar:double-alt-arrow-left-linear',
   prevIcon: 'solar:alt-arrow-left-linear',

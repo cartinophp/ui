@@ -196,7 +196,8 @@ defineExpose({
       <ToastClose v-if="close" as-child>
         <Button
           :leading-icon="closeIcon"
-          variant="plain"
+          variant="ghost"
+          color="neutral"
           size="sm"
           square
           aria-label="Close toast"

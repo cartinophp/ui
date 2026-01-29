@@ -151,7 +151,8 @@ const handleClose = () => {
 
       <Button
         v-if="closable"
-        variant="monochromePlain"
+        variant="ghost"
+        color="neutral"
         size="md"
         trailing-icon="solar:close-circle-linear"
         :class="alertTheme.closeButton({ class: ui?.closeButton })"

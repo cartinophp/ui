@@ -50,7 +50,8 @@
                 <Button
                   :leading-icon="closeIcon"
                   size="sm"
-                  variant="plain"
+                  variant="ghost"
+                  color="neutral"
                   aria-label="Close modal"
                   :class="modalTheme.closeButton({ class: ui?.closeButton })"
                 />
@@ -67,10 +68,10 @@
           <div :class="modalTheme.footer({ class: ui?.footer })">
             <slot name="actions">
               <ButtonGroup align="end">
-                <Button variant="secondary" @click="emit('update:open', false)">
+                <Button variant="outline" color="neutral" @click="emit('update:open', false)">
                   Cancel
                 </Button>
-                <Button variant="primary" @click="handleConfirm">
+                <Button variant="solid" @click="handleConfirm">
                   Confirm
                 </Button>
               </ButtonGroup>

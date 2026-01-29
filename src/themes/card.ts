@@ -1,95 +1,213 @@
 import { tv } from 'tailwind-variants'
 
-/**
- * Card Component Theme
- * Based on Shopify Polaris Card - clean, minimal design with subtle shadows and bevel effect
- * Uses shadow-100 equivalent (subtle shadow) and border-radius-300 (8px/0.5rem)
- */
 export default tv({
   slots: {
-    root: 'relative rounded-lg overflow-clip bg-card text-card-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_1px_2px_0_rgba(0,0,0,0.05)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.2)] before:content-[""] before:absolute before:inset-0 before:rounded-lg before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] before:pointer-events-none dark:before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]',
-    header: 'flex flex-col space-y-1.5 p-6',
-    title: 'text-2xl font-semibold leading-none tracking-tight',
-    description: 'text-sm text-muted-foreground',
-    content: 'p-6 pt-0',
-    footer: 'flex items-center p-6 pt-0'
+    root: 'relative rounded-lg overflow-clip bg-card text-card-foreground',
+    header: 'flex flex-col',
+    title: 'font-semibold leading-none tracking-tight',
+    description: 'text-muted-foreground',
+    content: '',
+    footer: 'flex items-center'
   },
   variants: {
-    variant: {
-      default: {
-        root: 'bg-card border border-border/50 dark:border-border/20'
-      },
-      outline: {
-        root: 'border border-border bg-transparent shadow-none before:shadow-none'
-      },
-      elevated: {
-        root: 'border-0 shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_2px_4px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_2px_4px_0_rgba(0,0,0,0.3)]'
-      },
-      ghost: {
-        root: 'border-0 shadow-none bg-transparent before:shadow-none'
-      }
-    },
     size: {
+      xs: {
+        root: 'rounded-md',
+        header: 'p-2 sm:p-2.5 space-y-0.5',
+        title: 'text-sm',
+        description: 'text-xs',
+        content: 'p-2 sm:p-2.5 pt-0',
+        footer: 'p-2 sm:p-2.5 pt-0'
+      },
       sm: {
+        root: 'rounded-md',
         header: 'p-3 space-y-1',
-        title: 'text-lg font-medium',
+        title: 'text-base sm:text-lg',
         description: 'text-xs',
         content: 'p-3 pt-0',
         footer: 'p-3 pt-0'
       },
       md: {
-        header: 'p-4 space-y-1.5',
-        title: 'text-2xl font-semibold',
+        root: 'rounded-lg',
+        header: 'p-4 sm:p-5 space-y-1 sm:space-y-1.5',
+        title: 'text-lg sm:text-xl',
         description: 'text-sm',
-        content: 'p-4 pt-0',
-        footer: 'p-4 pt-0'
+        content: 'p-4 sm:p-5 pt-0',
+        footer: 'p-4 sm:p-5 pt-0'
       },
       lg: {
-        header: 'p-6 space-y-2',
-        title: 'text-3xl font-semibold',
+        root: 'rounded-lg sm:rounded-xl',
+        header: 'p-5 sm:p-6 space-y-1.5 sm:space-y-2',
+        title: 'text-xl sm:text-2xl',
+        description: 'text-sm sm:text-base',
+        content: 'p-5 sm:p-6 pt-0',
+        footer: 'p-5 sm:p-6 pt-0'
+      },
+      xl: {
+        root: 'rounded-xl sm:rounded-2xl',
+        header: 'p-6 sm:p-8 space-y-2',
+        title: 'text-2xl sm:text-3xl',
         description: 'text-base',
-        content: 'p-6 pt-0',
-        footer: 'p-6 pt-0'
+        content: 'p-6 sm:p-8 pt-0',
+        footer: 'p-6 sm:p-8 pt-0'
       }
+    },
+    variant: {
+      default: {
+        root: 'border border-border/50 dark:border-border/20 shadow-sm'
+      },
+      outline: {
+        root: 'border border-border bg-transparent shadow-none'
+      },
+      elevated: {
+        root: 'border-0 shadow-md dark:shadow-lg dark:shadow-black/20'
+      },
+      ghost: {
+        root: 'border-0 shadow-none bg-transparent'
+      },
+      soft: {
+        root: 'border-0 shadow-none'
+      }
+    },
+    color: {
+      default: {},
+      primary: {},
+      secondary: {},
+      success: {},
+      warning: {},
+      error: {},
+      info: {}
     },
     hover: {
       true: {
-        root: 'transition-shadow duration-150 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_4px_8px_0_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_4px_8px_0_rgba(0,0,0,0.3)]'
+        root: 'transition-all duration-150 cursor-pointer'
       }
     }
   },
   compoundVariants: [
+    // Color + variant combinations for soft
+    {
+      variant: 'soft',
+      color: 'default',
+      class: { root: 'bg-muted/50' }
+    },
+    {
+      variant: 'soft',
+      color: 'primary',
+      class: { root: 'bg-primary/5' }
+    },
+    {
+      variant: 'soft',
+      color: 'secondary',
+      class: { root: 'bg-secondary/5' }
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      class: { root: 'bg-success/5' }
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      class: { root: 'bg-warning/5' }
+    },
+    {
+      variant: 'soft',
+      color: 'error',
+      class: { root: 'bg-error/5' }
+    },
+    {
+      variant: 'soft',
+      color: 'info',
+      class: { root: 'bg-info/5' }
+    },
+    // Color + variant combinations for outline
+    {
+      variant: 'outline',
+      color: 'primary',
+      class: { root: 'border-primary/30' }
+    },
+    {
+      variant: 'outline',
+      color: 'success',
+      class: { root: 'border-success/30' }
+    },
+    {
+      variant: 'outline',
+      color: 'warning',
+      class: { root: 'border-warning/30' }
+    },
+    {
+      variant: 'outline',
+      color: 'error',
+      class: { root: 'border-error/30' }
+    },
+    {
+      variant: 'outline',
+      color: 'info',
+      class: { root: 'border-info/30' }
+    },
+    // Hover effects
     {
       variant: 'default',
       hover: true,
-      class: {
-        root: 'hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_4px_8px_0_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_4px_8px_0_rgba(0,0,0,0.3)]'
-      }
+      class: { root: 'hover:shadow-md hover:border-border' }
     },
     {
       variant: 'elevated',
       hover: true,
-      class: {
-        root: 'hover:shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_8px_16px_0_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_8px_16px_0_rgba(0,0,0,0.4)]'
-      }
+      class: { root: 'hover:shadow-lg' }
     },
     {
       variant: 'outline',
       hover: true,
-      class: {
-        root: 'hover:bg-accent/5 dark:hover:bg-accent/10'
-      }
+      class: { root: 'hover:bg-accent/5' }
     },
     {
       variant: 'ghost',
       hover: true,
-      class: {
-        root: 'hover:bg-accent/5 dark:hover:bg-accent/10'
-      }
+      class: { root: 'hover:bg-accent/5' }
+    },
+    {
+      variant: 'soft',
+      hover: true,
+      class: { root: 'hover:bg-muted' }
+    },
+    {
+      variant: 'soft',
+      color: 'primary',
+      hover: true,
+      class: { root: 'hover:bg-primary/10' }
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      hover: true,
+      class: { root: 'hover:bg-success/10' }
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      hover: true,
+      class: { root: 'hover:bg-warning/10' }
+    },
+    {
+      variant: 'soft',
+      color: 'error',
+      hover: true,
+      class: { root: 'hover:bg-error/10' }
+    },
+    {
+      variant: 'soft',
+      color: 'info',
+      hover: true,
+      class: { root: 'hover:bg-info/10' }
     }
   ],
   defaultVariants: {
     variant: 'default',
-    size: 'md'
+    color: 'default',
+    size: 'md',
+    hover: false
   }
 })
