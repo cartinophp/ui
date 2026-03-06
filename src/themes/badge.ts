@@ -8,25 +8,17 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'px-1.5 py-0.5 text-[10px] rounded gap-1',
-        icon: 'size-2.5'
-      },
       sm: {
-        root: 'px-2 py-0.5 sm:py-1 text-xs rounded-md gap-1',
+        root: 'px-2 py-0.5 text-xs rounded-md gap-1',
         icon: 'size-3'
       },
       md: {
-        root: 'px-2.5 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md gap-1.5',
+        root: 'px-2.5 py-1 text-xs sm:text-sm rounded-md gap-1.5',
         icon: 'size-3.5 sm:size-4'
       },
       lg: {
-        root: 'px-3 py-1.5 sm:py-2 text-sm sm:text-base rounded-md gap-1.5',
+        root: 'px-3 py-1.5 text-sm sm:text-base rounded-md gap-1.5',
         icon: 'size-4 sm:size-5'
-      },
-      xl: {
-        root: 'px-4 py-2 text-base rounded-lg gap-2',
-        icon: 'size-5'
       }
     },
     variant: {

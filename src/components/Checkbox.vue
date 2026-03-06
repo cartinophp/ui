@@ -11,7 +11,7 @@ export interface CheckboxProps {
   required?: boolean
   name?: string
   value?: string
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg'
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
   label?: string
   description?: string

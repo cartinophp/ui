@@ -35,18 +35,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        trigger: 'px-2 py-1.5 text-xs gap-1.5',
-        triggerIcon: 'size-3.5',
-        triggerCaret: 'size-3',
-        content: 'min-w-[160px] p-1.5',
-        gridItem: 'p-2 gap-2',
-        gridItemIcon: 'size-4',
-        gridItemLabel: 'text-xs',
-        gridItemDescription: 'text-[10px]',
-        link: 'px-2 py-1.5 text-xs gap-1.5',
-        linkIcon: 'size-3.5'
-      },
       sm: {
         trigger: 'px-2.5 py-1.5 text-xs sm:text-sm gap-1.5',
         triggerIcon: 'size-4 sm:size-3.5',
@@ -83,18 +71,6 @@ export default tv({
         link: 'px-4 py-2.5 text-base sm:text-sm gap-2.5',
         linkIcon: 'size-5 sm:size-4'
       },
-      xl: {
-        trigger: 'px-5 py-3 text-lg sm:text-base gap-3',
-        triggerIcon: 'size-6 sm:size-5',
-        triggerCaret: 'size-5',
-        content: 'min-w-[280px] p-3',
-        gridItem: 'p-4 gap-4',
-        gridItemIcon: 'size-7 sm:size-6',
-        gridItemLabel: 'text-lg sm:text-base',
-        gridItemDescription: 'text-base sm:text-sm',
-        link: 'px-5 py-3 text-lg sm:text-base gap-3',
-        linkIcon: 'size-6 sm:size-5'
-      }
     },
     orientation: {
       horizontal: {
@@ -121,11 +97,6 @@ export default tv({
   compoundVariants: [
     {
       collapsed: true,
-      size: 'xs',
-      class: { trigger: 'p-1.5', link: 'p-1.5' }
-    },
-    {
-      collapsed: true,
       size: 'sm',
       class: { trigger: 'p-1.5', link: 'p-1.5' }
     },
@@ -139,11 +110,6 @@ export default tv({
       size: 'lg',
       class: { trigger: 'p-2.5', link: 'p-2.5' }
     },
-    {
-      collapsed: true,
-      size: 'xl',
-      class: { trigger: 'p-3', link: 'p-3' }
-    }
   ],
   defaultVariants: {
     size: 'md',

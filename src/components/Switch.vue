@@ -45,7 +45,7 @@ const handleUpdate = (value: boolean) => {
 <template>
   <div
     :class="
-      label || description ? switchTheme.wrapper({ class: ui?.wrapper }) : ''
+      label || description ? switchTheme.wrapper({ class: props.ui?.wrapper }) : ''
     "
   >
     <SwitchRoot
@@ -55,27 +55,27 @@ const handleUpdate = (value: boolean) => {
       :required="required"
       :name="name"
       :value="value"
-      :class="switchTheme.root({ class: ui?.root })"
+      :class="switchTheme.root({ class: props.ui?.root })"
       @update:checked="handleUpdate"
     >
-      <SwitchThumb :class="switchTheme.thumb({ class: ui?.thumb })" />
+      <SwitchThumb :class="switchTheme.thumb({ class: props.ui?.thumb })" />
     </SwitchRoot>
 
     <div
       v-if="label || description"
-      :class="switchTheme.content({ class: ui?.content })"
+      :class="switchTheme.content({ class: props.ui?.content })"
     >
-      <label v-if="label" :class="switchTheme.label({ class: ui?.label })">
+      <label v-if="label" :class="switchTheme.label({ class: props.ui?.label })">
         {{ label }}
         <span
           v-if="required"
-          :class="switchTheme.required({ class: ui?.required })"
+          :class="switchTheme.required({ class: props.ui?.required })"
           >*</span
         >
       </label>
       <span
         v-if="description"
-        :class="switchTheme.description({ class: ui?.description })"
+        :class="switchTheme.description({ class: props.ui?.description })"
       >
         {{ description }}
       </span>

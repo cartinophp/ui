@@ -28,12 +28,6 @@ export default tv({
       }
     },
     size: {
-      xs: {
-        trigger: 'py-2 sm:py-1.5 text-xs gap-2',
-        icon: 'size-3.5 sm:size-3',
-        content: 'text-xs',
-        contentInner: 'pb-2 sm:pb-1.5'
-      },
       sm: {
         trigger: 'py-3 sm:py-2.5 text-sm gap-2',
         icon: 'size-4 sm:size-3.5',
@@ -52,12 +46,6 @@ export default tv({
         content: 'text-base sm:text-sm',
         contentInner: 'pb-5 sm:pb-4'
       },
-      xl: {
-        trigger: 'py-6 sm:py-5 text-xl sm:text-lg gap-3',
-        icon: 'size-6 sm:size-5',
-        content: 'text-lg sm:text-base',
-        contentInner: 'pb-6 sm:pb-5'
-      }
     },
     color: {
       default: {},

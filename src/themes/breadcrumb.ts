@@ -15,15 +15,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        list: 'gap-x-1',
-        item: 'gap-x-1',
-        link: 'gap-x-1',
-        linkLeadingIcon: 'size-3',
-        linkLabel: 'text-xs',
-        linkTrailingIcon: 'size-3',
-        separatorIcon: 'size-3'
-      },
       sm: {
         list: 'gap-x-1 sm:gap-x-1.5',
         item: 'gap-x-1 sm:gap-x-1.5',
@@ -51,15 +42,6 @@ export default tv({
         linkTrailingIcon: 'size-5 sm:size-4',
         separatorIcon: 'size-5 sm:size-4'
       },
-      xl: {
-        list: 'gap-x-2.5',
-        item: 'gap-x-2.5',
-        link: 'gap-x-2.5',
-        linkLeadingIcon: 'size-6 sm:size-5',
-        linkLabel: 'text-lg sm:text-base',
-        linkTrailingIcon: 'size-6 sm:size-5',
-        separatorIcon: 'size-5'
-      }
     },
     active: {
       true: {

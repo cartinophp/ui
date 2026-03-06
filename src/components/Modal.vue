@@ -9,37 +9,37 @@
       <DialogOverlay
         v-if="props.overlay"
         :class="[
-          modalTheme.overlay({ class: ui?.overlay }),
+          modalTheme.overlay({ class: props.ui?.overlay }),
           props.scrollable ? 'overflow-auto' : '',
           'fixed inset-0 z-50 bg-black/50'
         ]"
       >
-        <DialogContent :class="modalTheme.content({ class: ui?.content })">
+        <DialogContent :class="modalTheme.content({ class: props.ui?.content })">
           <!-- Header -->
           <div
             v-if="title || description || $slots.header || closable || iconName"
-            :class="modalTheme.header({ class: ui?.header })"
+            :class="modalTheme.header({ class: props.ui?.header })"
           >
             <slot name="header">
-              <div :class="modalTheme.wrapper({ class: ui?.wrapper })">
+              <div :class="modalTheme.wrapper({ class: props.ui?.wrapper })">
                 <!-- Icon slot -->
                 <slot name="icon">
                   <Icon
                     v-if="iconName"
                     :name="iconName"
-                    :class="modalTheme.icon({ tone: props.tone, class: ui?.icon })"
+                    :class="modalTheme.icon({ tone: props.tone, class: props.ui?.icon })"
                   />
                 </slot>
 
                 <DialogTitle
                   v-if="title"
-                  :class="modalTheme.title({ class: ui?.title })"
+                  :class="modalTheme.title({ class: props.ui?.title })"
                 >
                   {{ title }}
                 </DialogTitle>
                 <DialogDescription
                   v-if="description"
-                  :class="modalTheme.description({ class: ui?.description })"
+                  :class="modalTheme.description({ class: props.ui?.description })"
                 >
                   {{ description }}
                 </DialogDescription>
@@ -53,19 +53,19 @@
                   variant="ghost"
                   color="neutral"
                   aria-label="Close modal"
-                  :class="modalTheme.closeButton({ class: ui?.closeButton })"
+                  :class="modalTheme.closeButton({ class: props.ui?.closeButton })"
                 />
               </DialogClose>
             </slot>
           </div>
 
           <!-- Body -->
-          <div :class="modalTheme.body({ class: ui?.body })">
+          <div :class="modalTheme.body({ class: props.ui?.body })">
             <slot />
           </div>
 
           <!-- Footer -->
-          <div :class="modalTheme.footer({ class: ui?.footer })">
+          <div :class="modalTheme.footer({ class: props.ui?.footer })">
             <slot name="actions">
               <ButtonGroup align="end">
                 <Button variant="outline" color="neutral" @click="emit('update:open', false)">
@@ -105,7 +105,7 @@ export interface ModalProps {
   description?: string
   icon?: string
   tone?: 'success' | 'warning' | 'error' | 'info'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
+  size?: 'sm' | 'md' | 'lg' | 'full'
   closable?: boolean
   closeIcon?: string
   fullscreen?: boolean
@@ -153,15 +153,5 @@ const modalTheme = computed(() =>
   })
 )
 
-// ---------- Icon Fallback ----------
-const validIcons = ['solar:info-linear', 'solar:success-linear', 'solar:warning-linear', 'solar:error-linear']
-
-const iconName = computed(() => {
-  if (!props.icon) return undefined
-  if (!validIcons.includes(props.icon)) {
-    console.warn(`[Modal] Invalid icon "${props.icon}" passed, falling back to default.`)
-    return 'solar:info-linear'
-  }
-  return props.icon
-})
+const iconName = computed(() => props.icon || undefined)
 </script>

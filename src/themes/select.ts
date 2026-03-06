@@ -28,16 +28,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        base: 'h-7 sm:h-6 px-2 py-1 text-xs gap-1',
-        leadingIcon: 'size-3.5 sm:size-3',
-        trailingIcon: 'size-3.5 sm:size-3',
-        label: 'p-1 text-[10px]/3 gap-1',
-        item: 'p-1 text-xs gap-1',
-        itemLeadingIcon: 'size-3.5 sm:size-3',
-        itemTrailingIcon: 'size-3.5 sm:size-3',
-        itemDescription: 'text-[10px]'
-      },
       sm: {
         base: 'h-8 sm:h-7 px-2.5 py-1.5 text-xs gap-1.5',
         leadingIcon: 'size-4 sm:size-3.5',
@@ -68,16 +58,6 @@ export default tv({
         itemTrailingIcon: 'size-5',
         itemDescription: 'text-xs'
       },
-      xl: {
-        base: 'h-14 sm:h-12 px-5 py-3 text-lg sm:text-base gap-2.5',
-        leadingIcon: 'size-6 sm:size-5',
-        trailingIcon: 'size-6 sm:size-5',
-        label: 'p-2.5 text-sm gap-2.5',
-        item: 'p-2.5 text-lg sm:text-base gap-2.5',
-        itemLeadingIcon: 'size-6 sm:size-5',
-        itemTrailingIcon: 'size-6 sm:size-5',
-        itemDescription: 'text-sm sm:text-xs'
-      }
     },
     variant: {
       solid: {

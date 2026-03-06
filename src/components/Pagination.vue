@@ -17,7 +17,7 @@ export interface PaginationProps {
   variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   activeColor?: string
   activeVariant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg'
   to?: (page: number) => string | object
   firstIcon?: string
   prevIcon?: string

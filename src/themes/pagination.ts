@@ -14,11 +14,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        list: 'gap-0.5 sm:gap-0.5',
-        ellipsis: 'size-6 sm:size-5 text-xs',
-        label: 'text-xs'
-      },
       sm: {
         list: 'gap-0.5 sm:gap-1',
         ellipsis: 'size-7 sm:size-6 text-xs',
@@ -34,11 +29,6 @@ export default tv({
         ellipsis: 'size-10 sm:size-9 text-base',
         label: 'text-base'
       },
-      xl: {
-        list: 'gap-1.5 sm:gap-2',
-        ellipsis: 'size-12 sm:size-11 text-lg',
-        label: 'text-lg'
-      }
     },
     disabled: {
       true: {

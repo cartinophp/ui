@@ -9,8 +9,8 @@ export interface ButtonProps {
   variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   /** Button semantic color */
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-  /** Button sizes: xs, sm, md, lg, xl */
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  /** Button sizes: sm, md, lg */
+  size?: 'sm' | 'md' | 'lg'
   square?: boolean
   block?: boolean
   loading?: boolean

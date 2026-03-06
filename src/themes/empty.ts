@@ -13,11 +13,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        avatar: 'size-8 text-base',
-        title: 'text-sm',
-        description: 'text-xs'
-      },
       sm: {
         avatar: 'size-9 text-lg',
         title: 'text-sm',
@@ -33,11 +28,6 @@ export default tv({
         title: 'text-base',
         description: 'text-sm'
       },
-      xl: {
-        avatar: 'size-12 text-2xl',
-        title: 'text-lg',
-        description: 'text-base'
-      }
     },
     variant: {
       solid: {

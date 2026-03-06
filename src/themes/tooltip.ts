@@ -8,9 +8,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        content: 'px-1.5 py-0.5 text-[10px] rounded-md'
-      },
       sm: {
         content: 'px-2 py-1 text-xs rounded-md'
       },
@@ -20,9 +17,6 @@ export default tv({
       lg: {
         content: 'px-4 py-2 sm:py-1.5 text-sm rounded-lg'
       },
-      xl: {
-        content: 'px-5 py-2.5 sm:py-2 text-base sm:text-sm rounded-lg'
-      }
     },
     color: {
       default: {

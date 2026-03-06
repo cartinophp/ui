@@ -27,11 +27,6 @@ export default tv({
       }
     },
     size: {
-      xs: {
-        list: 'gap-1 sm:gap-2',
-        trigger: 'text-xs h-7 sm:h-6 px-2 sm:px-2',
-        content: 'mt-2'
-      },
       sm: {
         list: 'gap-2 sm:gap-3',
         trigger: 'text-xs sm:text-sm h-8 sm:h-7 px-2 sm:px-2.5',
@@ -47,11 +42,6 @@ export default tv({
         trigger: 'text-base sm:text-sm h-10 sm:h-9 px-3 sm:px-4',
         content: 'mt-4 sm:mt-5'
       },
-      xl: {
-        list: 'gap-5 sm:gap-6',
-        trigger: 'text-lg sm:text-base h-11 sm:h-10 px-4 sm:px-5',
-        content: 'mt-5 sm:mt-6'
-      }
     },
     orientation: {
       horizontal: {
@@ -68,11 +58,6 @@ export default tv({
   compoundVariants: [
     {
       variant: 'line',
-      size: 'xs',
-      class: { trigger: 'pb-2 px-1' }
-    },
-    {
-      variant: 'line',
       size: 'sm',
       class: { trigger: 'pb-2.5 px-1' }
     },
@@ -85,16 +70,6 @@ export default tv({
       variant: 'line',
       size: 'lg',
       class: { trigger: 'pb-3.5 px-1.5' }
-    },
-    {
-      variant: 'line',
-      size: 'xl',
-      class: { trigger: 'pb-4 px-2' }
-    },
-    {
-      variant: 'pill',
-      size: 'xs',
-      class: { list: 'p-0.5 gap-0.5' }
     },
     {
       variant: 'pill',
@@ -112,16 +87,6 @@ export default tv({
       class: { list: 'p-1 gap-1 sm:p-1.5 sm:gap-1' }
     },
     {
-      variant: 'pill',
-      size: 'xl',
-      class: { list: 'p-1.5 gap-1' }
-    },
-    {
-      variant: 'card',
-      size: 'xs',
-      class: { list: 'gap-1' }
-    },
-    {
       variant: 'card',
       size: 'sm',
       class: { list: 'gap-1 sm:gap-1.5' }
@@ -135,11 +100,6 @@ export default tv({
       variant: 'card',
       size: 'lg',
       class: { list: 'gap-2' }
-    },
-    {
-      variant: 'card',
-      size: 'xl',
-      class: { list: 'gap-2 sm:gap-2.5' }
     },
     {
       variant: 'line',

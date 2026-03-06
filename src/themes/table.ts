@@ -20,13 +20,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        base: 'text-xs',
-        th: 'px-2 sm:px-3 py-1.5 sm:py-2 text-xs first:pl-2 sm:first:pl-3 last:pr-2 sm:last:pr-3',
-        td: 'px-2 sm:px-3 py-1 sm:py-1.5 text-xs first:pl-2 sm:first:pl-3 last:pr-2 sm:last:pr-3',
-        empty: 'py-6 sm:py-8',
-        loading: 'py-6 sm:py-8'
-      },
       sm: {
         base: 'text-xs sm:text-sm',
         th: 'px-3 sm:px-4 py-2 sm:py-2.5 text-xs first:pl-3 sm:first:pl-4 last:pr-3 sm:last:pr-4',
@@ -48,13 +41,6 @@ export default tv({
         empty: 'py-12 sm:py-16',
         loading: 'py-12 sm:py-16'
       },
-      xl: {
-        base: 'text-base',
-        th: 'px-6 sm:px-8 lg:px-10 py-4 sm:py-5 text-base first:pl-6 sm:first:pl-8 lg:first:pl-10 last:pr-6 sm:last:pr-8 lg:last:pr-10',
-        td: 'px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-base first:pl-6 sm:first:pl-8 lg:first:pl-10 last:pr-6 sm:last:pr-8 lg:last:pr-10',
-        empty: 'py-16 sm:py-20',
-        loading: 'py-16 sm:py-20'
-      }
     },
     striped: {
       true: {

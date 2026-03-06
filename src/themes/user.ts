@@ -10,24 +10,6 @@ export default tv({
   },
   variants: {
     size: {
-      '3xs': {
-        root: 'gap-1',
-        wrapper: 'gap-0.5',
-        name: 'text-xs',
-        description: 'text-xs'
-      },
-      '2xs': {
-        root: 'gap-1.5',
-        wrapper: 'gap-0.5',
-        name: 'text-xs',
-        description: 'text-xs'
-      },
-      xs: {
-        root: 'gap-2',
-        wrapper: 'gap-1',
-        name: 'text-sm',
-        description: 'text-sm'
-      },
       sm: {
         root: 'gap-2.5',
         wrapper: 'gap-1',

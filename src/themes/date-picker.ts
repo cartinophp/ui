@@ -17,14 +17,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        base: 'h-7 sm:h-6 px-1.5 sm:px-2 text-xs gap-0.5 min-h-7 sm:min-h-6',
-        segment: 'text-xs py-0.5 min-w-[1.25rem]',
-        leadingIcon: 'size-3.5 sm:size-3',
-        trailingIcon: 'size-3.5 sm:size-3',
-        loadingIcon: 'size-3.5 sm:size-3',
-        separatorIcon: 'size-2.5 sm:size-2'
-      },
       sm: {
         base: 'h-8 sm:h-7 px-2 text-sm gap-1 min-h-8 sm:min-h-7',
         segment: 'text-sm sm:text-xs py-0.5 min-w-[1.5rem]',
@@ -49,14 +41,6 @@ export default tv({
         loadingIcon: 'size-5',
         separatorIcon: 'size-5 sm:size-4'
       },
-      xl: {
-        base: 'h-14 sm:h-12 px-5 text-xl sm:text-lg gap-2.5 min-h-14 sm:min-h-12',
-        segment: 'text-xl sm:text-lg py-1 px-2 min-w-[2.5rem]',
-        leadingIcon: 'size-6 sm:size-5',
-        trailingIcon: 'size-6 sm:size-5',
-        loadingIcon: 'size-6 sm:size-5',
-        separatorIcon: 'size-5'
-      }
     },
     variant: {
       solid: {
@@ -167,11 +151,6 @@ export default tv({
       class: { base: 'bg-info/10 hover:bg-info/15' }
     },
     {
-      size: 'xs',
-      range: true,
-      class: { base: 'px-1 py-0.5' }
-    },
-    {
       size: 'sm',
       range: true,
       class: { base: 'px-1.5 py-1' }
@@ -186,11 +165,6 @@ export default tv({
       range: true,
       class: { base: 'px-3 py-2' }
     },
-    {
-      size: 'xl',
-      range: true,
-      class: { base: 'px-4 py-2.5' }
-    }
   ],
   defaultVariants: {
     size: 'md',

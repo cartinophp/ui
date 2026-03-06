@@ -97,7 +97,6 @@ const handleCheckboxChange = (item: DropdownItem, checked: boolean) => {
         :side="side"
         :side-offset="sideOffset"
         :collision-padding="collisionPadding"
-        force-mount
       >
         <div :class="ui.viewport({ class: props.ui?.viewport })">
           <slot>

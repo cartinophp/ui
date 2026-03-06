@@ -9,7 +9,7 @@ export type BadgeColor =
   | 'error'
   | 'info'
   | 'neutral'
-export type BadgeVariant = 'soft' | 'strong'
+export type BadgeVariant = 'solid' | 'soft' | 'outline' | 'subtle' | 'ghost'
 export type BadgeSize = 'sm' | 'md' | 'lg'
 export type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete'
 
@@ -54,8 +54,8 @@ const progressIcons = {
 </script>
 
 <template>
-  <span :class="badgeTheme.root({ class: ui?.root })">
-    <span v-if="progress" :class="badgeTheme.icon({ class: ui?.icon })">
+  <span :class="badgeTheme.root({ class: props.ui?.root })">
+    <span v-if="progress" :class="badgeTheme.icon({ class: props.ui?.icon })">
       <svg
         :viewBox="progressIcons[progress].viewBox"
         xmlns="http://www.w3.org/2000/svg"
@@ -64,13 +64,13 @@ const progressIcons = {
       </svg>
     </span>
 
-    <span v-else-if="icon" :class="badgeTheme.icon({ class: ui?.icon })">
+    <span v-else-if="icon" :class="badgeTheme.icon({ class: props.ui?.icon })">
       <slot name="icon" />
     </span>
 
     <span
       v-if="label || $slots.default"
-      :class="badgeTheme.text({ class: ui?.text })"
+      :class="badgeTheme.text({ class: props.ui?.text })"
     >
       <slot>{{ label }}</slot>
     </span>

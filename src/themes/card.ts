@@ -11,14 +11,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'rounded-md',
-        header: 'p-2 sm:p-2.5 space-y-0.5',
-        title: 'text-sm',
-        description: 'text-xs',
-        content: 'p-2 sm:p-2.5 pt-0',
-        footer: 'p-2 sm:p-2.5 pt-0'
-      },
       sm: {
         root: 'rounded-md',
         header: 'p-3 space-y-1',
@@ -43,14 +35,6 @@ export default tv({
         content: 'p-5 sm:p-6 pt-0',
         footer: 'p-5 sm:p-6 pt-0'
       },
-      xl: {
-        root: 'rounded-xl sm:rounded-2xl',
-        header: 'p-6 sm:p-8 space-y-2',
-        title: 'text-2xl sm:text-3xl',
-        description: 'text-base',
-        content: 'p-6 sm:p-8 pt-0',
-        footer: 'p-6 sm:p-8 pt-0'
-      }
     },
     variant: {
       default: {

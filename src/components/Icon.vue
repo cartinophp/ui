@@ -5,7 +5,7 @@
   export interface IconProps {
     /** Icon name from Iconify (e.g., 'solar:user-bold', 'solar:home-linear') */
     name: string
-    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+    size?: 'sm' | 'md' | 'lg'
     customClass?: string | string[] | Record<string, boolean>
   }
   

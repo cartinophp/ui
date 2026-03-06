@@ -49,10 +49,6 @@ export default tv({
       }
     },
     size: {
-      xs: {
-        status: 'text-xs',
-        steps: 'text-xs'
-      },
       sm: {
         status: 'text-xs sm:text-sm',
         steps: 'text-xs sm:text-sm'
@@ -65,10 +61,6 @@ export default tv({
         status: 'text-base sm:text-sm',
         steps: 'text-base sm:text-sm'
       },
-      xl: {
-        status: 'text-lg sm:text-base',
-        steps: 'text-lg sm:text-base'
-      }
     },
     step: {
       active: {
@@ -120,17 +112,13 @@ export default tv({
       }
     },
     // Horizontal sizes
-    { orientation: 'horizontal', size: 'xs', class: { base: 'h-0.5 sm:h-0.5' } },
     { orientation: 'horizontal', size: 'sm', class: { base: 'h-1 sm:h-1' } },
     { orientation: 'horizontal', size: 'md', class: { base: 'h-2 sm:h-1.5' } },
     { orientation: 'horizontal', size: 'lg', class: { base: 'h-3 sm:h-2' } },
-    { orientation: 'horizontal', size: 'xl', class: { base: 'h-4 sm:h-3' } },
     // Vertical sizes
-    { orientation: 'vertical', size: 'xs', class: { base: 'w-0.5 sm:w-0.5' } },
     { orientation: 'vertical', size: 'sm', class: { base: 'w-1 sm:w-1' } },
     { orientation: 'vertical', size: 'md', class: { base: 'w-2 sm:w-1.5' } },
     { orientation: 'vertical', size: 'lg', class: { base: 'w-3 sm:w-2' } },
-    { orientation: 'vertical', size: 'xl', class: { base: 'w-4 sm:w-3' } },
     // Animations
     {
       orientation: 'horizontal',

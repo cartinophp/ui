@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import breadcrumbTheme from '@/themes/breadcrumb'
 import Link from './Link.vue'
@@ -44,6 +45,8 @@ const getItemLabel = (item) => {
   return item[props.labelKey] || item.label
 }
 
+const baseTheme = computed(() => baseTheme)
+
 const getItemUi = (item, index) => {
   const isActive = index === props.items.length - 1
   return breadcrumbTheme({
@@ -59,18 +62,18 @@ const getItemUi = (item, index) => {
     :as="props.as"
     aria-label="Breadcrumb"
     data-slot="root"
-    :class="breadcrumbTheme().root({ class: [props.ui?.root, props.class] })"
+    :class="baseTheme.root({ class: [props.ui?.root, props.class] })"
     v-bind="$attrs"
   >
     <ol
       data-slot="list"
-      :class="breadcrumbTheme().list({ class: props.ui?.list })"
+      :class="baseTheme.list({ class: props.ui?.list })"
     >
       <li
         v-for="(item, index) in items"
         :key="index"
         data-slot="item"
-        :class="breadcrumbTheme().item({ class: props.ui?.item })"
+        :class="baseTheme.item({ class: props.ui?.item })"
       >
         <slot
           name="item"
@@ -93,7 +96,7 @@ const getItemUi = (item, index) => {
               <UAvatar
                 v-if="item.avatar"
                 v-bind="item.avatar"
-                size="3xs"
+                size="sm"
                 data-slot="link-leading-avatar"
                 :class="
                   getItemUi(item, index).linkLeadingAvatar({
@@ -153,7 +156,7 @@ const getItemUi = (item, index) => {
               <UAvatar
                 v-if="item.avatar"
                 v-bind="item.avatar"
-                size="3xs"
+                size="sm"
                 data-slot="link-leading-avatar"
                 :class="
                   getItemUi(item, index).linkLeadingAvatar({
@@ -204,13 +207,13 @@ const getItemUi = (item, index) => {
         <slot v-if="index < items.length - 1" name="separator">
           <div
             data-slot="separator"
-            :class="breadcrumbTheme().separator({ class: props.ui?.separator })"
+            :class="baseTheme.separator({ class: props.ui?.separator })"
           >
             <Icon
               :name="separatorIcon"
               data-slot="separator-icon"
               :class="
-                breadcrumbTheme().separatorIcon({
+                baseTheme.separatorIcon({
                   class: props.ui?.separatorIcon
                 })
               "

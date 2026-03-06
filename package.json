@@ -33,23 +33,23 @@
     "vue": "^3.4.0"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^5.0.0",
-    "@storybook/addon-a11y": "^10.2.5",
-    "@storybook/addon-docs": "^10.2.5",
-    "@storybook/addon-links": "^10.2.5",
-    "@storybook/addon-themes": "^10.2.5",
-    "@storybook/vue3-vite": "^10.2.5",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^25.2.0",
+    "@chromatic-com/storybook": "^5.0.1",
+    "@storybook/addon-a11y": "^10.2.15",
+    "@storybook/addon-docs": "^10.2.15",
+    "@storybook/addon-links": "^10.2.15",
+    "@storybook/addon-themes": "^10.2.15",
+    "@storybook/vue3-vite": "^10.2.15",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/node": "^25.3.5",
     "@vitejs/plugin-vue": "^6.0.4",
     "cross-env": "^10.1.0",
-    "storybook": "^10.2.5",
-    "tailwindcss": "^4.1.18",
+    "storybook": "^10.2.15",
+    "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vue": "^3.5.27",
-    "vue-tsc": "^3.2.4"
+    "vue": "^3.5.29",
+    "vue-tsc": "^3.2.5"
   },
   "keywords": [
     "vue",
@@ -63,11 +63,11 @@
   "license": "MIT",
   "dependencies": {
     "@iconify/vue": "^5.0.0",
-    "@internationalized/date": "^3.11.0",
+    "@internationalized/date": "^3.12.0",
     "@tanstack/vue-table": "^8.21.3",
-    "@vueuse/core": "^14.2.0",
-    "reka-ui": "^2.8.0",
-    "tailwind-merge": "^3.4.0",
+    "@vueuse/core": "^14.2.1",
+    "reka-ui": "^2.9.0",
+    "tailwind-merge": "^3.5.0",
     "tailwind-variants": "^3.2.2"
   },
   "prettier": {

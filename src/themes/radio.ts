@@ -11,13 +11,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'size-3.5 sm:size-3',
-        indicator: 'after:size-1.5 sm:after:size-1',
-        wrapper: 'gap-1.5 sm:gap-1',
-        label: 'text-xs',
-        description: 'text-[10px]'
-      },
       sm: {
         root: 'size-4 sm:size-3.5',
         indicator: 'after:size-2 sm:after:size-1.5',
@@ -39,13 +32,6 @@ export default tv({
         label: 'text-base sm:text-sm',
         description: 'text-sm'
       },
-      xl: {
-        root: 'size-7 sm:size-6',
-        indicator: 'after:size-3.5 sm:after:size-3',
-        wrapper: 'gap-3 sm:gap-3',
-        label: 'text-lg sm:text-base',
-        description: 'text-base sm:text-sm'
-      }
     },
     color: {
       primary: {

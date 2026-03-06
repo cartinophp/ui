@@ -10,9 +10,9 @@
     disabled?: boolean
     readonly?: boolean
     required?: boolean
-    size?: string
-    color?: string
-    variant?: string
+    size?: 'sm' | 'md' | 'lg'
+    color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+    variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'flushed' | 'none'
     label?: string
     hint?: string
     error?: string
@@ -60,6 +60,7 @@
       focused: isFocused.value,
       disabled: props.disabled,
       hasLeading: !!(props.leadingIcon || slots.leading),
+      hasTrailing: !!(props.trailingIcon || slots.trailing),
       hasError: !!props.error
     })
   )

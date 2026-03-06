@@ -10,7 +10,7 @@ export interface UserProps {
   description?: string
   avatar?: any
   chip?: boolean | object
-  size?: string
+  size?: 'sm' | 'md' | 'lg'
   orientation?: 'horizontal' | 'vertical'
   to?: string | object
   target?: string
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<UserProps>(), {
 
 const slots = defineSlots()
 
-const ui = computed(() => theme())
+const ui = computed(() => theme({ size: props.size, orientation: props.orientation, to: !!props.to }))
 </script>
 
 <template>
@@ -57,8 +57,7 @@ const ui = computed(() => theme())
         <div
           class="rounded-full bg-muted flex items-center justify-center text-muted-foreground font-medium"
           :class="{
-            'w-6 h-6 text-xs': size === '3xs' || size === '2xs',
-            'w-8 h-8 text-sm': size === 'xs' || size === 'sm',
+            'w-8 h-8 text-sm': size === 'sm',
             'w-10 h-10 text-base': size === 'md',
             'w-12 h-12 text-lg': size === 'lg'
           }"

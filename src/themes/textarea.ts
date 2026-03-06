@@ -13,12 +13,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        label: 'text-xs',
-        textarea: 'min-h-[48px] sm:min-h-[40px] px-2 py-1 text-xs',
-        resizeIcon: 'size-3',
-        hint: 'text-[10px]'
-      },
       sm: {
         label: 'text-xs',
         textarea: 'min-h-[60px] sm:min-h-[52px] px-2 py-1.5 text-xs sm:text-xs',
@@ -37,12 +31,6 @@ export default tv({
         resizeIcon: 'size-4',
         hint: 'text-sm'
       },
-      xl: {
-        label: 'text-lg sm:text-base',
-        textarea: 'min-h-[120px] sm:min-h-[104px] px-5 py-3 text-lg sm:text-base',
-        resizeIcon: 'size-5',
-        hint: 'text-base sm:text-sm'
-      }
     },
     variant: {
       solid: {

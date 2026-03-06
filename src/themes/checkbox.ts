@@ -13,14 +13,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'size-3.5 sm:size-3 rounded-sm',
-        icon: 'size-2 sm:size-1.5',
-        label: 'text-xs',
-        description: 'text-xs',
-        wrapper: 'space-x-2 sm:space-x-1.5',
-        content: 'gap-0.5'
-      },
       sm: {
         root: 'size-4 sm:size-3.5 rounded-sm',
         icon: 'size-2.5 sm:size-2',
@@ -45,14 +37,6 @@ export default tv({
         wrapper: 'space-x-3 sm:space-x-3',
         content: 'gap-1.5'
       },
-      xl: {
-        root: 'size-7 sm:size-6 rounded-lg',
-        icon: 'size-5 sm:size-4',
-        label: 'text-lg sm:text-base',
-        description: 'text-base sm:text-sm',
-        wrapper: 'space-x-4 sm:space-x-3',
-        content: 'gap-2'
-      }
     },
     color: {
       primary: {

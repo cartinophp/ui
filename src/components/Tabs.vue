@@ -97,7 +97,7 @@ export interface TabsProps {
   items?: TabItem[]
   orientation?: 'horizontal' | 'vertical'
   variant?: 'line' | 'pill' | 'card'
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg'
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
   class?: string | object | any[]
   ui?: {

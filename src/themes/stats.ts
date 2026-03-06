@@ -23,18 +23,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'p-2 sm:p-2.5',
-        iconContainer: 'p-1',
-        icon: 'size-3 sm:size-3.5',
-        label: 'text-[10px] sm:text-xs',
-        value: 'text-base sm:text-lg',
-        description: 'text-[10px]',
-        change: 'text-[10px]',
-        changeIcon: 'size-2.5',
-        progressContainer: 'mt-1.5',
-        progressText: 'text-[10px]'
-      },
       sm: {
         root: 'p-2.5 sm:p-3',
         iconContainer: 'p-1.5',
@@ -71,18 +59,6 @@ export default tv({
         progressContainer: 'mt-3',
         progressText: 'text-xs sm:text-sm'
       },
-      xl: {
-        root: 'p-5 sm:p-6 lg:p-8',
-        iconContainer: 'p-2.5 sm:p-3 lg:p-4',
-        icon: 'size-7 sm:size-6 lg:size-7',
-        label: 'text-sm sm:text-base',
-        value: 'text-3xl sm:text-4xl',
-        description: 'text-sm sm:text-base',
-        change: 'text-sm sm:text-base',
-        changeIcon: 'size-4',
-        progressContainer: 'mt-4',
-        progressText: 'text-sm'
-      }
     },
     color: {
       default: {

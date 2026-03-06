@@ -13,6 +13,7 @@ export interface RadioProps {
   ui?: {
     root?: string
     indicator?: string
+    wrapper?: string
     label?: string
     description?: string
   }
@@ -32,48 +33,20 @@ const radioThemeObj = computed(() =>
   })
 )
 
-const itemWrapperClasses = 'flex items-start gap-3'
-
-const rootClasses = computed(
-  () => radioThemeObj.value.root?.({ class: props.ui?.root }) || ''
-)
-
-const indicatorClasses = computed(
-  () => radioThemeObj.value.indicator?.({ class: props.ui?.indicator }) || ''
-)
-
-const labelClasses = computed(() => {
-  const base = 'text-foreground font-medium cursor-pointer select-none'
-  const sizes = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
-  }
-  return `${base} ${sizes[props.size]}`
-})
-
-const descriptionClasses = computed(() => {
-  const base = 'text-muted-foreground'
-  const sizes = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base'
-  }
-  return `${base} ${sizes[props.size]}`
-})
+const radioTheme = radioThemeObj
 </script>
 
 <template>
-  <div :class="itemWrapperClasses">
-    <RadioGroupItem :value="value" :disabled="disabled" :class="rootClasses">
-      <RadioGroupIndicator :class="indicatorClasses" />
+  <div :class="radioTheme.value.wrapper({ class: props.ui?.wrapper })">
+    <RadioGroupItem :value="value" :disabled="disabled" :class="radioTheme.value.root({ class: props.ui?.root })">
+      <RadioGroupIndicator :class="radioTheme.value.indicator({ class: props.ui?.indicator })" />
     </RadioGroupItem>
 
     <div v-if="label || description" class="flex flex-col">
-      <label v-if="label" :class="labelClasses">
+      <label v-if="label" :class="radioTheme.value.label({ class: props.ui?.label })">
         {{ label }}
       </label>
-      <span v-if="description" :class="descriptionClasses">
+      <span v-if="description" :class="radioTheme.value.description({ class: props.ui?.description })">
         {{ description }}
       </span>
     </div>

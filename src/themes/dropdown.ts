@@ -17,12 +17,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        content: 'min-w-[120px] sm:min-w-[140px]',
-        item: 'px-2 py-1.5 text-xs gap-1.5',
-        itemIcon: 'size-3',
-        label: 'px-2 py-1 text-[10px]'
-      },
       sm: {
         content: 'min-w-[140px] sm:min-w-[160px]',
         item: 'px-2 py-2 text-xs sm:text-xs gap-2',
@@ -41,12 +35,6 @@ export default tv({
         itemIcon: 'size-5',
         label: 'px-3 sm:px-4 py-2.5 text-xs sm:text-sm'
       },
-      xl: {
-        content: 'min-w-[240px] sm:min-w-[280px]',
-        item: 'px-4 py-3.5 text-lg gap-3',
-        itemIcon: 'size-6 sm:size-5',
-        label: 'px-4 py-3 text-sm'
-      }
     },
     variant: {
       default: {

@@ -27,16 +27,6 @@ export default tv({
       button: {}
     },
     size: {
-      xs: {
-        base: 'text-xs',
-        icon: 'size-4 sm:size-3.5',
-        label: 'mt-1.5 text-xs',
-        description: 'mt-0.5 text-[10px]',
-        actions: 'mt-3 gap-1',
-        file: 'text-xs px-2 py-1 gap-1',
-        fileWrapper: 'flex-row gap-1',
-        fileSize: 'text-[10px]'
-      },
       sm: {
         base: 'text-xs sm:text-xs',
         icon: 'size-5 sm:size-4',
@@ -65,15 +55,6 @@ export default tv({
         file: 'text-sm px-3 py-2 gap-2',
         fileSize: 'text-xs'
       },
-      xl: {
-        base: 'text-lg sm:text-base',
-        icon: 'size-10 sm:size-8',
-        label: 'mt-3 text-lg sm:text-base',
-        description: 'mt-1.5 text-base sm:text-sm',
-        actions: 'mt-6 gap-2',
-        file: 'text-base sm:text-sm px-4 py-2.5 gap-2.5',
-        fileSize: 'text-sm sm:text-xs'
-      }
     },
     layout: {
       list: {
@@ -113,11 +94,6 @@ export default tv({
   },
   compoundVariants: [
     {
-      size: 'xs',
-      layout: 'list',
-      class: { fileTrailingButton: '-me-1' }
-    },
-    {
       size: 'sm',
       layout: 'list',
       class: { fileTrailingButton: '-me-1.5' }
@@ -131,16 +107,6 @@ export default tv({
       size: 'lg',
       layout: 'list',
       class: { fileTrailingButton: '-me-2' }
-    },
-    {
-      size: 'xl',
-      layout: 'list',
-      class: { fileTrailingButton: '-me-2' }
-    },
-    {
-      variant: 'button',
-      size: 'xs',
-      class: { base: 'p-0.5 sm:p-1' }
     },
     {
       variant: 'button',
@@ -157,11 +123,6 @@ export default tv({
       size: 'lg',
       class: { base: 'p-2 sm:p-3' }
     },
-    {
-      variant: 'button',
-      size: 'xl',
-      class: { base: 'p-3 sm:p-4' }
-    }
   ],
   defaultVariants: {
     variant: 'area',

@@ -1,5 +1,5 @@
 <template>
-  <div :class="ui.wrapper({ class: ui?.wrapper })" v-bind="$attrs">
+  <div :class="ui.wrapper({ class: props.ui?.wrapper })" v-bind="$attrs">
     <textarea
       ref="textarea"
       :id="inputId"
@@ -13,7 +13,7 @@
       :cols="cols"
       :maxlength="maxlength"
       :minlength="minlength"
-      :class="ui.root({ class: ui?.root })"
+      :class="ui.textarea({ class: props.ui?.textarea })"
       @input="onInput"
       @change="$emit('change', $event)"
       @blur="$emit('blur', $event)"
@@ -24,11 +24,11 @@
     <!-- Resize handle -->
     <div
       v-if="resize && !disabled"
-      :class="ui.resizeHandle({ class: ui?.resizeHandle })"
+      :class="ui.resizeHandle({ class: props.ui?.resizeHandle })"
     >
       <Icon
         name="solar:sort-linear"
-        :class="ui.resizeIcon({ class: ui?.resizeIcon })"
+        :class="ui.resizeIcon({ class: props.ui?.resizeIcon })"
       />
     </div>
   </div>
@@ -52,7 +52,7 @@ export interface TextareaProps {
   maxlength?: number
   minlength?: number
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'outline' | 'filled' | 'flushed' | 'unstyled'
+  variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'flushed' | 'none'
   color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
   resize?: boolean
   autoresize?: boolean
@@ -68,7 +68,16 @@ const props = withDefaults(defineProps<TextareaProps>(), {
   autoresize: false
 })
 
-const ui = computed(() => theme())
+const ui = computed(() =>
+  theme({
+    size: props.size,
+    variant: props.variant,
+    color: props.color,
+    disabled: props.disabled,
+    readonly: props.readonly,
+    resize: props.resize
+  })
+)
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]

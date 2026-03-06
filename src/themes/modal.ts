@@ -16,9 +16,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        content: 'w-[calc(100vw-2rem)] sm:w-[300px] rounded-lg sm:rounded-lg'
-      },
       sm: {
         content: 'w-[calc(100vw-2rem)] sm:w-[400px] rounded-lg sm:rounded-lg'
       },
@@ -27,15 +24,6 @@ export default tv({
       },
       lg: {
         content: 'w-[calc(100vw-2rem)] sm:w-[600px] md:w-[700px] rounded-lg sm:rounded-lg'
-      },
-      xl: {
-        content: 'w-[calc(100vw-2rem)] sm:w-[700px] md:w-[800px] rounded-lg sm:rounded-lg'
-      },
-      '2xl': {
-        content: 'w-[calc(100vw-2rem)] sm:w-[800px] md:w-[900px] rounded-lg sm:rounded-lg'
-      },
-      '3xl': {
-        content: 'w-[calc(100vw-2rem)] sm:w-[900px] md:w-[1000px] rounded-lg sm:rounded-lg'
       },
       full: {
         content: 'w-[calc(100vw-1rem)] sm:w-[95vw] rounded-lg sm:rounded-lg'

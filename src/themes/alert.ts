@@ -13,13 +13,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        root: 'p-2 sm:p-2.5 gap-2',
-        title: 'text-xs',
-        description: 'text-xs mt-0.5',
-        icon: 'size-4 sm:size-3.5',
-        actions: 'gap-1.5 mt-2'
-      },
       sm: {
         root: 'p-2.5 sm:p-3 gap-2.5',
         title: 'text-xs sm:text-sm',
@@ -41,13 +34,6 @@ export default tv({
         icon: 'size-6 sm:size-5',
         actions: 'gap-2 mt-4'
       },
-      xl: {
-        root: 'p-5 sm:p-6 gap-4',
-        title: 'text-lg sm:text-base',
-        description: 'text-base mt-1.5',
-        icon: 'size-7 sm:size-6',
-        actions: 'gap-2.5 mt-5'
-      }
     },
     variant: {
       soft: {},

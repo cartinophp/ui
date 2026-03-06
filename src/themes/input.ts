@@ -15,14 +15,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        label: 'text-xs',
-        wrapper: 'text-xs h-7 sm:h-6',
-        input: 'px-2 py-1',
-        leadingIcon: 'size-3.5 sm:size-3 left-2',
-        trailingIcon: 'size-3.5 sm:size-3 right-2',
-        hint: 'text-[10px]'
-      },
       sm: {
         label: 'text-xs',
         wrapper: 'text-sm h-8 sm:h-7',
@@ -34,7 +26,7 @@ export default tv({
       md: {
         label: 'text-sm',
         wrapper: 'text-base sm:text-sm h-10 sm:h-9',
-        input: 'px-3 sm:px-3 py-2 sm:py-1.5',
+        input: 'px-3 py-2 sm:py-1.5',
         leadingIcon: 'size-5 sm:size-4 left-3',
         trailingIcon: 'size-5 sm:size-4 right-3',
         hint: 'text-xs sm:text-sm'
@@ -46,14 +38,6 @@ export default tv({
         leadingIcon: 'size-5 left-4',
         trailingIcon: 'size-5 right-4',
         hint: 'text-sm'
-      },
-      xl: {
-        label: 'text-lg sm:text-base',
-        wrapper: 'text-xl sm:text-lg h-14 sm:h-12',
-        input: 'px-5 py-3 sm:py-2.5',
-        leadingIcon: 'size-6 sm:size-5 left-5',
-        trailingIcon: 'size-6 sm:size-5 right-5',
-        hint: 'text-base sm:text-sm'
       }
     },
     variant: {
@@ -124,17 +108,13 @@ export default tv({
   },
   compoundVariants: [
     // Leading icon padding adjustments
-    { hasLeading: true, size: 'xs', class: { input: 'pl-7 sm:pl-6' } },
     { hasLeading: true, size: 'sm', class: { input: 'pl-8 sm:pl-7' } },
     { hasLeading: true, size: 'md', class: { input: 'pl-10 sm:pl-9' } },
     { hasLeading: true, size: 'lg', class: { input: 'pl-11 sm:pl-10' } },
-    { hasLeading: true, size: 'xl', class: { input: 'pl-13 sm:pl-12' } },
     // Trailing icon padding adjustments
-    { hasTrailing: true, size: 'xs', class: { input: 'pr-7 sm:pr-6' } },
     { hasTrailing: true, size: 'sm', class: { input: 'pr-8 sm:pr-7' } },
     { hasTrailing: true, size: 'md', class: { input: 'pr-10 sm:pr-9' } },
     { hasTrailing: true, size: 'lg', class: { input: 'pr-11 sm:pr-10' } },
-    { hasTrailing: true, size: 'xl', class: { input: 'pr-13 sm:pr-12' } },
     // Outline variant colors
     {
       variant: 'outline',

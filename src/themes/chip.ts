@@ -30,15 +30,6 @@ export default tv({
       }
     },
     size: {
-      '3xs': {
-        base: 'size-1.5'
-      },
-      '2xs': {
-        base: 'size-2'
-      },
-      xs: {
-        base: 'size-2.5 text-[8px]'
-      },
       sm: {
         base: 'size-3 text-[10px]'
       },
@@ -48,15 +39,6 @@ export default tv({
       lg: {
         base: 'size-5 text-sm'
       },
-      xl: {
-        base: 'size-6 text-base'
-      },
-      '2xl': {
-        base: 'size-7 text-lg'
-      },
-      '3xl': {
-        base: 'size-8 text-xl'
-      }
     },
     position: {
       'top-right': {},

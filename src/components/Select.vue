@@ -36,7 +36,7 @@ export interface SelectProps {
   placeholder?: string
   disabled?: boolean
   loading?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'sm' | 'md' | 'lg'
   variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'link' | 'none'
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
   trailingIcon?: string
