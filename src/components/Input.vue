@@ -12,7 +12,7 @@
     required?: boolean
     size?: 'sm' | 'md' | 'lg'
     color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
-    variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'flushed' | 'none'
+    variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'link' | 'none'
     label?: string
     hint?: string
     error?: string

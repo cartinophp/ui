@@ -13,9 +13,9 @@ export interface PaginationProps {
   showEdges?: boolean
   showControls?: boolean
   disabled?: boolean
-  color?: string
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
   variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
-  activeColor?: string
+  activeColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
   activeVariant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg'
   to?: (page: number) => string | object

@@ -52,14 +52,7 @@
         <!-- UPDATED: Polaris-like "Product options" style button -->
         <button
           type="button"
-          class="inline-flex items-center justify-center gap-1.5
-                 rounded-md border border-gray-300
-                 bg-white text-sm text-gray-900
-                 px-3 py-1.5
-                 shadow-sm
-                 hover:bg-gray-50
-                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                 disabled:cursor-not-allowed disabled:opacity-50"
+          class="inline-flex items-center justify-center gap-1.5 rounded-md border border-border bg-card text-sm text-foreground px-3 py-1.5 shadow-sm hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <slot />
         </button>

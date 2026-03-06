@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Support explicit dark mode via data-theme="dark" attribute */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 /**
  * Cartino UI Theme System
  * OKLCH Color Format for perceptually uniform colors

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref, type Ref } from 'vue'
+  import { computed, ref } from 'vue'
   import {
     useVueTable,
     getCoreRowModel,

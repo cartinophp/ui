@@ -52,7 +52,7 @@ export interface TextareaProps {
   maxlength?: number
   minlength?: number
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'flushed' | 'none'
+  variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'link' | 'none'
   color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
   resize?: boolean
   autoresize?: boolean

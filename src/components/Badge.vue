@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import theme from '@/themes/badge'
+import Icon from './Icon.vue'
 
 export type BadgeColor =
   | 'primary'
@@ -65,7 +66,9 @@ const progressIcons = {
     </span>
 
     <span v-else-if="icon" :class="badgeTheme.icon({ class: props.ui?.icon })">
-      <slot name="icon" />
+      <slot name="icon">
+        <Icon :name="icon" />
+      </slot>
     </span>
 
     <span

@@ -8,6 +8,7 @@ import {
   AccordionContent
 } from 'reka-ui'
 import theme from '@/themes/accordion'
+import Icon from './Icon.vue'
 
 export interface AccordionItem {
   label?: string

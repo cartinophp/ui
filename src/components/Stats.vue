@@ -92,6 +92,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import theme from '@/themes/stats'
+import Icon from './Icon.vue'
 
 export interface StatsProps {
   label?: string

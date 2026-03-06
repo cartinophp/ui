@@ -28,10 +28,6 @@ export default defineConfig({
         globals: { vue: 'Vue' },
         preserveModules: true,       // keep ES modules for tree-shaking
         preserveModulesRoot: 'src',  // root for preserved modules
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) return 'vendor'
-          if (id.includes('themes')) return 'themes'
-        },
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) return 'style.css'
           return assetInfo.name || 'asset'

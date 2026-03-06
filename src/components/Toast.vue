@@ -19,8 +19,8 @@ import Button from './Button.vue'
 export interface ToastActionButton {
   label: string
   onClick?: () => void
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
-  tone?: 'default' | 'success' | 'critical'
+  variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
 }
 
 export interface ToastProps
