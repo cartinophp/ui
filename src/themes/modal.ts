@@ -7,7 +7,7 @@ export default tv({
     content:
       'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-background divide-y divide-border flex flex-col shadow-xl ring-1 ring-border max-h-[85vh] sm:max-h-[90vh] focus:outline-none data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]',
     header: 'flex items-center gap-1.5 p-4 sm:p-6 min-h-14 sm:min-h-16 shrink-0',
-    wrapper: 'flex-1 min-h-0',
+    headerContent: 'flex-1 min-h-0',
     title: 'text-lg sm:text-xl font-semibold text-foreground',
     description: 'mt-0.5 sm:mt-1 text-muted-foreground text-xs sm:text-sm',
     body: 'flex-1 p-4 sm:p-6 overflow-y-auto text-foreground text-sm sm:text-base',

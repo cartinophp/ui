@@ -10,7 +10,7 @@ export interface AvatarProps {
   alt?: string
   icon?: string
   text?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
   shape?: 'circle' | 'square'
   variant?: 'default' | 'soft' | 'outline'
   chip?:

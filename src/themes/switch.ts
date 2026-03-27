@@ -14,6 +14,14 @@ export default tv({
   },
   variants: {
     size: {
+      xs: {
+        wrapper: 'gap-2',
+        root: 'h-4 w-7 sm:h-3.5 sm:w-6',
+        thumb: 'size-3 sm:size-2.5 data-[state=checked]:translate-x-3 sm:data-[state=checked]:translate-x-2.5',
+        label: 'text-xs',
+        description: 'text-xs',
+        content: 'gap-0.5'
+      },
       sm: {
         wrapper: 'gap-2.5',
         root: 'h-5 w-9 sm:h-4 sm:w-7',
@@ -38,6 +46,14 @@ export default tv({
         description: 'text-sm',
         content: 'gap-1'
       },
+      xl: {
+        wrapper: 'gap-4',
+        root: 'h-8 w-15 sm:h-7 sm:w-13',
+        thumb: 'size-7 sm:size-6 data-[state=checked]:translate-x-7 sm:data-[state=checked]:translate-x-6',
+        label: 'text-xl sm:text-lg',
+        description: 'text-base',
+        content: 'gap-1.5'
+      }
     },
     color: {
       primary: {

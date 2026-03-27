@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import breadcrumbTheme from '@/themes/breadcrumb'
 import Link from './Link.vue'
@@ -45,7 +44,7 @@ const getItemLabel = (item) => {
   return item[props.labelKey] || item.label
 }
 
-const baseTheme = computed(() => baseTheme)
+const baseTheme = breadcrumbTheme()
 
 const getItemUi = (item, index) => {
   const isActive = index === props.items.length - 1

@@ -9,6 +9,11 @@ export default tv({
   },
   variants: {
     size: {
+      xs: {
+        root: 'size-6 sm:size-5 text-xs',
+        icon: 'size-3 sm:size-2.5',
+        fallback: 'text-xs'
+      },
       sm: {
         root: 'size-7 sm:size-6 text-xs',
         icon: 'size-4 sm:size-3.5',
@@ -23,6 +28,21 @@ export default tv({
         root: 'size-11 sm:size-10 text-base',
         icon: 'size-6 sm:size-5',
         fallback: 'text-base'
+      },
+      xl: {
+        root: 'size-12 sm:size-11 text-lg',
+        icon: 'size-7 sm:size-6',
+        fallback: 'text-lg'
+      },
+      '2xl': {
+        root: 'size-14 sm:size-12 text-xl',
+        icon: 'size-8 sm:size-7',
+        fallback: 'text-xl'
+      },
+      '3xl': {
+        root: 'size-16 sm:size-14 text-2xl',
+        icon: 'size-9 sm:size-8',
+        fallback: 'text-2xl'
       }
     },
     shape: {
@@ -136,6 +156,11 @@ export default tv({
     // Square shape radius by size
     {
       shape: 'square',
+      size: 'xs',
+      class: { root: 'rounded-sm', image: 'rounded-sm' }
+    },
+    {
+      shape: 'square',
       size: 'sm',
       class: { root: 'rounded-md', image: 'rounded-md' }
     },
@@ -148,6 +173,21 @@ export default tv({
       shape: 'square',
       size: 'lg',
       class: { root: 'rounded-xl', image: 'rounded-xl' }
+    },
+    {
+      shape: 'square',
+      size: 'xl',
+      class: { root: 'rounded-xl', image: 'rounded-xl' }
+    },
+    {
+      shape: 'square',
+      size: '2xl',
+      class: { root: 'rounded-2xl', image: 'rounded-2xl' }
+    },
+    {
+      shape: 'square',
+      size: '3xl',
+      class: { root: 'rounded-2xl', image: 'rounded-2xl' }
     }
   ],
   defaultVariants: {

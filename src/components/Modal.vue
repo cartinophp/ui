@@ -21,7 +21,7 @@
             :class="modalTheme.header({ class: props.ui?.header })"
           >
             <slot name="header">
-              <div :class="modalTheme.wrapper({ class: props.ui?.wrapper })">
+              <div :class="modalTheme.headerContent({ class: props.ui?.headerContent })">
                 <!-- Icon slot -->
                 <slot name="icon">
                   <Icon

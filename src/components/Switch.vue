@@ -10,7 +10,7 @@ export interface SwitchProps {
   required?: boolean
   name?: string
   value?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'primary' | 'success' | 'warning' | 'error'
   label?: string
   description?: string

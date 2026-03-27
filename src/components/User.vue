@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Primitive } from 'reka-ui'
 import theme from '@/themes/user'
 import Link from './Link.vue'
+import Avatar from './Avatar.vue'
 
 export interface UserProps {
   as?: string | object
@@ -48,26 +49,14 @@ const ui = computed(() => theme({ size: props.size, orientation: props.orientati
     @click="props.onClick"
   >
     <slot name="avatar" :ui="ui">
-      <!-- TODO: Replace with Avatar component when available -->
-      <div
+      <Avatar
         v-if="avatar"
+        v-bind="avatar"
+        :text="avatar.text || (props.name ? props.name.split(' ').slice(0, 2).map((w: string) => w[0].toUpperCase()).join('') : undefined)"
+        :size="props.size"
         data-slot="avatar"
         :class="ui.avatar({ class: props.ui?.avatar })"
-      >
-        <div
-          class="rounded-full bg-muted flex items-center justify-center text-muted-foreground font-medium"
-          :class="{
-            'w-8 h-8 text-sm': size === 'sm',
-            'w-10 h-10 text-base': size === 'md',
-            'w-12 h-12 text-lg': size === 'lg'
-          }"
-        >
-          {{
-            avatar.text ||
-            (props.name ? props.name.charAt(0).toUpperCase() : '?')
-          }}
-        </div>
-      </div>
+      />
     </slot>
 
     <div data-slot="wrapper" :class="ui.wrapper({ class: props.ui?.wrapper })">
