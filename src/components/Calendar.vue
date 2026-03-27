@@ -120,7 +120,7 @@ function onUpdate(value: any) {
           :leading-icon="prevYearIcon"
           :size="buttonSize"
           color="neutral"
-          variant="plain"
+          variant="ghost"
         />
       </Calendar.Prev>
       <Calendar.Prev v-if="monthControls" aria-label="Previous month" as-child>
@@ -128,7 +128,7 @@ function onUpdate(value: any) {
           :leading-icon="prevMonthIcon"
           :size="buttonSize"
           color="neutral"
-          variant="plain"
+          variant="ghost"
         />
       </Calendar.Prev>
       <Calendar.Heading
@@ -145,7 +145,7 @@ function onUpdate(value: any) {
           :leading-icon="nextMonthIcon"
           :size="buttonSize"
           color="neutral"
-          variant="plain"
+          variant="ghost"
         />
       </Calendar.Next>
       <Calendar.Next
@@ -158,7 +158,7 @@ function onUpdate(value: any) {
           :leading-icon="nextYearIcon"
           :size="buttonSize"
           color="neutral"
-          variant="plain"
+          variant="ghost"
         />
       </Calendar.Next>
     </Calendar.Header>

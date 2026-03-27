@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { shallowRef, watchEffect } from 'vue'
 import {
   SelectRoot,
   SelectTrigger,
@@ -34,9 +35,10 @@ export interface SelectProps {
   options?: (SelectOption | string | number | SelectGroup)[]
   placeholder?: string
   disabled?: boolean
+  loading?: boolean
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'outline' | 'filled' | 'ghost' | 'soft' | 'none'
-  color?: 'primary' | 'error' | 'success' | 'warning' | 'info'
+  variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'ghost' | 'link' | 'none'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
   trailingIcon?: string
   selectedIcon?: string
   valueKey?: string
@@ -48,6 +50,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   size: 'md',
   variant: 'outline',
   color: 'primary',
+  loading: false,
   trailingIcon: 'solar:alt-arrow-down-linear',
   selectedIcon: 'solar:check-circle-linear',
   valueKey: 'value',
@@ -65,6 +68,7 @@ const selectTheme = computed(() =>
     size: props.size,
     variant: props.variant,
     color: props.color,
+    loading: props.loading,
     disabled: props.disabled
   })
 )
@@ -76,11 +80,17 @@ const hasGroups = computed(() => {
   )
 })
 
-const normalizedOptions = computed(() => {
-  if (!props.options) return []
+const normalizedOptions = shallowRef<any[]>([])
+
+watchEffect(() => {
+  if (!props.options) {
+    normalizedOptions.value = []
+    return
+  }
+
   if (hasGroups.value) {
     // Grouped options
-    return props.options.map((group: any) => {
+    normalizedOptions.value = props.options.map((group: any) => {
       if (typeof group === 'object' && 'options' in group) {
         return {
           label: group.label,
@@ -92,16 +102,16 @@ const normalizedOptions = computed(() => {
           )
         }
       }
-      // fallback for non-grouped
       return { label: undefined, options: [group] }
     })
+  } else {
+    // Flat options
+    normalizedOptions.value = props.options.map((option: any) =>
+      typeof option === 'string' || typeof option === 'number'
+        ? { label: String(option), value: option }
+        : option
+    )
   }
-  // Flat options
-  return props.options.map((option: any) =>
-    typeof option === 'string' || typeof option === 'number'
-      ? { label: String(option), value: option }
-      : option
-  )
 })
 
 const getOptionValue = (option: SelectOption) => {

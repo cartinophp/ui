@@ -16,8 +16,8 @@ export interface EmptyProps {
   actions?: Array<{
     label: string
     leadingIcon?: string
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
-    tone?: 'default' | 'success' | 'critical'
+    variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+    color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
     onClick?: () => void
   }>
   variant?: 'solid' | 'outline' | 'soft' | 'subtle' | 'naked'
@@ -101,7 +101,7 @@ const ui = computed(() =>
               :label="action.label"
               :leadingIcon="action.leadingIcon"
               :variant="action.variant"
-              :tone="action.tone"
+              :color="action.color"
               @click="action.onClick"
             />
           </slot>

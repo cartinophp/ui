@@ -131,7 +131,6 @@
             :size="size"
             :color="color"
             :value="option.value"
-            :icon="getOptionIcon(option.icon)"
             @update:model-value="(checked) =>
               handleChange(option.value, checked)
             "

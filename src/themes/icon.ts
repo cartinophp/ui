@@ -5,15 +5,9 @@ export default tv({
   base: 'shrink-0 inline-block',
   variants: {
     size: {
-      '3xs': 'size-2.5',
-      '2xs': 'size-3',
-      xs: 'size-3.5',
       sm: 'size-4',
       md: 'size-5',
-      lg: 'size-6',
-      xl: 'size-7',
-      '2xl': 'size-8',
-      '3xl': 'size-10'
+      lg: 'size-6'
     }
   },
   defaultVariants: {

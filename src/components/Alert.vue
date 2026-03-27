@@ -14,13 +14,15 @@ export interface AlertProps {
     alt?: string
     fallback?: string
   }
-  color?: 'info' | 'success' | 'warning' | 'critical' | 'neutral'
+  color?: 'info' | 'success' | 'warning' | 'error' | 'neutral'
+  variant?: 'soft' | 'solid' | 'outline' | 'subtle'
+  size?: 'sm' | 'md' | 'lg'
   orientation?: 'horizontal' | 'vertical'
   closable?: boolean
   actions?: Array<{
     label: string
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
-    tone?: 'default' | 'success' | 'critical'
+    variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+    color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
     onClick?: () => void
   }>
   class?: string
@@ -29,6 +31,8 @@ export interface AlertProps {
 
 const props = withDefaults(defineProps<AlertProps>(), {
   color: 'info',
+  variant: 'soft',
+  size: 'md',
   orientation: 'vertical',
   closable: false
 })
@@ -40,6 +44,8 @@ const emit = defineEmits<{
 const alertTheme = computed(() =>
   theme({
     color: props.color,
+    variant: props.variant,
+    size: props.size,
     orientation: props.orientation
   })
 )
@@ -52,7 +58,7 @@ const displayIcon = computed(() => {
     info: 'solar:info-circle-linear',
     success: 'solar:check-circle-linear',
     warning: 'solar:danger-triangle-linear',
-    critical: 'solar:close-circle-linear',
+    error: 'solar:close-circle-linear',
     neutral: 'solar:lightbulb-linear'
   }
 
@@ -151,7 +157,8 @@ const handleClose = () => {
 
       <Button
         v-if="closable"
-        variant="monochromePlain"
+        variant="ghost"
+        color="neutral"
         size="md"
         trailing-icon="solar:close-circle-linear"
         :class="alertTheme.closeButton({ class: ui?.closeButton })"

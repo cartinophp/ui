@@ -19,8 +19,8 @@ import Button from './Button.vue'
 export interface ToastActionButton {
   label: string
   onClick?: () => void
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
-  tone?: 'default' | 'success' | 'critical'
+  variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
 }
 
 export interface ToastProps
@@ -196,7 +196,8 @@ defineExpose({
       <ToastClose v-if="close" as-child>
         <Button
           :leading-icon="closeIcon"
-          variant="plain"
+          variant="ghost"
+          color="neutral"
           size="sm"
           square
           aria-label="Close toast"

@@ -10,7 +10,9 @@ export interface AvatarProps {
   alt?: string
   icon?: string
   text?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
+  shape?: 'circle' | 'square'
+  variant?: 'default' | 'soft' | 'outline'
   chip?:
     | boolean
     | { position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' }
@@ -31,7 +33,9 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<AvatarProps>(), {
   as: 'span',
-  size: 'md'
+  size: 'md',
+  shape: 'circle',
+  variant: 'default'
 })
 
 const slots = defineSlots()
@@ -41,6 +45,8 @@ const imageError = ref(false)
 const ui = computed(() =>
   avatarTheme({
     size: props.size,
+    shape: props.shape,
+    variant: props.variant,
     chipPosition:
       typeof props.chip === 'object' ? props.chip.position : 'top-right'
   })

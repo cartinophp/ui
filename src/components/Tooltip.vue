@@ -34,7 +34,7 @@ const slots = defineSlots<{
   content?: () => any
 }>()
 
-const ui = computed(() =>theme())
+const ui = computed(() => theme({ size: props.size }))
 </script>
 
 <template>

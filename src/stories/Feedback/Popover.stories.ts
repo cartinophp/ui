@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import Popover from '../../components/Popover.vue'
-import Button from '../../components/Button.vue'
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import Popover from '../../components/Popover.vue';
+import Button from '../../components/Button.vue';
+import { ref } from 'vue'
 
 const meta = {
   title: 'Feedback/Popover',
@@ -10,194 +11,331 @@ const meta = {
     side: {
       control: 'select',
       options: ['top', 'right', 'bottom', 'left'],
-      description: 'Side of the trigger'
+      description: 'Side of the trigger',
     },
     align: {
       control: 'select',
       options: ['start', 'center', 'end'],
-      description: 'Alignment'
+      description: 'Alignment',
     },
     modal: {
       control: 'boolean',
-      description: 'Show popover as fullscreen modal'
-    }
-  }
-} satisfies Meta<typeof Popover>
+      description: 'Show popover as modal (with overlay)',
+    },
+  },
+} satisfies Meta<typeof Popover>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args }
+      return { args };
     },
     template: `
-      <div class="flex items-center justify-center min-h-75">
-        <Popover v-bind="args">
-          <Button variant="outline">Open Popover</Button>
-          <template #content>
-            <div class="w-80">
-              <h3 class="font-semibold text-foreground mb-2">About Popover</h3>
-              <p class="text-sm text-muted-foreground">
-                This is a popover component. It can contain any content you want, including forms, lists, or custom layouts.
-              </p>
-            </div>
-          </template>
-        </Popover>
+     <div class="flex items-center justify-center min-h-75">
+  <Popover v-bind="args">
+    <template #trigger>
+      <button
+        type="button"
+        class="inline-flex items-center justify-center gap-1.5
+               rounded-md border border-gray-300
+               bg-white text-sm text-gray-900
+               px-3 py-1.5
+               shadow-sm
+               hover:bg-gray-50
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+               disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Open Popover
+      </button>
+    </template>
+
+    <template #content>
+      <div class="w-80">
+        <h3 class="font-semibold text-foreground mb-2">About Popover</h3>
+        <p class="text-sm text-muted-foreground">
+          This is a popover component. It can contain any content you want, including forms, lists, or custom layouts.
+        </p>
       </div>
-    `
-  })
-}
+    </template>
+  </Popover>
+</div>
+    `,
+  }),
+};
 
 export const WithCloseButton: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args }
+      return { args };
     },
     template: `
-      <div class="flex items-center justify-center min-h-75">
-        <Popover v-bind="args">
-          <Button>Open with Close</Button>
-          <template #content>
-            <div class="w-72 pr-6">
-              <h3 class="font-semibold text-foreground mb-2">Notifications</h3>
-              <div class="space-y-2">
-                <div class="text-sm">
-                  <p class="font-medium text-foreground">New message</p>
-                  <p class="text-muted-foreground">You have a new message from John</p>
-                </div>
-                <div class="text-sm">
-                  <p class="font-medium text-foreground">Update available</p>
-                  <p class="text-muted-foreground">A new version is ready to install</p>
-                </div>
-              </div>
-            </div>
-          </template>
+     <div class="flex items-center justify-center min-h-75">
+  <Popover v-bind="args">
+    <template #trigger>
+      <button
+        type="button"
+        class="inline-flex items-center justify-center gap-1.5
+               rounded-md border border-gray-300
+               bg-white text-sm text-gray-900
+               px-3 py-1.5
+               shadow-sm
+               hover:bg-gray-50
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+               disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Open with Close
+      </button>
+    </template>
 
-          <template #close>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </template>
-        </Popover>
+    <template #content>
+      <div class="w-72 pr-6">
+        <h3 class="font-semibold text-foreground mb-2">Notifications</h3>
+        <div class="space-y-2">
+          <div class="text-sm">
+            <p class="font-medium text-foreground">New message</p>
+            <p class="text-muted-foreground">You have a new message from John</p>
+          </div>
+          <div class="text-sm">
+            <p class="font-medium text-foreground">Update available</p>
+            <p class="text-muted-foreground">A new version is ready to install</p>
+          </div>
+        </div>
       </div>
-    `
-  })
-}
+    </template>
+
+    <template #close>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </template>
+  </Popover>
+</div>
+    `,
+  }),
+};
 
 export const ModalPopover: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args }
+      const open = ref(false)
+
+      return {
+        args,
+        open,
+      }
     },
     template: `
-  <div>
-  <div v-if="args.modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative">
-      <h2 class="font-bold text-lg mb-4">Modal Popover</h2>
-      <p class="text-sm text-muted-foreground mb-4">
-        This popover opens as a fullscreen modal overlay.
-      </p>
-      <Button variant="outline" @click="args.modal = false" class="absolute top-2 right-2">
-        Close
-      </Button>
-      <slot name="content" />
-    </div>
-  </div>
-      </template>
-    </Popover>
-  </div>
-</div>
-    `
+      <div class="flex items-center justify-center min-h-75">
+        <Popover
+          v-bind="args"
+          :open="open"
+          @update:open="open = $event"
+        >
+          <template #trigger>
+            <button
+              type="button"
+              @click="open = true"
+              class="inline-flex items-center justify-center gap-1.5
+                     rounded-md border border-gray-300
+                     bg-white text-sm text-gray-900
+                     px-3 py-1.5
+                     shadow-sm
+                     hover:bg-gray-50
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            >
+              Open Modal Popover
+            </button>
+          </template>
+
+          <template #content>
+            <div class="w-80">
+              <h2 class="font-bold text-lg mb-3">Modal Popover</h2>
+              <p class="text-sm text-muted-foreground mb-3">
+                This popover appears with a subtle overlay and traps focus like a modal.
+              </p>
+              <div class="flex justify-end">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  @click="open = false"
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </template>
+        </Popover>
+      </div>
+    `,
   }),
   args: {
-    modal: true
-  }
+    modal: true,
+  },
 }
 
 export const SideTop: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args }
+      return { args };
     },
     template: `
-      <div class="flex items-center justify-center pt-40">
+      <div class="flex items-center justify-center min-h-75">
         <Popover v-bind="args">
-          <Button variant="outline">Top Popover</Button>
+          <template #trigger>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center gap-1.5
+                     rounded-md border border-gray-300
+                     bg-white text-sm text-gray-900
+                     px-3 py-1.5
+                     shadow-sm
+                     hover:bg-gray-50
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                     disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Top Popover
+            </button>
+          </template>
+
           <template #content>
             <div class="w-64">
-              <p class="text-sm text-muted-foreground">This popover opens on top of the trigger button.</p>
+              <p class="text-sm text-muted-foreground">
+                This popover opens on top of the trigger button.
+              </p>
             </div>
           </template>
         </Popover>
       </div>
-    `
+    `,
   }),
   args: {
-    side: 'top'
-  }
-}
+    side: 'top',
+  },
+};
 
 export const SideRight: Story = {
   render: (args) => ({
     components: { Popover, Button },
     setup() {
-      return { args }
+      return { args };
     },
     template: `
       <div class="flex items-center justify-center min-h-75">
         <Popover v-bind="args">
-          <Button variant="outline">Right Popover</Button>
+          <template #trigger>
+            <button
+              type="button"
+              class="inline-flex items-center justify-center gap-1.5
+                     rounded-md border border-gray-300
+                     bg-white text-sm text-gray-900
+                     px-3 py-1.5
+                     shadow-sm
+                     hover:bg-gray-50
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                     disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Right Popover
+            </button>
+          </template>
+
           <template #content>
             <div class="w-64">
-              <p class="text-sm text-muted-foreground">This popover opens to the right of the trigger.</p>
+              <p class="text-sm text-muted-foreground">
+                This popover opens to the right of the trigger.
+              </p>
             </div>
           </template>
         </Popover>
       </div>
-    `
+    `,
   }),
   args: {
-    side: 'right'
-  }
-}
+    side: 'right',
+  },
+};
 
-export const FormInPopover: Story = {
+export const InputPopover: Story = {
   render: () => ({
     components: { Popover, Button },
     template: `
       <div class="flex items-center justify-center min-h-75">
         <Popover>
-          <Button variant="primary">Add Comment</Button>
+          <!-- Trigger -->
+          <template #trigger>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2
+                     rounded-md border border-gray-300
+                     bg-white px-3 py-1.5 text-sm text-gray-900
+                     shadow-sm hover:bg-gray-50
+                     focus-visible:outline-none
+                     focus-visible:ring-2 focus-visible:ring-blue-500
+                     focus-visible:ring-offset-2"
+            >
+              Add Comment
+            </button>
+          </template>
+
+          <!-- Content -->
           <template #content>
-            <div class="w-80">
-              <h3 class="font-semibold text-foreground mb-3">Add a comment</h3>
-              <form class="space-y-3">
-                <div>
-                  <textarea
-                    class="w-full px-3 py-2 border border-border rounded-md text-sm bg-background text-foreground"
-                    rows="3"
-                    placeholder="Write your comment..."
-                  ></textarea>
-                </div>
-                <div class="flex justify-end gap-2">
-                  <Button size="sm" variant="outline">Cancel</Button>
-                  <Button size="sm" variant="primary">Submit</Button>
-                </div>
-              </form>
+            <div class="w-72 space-y-3">
+              <label class="block text-sm font-medium text-gray-900">
+                New name
+              </label>
+
+              <input
+                type="text"
+                placeholder="Enter a name"
+                class="w-full rounded-md
+                       border border-gray-300
+                       bg-white px-2.5 py-1.5
+                       text-sm text-gray-900
+                       shadow-sm
+                       focus:border-blue-500
+                       focus:outline-none
+                       focus:ring-2 focus:ring-blue-500"
+              />
+
+              <div class="flex justify-end gap-2 pt-1">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  type="button"
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  size="sm"
+                  variant="primary"
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </div>
             </div>
           </template>
         </Popover>
       </div>
-    `
-  })
-}
+    `,
+  }),
+};
 
 export const UserProfile: Story = {
   render: () => ({
@@ -205,12 +343,15 @@ export const UserProfile: Story = {
     template: `
       <div class="flex items-center justify-center min-h-75">
         <Popover>
-          <button class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent">
-            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold">
-              JV
-            </div>
-            <span class="text-sm font-medium text-foreground">John Doe</span>
-          </button>
+          <template #trigger>
+            <button class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent">
+              <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold">
+                JV
+              </div>
+              <span class="text-sm font-medium text-foreground">John Doe</span>
+            </button>
+          </template>
+
           <template #content>
             <div class="w-64">
               <div class="flex items-center gap-3 pb-3 border-b border-border">
@@ -234,6 +375,6 @@ export const UserProfile: Story = {
           </template>
         </Popover>
       </div>
-    `
-  })
-}
+    `,
+  }),
+};

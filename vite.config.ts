@@ -14,24 +14,27 @@ export default defineConfig({
       formats: ['es', 'cjs']
     },
     rollupOptions: {
-      // Assicurati di esternalizzare le dipendenze che non dovrebbero essere bundle nella libreria
-      external: ['vue', 'reka-ui'],
+      external: [
+        'vue',
+        'reka-ui',
+        '@iconify/vue',
+        '@tanstack/vue-table',
+        '@vueuse/core',
+        'tailwind-merge',
+        'tailwind-variants'
+      ],
       output: {
         exports: 'named',
-        // Fornisci variabili globali da usare nel build UMD
-        // per dipendenze esternalizzate
-        globals: {
-          vue: 'Vue'
-        },
+        globals: { vue: 'Vue' },
+        preserveModules: true,       // keep ES modules for tree-shaking
+        preserveModulesRoot: 'src',  // root for preserved modules
         assetFileNames: (assetInfo) => {
-          if (assetInfo.names?.[0]?.endsWith('.css')) {
-            return 'style.css'
-          }
-          return assetInfo.names?.[0] || 'asset'
+          if (assetInfo.name?.endsWith('.css')) return 'style.css'
+          return assetInfo.name || 'asset'
         }
       }
     },
-    cssCodeSplit: false // Bundle all CSS into single file
+    cssCodeSplit: false
   },
   resolve: {
     alias: {
@@ -41,6 +44,6 @@ export default defineConfig({
   server: {
     port: 3001,
     host: '0.0.0.0',
-    strictPort: true // Fail se porta occupata invece di usare altra porta
+    strictPort: true
   }
 })

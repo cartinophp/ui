@@ -293,7 +293,8 @@ watch(modelValue, (newValue) => {
                   >
                     <Button
                       v-if="fileDelete"
-                      variant="monochromePlain"
+                      variant="ghost"
+                    color="neutral"
                       :size="computedLayout === 'grid' ? 'sm' : size"
                       :trailing-icon="fileDeleteIcon"
                       :class="
@@ -430,7 +431,8 @@ watch(modelValue, (newValue) => {
                 <slot name="file-trailing" :file="file" :index="index" :ui="ui">
                   <Button
                     v-if="fileDelete"
-                    variant="monochromePlain"
+                    variant="ghost"
+                    color="neutral"
                     :size="computedLayout === 'grid' ? 'sm' : size"
                     :trailing-icon="fileDeleteIcon"
                     :class="

@@ -48,7 +48,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   modelValue: () => []
 })
 
-const emit = defineEmits(['update:modelValue', 'select', 'hover'])
+const emit = defineEmits<{ 'update:modelValue': [value: any[]], select: [row: any], hover: [row: any] }>()
 
 const slots = defineSlots()
 

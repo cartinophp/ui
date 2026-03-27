@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<BannerProps>(), {
 
 const slots = defineSlots()
 
-const emits = defineEmits(['close'])
+const emits = defineEmits<{ close: [] }>()
 
 const ui = computed(() =>
   bannerTheme({

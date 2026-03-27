@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
   show: true
 })
 
-const emit = defineEmits(['update:show'])
+const emit = defineEmits<{ 'update:show': [] }>()
 
 const slots = defineSlots()
 

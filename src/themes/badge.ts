@@ -2,31 +2,35 @@ import { tv } from 'tailwind-variants'
 
 export default tv({
   slots: {
-    root: 'inline-flex items-center gap-1.5 font-medium transition-colors',
+    root: 'inline-flex items-center font-medium transition-colors',
     icon: 'flex items-center justify-center shrink-0',
-    text: 'inline-block'
+    text: 'inline-block truncate'
   },
   variants: {
     size: {
       sm: {
-        root: 'px-2 py-1 text-xs rounded-md',
-        icon: 'w-3 h-3'
+        root: 'px-2 py-0.5 text-xs rounded-md gap-1',
+        icon: 'size-3'
       },
       md: {
-        root: 'px-2.5 py-2 text-sm rounded-md',
-        icon: 'w-4 h-4'
+        root: 'px-2.5 py-1 text-xs sm:text-sm rounded-md gap-1.5',
+        icon: 'size-3.5 sm:size-4'
       },
       lg: {
-        root: 'px-3 py-2 text-base rounded-md',
-        icon: 'w-5 h-5'
+        root: 'px-3 py-1.5 text-sm sm:text-base rounded-md gap-1.5',
+        icon: 'size-4 sm:size-5'
       }
     },
     variant: {
+      solid: {},
       soft: {},
-      strong: {}
+      outline: {},
+      subtle: {},
+      ghost: {}
     },
     color: {
       primary: {},
+      secondary: {},
       success: {},
       warning: {},
       error: {},
@@ -35,91 +39,185 @@ export default tv({
     }
   },
   compoundVariants: [
+    // Solid variants - colored background with foreground text
+    {
+      variant: 'solid',
+      color: 'primary',
+      class: { root: 'bg-primary text-primary-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'secondary',
+      class: { root: 'bg-secondary text-secondary-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'success',
+      class: { root: 'bg-success text-success-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'warning',
+      class: { root: 'bg-warning text-warning-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'error',
+      class: { root: 'bg-error text-error-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'info',
+      class: { root: 'bg-info text-info-foreground' }
+    },
+    {
+      variant: 'solid',
+      color: 'neutral',
+      class: { root: 'bg-foreground text-background' }
+    },
     // Soft variants - light background with colored text
     {
       variant: 'soft',
       color: 'primary',
-      class: {
-        root: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-      }
+      class: { root: 'bg-primary/10 text-primary' }
+    },
+    {
+      variant: 'soft',
+      color: 'secondary',
+      class: { root: 'bg-secondary/10 text-secondary' }
     },
     {
       variant: 'soft',
       color: 'success',
-      class: {
-        root: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-      }
+      class: { root: 'bg-success/10 text-success' }
     },
     {
       variant: 'soft',
       color: 'warning',
-      class: {
-        root: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
-      }
+      class: { root: 'bg-warning/10 text-warning' }
     },
     {
       variant: 'soft',
       color: 'error',
-      class: {
-        root: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-      }
+      class: { root: 'bg-error/10 text-error' }
     },
     {
       variant: 'soft',
       color: 'info',
-      class: {
-        root: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200'
-      }
+      class: { root: 'bg-info/10 text-info' }
     },
     {
       variant: 'soft',
       color: 'neutral',
-      class: {
-        root: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
-      }
+      class: { root: 'bg-muted text-muted-foreground' }
     },
-    // Strong variants - colored background with white text
+    // Outline variants - transparent with border
     {
-      variant: 'strong',
+      variant: 'outline',
       color: 'primary',
-      class: {
-        root: 'bg-blue-600 text-white dark:bg-blue-700'
-      }
+      class: { root: 'border border-primary text-primary bg-transparent' }
     },
     {
-      variant: 'strong',
+      variant: 'outline',
+      color: 'secondary',
+      class: { root: 'border border-secondary text-secondary bg-transparent' }
+    },
+    {
+      variant: 'outline',
       color: 'success',
-      class: {
-        root: 'bg-green-600 text-white dark:bg-green-700'
-      }
+      class: { root: 'border border-success text-success bg-transparent' }
     },
     {
-      variant: 'strong',
+      variant: 'outline',
       color: 'warning',
-      class: {
-        root: 'bg-amber-600 text-white dark:bg-amber-700'
-      }
+      class: { root: 'border border-warning text-warning bg-transparent' }
     },
     {
-      variant: 'strong',
+      variant: 'outline',
       color: 'error',
-      class: {
-        root: 'bg-red-600 text-white dark:bg-red-700'
-      }
+      class: { root: 'border border-error text-error bg-transparent' }
     },
     {
-      variant: 'strong',
+      variant: 'outline',
       color: 'info',
-      class: {
-        root: 'bg-cyan-600 text-white dark:bg-cyan-700'
-      }
+      class: { root: 'border border-info text-info bg-transparent' }
     },
     {
-      variant: 'strong',
+      variant: 'outline',
       color: 'neutral',
-      class: {
-        root: 'bg-gray-600 text-white dark:bg-gray-700'
-      }
+      class: { root: 'border border-border text-foreground bg-transparent' }
+    },
+    // Subtle variants - very light background
+    {
+      variant: 'subtle',
+      color: 'primary',
+      class: { root: 'bg-primary/5 text-primary' }
+    },
+    {
+      variant: 'subtle',
+      color: 'secondary',
+      class: { root: 'bg-secondary/5 text-secondary' }
+    },
+    {
+      variant: 'subtle',
+      color: 'success',
+      class: { root: 'bg-success/5 text-success' }
+    },
+    {
+      variant: 'subtle',
+      color: 'warning',
+      class: { root: 'bg-warning/5 text-warning' }
+    },
+    {
+      variant: 'subtle',
+      color: 'error',
+      class: { root: 'bg-error/5 text-error' }
+    },
+    {
+      variant: 'subtle',
+      color: 'info',
+      class: { root: 'bg-info/5 text-info' }
+    },
+    {
+      variant: 'subtle',
+      color: 'neutral',
+      class: { root: 'bg-muted/50 text-muted-foreground' }
+    },
+    // Ghost variants - no background, just text
+    {
+      variant: 'ghost',
+      color: 'primary',
+      class: { root: 'text-primary hover:bg-primary/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'secondary',
+      class: { root: 'text-secondary hover:bg-secondary/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'success',
+      class: { root: 'text-success hover:bg-success/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'warning',
+      class: { root: 'text-warning hover:bg-warning/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'error',
+      class: { root: 'text-error hover:bg-error/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'info',
+      class: { root: 'text-info hover:bg-info/10' }
+    },
+    {
+      variant: 'ghost',
+      color: 'neutral',
+      class: { root: 'text-muted-foreground hover:bg-muted' }
     }
   ],
   defaultVariants: {

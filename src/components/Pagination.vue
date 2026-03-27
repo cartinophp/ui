@@ -13,15 +13,10 @@ export interface PaginationProps {
   showEdges?: boolean
   showControls?: boolean
   disabled?: boolean
-  color?: string
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
-  activeColor?: string
-  activeVariant?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'plain'
-    | 'monochromePlain'
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+  activeColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  activeVariant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg'
   to?: (page: number) => string | object
   firstIcon?: string
@@ -56,9 +51,9 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   showControls: true,
   disabled: false,
   color: 'neutral',
-  variant: 'plain',
+  variant: 'ghost',
   activeColor: 'primary',
-  activeVariant: 'primary',
+  activeVariant: 'solid',
   size: 'md',
   firstIcon: 'solar:double-alt-arrow-left-linear',
   prevIcon: 'solar:alt-arrow-left-linear',
@@ -67,7 +62,9 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   ellipsisIcon: 'solar:menu-dots-linear'
 })
 
-const emit = defineEmits(['update:page'])
+const emit = defineEmits<{
+  'update:page': [page: number]
+}>()
 
 const slots = defineSlots()
 
@@ -145,7 +142,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToFirst"
         >
           <UButton
-            :icon="firstIcon"
+            :leading-icon="firstIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -168,7 +166,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToPrev"
         >
           <UButton
-            :icon="prevIcon"
+            :leading-icon="prevIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -217,7 +216,8 @@ const goToLast = () => goToPage(pageCount.value)
             :class="ui.ellipsis({ class: props.ui?.ellipsis })"
           >
             <UButton
-              :icon="ellipsisIcon"
+              :leading-icon="ellipsisIcon"
+              square
               :color="color"
               :variant="variant"
               :size="size"
@@ -239,7 +239,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToNext"
         >
           <UButton
-            :icon="nextIcon"
+            :leading-icon="nextIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"
@@ -262,7 +263,8 @@ const goToLast = () => goToPage(pageCount.value)
           :onClick="goToLast"
         >
           <UButton
-            :icon="lastIcon"
+            :leading-icon="lastIcon"
+            square
             :color="color"
             :variant="variant"
             :size="size"

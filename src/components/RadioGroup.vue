@@ -35,7 +35,9 @@ const props = withDefaults(defineProps<RadioGroupProps>(), {
   color: 'primary'
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+}>()
 
 const slots = defineSlots()
 

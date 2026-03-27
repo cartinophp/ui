@@ -19,7 +19,6 @@ import Command from './components/Command.vue'
 import DashboardSidebar from './components/DashboardSidebar.vue'
 import DashboardSidebarLinks from './components/DashboardSidebarLinks.vue'
 import DashboardToolbar from './components/DashboardToolbar.vue'
-import Drawer from './components/Drawer.vue'
 import Calendar from './components/Calendar.vue'
 import DataTable from './components/DataTable.vue'
 import DatePicker from './components/DatePicker.vue'
@@ -70,7 +69,6 @@ export const install = (app: App) => {
   app.component('CartinoDashboardSidebar', DashboardSidebar)
   app.component('CartinoDashboardSidebarLinks', DashboardSidebarLinks)
   app.component('CartinoDashboardToolbar', DashboardToolbar)
-  app.component('CartinoDrawer', Drawer)
   app.component('CartinoCalendar', Calendar)
   app.component('CartinoDataTable', DataTable)
   app.component('CartinoDatePicker', DatePicker)
@@ -123,7 +121,6 @@ export {
   DashboardSidebar,
   DashboardSidebarLinks,
   DashboardToolbar,
-  Drawer,
   DataTable,
   DatePicker,
   Dropdown,
@@ -178,7 +175,6 @@ export type {
 export type { DashboardSidebarProps } from './components/DashboardSidebar.vue'
 export type { DashboardSidebarLinksProps } from './components/DashboardSidebarLinks.vue'
 export type { DashboardToolbarProps } from './components/DashboardToolbar.vue'
-export type { DrawerProps } from './components/Drawer.vue'
 export type { DataTableProps } from './components/DataTable.vue'
 export type { DatePickerProps } from './components/DatePicker.vue'
 export type { DropdownProps, DropdownItem } from './components/Dropdown.vue'

@@ -8,8 +8,18 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['info', 'success', 'warning', 'critical', 'neutral'],
-      description: 'Color tone of the alert (Polaris-inspired)'
+      options: ['primary', 'info', 'success', 'warning', 'error', 'neutral'],
+      description: 'Color tone of the alert'
+    },
+    variant: {
+      control: 'select',
+      options: ['soft', 'solid', 'outline', 'subtle'],
+      description: 'Visual variant style'
+    },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      description: 'Size of the alert'
     },
     orientation: {
       control: 'select',
@@ -20,18 +30,67 @@ const meta = {
       control: 'boolean',
       description: 'Show close button'
     }
+  },
+  args: {
+    color: 'info',
+    variant: 'soft',
+    size: 'md'
   }
 } satisfies Meta<typeof Alert>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Info: Story = {
+export const Default: Story = {
   args: {
-    color: 'info',
     title: 'Heads up!',
     description: 'You can change the primary color in your app config.'
   }
+}
+
+export const Colors: Story = {
+  render: () => ({
+    components: { Alert },
+    template: `
+      <div class="space-y-4">
+        <Alert color="primary" title="Primary" description="Primary alert message" />
+        <Alert color="info" title="Info" description="Informational alert message" />
+        <Alert color="success" title="Success" description="Success alert message" />
+        <Alert color="warning" title="Warning" description="Warning alert message" />
+        <Alert color="error" title="Error" description="Error alert message" />
+        <Alert color="neutral" title="Neutral" description="Neutral alert message" />
+      </div>
+    `
+  })
+}
+
+export const Variants: Story = {
+  render: () => ({
+    components: { Alert },
+    template: `
+      <div class="space-y-4">
+        <Alert variant="soft" color="primary" title="Soft Variant" description="This is the default soft variant" />
+        <Alert variant="solid" color="primary" title="Solid Variant" description="Solid background with foreground text" />
+        <Alert variant="outline" color="primary" title="Outline Variant" description="Border with transparent background" />
+        <Alert variant="subtle" color="primary" title="Subtle Variant" description="Very light background" />
+      </div>
+    `
+  })
+}
+
+export const Sizes: Story = {
+  render: () => ({
+    components: { Alert },
+    template: `
+      <div class="space-y-4">
+        <Alert size="xs" title="Extra Small" description="XS size alert" />
+        <Alert size="sm" title="Small" description="SM size alert" />
+        <Alert size="md" title="Medium" description="MD size alert (default)" />
+        <Alert size="lg" title="Large" description="LG size alert" />
+        <Alert size="xl" title="Extra Large" description="XL size alert" />
+      </div>
+    `
+  })
 }
 
 export const Success: Story = {
@@ -50,20 +109,11 @@ export const Warning: Story = {
   }
 }
 
-export const Critical: Story = {
+export const Error: Story = {
   args: {
-    color: 'critical',
+    color: 'error',
     title: 'Error',
     description: 'An error occurred while processing your request.'
-  }
-}
-
-export const Neutral: Story = {
-  args: {
-    color: 'neutral',
-    title: 'Did you know?',
-    description:
-      'You can customize the appearance of this alert using the color prop.'
   }
 }
 
@@ -72,25 +122,7 @@ export const Closable: Story = {
     closable: true,
     color: 'info',
     title: 'Closable Alert',
-    description: 'Click the × button to close this alert.'
-  }
-}
-
-export const HorizontalOrientation: Story = {
-  args: {
-    color: 'success',
-    orientation: 'horizontal',
-    title: 'Horizontal Layout',
-    description: 'This alert uses horizontal orientation.'
-  }
-}
-
-export const VerticalOrientation: Story = {
-  args: {
-    color: 'warning',
-    orientation: 'vertical',
-    title: 'Vertical Layout',
-    description: 'This alert uses vertical orientation with actions below.'
+    description: 'Click the close button to dismiss this alert.'
   }
 }
 
@@ -103,50 +135,40 @@ export const WithActions: Story = {
       {
         label: 'Cancel',
         variant: 'ghost',
+        color: 'neutral',
         onClick: () => alert('Cancelled')
       },
       {
         label: 'Confirm',
-        variant: 'primary',
+        variant: 'solid',
         onClick: () => alert('Confirmed')
       }
     ]
   }
 }
 
-export const WithCustomIcon: Story = {
+export const HorizontalOrientation: Story = {
   args: {
     color: 'success',
-    icon: '🎉',
-    title: 'Congratulations!',
-    description: 'You have completed all tasks.'
+    orientation: 'horizontal',
+    title: 'Horizontal Layout',
+    description: 'This alert uses horizontal orientation.'
   }
 }
 
-export const TitleOnly: Story = {
-  args: {
-    color: 'info',
-    title: 'Simple alert with title only'
-  }
-}
-
-export const DescriptionOnly: Story = {
-  args: {
-    color: 'neutral',
-    description: 'This alert only has a description without a title.'
-  }
-}
-
-export const AllColors: Story = {
+export const ResponsiveSizes: Story = {
   render: () => ({
     components: { Alert },
     template: `
       <div class="space-y-4">
-        <Alert color="info" title="Info" description="Informational alert with blue background (Polaris style)" />
-        <Alert color="success" title="Success" description="Success alert with green background (Polaris style)" />
-        <Alert color="warning" title="Warning" description="Warning alert with yellow background (Polaris style)" />
-        <Alert color="critical" title="Critical" description="Critical alert with red background (Polaris style)" />
-        <Alert color="neutral" title="Neutral" description="Neutral alert with gray background (Polaris style)" />
+        <p class="text-sm text-muted-foreground">Alerts are larger on mobile for better readability. Resize the viewport to see the difference.</p>
+        <Alert
+          color="info"
+          size="md"
+          title="Responsive Alert"
+          description="This alert adapts its size based on viewport width."
+          icon="solar:info-circle-linear"
+        />
       </div>
     `
   })
@@ -158,33 +180,33 @@ export const ComplexExample: Story = {
     template: `
       <div class="space-y-4">
         <Alert
-          color="critical"
+          color="error"
+          variant="soft"
           closable
           title="Payment Failed"
           description="Your payment could not be processed. Please check your payment method and try again."
           :actions="[
-            { label: 'Update Payment', variant: 'primary', onClick: () => alert('Update payment') },
-            { label: 'Contact Support', variant: 'secondary', onClick: () => alert('Contact support') }
+            { label: 'Update Payment', variant: 'solid', color: 'error', onClick: () => alert('Update payment') },
+            { label: 'Contact Support', variant: 'outline', color: 'neutral', onClick: () => alert('Contact support') }
           ]"
         />
 
         <Alert
           color="success"
+          variant="solid"
           icon="solar:check-circle-linear"
           title="Deployment Successful"
           description="Your application has been deployed to production."
-          :actions="[
-            { label: 'View Details', variant: 'secondary', onClick: () => alert('View details') }
-          ]"
         />
-        
+
         <Alert
           color="info"
+          variant="outline"
           orientation="horizontal"
           title="New Feature Available"
           description="Check out our latest updates."
           :actions="[
-            { label: 'Learn More', variant: 'primary', onClick: () => alert('Learn more') }
+            { label: 'Learn More', variant: 'solid', onClick: () => alert('Learn more') }
           ]"
         />
       </div>

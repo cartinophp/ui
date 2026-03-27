@@ -15,7 +15,7 @@
       | {
           label?: string
           color?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
-          variant?: 'soft' | 'strong'
+          variant?: 'solid' | 'soft' | 'outline' | 'subtle' | 'ghost'
         }
     active?: boolean
     disabled?: boolean

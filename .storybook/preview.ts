@@ -1,18 +1,18 @@
 import type { Preview } from '@storybook/vue3-vite'
 import { withThemeByDataAttribute } from '@storybook/addon-themes'
-import { setup } from '@storybook/vue3'
+//import { setup } from '@storybook/vue3'
 
 import '../src/style.css'
 import Toaster from '../src/components/Toaster.vue'
 import { h } from 'vue'
 
-// Mock router-link for Storybook
-setup((app) => {
-  app.component('router-link', {
-    props: ['to'],
-    template: '<a :href="to"><slot /></a>'
-  })
-})
+// // Mock router-link for Storybook
+// setup((app) => {
+//   app.component('router-link', {
+//     props: ['to'],
+//     template: '<a :href="to"><slot /></a>'
+//   })
+// })
 
 const preview: Preview = {
   parameters: {

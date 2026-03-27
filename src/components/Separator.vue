@@ -7,21 +7,18 @@ export interface SeparatorProps {
   orientation?: 'horizontal' | 'vertical'
   decorative?: boolean
   label?: string
-  size?: 'sm' | 'md' | 'lg'
   ui?: Record<string, any>
 }
 
 const props = withDefaults(defineProps<SeparatorProps>(), {
   orientation: 'horizontal',
-  decorative: true,
-  size: 'md'
+  decorative: true
 })
 
 const separatorTheme = computed(() =>
   theme({
     orientation: props.orientation,
-    size: props.size,
-    hasLabel: !!props.label
+    withLabel: !!props.label
   })
 )
 

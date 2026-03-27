@@ -5,11 +5,11 @@ import Icon from '@/components/Icon.vue'
 
 export interface ButtonProps {
   label?: string
-  /** Polaris variant: primary, secondary, tertiary, plain, monochromePlain */
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain' | 'monochromePlain'
-  /** Polaris tone: default, success, critical */
-  tone?: 'default' | 'success' | 'critical'
-  /** Button sizes: sm (small), md (medium), lg (large) */
+  /** Button visual style: solid, outline, soft, ghost, link */
+  variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link'
+  /** Button semantic color */
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
+  /** Button sizes: sm, md, lg */
   size?: 'sm' | 'md' | 'lg'
   square?: boolean
   block?: boolean
@@ -22,8 +22,8 @@ export interface ButtonProps {
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  variant: 'primary',
-  tone: 'default',
+  variant: 'solid',
+  color: 'primary',
   size: 'md',
   square: false,
   block: false,
@@ -41,7 +41,7 @@ const slots = defineSlots<{
 const buttonTheme = computed(() =>
   theme({
     variant: props.variant,
-    tone: props.tone,
+    color: props.color,
     size: props.size,
     square: props.square,
     block: props.block,

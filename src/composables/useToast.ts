@@ -9,8 +9,23 @@ export interface Toast extends ToastOptions {
 
 const toasts = ref<Toast[]>([])
 let idCounter = 0
+
+// ---- FIX STARTS HERE ----
 const recentToasts = new Map<string, number>()
-const DEBOUNCE_TIME = 300 // milliseconds
+const DEBOUNCE_TIME = 300 // ms
+const MAX_RECENT = 100
+
+const cleanupRecentToasts = () => {
+  if (recentToasts.size <= MAX_RECENT) return
+
+  const excess = recentToasts.size - MAX_RECENT
+  const oldestEntries = Array.from(recentToasts.entries())
+    .sort((a, b) => a[1] - b[1])
+    .slice(0, excess)
+
+  oldestEntries.forEach(([key]) => recentToasts.delete(key))
+}
+// ---- FIX ENDS HERE ----
 
 export const toastMaxInjectionKey: InjectionKey<Ref<number>> =
   Symbol('toast-max')
@@ -22,16 +37,17 @@ const isDuplicate = (options: ToastOptions): boolean => {
     title: options.title,
     description: options.description
   })
-  const lastTime = recentToasts.get(key)
+
   const now = Date.now()
+  const lastTime = recentToasts.get(key)
 
   if (lastTime && now - lastTime < DEBOUNCE_TIME) {
     return true
   }
 
   recentToasts.set(key, now)
+  cleanupRecentToasts()
 
-  // Clean up old entries
   setTimeout(() => {
     recentToasts.delete(key)
   }, DEBOUNCE_TIME)
@@ -64,21 +80,17 @@ export const useToast = (): UseToastReturn => {
   const max = inject(toastMaxInjectionKey, ref(5))
 
   const add = (options: ToastOptions) => {
-    // Prevent duplicate toasts from rapid clicks
     if (isDuplicate(options)) {
-      // Return the last toast with same content
       return toasts.value[toasts.value.length - 1]
     }
 
-    const id = getNextId()
     const toast: Toast = {
-      id,
+      id: getNextId(),
       duration: 5000,
       close: true,
       ...options
     }
 
-    // Remove oldest toast if we hit the max
     if (toasts.value.length >= max.value) {
       toasts.value.shift()
     }
@@ -88,17 +100,13 @@ export const useToast = (): UseToastReturn => {
   }
 
   const remove = (id: string | number) => {
-    const index = toasts.value.findIndex((t) => t.id === id)
-    if (index > -1) {
-      toasts.value.splice(index, 1)
-    }
+    const index = toasts.value.findIndex(t => t.id === id)
+    if (index > -1) toasts.value.splice(index, 1)
   }
 
   const update = (id: string | number, options: Partial<ToastOptions>) => {
-    const toast = toasts.value.find((t) => t.id === id)
-    if (toast) {
-      Object.assign(toast, options)
-    }
+    const toast = toasts.value.find(t => t.id === id)
+    if (toast) Object.assign(toast, options)
   }
 
   const clear = () => {
@@ -107,45 +115,17 @@ export const useToast = (): UseToastReturn => {
 
   const toast = (options: ToastOptions) => add(options)
 
-  const success = (
-    title: string,
-    description?: string,
-    options?: ToastOptions
-  ) =>
-    add({
-      color: 'success',
-      title,
-      description,
-      ...options
-    })
+  const success = (title: string, description?: string, options?: ToastOptions) =>
+    add({ color: 'success', title, description, ...options })
 
   const error = (title: string, description?: string, options?: ToastOptions) =>
-    add({
-      color: 'error',
-      title,
-      description,
-      ...options
-    })
+    add({ color: 'error', title, description, ...options })
 
-  const warning = (
-    title: string,
-    description?: string,
-    options?: ToastOptions
-  ) =>
-    add({
-      color: 'warning',
-      title,
-      description,
-      ...options
-    })
+  const warning = (title: string, description?: string, options?: ToastOptions) =>
+    add({ color: 'warning', title, description, ...options })
 
   const info = (title: string, description?: string, options?: ToastOptions) =>
-    add({
-      color: 'info',
-      title,
-      description,
-      ...options
-    })
+    add({ color: 'info', title, description, ...options })
 
   return {
     toasts,

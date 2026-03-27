@@ -10,9 +10,6 @@ export default tv({
   },
   variants: {
     size: {
-      xs: {
-        thumb: 'size-3'
-      },
       sm: {
         thumb: 'size-3.5'
       },
@@ -22,9 +19,6 @@ export default tv({
       lg: {
         thumb: 'size-4.5'
       },
-      xl: {
-        thumb: 'size-5'
-      }
     },
     color: {
       primary: {
@@ -78,11 +72,6 @@ export default tv({
     // Track height by size for horizontal
     {
       orientation: 'horizontal',
-      size: 'xs',
-      class: { track: 'h-1' }
-    },
-    {
-      orientation: 'horizontal',
       size: 'sm',
       class: { track: 'h-1.5' }
     },
@@ -96,17 +85,7 @@ export default tv({
       size: 'lg',
       class: { track: 'h-2.5' }
     },
-    {
-      orientation: 'horizontal',
-      size: 'xl',
-      class: { track: 'h-3' }
-    },
     // Track width by size for vertical
-    {
-      orientation: 'vertical',
-      size: 'xs',
-      class: { track: 'w-1' }
-    },
     {
       orientation: 'vertical',
       size: 'sm',
@@ -122,11 +101,6 @@ export default tv({
       size: 'lg',
       class: { track: 'w-2.5' }
     },
-    {
-      orientation: 'vertical',
-      size: 'xl',
-      class: { track: 'w-3' }
-    }
   ],
   defaultVariants: {
     size: 'md',
